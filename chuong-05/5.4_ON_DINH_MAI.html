@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<script src="../config.js" onerror="console.log('[NCM] config.js not found')"></script>
 <style>
 :root{--P:#1565C0;--Pdk:#0D47A1;--Plt:#E3F2FD;--G:#2E7D32;--Glt:#E8F5E9;--Gdk:#1B5E20;--R:#C62828;--Rlt:#FFEBEE;--A:#FF8F00;--Alt:#FFF8E1;--bg:#E8F4FD;--sur:#fff;--brd:#90CAF9;--muted:#546E7A;--text:#0D1B2A;--sans:'Plus Jakarta Sans',sans-serif;--mono:'JetBrains Mono',monospace;--r:12px;--sh:0 2px 16px rgba(21,101,192,.10)}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -77,7 +78,7 @@ main{max-width:960px;margin:0 auto;padding:20px 20px 80px}
 
 <header class="hdr">
   <div class="hdr-in">
-    <a href="../index_C5.html" class="back-btn"><i class="ti ti-arrow-left"></i> Chương 5</a>
+    <a href="index_C5.html" class="back-btn"><i class="ti ti-arrow-left"></i> Chương 5</a>
     <div class="hdr-title">
       <h1>5.4 — Ổn Định Mái Dốc</h1>
       <p>Mái rời · Mái dính thẳng đứng · Mái dính (c,φ)</p>
@@ -365,19 +366,23 @@ main{max-width:960px;margin:0 auto;padding:20px 20px 80px}
 <div class="sticky-nav">
   <div>
     <span id="nav-prog">0/0</span>
-    <span style="opacity:.6;margin-left:8px">câu đúng</span>
+    <span style="opacity:.6;margin-left:8px">câu đã làm</span>
   </div>
   <div style="display:flex;gap:10px">
-    <a href="../index_C5.html" class="btn btn-ghost btn-sm"><i class="ti ti-home"></i> Hub</a>
+    <button class="btn btn-ghost btn-sm" id="btn-nop" onclick="submitResult()" style="background:rgba(150,150,150,.35);border-color:rgba(200,200,200,.4)">🔒 Nộp bài <span style="font-size:10px;opacity:.8">(0%/?%)</span></button>
+    <a href="index_C5.html" class="btn btn-ghost btn-sm"><i class="ti ti-home"></i> Hub</a>
     <a href="5.5_TONG_HOP.html" class="btn btn-ghost btn-sm">5.5 Tổng hợp →</a>
   </div>
 </div>
 
 <script>
 var ANS={};
+var _submitted=false;
+var TOTAL_QUESTIONS=0;
 function r1(v){return Math.round(v*10)/10}
 function r2(v){return Math.round(v*100)/100}
 function r3(v){return Math.round(v*1000)/1000}
+function getSV(){try{return JSON.parse(sessionStorage.getItem('ncm_sv'));}catch(e){return null;}}
 function deg(d){return d*Math.PI/180}
 function seededRng(seed){var s=seed%1000;return function(){s=(s*9301+49297)%233280;return s/233280;}}
 function togS(hd){hd.classList.toggle('open');hd.nextElementSibling.classList.toggle('open');}
@@ -399,14 +404,25 @@ function chkFill(id,ans,tol){
   ANS[id]=ok;updateProg();
 }
 function updateProg(){
-  var total=0,done=0;
-  Object.keys(ANS).forEach(function(k){total++;if(ANS[k]===true)done++;});
-  var pct=total?Math.round(done/total*100):0;
-  document.getElementById('prog-fill').style.width=pct+'%';
-  document.getElementById('prog-txt').textContent=done+' / '+total+' câu đúng';
-  document.getElementById('hdr-prog').textContent=done+' / '+total+' ✓';
-  document.getElementById('nav-prog').textContent=done+'/'+total;
-  try{localStorage.setItem('prog_c5_54',JSON.stringify({done:done,total:total}));}catch(e){}
+  var attempted=0,done=0,total=TOTAL_QUESTIONS||Object.keys(ANS).length;
+  Object.keys(ANS).forEach(function(k){if(ANS[k]!==null&&ANS[k]!==undefined){attempted++;if(ANS[k]===true)done++;}});
+  var attemPct=total?Math.round(attempted/total*100):0;
+  var donePct=total?Math.round(done/total*100):0;
+  document.getElementById('prog-fill').style.width=attemPct+'%';
+  document.getElementById('prog-txt').textContent='Đã làm: '+attempted+'/'+total+' ('+attemPct+'%) · Đúng: '+done+' ('+donePct+'%)';
+  document.getElementById('hdr-prog').textContent=attempted+' / '+total;
+  document.getElementById('nav-prog').textContent=attempted+'/'+total;
+  try{localStorage.setItem('prog_c5_54',JSON.stringify({done:done,total:total,attempted:attempted}));}catch(e){}
+  if(!_submitted){
+    var minPct=(typeof window.MIN_ATTEMPT_PCT!=='undefined')?window.MIN_ATTEMPT_PCT:5;
+    var btn=document.getElementById('btn-nop');
+    if(btn){
+      var ready=(attemPct>=minPct&&attempted>0);
+      btn.style.background=ready?'rgba(46,125,50,.7)':'rgba(150,150,150,.35)';
+      btn.style.borderColor=ready?'rgba(165,214,167,.6)':'rgba(200,200,200,.4)';
+      btn.innerHTML=(ready?'✅':'🔒')+' Nộp bài <span style="font-size:10px;opacity:.8">('+attemPct+'%/'+minPct+'%)</span>';
+    }
+  }
 }
 function makeAnsRow(id,label,ans,tol,unit){
   ANS[id]=null;
@@ -552,18 +568,57 @@ function genD3(sv){
 }
 
 // Init pre-registered ANS keys
+function submitResult(){
+  var sv=getSV();
+  if(!sv||!sv.name){alert('⚠️ Chưa đăng nhập. Về trang chủ nhập thông tin trước!');return;}
+  if(_submitted){return;}
+  var total=TOTAL_QUESTIONS||Object.keys(ANS).length;
+  var attempted=0,done=0;
+  Object.keys(ANS).forEach(function(k){if(ANS[k]!==null&&ANS[k]!==undefined){attempted++;if(ANS[k]===true)done++;}});
+  var attemPct=total?Math.round(attempted/total*100):0;
+  var scorePct=total?Math.round(done/total*100):0;
+  if(attempted===0){alert('⚠️ Chưa làm câu nào!');return;}
+  var minPct=(typeof window.MIN_ATTEMPT_PCT!=='undefined')?window.MIN_ATTEMPT_PCT:5;
+  if(attemPct<minPct){alert('⚠️ Cần làm tối thiểu '+minPct+'% số câu mới được nộp! Đã làm: '+attemPct+'%');return;}
+  var workerUrl=(typeof window.WORKER_URL!=='undefined')?window.WORKER_URL:'https://dqt-chdnm.phamvietanh158.workers.dev';
+  fetch(workerUrl,{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({name:sv.name,mssv:sv.mssv,stt:Number(sv.stt)||0,classId:sv.classId,
+      chapterId:'C5-54-OnDinhMai',score:scorePct,correct:done,total:total,duration:0})
+  })
+  .then(function(r){return r.json();})
+  .then(function(d){
+    if(d.ok){
+      _submitted=true;
+      var btn=document.getElementById('btn-nop');
+      if(btn){btn.innerHTML='✓ Đã nộp ('+scorePct+'%)';btn.disabled=true;btn.style.background='rgba(46,125,50,.5)';}
+      alert('✅ Nộp thành công! Đúng: '+scorePct+'% ('+done+'/'+total+')');
+    } else {alert('❌ Lỗi: '+(d.error||'Không rõ'));}
+  })
+  .catch(function(err){alert('❌ Không kết nối được Worker: '+err.message);});
+}
+
 ['d11-Fs','d11-bmax','d12-Fs','d12-bmax',
  'd21-hmax','d21-hsafe','d22-hmax','d22-hsafe',
  'd31-G','d31-BA','d31-num','d31-den','d31-K',
  'd32-G','d32-BA','d32-num','d32-den','d32-K'].forEach(function(k){ANS[k]=null;});
 
 window.onload=function(){
-  var sv=parseInt(localStorage.getItem('sv_code')||'0')||0;
-  if(sv<1||sv>200){sv=1;}
-  document.getElementById('sv-name').textContent='STT Sinh viên: '+sv;
-  document.getElementById('sv-code-disp').textContent=sv;
-  document.getElementById('hdr-sv').textContent='SV #'+sv;
-  genD1(sv);genD2(sv);genD3(sv);
+  var sv=getSV();
+  var stt=1;
+  if(sv&&sv.name){
+    document.getElementById('sv-name').textContent=sv.name+' — STT: '+sv.stt;
+    document.getElementById('sv-code-disp').textContent=sv.stt;
+    document.getElementById('hdr-sv').textContent='SV #'+sv.stt;
+    stt=parseInt(sv.stt)||1;
+  } else {
+    document.getElementById('sv-name').textContent='Chưa đăng nhập — về Trang chủ';
+    document.getElementById('sv-code-disp').textContent='–';
+  }
+  genD1(stt);genD2(stt);genD3(stt);
+  TOTAL_QUESTIONS=Object.keys(ANS).length;
+  var minPct=(typeof window.MIN_ATTEMPT_PCT!=='undefined')?window.MIN_ATTEMPT_PCT:5;
+  var btn=document.getElementById('btn-nop');
+  if(btn)btn.innerHTML='🔒 Nộp bài <span style="font-size:10px;opacity:.8">(0%/'+minPct+'%)</span>';
   updateProg();
 };
 </script>
