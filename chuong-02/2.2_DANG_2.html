@@ -6,6 +6,7 @@
 <title>C2 &middot; D&#7841;ng 2 &mdash; &#7912;ng Su&#7845;t B&#7843;n Th&#226;n (C&#243; MNN)</title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<script src="../config.js" onerror="console.log('[NCM] config.js not found')"></script>
 <style>
 /* ════════════════════════════════════════
    _shared.css — Chương 2 · Cơ Học Đất
@@ -139,7 +140,7 @@ table.tbl tr:nth-child(even) td{background:#F0F7FF}
 <div id="toast"></div>
 
 <header class="hdr"><div class="hdr-in">
-  <a href="index_C2.html" class="hdr-back"><i class="ti ti-arrow-left"></i> Ch&#432;&#417;ng 2</a>
+  <a href="index.html" class="hdr-back"><i class="ti ti-arrow-left"></i> Ch&#432;&#417;ng 2</a>
   <div class="hdr-t">
     <h1>D&#7841;ng 2 &mdash; &#7912;ng Su&#7845;t B&#7843;n Th&#226;n Khi C&#243; M&#7921;c N&#432;&#7899;c Ng&#7847;m (MNN)</h1>
     <p>Ch&#432;&#417;ng 2 &middot; C&#417; H&#7885;c &#272;&#7845;t &middot; TS. Ph&#7841;m Vi&#7879;t Anh &middot; &#272;HXD H&#224; N&#7897;i</p>
@@ -553,6 +554,7 @@ table.tbl tr:nth-child(even) td{background:#F0F7FF}
   <div style="display:flex;align-items:center;gap:10px">
     <span id="nav-prog" style="font-family:var(--mono);font-size:12px">0/0</span>
     <button class="sticky-btn" onclick="scrollNext()">&#9660; C&#226;u ti&#7871;p</button>
+    <button class="sticky-btn" id="btn-nop" onclick="submitResult()" style="background:rgba(150,150,150,.35);border-color:rgba(200,200,200,.4)">🔒 N&#7897;p b&#224;i &nbsp;<span style="font-size:10px;opacity:.8">(&#273;&#227; l&#224;m 0%/c&#7847;n ?%)</span></button>
     <a href="2.1_DANG_1.html" class="sticky-btn">&larr; D&#7841;ng 1</a>
     <a href="2.3_DANG_3.html" class="sticky-btn">D&#7841;ng 3 &rarr;</a>
   </div>
@@ -561,6 +563,8 @@ table.tbl tr:nth-child(even) td{background:#F0F7FF}
 <script>
 var DANG_ID = 'dang2';
 var ANS = {};
+var _submitted = false;
+var TOTAL_QUESTIONS = 0;
 
 /* ── SHARED FUNCTIONS ── */
 function toast(msg,dur){dur=dur||3000;var el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');clearTimeout(toast._t);toast._t=setTimeout(function(){el.classList.remove('show');},dur);}
@@ -593,13 +597,28 @@ function pickMCQ(name,idx,correct,expText){
   ANS['mcq-'+name]=ok;updateProg();
 }
 function updateProg(){
-  var total=0,done=0;
-  Object.keys(ANS).forEach(function(k){if(ANS[k]!==null&&ANS[k]!==undefined){total++;if(ANS[k]===true)done++;}});
-  var pct=total?Math.round(done/total*100):0;
-  var fill=document.getElementById('prog-bar');if(fill)fill.style.width=pct+'%';
-  var pt=document.getElementById('prog-txt');if(pt)pt.textContent=done+' / '+total+' ('+pct+'%)';
-  var np=document.getElementById('nav-prog');if(np)np.textContent=done+'/'+total;
-  localStorage.setItem('prog_c2_dang1',JSON.stringify({done:done,total:total}));
+  var attempted=0,done=0,total=TOTAL_QUESTIONS||Object.keys(ANS).length;
+  Object.keys(ANS).forEach(function(k){
+    if(ANS[k]!==null&&ANS[k]!==undefined){attempted++;if(ANS[k]===true)done++;}
+  });
+  var donePct  =total?Math.round(done/total*100):0;
+  var attemPct =total?Math.round(attempted/total*100):0;
+  var fill=document.getElementById('prog-bar');if(fill)fill.style.width=attemPct+'%';
+  var pt=document.getElementById('prog-txt');
+  if(pt)pt.textContent='Đã làm: '+attempted+'/'+total+' câu ('+attemPct+'%) · Đúng: '+done+' ('+donePct+'%)';
+  var np=document.getElementById('nav-prog');if(np)np.textContent=attempted+'/'+total;
+  localStorage.setItem('prog_c2_dang2',JSON.stringify({done:done,total:total,attempted:attempted}));
+  if(!_submitted){
+    var minPct=(typeof window.MIN_ATTEMPT_PCT!=='undefined')?window.MIN_ATTEMPT_PCT:5;
+    var btn=document.getElementById('btn-nop');
+    if(btn){
+      var ready=(attemPct>=minPct&&attempted>0);
+      btn.style.background=ready?'rgba(46,125,50,.7)':'rgba(150,150,150,.35)';
+      btn.style.borderColor=ready?'rgba(165,214,167,.7)':'rgba(200,200,200,.4)';
+      btn.title=ready?'Đủ điều kiện nộp bài':'Cần làm tối thiểu '+minPct+'% số câu (hiện: '+attemPct+'%)';
+      btn.innerHTML=(ready?'✅':'🔒')+' Nộp bài &nbsp;<span style="font-size:10px;opacity:.8">(đã làm '+attemPct+'%/cần '+minPct+'%)</span>';
+    }
+  }
 }
 function makeQ(id,label,ans,tol,unit){
   ANS[id]=null;
@@ -611,7 +630,6 @@ function makeQ(id,label,ans,tol,unit){
     +'<span class="chip" id="ck-'+id+'"></span></div>';
   return html;
 }
-/* MCQ chọn lớp — an toàn với mọi string */
 function makeLopMCQ(pid, opts, correct, expText) {
   var html = opts.map(function(o,i){
     return '<div class="mcq-opt" id="mco-'+pid+'-'+i+'" '
@@ -621,6 +639,42 @@ function makeLopMCQ(pid, opts, correct, expText) {
   }).join('');
   document.getElementById(pid+'-opts').innerHTML = html;
   ANS['mcq-'+pid] = null;
+}
+
+/* ── SUBMIT KẾT QUẢ → WORKER → GOOGLE SHEET ── */
+function submitResult(){
+  var sv=getSV();
+  if(!sv||!sv.name){toast('⚠️ Không tìm thấy thông tin SV. Về trang chủ đăng nhập lại.');return;}
+  if(_submitted){toast('ℹ️ Bài đã được nộp rồi.');return;}
+  var total=TOTAL_QUESTIONS||Object.keys(ANS).length;
+  var attempted=0,done=0;
+  Object.keys(ANS).forEach(function(k){if(ANS[k]!==null&&ANS[k]!==undefined){attempted++;if(ANS[k]===true)done++;}});
+  var attemPct=total?Math.round(attempted/total*100):0;
+  var scorePct=total?Math.round(done/total*100):0;
+  if(attempted===0){toast('⚠️ Chưa làm câu nào!');return;}
+  var workerUrl=(typeof window.WORKER_URL!=='undefined')?window.WORKER_URL:'https://dqt-chdnm.phamvietanh158.workers.dev';
+  var minPct=(typeof window.MIN_ATTEMPT_PCT!=='undefined')?window.MIN_ATTEMPT_PCT:5;
+  if(attemPct<minPct){
+    toast('⚠️ Cần làm tối thiểu '+minPct+'% số câu mới được nộp! Đã làm: '+attemPct+'% ('+attempted+'/'+total+')',4000);
+    var btn=document.getElementById('btn-nop');
+    if(btn){btn.style.transition='transform .08s';[0,1,2,3,4].forEach(function(i){setTimeout(function(){btn.style.transform=i%2?'translateX(5px)':'translateX(-5px)';},i*70);});setTimeout(function(){btn.style.transform='';},380);}
+    return;
+  }
+  toast('📤 Đang gửi kết quả...',8000);
+  fetch(workerUrl,{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({name:sv.name,mssv:sv.mssv,stt:Number(sv.stt)||0,classId:sv.classId,
+      chapterId:'C2-Dang2',score:scorePct,correct:done,total:total,duration:0})
+  })
+  .then(function(r){return r.json();})
+  .then(function(d){
+    if(d.ok){
+      toast('✅ Nộp thành công! Đã làm: '+attemPct+'% · Đúng: '+scorePct+'% ('+done+'/'+total+')',5000);
+      _submitted=true;
+      var btn=document.getElementById('btn-nop');
+      if(btn){btn.innerHTML='✓ Đã nộp ('+scorePct+'%)';btn.disabled=true;btn.style.background='rgba(46,125,50,.5)';}
+    } else {toast('❌ Lỗi: '+(d.error||'Không rõ'),5000);}
+  })
+  .catch(function(err){toast('❌ Không kết nối được Worker: '+err.message,5000);});
 }
 
 /* ── RENDER B & C ── */
@@ -686,7 +740,7 @@ function genAll(){
       ['TR&#202;N MNN &nbsp;(z = '+z+' m &lt; h<sub>nn</sub> = '+hnn+' m)',
        'D&#431;&#7898;I MNN &nbsp;(z = '+z+' m &gt; h<sub>nn</sub> = '+hnn+' m)'],
       0,
-      '&#10003; z='+z+' &lt; h<sub>nn</sub>='+hnn+' &#8594; TR&#202;N MNN, u=0, &#963;&#x27;<sub>oz</sub>=&#963;<sub>oz</sub>='+sz+' kN/m&#178;');
+      '&#10003; z = '+z+' m &lt; h<sub>nn</sub> = '+hnn+' m  &#8594;  &#272;i&#7875;m n&#7857;m <b>TR&#202;N MNN</b>  &#8594;  u = 0, &#963;&#x27;<sub>oz</sub> = &#963;<sub>oz</sub>. &#193;p d&#7909;ng: &#963;<sub>oz</sub> = z &times; &#947;&#8321;');
     document.getElementById('a1-q').innerHTML=
       makeQ('a1-sz','&#963;<sub>oz</sub> = z&middot;&#947;&#8321; (kN/m&sup2;)',sz,r2(sz*0.02+0.5),'kN/m&sup2;')+
       makeQ('a1-u','u (kN/m&sup2;)',0,0.1,'kN/m&sup2;')+
@@ -714,7 +768,7 @@ function genAll(){
       ['TR&#202;N MNN: z='+z+' &lt; h<sub>nn</sub>='+hnn+' (trong L1, tr&#234;n MNN)',
        'D&#431;&#7898;I MNN: z='+z+' &gt; h<sub>nn</sub>='+hnn],
       0,
-      '&#10003; z='+z+' &lt; h<sub>nn</sub>='+hnn+' &#8594; TR&#202;N MNN. &#963;<sub>oz</sub>=z&times;&#947;&#8321;='+z+'&times;'+g1+'='+sz+', u=0, &#963;&#x27;<sub>oz</sub>='+sp);
+      '&#10003; z = '+z+' &lt; h<sub>nn</sub> = '+hnn+' &#8594; &#272;i&#7875;m n&#7857;m <b>TR&#202;N MNN</b>. u = 0, &#963;&#x27;<sub>oz</sub> = &#963;<sub>oz</sub>. &#193;p d&#7909;ng: &#963;<sub>oz</sub> = z &times; &#947;&#8321;');
     document.getElementById('a2-q').innerHTML=
       makeQ('a2-sz','&#963;<sub>oz</sub> (kN/m&sup2;)',sz,r2(sz*0.02+0.5),'kN/m&sup2;')+
       makeQ('a2-u','u (kN/m&sup2;)',0,0.1,'kN/m&sup2;')+
@@ -759,7 +813,7 @@ function genAll(){
       ['TR&#202;N MNN (z &lt; h<sub>nn</sub>='+hnn+')',
        'D&#431;&#7898;I MNN (z = '+z+' &gt; h<sub>nn</sub>='+hnn+')'],
       1,
-      '&#10003; z='+z+' &gt; h<sub>nn</sub>='+hnn+' &#8594; D&#431;&#7898;I MNN. &#963;<sub>oz</sub>='+sz2+', u='+u2+', &#963;&#x27;<sub>oz</sub>='+sp2+' kN/m&#178;');
+      '&#10003; z = '+z+' &gt; h<sub>nn</sub> = '+hnn+' &#8594; &#272;i&#7875;m n&#7857;m <b>D&#431;&#7898;I MNN</b>. C&#243; &#225;p l&#7921;c n&#432;&#7899;c l&#7895; r&#7895;ng: u = 10&times;(z&minus;h<sub>nn</sub>). &#193;p d&#7909;ng c&#244;ng th&#7913;c &#963;<sub>oz</sub> theo t&#7915;ng ph&#7847;n.');
     document.getElementById('a3-q1').innerHTML=
       makeQ('a3-sa','&#9312; h<sub>nn</sub>&middot;&#947;&#8321; (kN/m&sup2;)',sA,0.8,'kN/m&sup2;')+
       makeQ('a3-sb','&#9313; (h&#8321;&minus;h<sub>nn</sub>)&middot;&#947;<sub>bh1</sub> (kN/m&sup2;)',sB,0.8,'kN/m&sup2;')+
@@ -1123,7 +1177,16 @@ function genAll(){
   updateProg();
 }
 
-window.onload = function(){ renderSV(); genAll(); };
+window.onload = function(){
+  renderSV();
+  genAll();
+  TOTAL_QUESTIONS = Object.keys(ANS).length;
+  (function(){
+    var minPct=(typeof window.MIN_ATTEMPT_PCT!=='undefined')?window.MIN_ATTEMPT_PCT:5;
+    var btn=document.getElementById('btn-nop');
+    if(btn)btn.innerHTML='🔒 Nộp bài &nbsp;<span style="font-size:10px;opacity:.8">(đã làm 0%/cần '+minPct+'%)</span>';
+  })();
+};
 
 </script>
 </body>
