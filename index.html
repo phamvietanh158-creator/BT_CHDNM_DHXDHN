@@ -205,22 +205,6 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); min-
 .opt-lbl{font-size:13px;font-weight:700;}
 .opt-desc{font-size:11px;color:var(--muted);margin-top:2px;}
 
-/* ── GITHUB GUIDE ── */
-.gh-card{max-width:1080px;margin:0 auto 0;padding:0 20px 40px;}
-.gh-inner{background:var(--sur);border:1px solid var(--brd);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden;}
-.gh-hd{background:var(--Pdk);color:#fff;padding:11px 18px;display:flex;align-items:center;gap:9px;cursor:pointer;user-select:none;}
-.gh-hd h3{font-size:13px;font-weight:700;flex:1;}
-.gh-hd .chev{font-size:15px;transition:transform .2s;}
-.gh-hd.open .chev{transform:rotate(180deg);}
-.gh-body{display:none;padding:16px 18px;}
-.gh-body.open{display:block;}
-.gh-step{display:flex;gap:12px;margin-bottom:13px;align-items:flex-start;}
-.gh-num{min-width:24px;height:24px;background:var(--P);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:2px;}
-.gh-txt{font-size:13px;line-height:1.65;color:var(--text);}
-.gh-txt code{font-family:var(--mono);font-size:11px;background:var(--Plt);color:var(--P);padding:1px 6px;border-radius:4px;}
-.gh-txt b{color:var(--Pdk);}
-.tree{font-family:var(--mono);font-size:12px;background:var(--Plt);border-radius:8px;padding:12px 16px;line-height:2;color:var(--Pdk);margin-top:8px;}
-
 /* ── FOOTER ── */
 footer { background:var(--Pdk); color:rgba(255,255,255,.6); text-align:center; padding:20px; font-size:12px; }
 footer b { color:rgba(255,255,255,.9); }
@@ -334,7 +318,7 @@ footer b { color:rgba(255,255,255,.9); }
     </div>
     <div class="hdr-right">
       <div id="timer-badge">00:00</div>
-      <div class="hdr-meta">TS. Phạm Việt Anh<br><span style="color:rgba(255,255,255,.4)">Bộ môn Địa kỹ thuật</span></div>
+      <div class="hdr-meta">TS. Phạm Việt Anh<br><span style="color:rgba(255,255,255,.4)">Bộ môn Cơ học đất - Nền móng</span></div>
       <button class="btn-admin" onclick="ADMIN.open()"><i class="ti ti-settings"></i> Admin</button>
     </div>
   </div>
@@ -369,7 +353,7 @@ footer b { color:rgba(255,255,255,.9); }
 </div>
 
 <!-- PROGRESS TỔNG -->
-<div class="prog-wrap">
+<div class="prog-wrap hidden chapter-section" id="prog-wrap">
   <div class="prog-card">
     <span class="prog-label"><i class="ti ti-chart-bar"></i>Tiến độ tổng thể</span>
     <div class="prog-track"><div class="prog-fill" id="total-fill" style="width:0%"></div></div>
@@ -378,7 +362,7 @@ footer b { color:rgba(255,255,255,.9); }
 </div>
 
 <!-- INFO ROW -->
-<div class="info-row">
+<div class="info-row hidden chapter-section" id="info-row">
   <div class="info-chip"><i class="ti ti-building-bank"></i><span>Trường:</span> <b>ĐHXD Hà Nội</b></div>
   <div class="info-chip"><i class="ti ti-user-check"></i><span>Giảng viên:</span> <b>TS. Phạm Việt Anh</b></div>
   <div class="info-chip"><i class="ti ti-file-certificate"></i><span>Tiêu chuẩn:</span> <b>TCVN 9362:2012 · 10304:2014</b></div>
@@ -427,82 +411,30 @@ footer b { color:rgba(255,255,255,.9); }
 </div>
 
 <!-- ════════ PHẦN I: CƠ HỌC ĐẤT ════════ -->
-<div class="divider" style="margin-top:28px">
+<div class="divider hidden chapter-section" style="margin-top:28px" id="div-p1">
   <i class="ti ti-mountain"></i>
   Phần I — Cơ Học Đất (Chương MĐ – 6)
 </div>
-<div class="sec-head">
+<div class="sec-head hidden chapter-section" id="head-p1">
   <h2><i class="ti ti-books" style="font-size:18px"></i> Tính chất & Ứng xử của đất</h2>
   <p>Nắm vững lý thuyết nền tảng trước khi thiết kế móng · CLO1, CLO2</p>
 </div>
-<div class="grid" id="grid-p1"></div>
+<div class="grid hidden chapter-section" id="grid-p1"></div>
 
 <!-- ════════ PHẦN II: NỀN MÓNG ════════ -->
-<div class="divider" style="margin-top:4px">
+<div class="divider hidden chapter-section" style="margin-top:4px" id="div-p2">
   <i class="ti ti-building"></i>
   Phần II — Nền Móng (Chương 7 – 10)
 </div>
-<div class="sec-head">
+<div class="sec-head hidden chapter-section" id="head-p2">
   <h2><i class="ti ti-crane" style="font-size:18px"></i> Thiết kế Nền & Móng</h2>
   <p>Ứng dụng cơ học đất vào thiết kế móng nông, móng cọc · CLO3, CLO4</p>
 </div>
-<div class="grid" id="grid-p2"></div>
-
-<!-- ════════ HƯỚNG DẪN GITHUB ════════ -->
-<div class="gh-card" style="margin-top:12px">
-  <div class="gh-inner">
-    <div class="gh-hd" onclick="togGH(this)">
-      <i class="ti ti-brand-github" style="font-size:17px"></i>
-      <h3>🗂️ Hướng dẫn tạo thư mục & deploy lên GitHub Pages</h3>
-      <i class="ti ti-chevron-down chev"></i>
-    </div>
-    <div class="gh-body">
-      <div class="info-box" style="margin-bottom:14px">
-        Tất cả file HTML đặt lên <b>GitHub Pages</b> → link public cho SV truy cập, không cần server.
-        Kết quả bài làm → <b>Cloudflare Worker</b> → <b>Google Sheet</b> của GV.
-        Mở/đóng chương → chỉ cần sửa <code>config.js</code> rồi push GitHub.
-      </div>
-      <div class="gh-step">
-        <div class="gh-num">1</div>
-        <div class="gh-txt"><b>Tạo repo GitHub:</b> <code>github.com/new</code> → đặt tên VD: <code>nen-mong-baitap</code> → Public → Create. Vào Settings → Pages → Source: <code>Deploy from branch → main / root</code>. URL kết quả: <code>username.github.io/nen-mong-baitap/</code></div>
-      </div>
-      <div class="gh-step">
-        <div class="gh-num">2</div>
-        <div class="gh-txt"><b>Cấu trúc thư mục:</b>
-          <div class="tree">📁 nen-mong-baitap/<br>
-├── index.html &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← Trang chủ (file này)<br>
-├── config.js &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← GV sửa để mở/đóng chương<br>
-├── chuong-2/<br>
-│&nbsp;&nbsp;&nbsp;└── index.html &nbsp;← Bài tập chương 2 ✅<br>
-├── chuong-5/<br>
-│&nbsp;&nbsp;&nbsp;└── index.html &nbsp;← Bài tập chương 5 ✅<br>
-└── chuong-X/<br>
-&nbsp;&nbsp;&nbsp;&nbsp;└── index.html &nbsp;← Thêm dần khi build xong</div>
-        </div>
-      </div>
-      <div class="gh-step">
-        <div class="gh-num">3</div>
-        <div class="gh-txt"><b>Mở/đóng chương:</b> Sửa <code>config.js</code> → đổi <code>active: true/false</code> → <code>git commit -m "Mo chuong 2"</code> → <code>git push</code>. Tất cả SV thấy ngay sau ~1 phút. Không cần đụng vào <code>index.html</code>.</div>
-      </div>
-      <div class="gh-step">
-        <div class="gh-num">4</div>
-        <div class="gh-txt"><b>Cloudflare Worker:</b> Đăng ký <code>dash.cloudflare.com</code> → Workers → Create → dán script nhận POST và forward sang Google Apps Script. Copy Worker URL dán vào Admin Panel → Cài đặt.</div>
-      </div>
-      <div class="gh-step">
-        <div class="gh-num">5</div>
-        <div class="gh-txt"><b>Google Apps Script:</b> Mở Google Sheet → Extensions → Apps Script → dán code ghi dòng: <code>timestamp | tên | MSSV | STT | lớp | chương | điểm | thời gian làm bài</code>. Deploy → Web app → Anyone → Copy URL → dán vào Worker.</div>
-      </div>
-      <div class="gh-step">
-        <div class="gh-num">6</div>
-        <div class="gh-txt"><b>Kiểm tra end-to-end:</b> Điền thông tin SV thử → chọn chương đang mở → làm 1 câu → Nộp bài → mở Google Sheet → thấy dữ liệu ✅. Xem cột <i>thời gian làm bài</i> để biết SV mất bao lâu.</div>
-      </div>
-    </div>
-  </div>
-</div>
+<div class="grid hidden chapter-section" id="grid-p2"></div>
 
 <!-- FOOTER -->
 <footer>
-  <b>Cơ Học Đất · Nền Móng</b> — Bài Tập Online · TS. Phạm Việt Anh · Bộ môn Địa kỹ thuật · ĐHXD Hà Nội<br>
+  <b>Cơ Học Đất · Nền Móng</b> — Bài Tập Online · TS. Phạm Việt Anh · Bộ môn Cơ học đất - Nền móng · ĐHXD Hà Nội<br>
   <span style="margin-top:4px;display:block">54 giờ · 3 tín chỉ · 4 CLO · TCVN 9362:2012 · TCVN 10304:2014 · TCVN 9351:2012</span>
 </footer>
 
@@ -661,7 +593,7 @@ var TIMER = {
 var CFG_KEY='ncm_cfg_v1';
 var DEF_CFG={
   workerUrl:'',
-  teacher:'TS. Phạm Việt Anh · Bộ môn Địa kỹ thuật · ĐHXD Hà Nội',
+  teacher:'TS. Phạm Việt Anh · Bộ môn Cơ học đất - Nền móng · ĐHXD Hà Nội',
   adminPw:'admin2024',
   showFeedback:false,
   showScore:true,
@@ -708,7 +640,7 @@ function sendResult(payload){
       mssv:String(payload.mssv||'').trim(),
       stt:Number(payload.stt)||0,
       classId:String(payload.classId||''),
-      chapter:String(payload.chapter||''),
+      chapterId:String(payload.chapterId||payload.chapter||''),
       score:Number(payload.score)||0,
       correct:Number(payload.correct)||0,
       total:Number(payload.total)||0,
@@ -855,6 +787,16 @@ var APP = {
         document.getElementById('f-mssv').value=sv.mssv||'';
         document.getElementById('f-stt').value=sv.stt||'';
         document.getElementById('f-class').value=sv.classId||'';
+        // Tự động restore đăng nhập
+        this.student=sv;
+        document.getElementById('sv-av').textContent=sv.name.charAt(0).toUpperCase();
+        document.getElementById('sv-name').textContent=sv.name;
+        document.getElementById('sv-meta').textContent='MSSV: '+sv.mssv+' · STT: '+sv.stt+' · '+sv.classId;
+        document.getElementById('sv-infobar').classList.add('show');
+        document.getElementById('timer-badge').style.display='block';
+        document.getElementById('login-wrap').style.display='none';
+        document.querySelectorAll('.chapter-section').forEach(function(el){el.classList.remove('hidden');});
+        TIMER.start();
       }
     }catch(e){}
   },
@@ -983,8 +925,13 @@ var APP = {
     document.getElementById('sv-infobar').classList.add('show');
     document.getElementById('timer-badge').style.display='block';
     document.getElementById('login-wrap').style.display='none';
+    // Hiện tất cả phần chương
+    document.querySelectorAll('.chapter-section').forEach(function(el){el.classList.remove('hidden');});
     TIMER.start();
     this.renderGrid();
+    this.updateTotalProg();
+    // Scroll xuống danh sách chương
+    setTimeout(function(){document.getElementById('prog-wrap').scrollIntoView({behavior:'smooth',block:'start'});},120);
     toast('✅ Xin chào '+name+'! Chọn chương đang mở để bắt đầu làm bài.');
   },
 
@@ -998,6 +945,10 @@ var APP = {
     document.getElementById('timer-badge').textContent='00:00';
     document.getElementById('sv-clock').textContent='00:00';
     document.getElementById('login-wrap').style.display='block';
+    // Ẩn lại phần chương
+    document.querySelectorAll('.chapter-section').forEach(function(el){el.classList.add('hidden');});
+    // Scroll lên đầu
+    window.scrollTo({top:0,behavior:'smooth'});
     this.renderGrid();
   }
 };
