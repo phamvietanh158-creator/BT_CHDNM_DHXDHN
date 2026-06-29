@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5.4 — Ổn Định Mái Dốc</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+:root{--P:#1565C0;--Pdk:#0D47A1;--Plt:#E3F2FD;--G:#2E7D32;--Glt:#E8F5E9;--Gdk:#1B5E20;--R:#C62828;--Rlt:#FFEBEE;--A:#FF8F00;--Alt:#FFF8E1;--bg:#E8F4FD;--sur:#fff;--brd:#90CAF9;--muted:#546E7A;--text:#0D1B2A;--sans:'Plus Jakarta Sans',sans-serif;--mono:'JetBrains Mono',monospace;--r:12px;--sh:0 2px 16px rgba(21,101,192,.10)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);font-family:var(--sans);color:var(--text);font-size:14px;line-height:1.6}
+.hdr{background:var(--Pdk);color:#fff;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.2)}
+.hdr-in{max-width:960px;margin:0 auto;padding:0 20px;height:60px;display:flex;align-items:center;gap:14px}
+.back-btn{color:rgba(255,255,255,.75);text-decoration:none;font-size:13px;display:flex;align-items:center;gap:5px;padding:6px 10px;border-radius:8px;border:1px solid rgba(255,255,255,.2)}
+.hdr-title{flex:1}.hdr-title h1{font-size:15px;font-weight:700}.hdr-title p{font-size:11px;color:rgba(255,255,255,.6)}
+.hdr-right{display:flex;flex-direction:column;align-items:flex-end;gap:3px}
+.hdr-prog{font-family:var(--mono);font-size:12px;background:rgba(255,255,255,.15);padding:5px 12px;border-radius:20px}
+.sv-badge{font-size:11px;color:rgba(255,255,255,.55);font-family:var(--mono)}
+main{max-width:960px;margin:0 auto;padding:20px 20px 80px}
+.prog-wrap{margin-bottom:18px;background:var(--sur);border-radius:var(--r);border:1px solid var(--brd);padding:12px 18px;box-shadow:var(--sh)}
+.prog-top{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:7px;font-weight:500}
+.prog-track{height:8px;background:var(--Plt);border-radius:4px;overflow:hidden}
+.prog-fill{height:100%;background:var(--P);border-radius:4px;transition:width .4s}
+.sv-infobar{background:linear-gradient(135deg,var(--Pdk),var(--P));color:#fff;border-radius:var(--r);padding:12px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+.card{background:var(--sur);border:1px solid var(--brd);border-radius:var(--r);box-shadow:var(--sh);margin-bottom:18px;overflow:hidden}
+.card-hd{padding:13px 20px;display:flex;align-items:center;gap:11px;border-bottom:1.5px solid var(--brd);background:var(--Plt)}
+.card-hd i{font-size:20px;color:var(--P)}.card-hd h2{font-size:14px;font-weight:700;color:var(--Pdk);flex:1}
+.card-hd p{font-size:11px;color:var(--muted);margin-top:2px}
+.cbadge{font-size:10px;font-weight:700;padding:3px 9px;border-radius:6px;background:var(--P);color:#fff;letter-spacing:.6px;white-space:nowrap}
+.card-body{padding:16px 20px;display:flex;flex-direction:column;gap:13px}
+.step{border:1px solid var(--brd);border-radius:var(--r);overflow:hidden}
+.step-hd{padding:11px 16px;display:flex;align-items:center;gap:10px;cursor:pointer;background:#FAFCFF;user-select:none}
+.step-hd:hover{background:var(--Plt)}
+.snb{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;font-weight:700;color:#fff;flex-shrink:0}
+.step-hd h3{font-size:13px;font-weight:700;color:var(--Pdk);flex:1}
+.stag{font-size:10px;padding:3px 8px;border-radius:5px;font-weight:600}
+.chev{font-size:16px;color:var(--muted);transition:transform .2s}
+.step-hd.open .chev{transform:rotate(180deg)}
+.step-body{padding:14px 16px;border-top:1px solid var(--brd);display:none;flex-direction:column;gap:11px}
+.step-body.open{display:flex}
+.fml-box{background:#F8FBFF;border:1.5px solid #BBDEFB;border-left:4px solid var(--P);border-radius:0 8px 8px 0;padding:12px 16px;font-family:var(--mono);font-size:13px;line-height:1.9}
+.ftitle{font-family:var(--sans);font-size:11px;font-weight:700;color:var(--P);text-transform:uppercase;letter-spacing:.7px;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.frow{margin-bottom:3px;color:var(--Pdk)}
+.earth-box{background:#FFF8E1;border-left:4px solid #FF8F00;border-radius:0 8px 8px 0;padding:11px 15px;font-size:13px;line-height:1.7;color:#4E342E}
+.warn-box{background:var(--Rlt);border-left:4px solid var(--R);border-radius:0 8px 8px 0;padding:11px 15px;font-size:13px;line-height:1.7;color:var(--R)}
+.succ-box{background:var(--Glt);border-left:4px solid var(--G);border-radius:0 8px 8px 0;padding:11px 15px;font-size:13px;line-height:1.7;color:var(--Gdk);font-weight:600}
+.sec-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--P);display:flex;align-items:center;gap:7px;margin:2px 0}
+.sec-lbl::after{content:'';flex:1;height:1px;background:var(--brd)}
+.ans-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:8px 12px;background:#FAFCFF;border:1px solid var(--brd);border-radius:8px}
+.ans-label{font-size:13px;font-weight:600;color:var(--text);flex:1;min-width:180px;font-family:var(--mono)}
+.ans-inp{width:110px;padding:7px 10px;border:1.5px solid var(--brd);border-radius:7px;font-family:var(--mono);font-size:14px;font-weight:600;color:var(--text);outline:none;transition:border-color .15s;text-align:center}
+.ans-inp:focus{border-color:var(--P);background:var(--Plt)}
+.ans-inp.ok{border-color:var(--G);background:var(--Glt);color:var(--Gdk)}
+.ans-inp.no{border-color:var(--R);background:var(--Rlt);color:var(--R)}
+.ans-unit{font-size:12px;color:var(--muted);font-family:var(--mono);white-space:nowrap}
+.chip{font-size:12px;font-weight:700;padding:3px 9px;border-radius:6px;min-width:24px;text-align:center}
+.chip.ok{background:var(--Glt);color:var(--Gdk);border:1px solid #A5D6A7}
+.chip.no{background:var(--Rlt);color:var(--R);border:1px solid #FFCDD2}
+.ex-set{border:1px solid var(--brd);border-radius:var(--r);overflow:hidden}
+.ex-tabs{display:flex;background:#FAFCFF;border-bottom:1px solid var(--brd);flex-wrap:wrap}
+.ex-tab{flex:1;padding:9px 10px;text-align:center;font-size:12px;font-weight:600;cursor:pointer;color:var(--muted);border:none;background:none;border-bottom:3px solid transparent;margin-bottom:-1px;white-space:nowrap}
+.ex-tab.on{color:var(--P);border-bottom-color:var(--P);background:#fff}
+.ex-pane{padding:14px 16px;display:none;flex-direction:column;gap:11px}
+.ex-pane.on{display:flex}
+.ex-label{font-size:12px;font-weight:700;color:var(--P);text-transform:uppercase;letter-spacing:.7px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.btn{padding:8px 16px;border-radius:8px;border:none;cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;transition:opacity .15s}
+.btn-sm{padding:6px 13px;font-size:12px}.btn-p{background:var(--P);color:#fff}.btn-ghost{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25)}
+.btn:hover{opacity:.85}
+.sticky-nav{position:fixed;bottom:0;left:0;right:0;background:var(--Pdk);color:#fff;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;z-index:200;font-size:13px;box-shadow:0 -2px 12px rgba(0,0,0,.2)}
+@media(max-width:620px){.two-col{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-in">
+    <a href="../index_C5.html" class="back-btn"><i class="ti ti-arrow-left"></i> Chương 5</a>
+    <div class="hdr-title">
+      <h1>5.4 — Ổn Định Mái Dốc</h1>
+      <p>Mái rời · Mái dính thẳng đứng · Mái dính (c,φ)</p>
+    </div>
+    <div class="hdr-right">
+      <span class="hdr-prog" id="hdr-prog">0 / 0 ✓</span>
+      <span class="sv-badge" id="hdr-sv">SV: —</span>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="prog-wrap">
+    <div class="prog-top"><span>Tiến độ dạng 5.4</span><span id="prog-txt">0 / 0 câu đúng</span></div>
+    <div class="prog-track"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+  </div>
+
+  <div class="sv-infobar">
+    <i class="ti ti-user-circle" style="font-size:22px"></i>
+    <div style="flex:1">
+      <div style="font-weight:700;font-size:14px" id="sv-name">Chưa nhập STT</div>
+      <div style="font-size:11px;opacity:.7">Số liệu bài tập sinh theo STT cá nhân</div>
+    </div>
+    <div style="font-family:var(--mono);font-size:20px;font-weight:700;background:rgba(255,255,255,.15);padding:6px 18px;border-radius:10px" id="sv-code-disp">—</div>
+  </div>
+
+  <!-- ===== DẠNG 1: MÁI RỜI ===== -->
+  <div class="card">
+    <div class="card-hd">
+      <i class="ti ti-mountain"></i>
+      <div style="flex:1">
+        <h2>Dạng 1 — Mái Rời (c = 0)</h2>
+        <p>Tính hệ số ổn định Fs và góc mái dốc cho phép β<sub>max</sub></p>
+      </div>
+      <span class="cbadge">DẠNG 1</span>
+    </div>
+    <div class="card-body">
+      <!-- Công thức -->
+      <div class="step">
+        <div class="step-hd open" onclick="togS(this)">
+          <div class="snb" style="background:var(--P)">CT</div>
+          <h3>Công thức — Mái Rời</h3>
+          <span class="stag" style="background:var(--Plt);color:var(--Pdk)">Lý thuyết</span>
+          <i class="ti ti-chevron-down chev"></i>
+        </div>
+        <div class="step-body open">
+          <div class="fml-box">
+            <div class="ftitle"><i class="ti ti-math-function"></i> Mái Rời — c = 0</div>
+            <div class="frow">F<sub>s</sub> = tgφ / tgβ</div>
+            <div class="frow">β<sub>max</sub> ≡ φ  khi F<sub>s</sub> = 1</div>
+            <div class="frow">tgβ<sub>max</sub> = tgφ / [F<sub>s</sub>]  (khi cho F<sub>s</sub> yêu cầu)</div>
+          </div>
+          <div class="earth-box">
+            <strong>Nhận xét:</strong> Mái rời ổn định khi β ≤ φ, bất kể chiều cao H. Fs không phụ thuộc H hay γ.
+          </div>
+        </div>
+      </div>
+
+      <!-- Bài mẫu -->
+      <div class="step">
+        <div class="step-hd open" onclick="togS(this)">
+          <div class="snb" style="background:#6A1B9A">BM</div>
+          <h3>Bài mẫu — φ = 30°, β = 20°</h3>
+          <span class="stag" style="background:#EDE7F6;color:#6A1B9A">Cố định</span>
+          <i class="ti ti-chevron-down chev"></i>
+        </div>
+        <div class="step-body open">
+          <div class="sec-lbl">Dữ liệu</div>
+          <div class="two-col">
+            <div class="fml-box"><div class="frow">φ = 30°  →  tgφ = 0.577</div><div class="frow">β = 20°  →  tgβ = 0.364</div></div>
+            <div class="fml-box"><div class="frow">F<sub>s</sub> yêu cầu = 1.5</div></div>
+          </div>
+          <div class="sec-lbl">Lời giải</div>
+          <div class="fml-box">
+            <div class="frow">F<sub>s</sub> = tg30° / tg20° = 0.577 / 0.364 = <strong>1.59</strong></div>
+            <div class="frow">→ F<sub>s</sub> = 1.59 &gt; [F<sub>s</sub>] = 1.5  ✓ Ổn định</div>
+            <div class="frow" style="margin-top:8px">tgβ<sub>max</sub> = tg30° / 1.5 = 0.577 / 1.5 = 0.385</div>
+            <div class="frow">β<sub>max</sub> = arctan(0.385) = <strong>21.1°</strong></div>
+          </div>
+          <div class="succ-box">Kết quả: F<sub>s</sub> = 1.59 (ổn định) · β<sub>max</sub> = 21.1°</div>
+        </div>
+      </div>
+
+      <!-- Bài tập ngẫu nhiên -->
+      <div class="step">
+        <div class="step-hd open" onclick="togS(this)">
+          <div class="snb" style="background:var(--G)">BT</div>
+          <h3>Bài tập theo STT</h3>
+          <span class="stag" style="background:var(--Glt);color:var(--Gdk)">Ngẫu nhiên</span>
+          <i class="ti ti-chevron-down chev"></i>
+        </div>
+        <div class="step-body open">
+          <div class="ex-set">
+            <div class="ex-tabs">
+              <button class="ex-tab on" onclick="switchEx('d1',0,this)">Tương tự 1</button>
+              <button class="ex-tab" onclick="switchEx('d1',1,this)">Tương tự 2</button>
+            </div>
+            <div class="ex-pane on" id="d1-p0">
+              <div class="ex-label">Tương tự 1</div>
+              <div id="d1-1-prob" class="earth-box">Nhập STT để sinh số liệu…</div>
+              <div id="d1-1-q"></div>
+            </div>
+            <div class="ex-pane" id="d1-p1">
+              <div class="ex-label">Tương tự 2</div>
+              <div id="d1-2-prob" class="earth-box">Nhập STT để sinh số liệu…</div>
+              <div id="d1-2-q"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== DẠNG 2: MÁI DÍNH THẲNG ĐỨNG ===== -->
+  <div class="card">
+    <div class="card-hd">
+      <i class="ti ti-building-skyscraper"></i>
+      <div style="flex:1">
+        <h2>Dạng 2 — Mái Dính Thẳng Đứng (β = 90°)</h2>
+        <p>Tính chiều cao giới hạn h<sub>max</sub> khi φ = 0°</p>
+      </div>
+      <span class="cbadge">DẠNG 2</span>
+    </div>
+    <div class="card-body">
+      <div class="step">
+        <div class="step-hd open" onclick="togS(this)">
+          <div class="snb" style="background:var(--P)">CT</div>
+          <h3>Công thức — Mái Thẳng Đứng (φ = 0°)</h3>
+          <span class="stag" style="background:var(--Plt);color:var(--Pdk)">Lý thuyết</span>
+          <i class="ti ti-chevron-down chev"></i>
+        </div>
+        <div class="step-body open">
+          <div class="fml-box">
+            <div class="ftitle"><i class="ti ti-math-function"></i> Chiều cao tới hạn</div>
+            <div class="frow">h<sub>max</sub> = 4c<sub>u</sub> / γ  (Fs = 1)</div>
+            <div class="frow">h<sub>max</sub> = 4c<sub>u</sub> / (γ · [Fs])  (có Fs yêu cầu)</div>
+            <div class="frow" style="margin-top:6px">Tổng quát (có φ): h<sub>max</sub> = (4c/γ) · tg(45°+φ/2) / Fs</div>
+          </div>
+          <div class="earth-box">
+            <strong>Lưu ý:</strong> c<sub>u</sub> là lực dính không thoát nước (undrained). Với sét bão hòa: φ = 0°, c = c<sub>u</sub>.
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-hd open" onclick="togS(this)">
+          <div class="snb" style="background:#6A1B9A">BM</div>
+          <h3>Bài mẫu — γ = 17.6 kN/m³, c<sub>u</sub> = 11 kPa</h3>
+          <span class="stag" style="background:#EDE7F6;color:#6A1B9A">Cố định</span>
+          <i class="ti ti-chevron-down chev"></i>
+        </div>
+        <div class="step-body open">
+          <div class="two-col">
+            <div class="fml-box"><div class="frow">γ = 17.6 kN/m³</div><div class="frow">c<sub>u</sub> = 11 kPa</div><div class="frow">[Fs] = 1.5</div></div>
+            <div class="fml-box">
+              <div class="frow">h<sub>max</sub>(Fs=1) = 4×11/17.6 = <strong>2.50 m</strong></div>
+              <div class="frow">h<sub>max</sub>(Fs=1.5) = 4×11/(17.6×1.5) = <strong>1.67 m</strong></div>
+            </div>
+          </div>
+          <div class="succ-box">Chiều cao giới hạn: 2.50 m (Fs=1) · 1.67 m ([Fs]=1.5)</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-hd open" onclick="togS(this)">
+          <div class="snb" style="background:var(--G)">BT</div>
+          <h3>Bài tập theo STT</h3>
+          <span class="stag" style="background:var(--Glt);color:var(--Gdk)">Ngẫu nhiên</span>
+          <i class="ti ti-chevron-down chev"></i>
+        </div>
+        <div class="step-body open">
+          <div class="ex-set">
+            <div class="ex-tabs">
+              <button class="ex-tab on" onclick="switchEx('d2',0,this)">Tương tự 1</button>
+              <button class="ex-tab" onclick="switchEx('d2',1,this)">Tương tự 2</button>
+            </div>
+            <div class="ex-pane on" id="d2-p0">
+              <div class="ex-label">Tương tự 1</div>
+              <div id="d2-1-prob" class="earth-box">Nhập STT để sinh số liệu…</div>
+              <div id="d2-1-q"></div>
+            </div>
+            <div class="ex-pane" id="d2-p1">
+              <div class="ex-label">Tương tự 2</div>
+              <div id="d2-2-prob" class="earth-box">Nhập STT để sinh số liệu…</div>
+              <div id="d2-2-q"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== DẠNG 3: MÁI DÍNH (c,φ) ===== -->
+  <div class="card">
+    <div class="card-hd">
+      <i class="ti ti-slope"></i>
+      <div style="flex:1">
+        <h2>Dạng 3 — Mái Dính (c, φ) — Mặt Trượt Phẳng</h2>
+        <p>Tính hệ số ổn định K theo mặt trượt giả định</p>
+      </div>
+      <span class="cbadge">DẠNG 3</span>
+    </div>
+    <div class="card-body">
+      <div class="step">
+        <div class="step-hd open" onclick="togS(this)">
+          <div class="snb" style="background:var(--P)">CT</div>
+          <h3>Công thức — Mặt Trượt Phẳng</h3>
+          <span class="stag" style="background:var(--Plt);color:var(--Pdk)">Lý thuyết</span>
+          <i class="ti ti-chevron-down chev"></i>
+        </div>
+        <div class="step-body open">
+          <div class="fml-box">
+            <div class="ftitle"><i class="ti ti-math-function"></i> Hệ số ổn định K</div>
+            <div class="frow">G = ½ · γ · H² / tgα  (trọng lượng khối trượt tam giác)</div>
+            <div class="frow">BA = H / sinα  (chiều dài mặt trượt)</div>
+            <div class="frow" style="margin-top:6px">K = (G·tgφ·cosα + c·BA) / (G·sinα)</div>
+            <div class="frow" style="margin-top:6px">Yêu cầu: K ≥ [K] = 1.2 ÷ 1.5</div>
+          </div>
+          <div class="earth-box">
+            <strong>α</strong> là góc nghiêng mặt trượt so với phương ngang. Thường lấy α = β + (10°÷20°) để tìm K<sub>min</sub>.
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-hd open" onclick="togS(this)">
+          <div class="snb" style="background:#6A1B9A">BM</div>
+          <h3>Bài mẫu — H=5m, β=50°, γ=18, c=12, φ=20°, α=55°</h3>
+          <span class="stag" style="background:#EDE7F6;color:#6A1B9A">Cố định</span>
+          <i class="ti ti-chevron-down chev"></i>
+        </div>
+        <div class="step-body open">
+          <div class="two-col">
+            <div class="fml-box">
+              <div class="frow">H = 5 m · β = 50° · α = 55°</div>
+              <div class="frow">γ = 18 kN/m³ · c = 12 kPa · φ = 20°</div>
+              <div class="frow">[K] = 1.2</div>
+            </div>
+            <div class="fml-box">
+              <div class="frow">tgα = tg55° = 1.428</div>
+              <div class="frow">G = ½×18×25/1.428 = 157.6 kN/m</div>
+              <div class="frow">BA = 5/sin55° = 5/0.819 = 6.10 m</div>
+            </div>
+          </div>
+          <div class="fml-box">
+            <div class="frow">Tử: G·tgφ·cosα + c·BA = 157.6×0.364×0.574 + 12×6.10</div>
+            <div class="frow">= 32.91 + 73.2 = 106.1 kN/m</div>
+            <div class="frow">Mẫu: G·sinα = 157.6×0.819 = 129.1 kN/m</div>
+            <div class="frow" style="margin-top:6px"><strong>K = 106.1 / 129.1 = 0.82</strong></div>
+          </div>
+          <div class="warn-box">⚠ K = 0.82 &lt; [K] = 1.2 → Mái dốc KHÔNG ổn định! Cần giảm β hoặc tăng c.</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-hd open" onclick="togS(this)">
+          <div class="snb" style="background:var(--G)">BT</div>
+          <h3>Bài tập theo STT</h3>
+          <span class="stag" style="background:var(--Glt);color:var(--Gdk)">Ngẫu nhiên</span>
+          <i class="ti ti-chevron-down chev"></i>
+        </div>
+        <div class="step-body open">
+          <div class="ex-set">
+            <div class="ex-tabs">
+              <button class="ex-tab on" onclick="switchEx('d3',0,this)">Tương tự 1</button>
+              <button class="ex-tab" onclick="switchEx('d3',1,this)">Tương tự 2</button>
+            </div>
+            <div class="ex-pane on" id="d3-p0">
+              <div class="ex-label">Tương tự 1</div>
+              <div id="d3-1-prob" class="earth-box">Nhập STT để sinh số liệu…</div>
+              <div id="d3-1-q"></div>
+            </div>
+            <div class="ex-pane" id="d3-p1">
+              <div class="ex-label">Tương tự 2</div>
+              <div id="d3-2-prob" class="earth-box">Nhập STT để sinh số liệu…</div>
+              <div id="d3-2-q"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div class="sticky-nav">
+  <div>
+    <span id="nav-prog">0/0</span>
+    <span style="opacity:.6;margin-left:8px">câu đúng</span>
+  </div>
+  <div style="display:flex;gap:10px">
+    <a href="../index_C5.html" class="btn btn-ghost btn-sm"><i class="ti ti-home"></i> Hub</a>
+    <a href="5.5_TONG_HOP.html" class="btn btn-ghost btn-sm">5.5 Tổng hợp →</a>
+  </div>
+</div>
+
+<script>
+var ANS={};
+function r1(v){return Math.round(v*10)/10}
+function r2(v){return Math.round(v*100)/100}
+function r3(v){return Math.round(v*1000)/1000}
+function deg(d){return d*Math.PI/180}
+function seededRng(seed){var s=seed%1000;return function(){s=(s*9301+49297)%233280;return s/233280;}}
+function togS(hd){hd.classList.toggle('open');hd.nextElementSibling.classList.toggle('open');}
+function switchEx(g,idx,btn){
+  var panes=document.querySelectorAll('[id^="'+g+'-p"]');
+  panes.forEach(function(p){p.classList.remove('on');});
+  document.getElementById(g+'-p'+idx).classList.add('on');
+  btn.closest('.ex-tabs').querySelectorAll('.ex-tab').forEach(function(t){t.classList.remove('on');});
+  btn.classList.add('on');
+}
+function chkFill(id,ans,tol){
+  var inp=document.getElementById(id);
+  var chip=document.getElementById(id+'-chip');
+  var v=parseFloat(inp.value);
+  if(isNaN(v)){inp.classList.remove('ok','no');chip.className='chip';chip.textContent='';ANS[id]=null;updateProg();return;}
+  var ok=Math.abs(v-ans)<=tol;
+  inp.classList.toggle('ok',ok);inp.classList.toggle('no',!ok);
+  chip.className='chip '+(ok?'ok':'no');chip.textContent=ok?'✓':'✗';
+  ANS[id]=ok;updateProg();
+}
+function updateProg(){
+  var total=0,done=0;
+  Object.keys(ANS).forEach(function(k){total++;if(ANS[k]===true)done++;});
+  var pct=total?Math.round(done/total*100):0;
+  document.getElementById('prog-fill').style.width=pct+'%';
+  document.getElementById('prog-txt').textContent=done+' / '+total+' câu đúng';
+  document.getElementById('hdr-prog').textContent=done+' / '+total+' ✓';
+  document.getElementById('nav-prog').textContent=done+'/'+total;
+  try{localStorage.setItem('prog_c5_54',JSON.stringify({done:done,total:total}));}catch(e){}
+}
+function makeAnsRow(id,label,ans,tol,unit){
+  ANS[id]=null;
+  return '<div class="ans-row">'+
+    '<span class="ans-label">'+label+'</span>'+
+    '<input class="ans-inp" id="'+id+'" type="number" step="any" placeholder="?" oninput="chkFill(\''+id+'\','+ans+','+tol+')">'+
+    '<span class="ans-unit">'+unit+'</span>'+
+    '<span class="chip" id="'+id+'-chip"></span>'+
+    '</div>';
+}
+
+/* ===== DẠNG 1: MÁI RỜI ===== */
+function genD1(sv){
+  // PHI options: 25,28,30,32,35
+  var PHI=[25,28,30,32,35];
+  var BETA=[15,18,20,22,25,28];
+
+  // Tương tự 1
+  var rng=seededRng(sv*53+23);
+  var phi=PHI[Math.floor(rng()*PHI.length)];
+  var betaOpts=BETA.filter(function(b){return b<phi;});
+  var beta=betaOpts[Math.floor(rng()*betaOpts.length)]||Math.floor(phi*0.7);
+  var Fsreq=[1.3,1.4,1.5][Math.floor(rng()*3)];
+  var tgphi=Math.tan(deg(phi));
+  var tgbeta=Math.tan(deg(beta));
+  var Fs=r2(tgphi/tgbeta);
+  var tgbmax=r3(tgphi/Fsreq);
+  var bmax=r1(Math.atan(tgphi/Fsreq)*180/Math.PI);
+  document.getElementById('d1-1-prob').innerHTML=
+    '📐 Cho mái rời: φ = '+phi+'°, β = '+beta+'°, [F<sub>s</sub>] = '+Fsreq+'.<br>'+
+    'Tính: (1) F<sub>s</sub> hiện tại, (2) β<sub>max</sub> ứng với [F<sub>s</sub>] = '+Fsreq+'.';
+  document.getElementById('d1-1-q').innerHTML=
+    makeAnsRow('d11-Fs','Fs = tgφ/tgβ',Fs,0.08,'')+
+    makeAnsRow('d11-bmax','β<sub>max</sub> (°)',bmax,1.5,'°');
+
+  // Tương tự 2
+  var rng2=seededRng(sv*59+29);
+  var phi2=PHI[Math.floor(rng2()*PHI.length)];
+  var beta2Opts=BETA.filter(function(b){return b<phi2;});
+  var beta2=beta2Opts[Math.floor(rng2()*beta2Opts.length)]||Math.floor(phi2*0.65);
+  var Fsreq2=[1.3,1.4,1.5][Math.floor(rng2()*3)];
+  var tgphi2=Math.tan(deg(phi2));
+  var tgbeta2=Math.tan(deg(beta2));
+  var Fs2=r2(tgphi2/tgbeta2);
+  var bmax2=r1(Math.atan(tgphi2/Fsreq2)*180/Math.PI);
+  document.getElementById('d1-2-prob').innerHTML=
+    '📐 Cho mái rời: φ = '+phi2+'°, β = '+beta2+'°, [F<sub>s</sub>] = '+Fsreq2+'.<br>'+
+    'Tính: (1) F<sub>s</sub> hiện tại, (2) β<sub>max</sub> ứng với [F<sub>s</sub>] = '+Fsreq2+'.';
+  document.getElementById('d1-2-q').innerHTML=
+    makeAnsRow('d12-Fs','Fs = tgφ/tgβ',Fs2,0.08,'')+
+    makeAnsRow('d12-bmax','β<sub>max</sub> (°)',bmax2,1.5,'°');
+}
+
+/* ===== DẠNG 2: MÁI THẲNG ĐỨNG ===== */
+function genD2(sv){
+  // γ: 16.5–19.5, cu: 8–18
+  var rng=seededRng(sv*67+31);
+  var gamma=r1(16.5+rng()*3.0);  // 16.5–19.5
+  var cu=r1(8+rng()*10);          // 8–18
+  var Fs=rng()<0.5?1.3:1.5;
+  var hmax1=r2(4*cu/gamma);
+  var hmax2=r2(4*cu/(gamma*Fs));
+  document.getElementById('d2-1-prob').innerHTML=
+    '🏗 Cho mái đất sét thẳng đứng: γ = '+gamma+' kN/m³, c<sub>u</sub> = '+cu+' kPa, φ = 0°.<br>'+
+    'Tính: (1) h<sub>max</sub> giới hạn (Fs=1), (2) h<sub>max</sub> an toàn với [Fs] = '+Fs+'.';
+  document.getElementById('d2-1-q').innerHTML=
+    makeAnsRow('d21-hmax','h<sub>max</sub> (Fs=1) (m)',hmax1,0.08,'m')+
+    makeAnsRow('d21-hsafe','h<sub>max</sub> ([Fs]='+Fs+') (m)',hmax2,0.08,'m');
+
+  var rng2=seededRng(sv*71+37);
+  var gamma2=r1(16.5+rng2()*3.0);
+  var cu2=r1(8+rng2()*10);
+  var Fs2=rng2()<0.5?1.3:1.5;
+  var hmax1b=r2(4*cu2/gamma2);
+  var hmax2b=r2(4*cu2/(gamma2*Fs2));
+  document.getElementById('d2-2-prob').innerHTML=
+    '🏗 Cho mái đất sét thẳng đứng: γ = '+gamma2+' kN/m³, c<sub>u</sub> = '+cu2+' kPa, φ = 0°.<br>'+
+    'Tính: (1) h<sub>max</sub> giới hạn (Fs=1), (2) h<sub>max</sub> an toàn với [Fs] = '+Fs2+'.';
+  document.getElementById('d2-2-q').innerHTML=
+    makeAnsRow('d22-hmax','h<sub>max</sub> (Fs=1) (m)',hmax1b,0.08,'m')+
+    makeAnsRow('d22-hsafe','h<sub>max</sub> ([Fs]='+Fs2+') (m)',hmax2b,0.08,'m');
+}
+
+/* ===== DẠNG 3: MÁI DÍNH (c,φ) ===== */
+function genD3(sv){
+  // H: 4–8m, beta: 40–60°, gamma: 17–20, c: 10–20, phi: 15–25°, alpha: beta+10
+  var rng=seededRng(sv*79+41);
+  var H=Math.round(4+rng()*4);       // 4–8
+  var beta=Math.round(40+rng()*20);  // 40–60
+  var gamma=r1(17+rng()*3);          // 17–20
+  var c=Math.round(10+rng()*10);     // 10–20
+  var phi=Math.round(15+rng()*10);   // 15–25
+  var alpha=beta+10;
+  var K=[1.2,1.3,1.5][Math.floor(rng()*3)];
+
+  var tga=Math.tan(deg(alpha));
+  var sina=Math.sin(deg(alpha));
+  var cosa=Math.cos(deg(alpha));
+  var G=r1(0.5*gamma*H*H/tga);
+  var BA=r2(H/sina);
+  var num=r2(G*Math.tan(deg(phi))*cosa+c*BA);
+  var den=r2(G*sina);
+  var Kval=r2(num/den);
+  var stable=Kval>=K;
+
+  document.getElementById('d3-1-prob').innerHTML=
+    '⛰ Mái dốc: H = '+H+' m, β = '+beta+'°, γ = '+gamma+' kN/m³, c = '+c+' kPa, φ = '+phi+'°.<br>'+
+    'Giả định mặt trượt α = '+alpha+'°. Tính K ổn định. Biết [K] = '+K+'.';
+  document.getElementById('d3-1-q').innerHTML=
+    makeAnsRow('d31-G','G (kN/m)',G,r2(G*0.04),'kN/m')+
+    makeAnsRow('d31-BA','BA (m)',BA,0.06,'m')+
+    makeAnsRow('d31-num','Tử G·tgφ·cosα+c·BA',num,r2(num*0.05),'kN/m')+
+    makeAnsRow('d31-den','Mẫu G·sinα',den,r2(den*0.04),'kN/m')+
+    makeAnsRow('d31-K','K = Tử/Mẫu',Kval,0.06,'');
+
+  var rng2=seededRng(sv*83+47);
+  var H2=Math.round(4+rng2()*4);
+  var beta2=Math.round(40+rng2()*20);
+  var gamma2=r1(17+rng2()*3);
+  var c2=Math.round(10+rng2()*10);
+  var phi2=Math.round(15+rng2()*10);
+  var alpha2=beta2+10;
+  var K2=[1.2,1.3,1.5][Math.floor(rng2()*3)];
+
+  var tga2=Math.tan(deg(alpha2));
+  var sina2=Math.sin(deg(alpha2));
+  var cosa2=Math.cos(deg(alpha2));
+  var G2=r1(0.5*gamma2*H2*H2/tga2);
+  var BA2=r2(H2/sina2);
+  var num2=r2(G2*Math.tan(deg(phi2))*cosa2+c2*BA2);
+  var den2=r2(G2*sina2);
+  var Kval2=r2(num2/den2);
+
+  document.getElementById('d3-2-prob').innerHTML=
+    '⛰ Mái dốc: H = '+H2+' m, β = '+beta2+'°, γ = '+gamma2+' kN/m³, c = '+c2+' kPa, φ = '+phi2+'°.<br>'+
+    'Giả định mặt trượt α = '+alpha2+'°. Tính K ổn định. Biết [K] = '+K2+'.';
+  document.getElementById('d3-2-q').innerHTML=
+    makeAnsRow('d32-G','G (kN/m)',G2,r2(G2*0.04),'kN/m')+
+    makeAnsRow('d32-BA','BA (m)',BA2,0.06,'m')+
+    makeAnsRow('d32-num','Tử G·tgφ·cosα+c·BA',num2,r2(num2*0.05),'kN/m')+
+    makeAnsRow('d32-den','Mẫu G·sinα',den2,r2(den2*0.04),'kN/m')+
+    makeAnsRow('d32-K','K = Tử/Mẫu',Kval2,0.06,'');
+}
+
+// Init pre-registered ANS keys
+['d11-Fs','d11-bmax','d12-Fs','d12-bmax',
+ 'd21-hmax','d21-hsafe','d22-hmax','d22-hsafe',
+ 'd31-G','d31-BA','d31-num','d31-den','d31-K',
+ 'd32-G','d32-BA','d32-num','d32-den','d32-K'].forEach(function(k){ANS[k]=null;});
+
+window.onload=function(){
+  var sv=parseInt(localStorage.getItem('sv_code')||'0')||0;
+  if(sv<1||sv>200){sv=1;}
+  document.getElementById('sv-name').textContent='STT Sinh viên: '+sv;
+  document.getElementById('sv-code-disp').textContent=sv;
+  document.getElementById('hdr-sv').textContent='SV #'+sv;
+  genD1(sv);genD2(sv);genD3(sv);
+  updateProg();
+};
+</script>
+</body>
+</html>

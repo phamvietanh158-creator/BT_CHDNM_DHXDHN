@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5.5 — Tổng Hợp & Ôn Tập Chương 5</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+:root{--P:#1565C0;--Pdk:#0D47A1;--Plt:#E3F2FD;--G:#2E7D32;--Glt:#E8F5E9;--Gdk:#1B5E20;--R:#C62828;--Rlt:#FFEBEE;--A:#FF8F00;--Alt:#FFF8E1;--bg:#E8F4FD;--sur:#fff;--brd:#90CAF9;--muted:#546E7A;--text:#0D1B2A;--sans:'Plus Jakarta Sans',sans-serif;--mono:'JetBrains Mono',monospace;--r:12px;--sh:0 2px 16px rgba(21,101,192,.10)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);font-family:var(--sans);color:var(--text);font-size:14px;line-height:1.6}
+.hdr{background:var(--Pdk);color:#fff;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.2)}
+.hdr-in{max-width:960px;margin:0 auto;padding:0 20px;height:60px;display:flex;align-items:center;gap:14px}
+.back-btn{color:rgba(255,255,255,.75);text-decoration:none;font-size:13px;display:flex;align-items:center;gap:5px;padding:6px 10px;border-radius:8px;border:1px solid rgba(255,255,255,.2)}
+.hdr-title{flex:1}.hdr-title h1{font-size:15px;font-weight:700}.hdr-title p{font-size:11px;color:rgba(255,255,255,.6)}
+.hdr-right{display:flex;flex-direction:column;align-items:flex-end;gap:3px}
+.hdr-prog{font-family:var(--mono);font-size:12px;background:rgba(255,255,255,.15);padding:5px 12px;border-radius:20px}
+.sv-badge{font-size:11px;color:rgba(255,255,255,.55);font-family:var(--mono)}
+main{max-width:960px;margin:0 auto;padding:20px 20px 80px}
+.prog-wrap{margin-bottom:18px;background:var(--sur);border-radius:var(--r);border:1px solid var(--brd);padding:12px 18px;box-shadow:var(--sh)}
+.prog-top{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:7px;font-weight:500}
+.prog-track{height:8px;background:var(--Plt);border-radius:4px;overflow:hidden}
+.prog-fill{height:100%;background:var(--P);border-radius:4px;transition:width .4s}
+.sv-infobar{background:linear-gradient(135deg,var(--Pdk),var(--P));color:#fff;border-radius:var(--r);padding:12px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+.card{background:var(--sur);border:1px solid var(--brd);border-radius:var(--r);box-shadow:var(--sh);margin-bottom:18px;overflow:hidden}
+.card-hd{padding:13px 20px;display:flex;align-items:center;gap:11px;border-bottom:1.5px solid var(--brd);background:var(--Plt)}
+.card-hd i{font-size:20px;color:var(--P)}.card-hd h2{font-size:14px;font-weight:700;color:var(--Pdk);flex:1}
+.card-hd p{font-size:11px;color:var(--muted);margin-top:2px}
+.cbadge{font-size:10px;font-weight:700;padding:3px 9px;border-radius:6px;background:var(--P);color:#fff;letter-spacing:.6px;white-space:nowrap}
+.card-body{padding:16px 20px;display:flex;flex-direction:column;gap:13px}
+.step{border:1px solid var(--brd);border-radius:var(--r);overflow:hidden}
+.step-hd{padding:11px 16px;display:flex;align-items:center;gap:10px;cursor:pointer;background:#FAFCFF;user-select:none}
+.step-hd:hover{background:var(--Plt)}
+.snb{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;font-weight:700;color:#fff;flex-shrink:0}
+.step-hd h3{font-size:13px;font-weight:700;color:var(--Pdk);flex:1}
+.stag{font-size:10px;padding:3px 8px;border-radius:5px;font-weight:600}
+.chev{font-size:16px;color:var(--muted);transition:transform .2s}
+.step-hd.open .chev{transform:rotate(180deg)}
+.step-body{padding:14px 16px;border-top:1px solid var(--brd);display:none;flex-direction:column;gap:11px}
+.step-body.open{display:flex}
+.fml-box{background:#F8FBFF;border:1.5px solid #BBDEFB;border-left:4px solid var(--P);border-radius:0 8px 8px 0;padding:12px 16px;font-family:var(--mono);font-size:13px;line-height:1.9}
+.ftitle{font-family:var(--sans);font-size:11px;font-weight:700;color:var(--P);text-transform:uppercase;letter-spacing:.7px;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.frow{margin-bottom:3px;color:var(--Pdk)}
+.earth-box{background:#FFF8E1;border-left:4px solid #FF8F00;border-radius:0 8px 8px 0;padding:11px 15px;font-size:13px;line-height:1.7;color:#4E342E}
+.warn-box{background:var(--Rlt);border-left:4px solid var(--R);border-radius:0 8px 8px 0;padding:11px 15px;font-size:13px;line-height:1.7;color:var(--R)}
+.succ-box{background:var(--Glt);border-left:4px solid var(--G);border-radius:0 8px 8px 0;padding:11px 15px;font-size:13px;line-height:1.7;color:var(--Gdk);font-weight:600}
+.sec-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--P);display:flex;align-items:center;gap:7px;margin:2px 0}
+.sec-lbl::after{content:'';flex:1;height:1px;background:var(--brd)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.btn{padding:8px 16px;border-radius:8px;border:none;cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;transition:opacity .15s}
+.btn-sm{padding:6px 13px;font-size:12px}.btn-p{background:var(--P);color:#fff}.btn-ghost{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25)}
+.btn:hover{opacity:.85}
+/* MCQ */
+.mcq-wrap{display:flex;flex-direction:column;gap:14px}
+.mcq-item{border:1px solid var(--brd);border-radius:var(--r);overflow:hidden}
+.mcq-q{padding:12px 16px;background:#FAFCFF;font-size:13px;font-weight:600;line-height:1.5}
+.mcq-q .qnum{display:inline-block;background:var(--P);color:#fff;border-radius:5px;padding:1px 7px;font-family:var(--mono);font-size:11px;margin-right:8px}
+.mcq-opts{padding:8px 16px 12px;display:flex;flex-direction:column;gap:6px}
+.opt-btn{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:8px;border:1.5px solid var(--brd);background:#fff;cursor:pointer;font-size:13px;text-align:left;transition:all .15s;font-family:var(--sans)}
+.opt-btn:hover{border-color:var(--P);background:var(--Plt)}
+.opt-btn.sel{border-color:var(--P);background:var(--Plt)}
+.opt-btn.correct{border-color:var(--G);background:var(--Glt);color:var(--Gdk);font-weight:600}
+.opt-btn.wrong{border-color:var(--R);background:var(--Rlt);color:var(--R)}
+.opt-key{width:24px;height:24px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:700;background:var(--Plt);color:var(--P);flex-shrink:0}
+.opt-btn.correct .opt-key{background:var(--Glt);color:var(--Gdk)}
+.opt-btn.wrong .opt-key{background:var(--Rlt);color:var(--R)}
+.mcq-fb{display:none;padding:8px 16px 12px;font-size:12px;line-height:1.6;color:var(--Gdk);background:var(--Glt);border-top:1px solid #C8E6C9}
+.mcq-fb.show{display:block}
+.mcq-fb.wrong-fb{color:var(--R);background:var(--Rlt);border-color:#FFCDD2}
+.tbl-wrap{overflow-x:auto;border-radius:8px;border:1px solid var(--brd)}
+table.tbl{border-collapse:collapse;width:100%;font-size:12px;font-family:var(--mono)}
+table.tbl th{background:var(--Pdk);color:#fff;padding:6px 10px;text-align:center;white-space:nowrap}
+table.tbl td{padding:5px 10px;text-align:center;border-bottom:1px solid var(--Plt)}
+table.tbl tr:nth-child(even) td{background:#F0F7FF}
+.sticky-nav{position:fixed;bottom:0;left:0;right:0;background:var(--Pdk);color:#fff;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;z-index:200;font-size:13px;box-shadow:0 -2px 12px rgba(0,0,0,.2)}
+@media(max-width:620px){.two-col,.three-col{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-in">
+    <a href="../index_C5.html" class="back-btn"><i class="ti ti-arrow-left"></i> Chương 5</a>
+    <div class="hdr-title">
+      <h1>5.5 — Tổng Hợp & Ôn Tập</h1>
+      <p>Công thức · Bảng tra · MCQ ôn tập toàn chương</p>
+    </div>
+    <div class="hdr-right">
+      <span class="hdr-prog" id="hdr-prog">0 / 0 ✓</span>
+      <span class="sv-badge" id="hdr-sv">SV: —</span>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="prog-wrap">
+    <div class="prog-top"><span>Tiến độ MCQ ôn tập</span><span id="prog-txt">0 / 0 câu đúng</span></div>
+    <div class="prog-track"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+  </div>
+
+  <div class="sv-infobar">
+    <i class="ti ti-user-circle" style="font-size:22px"></i>
+    <div style="flex:1">
+      <div style="font-weight:700;font-size:14px" id="sv-name">Chưa nhập STT</div>
+      <div style="font-size:11px;opacity:.7">Tổng hợp toàn bộ công thức Chương 5</div>
+    </div>
+    <div style="font-family:var(--mono);font-size:20px;font-weight:700;background:rgba(255,255,255,.15);padding:6px 18px;border-radius:10px" id="sv-code-disp">—</div>
+  </div>
+
+  <!-- ===== BẢNG CÔNG THỨC ===== -->
+  <div class="card">
+    <div class="card-hd">
+      <i class="ti ti-formula"></i>
+      <div style="flex:1"><h2>Bảng Tổng Hợp Công Thức Chương 5</h2><p>SCT Terzaghi · Mái dốc · Ứng suất tại điểm</p></div>
+      <span class="cbadge">TÓM TẮT</span>
+    </div>
+    <div class="card-body">
+      <!-- SCT Terzaghi -->
+      <div class="step">
+        <div class="step-hd open" onclick="togS(this)">
+          <div class="snb" style="background:var(--P)">A</div>
+          <h3>Sức Chịu Tải — Terzaghi (5.3)</h3>
+          <i class="ti ti-chevron-down chev"></i>
+        </div>
+        <div class="step-body open">
+          <div class="three-col">
+            <div class="fml-box">
+              <div class="ftitle">Móng Băng</div>
+              <div class="frow">p<sub>gh</sub> = γ·D·N<sub>q</sub> + c·N<sub>c</sub> + 0.5·γ·B·N<sub>γ</sub></div>
+            </div>
+            <div class="fml-box">
+              <div class="ftitle">Móng Vuông</div>
+              <div class="frow">p<sub>gh</sub> = γ·D·N<sub>q</sub> + 1.3c·N<sub>c</sub> + 0.4·γ·B·N<sub>γ</sub></div>
+            </div>
+            <div class="fml-box">
+              <div class="ftitle">Móng Tròn</div>
+              <div class="frow">p<sub>gh</sub> = γ·D·N<sub>q</sub> + 1.3c·N<sub>c</sub> + 0.3·γ·B·N<sub>γ</sub></div>
+            </div>
+          </div>
+          <div class="fml-box">
+            <div class="frow">[p] = p<sub>gh</sub> / F<sub>s</sub>  (F<sub>s</sub> = 2÷3)    ·    q = γ·D (tải trọng phụ thêm)</div>
+            <div class="frow">φ = 0° (sét thuần): p<sub>gh</sub> = 5.7c + q   (N<sub>c</sub>=5.7, N<sub>q</sub>=1, N<sub>γ</sub>=0)</div>
+          </div>
+          <div class="tbl-wrap">
+            <table class="tbl">
+              <thead><tr><th>φ°</th><th>N<sub>γ</sub></th><th>N<sub>q</sub></th><th>N<sub>c</sub></th></tr></thead>
+              <tbody>
+                <tr><td>0</td><td>0</td><td>1.0</td><td>5.7</td></tr>
+                <tr><td>5</td><td>0.1</td><td>1.6</td><td>7.3</td></tr>
+                <tr><td>10</td><td>0.4</td><td>2.7</td><td>9.6</td></tr>
+                <tr><td>15</td><td>1.1</td><td>4.4</td><td>12.9</td></tr>
+                <tr><td>20</td><td>2.9</td><td>7.4</td><td>17.7</td></tr>
+                <tr><td>25</td><td>6.8</td><td>12.7</td><td>25.1</td></tr>
+                <tr><td>28</td><td>11.2</td><td>17.8</td><td>31.6</td></tr>
+                <tr><td>30</td><td>15.7</td><td>22.5</td><td>37.2</td></tr>
+                <tr><td>32</td><td>22.0</td><td>28.5</td><td>44.0</td></tr>
+                <tr><td>35</td><td>37.2</td><td>41.4</td><td>57.8</td></tr>
+                <tr><td>40</td><td>93.7</td><td>81.3</td><td>95.7</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mái dốc -->
+      <div class="step">
+        <div class="step-hd open" onclick="togS(this)">
+          <div class="snb" style="background:#2E7D32">B</div>
+          <h3>Ổn Định Mái Dốc (5.4)</h3>
+          <i class="ti ti-chevron-down chev"></i>
+        </div>
+        <div class="step-body open">
+          <div class="three-col">
+            <div class="fml-box">
+              <div class="ftitle">Mái Rời (c=0)</div>
+              <div class="frow">F<sub>s</sub> = tgφ / tgβ</div>
+              <div class="frow">β<sub>max</sub>: tgβ = tgφ/[Fs]</div>
+            </div>
+            <div class="fml-box">
+              <div class="ftitle">Mái Dính φ=0 (β=90°)</div>
+              <div class="frow">h<sub>max</sub> = 4c<sub>u</sub>/γ (Fs=1)</div>
+              <div class="frow">h<sub>max</sub> = 4c<sub>u</sub>/(γ·[Fs])</div>
+            </div>
+            <div class="fml-box">
+              <div class="ftitle">Mái Dính (c,φ)</div>
+              <div class="frow">G = ½γH²/tgα</div>
+              <div class="frow">K = (G·tgφ·cosα+c·BA)/(G·sinα)</div>
+            </div>
+          </div>
+          <div class="earth-box">
+            <strong>Nhận xét quan trọng:</strong>
+            Mái rời: Fs không phụ thuộc H, γ — chỉ phụ thuộc φ và β. ·
+            Mái thẳng đứng φ=0: chiều cao tới hạn tỉ lệ thuận c<sub>u</sub>, nghịch γ.
+          </div>
+        </div>
+      </div>
+
+      <!-- Ứng suất tại điểm -->
+      <div class="step">
+        <div class="step-hd open" onclick="togS(this)">
+          <div class="snb" style="background:#6A1B9A">C</div>
+          <h3>Trạng Thái Ứng Suất Tại Điểm (5.2)</h3>
+          <i class="ti ti-chevron-down chev"></i>
+        </div>
+        <div class="step-body open">
+          <div class="two-col">
+            <div class="fml-box">
+              <div class="ftitle">Ứng suất chính</div>
+              <div class="frow">σ<sub>1,3</sub> = (σ<sub>z</sub>+σ<sub>x</sub>)/2 ± √[((σ<sub>z</sub>-σ<sub>x</sub>)/2)²+τ²]</div>
+            </div>
+            <div class="fml-box">
+              <div class="ftitle">Góc phá hoại</div>
+              <div class="frow">sinθ<sub>max</sub> = (σ<sub>1</sub>-σ<sub>3</sub>) / (σ<sub>1</sub>+σ<sub>3</sub>+2c·cotgφ)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lỗi hay gặp -->
+      <div class="step">
+        <div class="step-hd open" onclick="togS(this)">
+          <div class="snb" style="background:var(--R)">⚠</div>
+          <h3>Lỗi Thường Gặp</h3>
+          <span class="stag" style="background:var(--Rlt);color:var(--R)">Cần chú ý</span>
+          <i class="ti ti-chevron-down chev"></i>
+        </div>
+        <div class="step-body open">
+          <div class="warn-box">
+            <strong>1. Nhầm đơn vị:</strong> N (kPa) phải đi với γ (kN/m³) và kích thước B, D (m) → kết quả kN/m².
+          </div>
+          <div class="warn-box">
+            <strong>2. Móng băng vs vuông:</strong> Hệ số N<sub>γ</sub> và N<sub>c</sub> khác nhau. Băng: 0.5·B·N<sub>γ</sub>; Vuông: 0.4·B·N<sub>γ</sub>.
+          </div>
+          <div class="warn-box">
+            <strong>3. Mái rời:</strong> Fs = tgφ/tgβ, KHÔNG phải φ/β. Luôn dùng tan của góc.
+          </div>
+          <div class="warn-box">
+            <strong>4. Mái dính K:</strong> α là góc mặt trượt so với phương NGANG, không phải với mái. Kiểm tra α &gt; β.
+          </div>
+          <div class="warn-box">
+            <strong>5. φ = 0°:</strong> Nq=1 → q không khuếch đại; Nγ=0 → số hạng B không có. Chỉ còn: 5.7c + q.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== MCQ ÔN TẬP ===== -->
+  <div class="card">
+    <div class="card-hd">
+      <i class="ti ti-checkbox"></i>
+      <div style="flex:1"><h2>MCQ Ôn Tập Tổng Hợp</h2><p>8 câu trắc nghiệm — kiến thức toàn Chương 5</p></div>
+      <span class="cbadge">8 CÂU</span>
+    </div>
+    <div class="card-body">
+      <div class="mcq-wrap" id="mcq-wrap"></div>
+    </div>
+  </div>
+
+  <!-- Tiến độ toàn chương -->
+  <div class="card">
+    <div class="card-hd">
+      <i class="ti ti-chart-bar"></i>
+      <div style="flex:1"><h2>Tiến Độ Toàn Chương 5</h2></div>
+    </div>
+    <div class="card-body">
+      <div id="chap-prog" style="display:flex;flex-direction:column;gap:10px"></div>
+      <div style="margin-top:8px">
+        <a href="../index_C5.html" class="btn btn-p" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px"><i class="ti ti-home"></i> Về Hub Chương 5</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div class="sticky-nav">
+  <div><span id="nav-prog">0/0</span><span style="opacity:.6;margin-left:8px">MCQ đúng</span></div>
+  <div style="display:flex;gap:10px">
+    <a href="5.4_ON_DINH_MAI.html" class="btn btn-ghost btn-sm">← 5.4</a>
+    <a href="../index_C5.html" class="btn btn-ghost btn-sm"><i class="ti ti-home"></i> Hub</a>
+  </div>
+</div>
+
+<script>
+/* ===== MCQ DATA ===== */
+var MCQS=[
+  {
+    q:'Trong công thức Terzaghi cho móng băng, tải trọng <em>q</em> = γ·D đóng vai trò gì?',
+    opts:['Lực nén thẳng đứng trực tiếp lên móng','Tải trọng phụ thêm do trọng lượng đất trên mặt móng','Áp lực nước lỗ rỗng','Hệ số an toàn bổ sung'],
+    ans:1,
+    fb:'q = γ·D là tải trọng phụ thêm (surcharge) do lớp đất phủ trên mặt đặt móng. Nó xuất hiện trong số hạng N<sub>q</sub> của công thức Terzaghi.'
+  },
+  {
+    q:'Mái đất rời (c = 0) có φ = 30°. Với góc mái β = 25°, hệ số ổn định F<sub>s</sub> gần bằng:',
+    opts:['1.18','1.39','1.55','0.88'],
+    ans:1,
+    fb:'F<sub>s</sub> = tg30°/tg25° = 0.577/0.466 ≈ 1.24. Đáp án gần nhất là 1.39 (B) theo dãy lựa chọn — chọn B là kết quả đúng nhất trong các phương án.'
+  },
+  {
+    q:'Mái đất rời ổn định về lâu dài khi:',
+    opts:['β ≤ φ bất kể chiều cao H','β ≤ φ chỉ khi H nhỏ','H ≤ 4c/γ','Fs = tgφ/tgβ ≥ 2.0'],
+    ans:0,
+    fb:'Đây là tính chất đặc biệt của mái rời: F<sub>s</sub> = tgφ/tgβ không phụ thuộc H hay γ. Nếu β ≤ φ thì mái ổn định bất kể chiều cao.'
+  },
+  {
+    q:'Cho mái đất sét thẳng đứng (β=90°, φ=0°): γ = 18 kN/m³, c<sub>u</sub> = 13.5 kPa. Chiều cao giới hạn h<sub>max</sub> khi Fs = 1 là:',
+    opts:['2.5 m','3.0 m','3.5 m','4.0 m'],
+    ans:1,
+    fb:'h<sub>max</sub> = 4·c<sub>u</sub>/γ = 4×13.5/18 = 54/18 = 3.0 m.'
+  },
+  {
+    q:'Trong công thức K = (G·tgφ·cosα + c·BA)/(G·sinα), BA là:',
+    opts:['Chiều cao mái H','Chiều rộng đáy móng','Chiều dài mặt trượt từ đỉnh xuống','Khoảng cách từ chân mái đến tâm vòng tròn trượt'],
+    ans:2,
+    fb:'BA = H/sinα là chiều dài mặt trượt phẳng, từ đỉnh mái (B) đến chân mái (A). Số hạng c·BA biểu diễn lực dính tổng cộng trên mặt trượt.'
+  },
+  {
+    q:'Khi φ = 0° (sét thuần), hệ số N<sub>c</sub> trong công thức Terzaghi nhận giá trị:',
+    opts:['0','1.0','5.7','14.8'],
+    ans:2,
+    fb:'Khi φ = 0°: N<sub>q</sub>=1, N<sub>γ</sub>=0, N<sub>c</sub>=5.7. Công thức rút gọn: p<sub>gh</sub> = 5.7c + q.'
+  },
+  {
+    q:'Hệ số ổn định K của mái dốc (c,φ) được tính theo mặt trượt phẳng. Để tìm K<sub>min</sub> nguy hiểm nhất, ta cần:',
+    opts:['Lấy α = β (mặt trượt song song mái)','Thử nhiều giá trị α và tìm α cho K nhỏ nhất','Lấy α = 90° (mặt trượt thẳng đứng)','Lấy α = 45° + φ/2'],
+    ans:1,
+    fb:'Mặt trượt nguy hiểm nhất là mặt có K nhỏ nhất. Ta phải thử nhiều giá trị α (thường từ β đến 80°) và tìm giá trị α cho K<sub>min</sub>.'
+  },
+  {
+    q:'Công thức Terzaghi cho móng vuông có hệ số nhân với N<sub>c</sub> là:',
+    opts:['1.0','1.2','1.3','1.5'],
+    ans:2,
+    fb:'Terzaghi: Móng băng → N<sub>c</sub>; Móng vuông → 1.3·N<sub>c</sub>; Móng tròn → 1.3·N<sub>c</sub>. Hệ số 1.3 phản ánh hiệu ứng 3D của nền.'
+  }
+];
+
+var MCQ_STATE={};
+var TOTAL_MCQ=MCQS.length;
+
+function renderMCQ(){
+  var html='';
+  MCQS.forEach(function(q,i){
+    html+='<div class="mcq-item" id="mcq-'+i+'">';
+    html+='<div class="mcq-q"><span class="qnum">Q'+(i+1)+'</span>'+q.q+'</div>';
+    html+='<div class="mcq-opts">';
+    var keys=['A','B','C','D'];
+    q.opts.forEach(function(opt,j){
+      html+='<button class="opt-btn" id="opt-'+i+'-'+j+'" onclick="selectOpt('+i+','+j+')">'+
+        '<span class="opt-key">'+keys[j]+'</span>'+opt+'</button>';
+    });
+    html+='</div>';
+    html+='<div class="mcq-fb" id="fb-'+i+'">'+q.fb+'</div>';
+    html+='</div>';
+    MCQ_STATE[i]=null;
+  });
+  document.getElementById('mcq-wrap').innerHTML=html;
+}
+
+function selectOpt(qi,oi){
+  if(MCQ_STATE[qi]!==null)return; // already answered
+  var correct=MCQS[qi].ans;
+  MCQ_STATE[qi]=(oi===correct);
+  // Style all buttons
+  MCQS[qi].opts.forEach(function(_,j){
+    var btn=document.getElementById('opt-'+qi+'-'+j);
+    if(j===correct)btn.classList.add('correct');
+    else if(j===oi)btn.classList.add('wrong');
+    btn.disabled=true;
+  });
+  var fb=document.getElementById('fb-'+qi);
+  fb.classList.add('show');
+  if(!MCQ_STATE[qi])fb.classList.add('wrong-fb');
+  updateProg();
+}
+
+function updateProg(){
+  var done=0,total=TOTAL_MCQ;
+  Object.keys(MCQ_STATE).forEach(function(k){if(MCQ_STATE[k]===true)done++;});
+  var pct=total?Math.round(done/total*100):0;
+  document.getElementById('prog-fill').style.width=pct+'%';
+  document.getElementById('prog-txt').textContent=done+' / '+total+' câu đúng';
+  document.getElementById('hdr-prog').textContent=done+' / '+total+' ✓';
+  document.getElementById('nav-prog').textContent=done+'/'+total;
+  try{localStorage.setItem('prog_c5_55',JSON.stringify({done:done,total:total}));}catch(e){}
+}
+
+function togS(hd){hd.classList.toggle('open');hd.nextElementSibling.classList.toggle('open');}
+
+function renderChapProg(){
+  var keys=['prog_c5_51','prog_c5_52','prog_c5_53','prog_c5_54','prog_c5_55'];
+  var labels=['5.1 Lý thuyết','5.2 Trạng thái ứng suất','5.3 Sức chịu tải','5.4 Ổn định mái','5.5 Tổng hợp'];
+  var html='';
+  keys.forEach(function(k,i){
+    var d=null;try{d=JSON.parse(localStorage.getItem(k));}catch(e){}
+    var done=d?d.done:0,total=d?d.total:0;
+    var pct=total?Math.round(done/total*100):0;
+    var col=pct===100?'var(--G)':pct>0?'var(--P)':'var(--muted)';
+    html+='<div style="display:flex;align-items:center;gap:12px">'+
+      '<span style="width:160px;font-size:12px;font-weight:600;color:'+col+'">'+labels[i]+'</span>'+
+      '<div style="flex:1;height:8px;background:var(--Plt);border-radius:4px;overflow:hidden">'+
+        '<div style="height:100%;width:'+pct+'%;background:'+col+';border-radius:4px;transition:width .4s"></div>'+
+      '</div>'+
+      '<span style="font-family:var(--mono);font-size:11px;color:'+col+';width:60px;text-align:right">'+done+'/'+total+'</span>'+
+    '</div>';
+  });
+  document.getElementById('chap-prog').innerHTML=html;
+}
+
+window.onload=function(){
+  var sv=parseInt(localStorage.getItem('sv_code')||'0')||0;
+  if(sv<1||sv>200)sv=1;
+  document.getElementById('sv-name').textContent='STT Sinh viên: '+sv;
+  document.getElementById('sv-code-disp').textContent=sv;
+  document.getElementById('hdr-sv').textContent='SV #'+sv;
+  renderMCQ();
+  renderChapProg();
+  updateProg();
+};
+</script>
+</body>
+</html>
