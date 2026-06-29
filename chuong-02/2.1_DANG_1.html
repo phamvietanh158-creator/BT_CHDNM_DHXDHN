@@ -6,6 +6,7 @@
 <title>C2 &middot; D&#7841;ng 1 &mdash; &#7912;ng Su&#7845;t B&#7843;n Th&#226;n (Kh&#244;ng MNN)</title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<script src="../config.js"></script>
 <style>
 /* ════════════════════════════════════════
    _shared.css — Chương 2 · Cơ Học Đất
@@ -582,12 +583,9 @@ function submitResult(){
 
   if(attempted===0){toast('⚠️ Chưa làm câu nào!');return;}
 
-  // Đọc % tối thiểu ĐÃ LÀM từ config GV
-  var cfg={};
-  try{cfg=JSON.parse(localStorage.getItem('ncm_cfg_v1'))||{};}catch(e){}
-  var workerUrl=cfg.workerUrl||'https://dqt-chdnm.phamvietanh158.workers.dev';
-  var minPct=(cfg.schedule&&cfg.schedule['c2']&&cfg.schedule['c2'].minPct!=null)
-    ? cfg.schedule['c2'].minPct : 5;
+  // Đọc config từ config.js (server) — có tác dụng trên máy SV
+  var workerUrl=(typeof window.WORKER_URL!=='undefined')?window.WORKER_URL:'https://dqt-chdnm.phamvietanh158.workers.dev';
+  var minPct=(typeof window.MIN_ATTEMPT_PCT!=='undefined')?window.MIN_ATTEMPT_PCT:5;
 
   // Chặn nếu chưa làm đủ %
   if(attemPct<minPct){
@@ -680,10 +678,7 @@ function updateProg(){
 
   // Cập nhật nút nộp bài theo % ĐÃ LÀM
   if(!_submitted){
-    var cfg={};
-    try{cfg=JSON.parse(localStorage.getItem('ncm_cfg_v1'))||{};}catch(e){}
-    var minPct=(cfg.schedule&&cfg.schedule['c2']&&cfg.schedule['c2'].minPct!=null)
-      ? cfg.schedule['c2'].minPct : 5;
+    var minPct=(typeof window.MIN_ATTEMPT_PCT!=='undefined')?window.MIN_ATTEMPT_PCT:5;
     var btn=document.getElementById('btn-nop');
     if(btn){
       var ready=(attemPct>=minPct&&attempted>0);
@@ -778,7 +773,7 @@ function genAll(){
       ['L&#7899;p 1 &nbsp;(z = '+z+' m &le; h&#8321; = '+h1+' m)',
        'L&#7899;p 2 &nbsp;(z = '+z+' m &gt; h&#8321; = '+h1+' m)'],
       0,
-      '&#10003; z='+z+' &lt; h&#8321;='+h1+' &#8594; L&#7899;p 1.  &#963;oz = z&times;&#947;&#8321; = '+z+'&times;'+g1+' = '+sz+' kN/m&#178;');
+      '&#10003; z = '+z+' m &lt; h&#8321; = '+h1+' m  &#8594;  &#272;i&#7875;m n&#7857;m trong <b>L&#7899;p 1</b>. &#193;p d&#7909;ng c&#244;ng th&#7913;c: &#963;<sub>oz</sub> = z &times; &#947;&#8321;');
     document.getElementById('a1-q').innerHTML=
       makeQ('a1-sz','&#963;<sub>oz</sub> = z &middot; &#947;&#8321; &nbsp;(kN/m&sup2;)',sz,r2(sz*0.02+0.5),'kN/m&sup2;');
   })();
@@ -802,7 +797,7 @@ function genAll(){
       ['L&#7899;p 1 &nbsp;(z = '+z+' m &le; h&#8321; = '+h1+' m)',
        'L&#7899;p 2 &nbsp;(z = '+z+' m &gt; h&#8321; = '+h1+' m)'],
       1,
-      '&#10003; z='+z+' &gt; h&#8321;='+h1+' &#8594; L&#7899;p 2.  &#963;oz='+s1+'+'+s2+'='+sz+' kN/m&#178;');
+      '&#10003; z = '+z+' m &gt; h&#8321; = '+h1+' m  &#8594;  &#272;i&#7875;m n&#7857;m trong <b>L&#7899;p 2</b>. &#193;p d&#7909;ng: &#963;<sub>oz</sub> = h&#8321;&middot;&#947;&#8321; + (z&minus;h&#8321;)&middot;&#947;&#8322;');
     document.getElementById('a2-q').innerHTML=
       makeQ('a2-s1','&#9312; h&#8321; &middot; &#947;&#8321; &nbsp;(kN/m&sup2;)',s1,0.8,'kN/m&sup2;')+
       makeQ('a2-sz','&#9313; &#963;<sub>oz</sub> t&#7893;ng &nbsp;(kN/m&sup2;)',sz,r2(sz*0.02+0.5),'kN/m&sup2;');
@@ -831,7 +826,7 @@ function genAll(){
        'L&#7899;p 2 &nbsp;('+h1+' &lt; z &le; '+H12+' m)',
        'L&#7899;p 3 &nbsp;(z &gt; '+H12+' m)'],
       2,
-      '&#10003; h&#8321;+h&#8322;='+H12+' &lt; z='+z+' &#8594; L&#7899;p 3.  &#963;oz='+s1+'+'+s2+'+'+s3+'='+sz+' kN/m&#178;');
+      '&#10003; h&#8321;+h&#8322; = '+H12+' m &lt; z = '+z+' m  &#8594;  &#272;i&#7875;m n&#7857;m trong <b>L&#7899;p 3</b>. &#193;p d&#7909;ng: &#963;<sub>oz</sub> = h&#8321;&#947;&#8321; + h&#8322;&#947;&#8322; + (z&minus;h&#8321;&minus;h&#8322;)&#947;&#8323;');
     document.getElementById('a3-q').innerHTML=
       makeQ('a3-s1','&#9312; h&#8321;&middot;&#947;&#8321; (kN/m&sup2;)',s1,0.8,'kN/m&sup2;')+
       makeQ('a3-s2','&#9313; h&#8322;&middot;&#947;&#8322; (kN/m&sup2;)',s2,0.8,'kN/m&sup2;')+
@@ -864,7 +859,7 @@ function genAll(){
        'L&#7899;p 3 ('+r2(h1+h2)+' &lt; z &le; '+H+')',
        'L&#7899;p 4 (z &gt; '+H+')'],
       3,
-      '&#10003; &Sigma;h&#8323;='+H+' &lt; z='+z+' &#8594; L&#7899;p 4.  &#963;oz='+sz+' kN/m&#178;');
+      '&#10003; &Sigma;h&#8323; = '+H+' m &lt; z = '+z+' m  &#8594;  &#272;i&#7875;m n&#7857;m trong <b>L&#7899;p 4</b>. &#193;p d&#7909;ng: &#963;<sub>oz</sub> = h&#8321;&#947;&#8321;+h&#8322;&#947;&#8322;+h&#8323;&#947;&#8323;+(z&minus;&Sigma;h&#8323;)&#947;&#8324;');
     document.getElementById('a4-q').innerHTML=
       makeQ('a4-s123','&#9312; h&#8321;&#947;&#8321;+h&#8322;&#947;&#8322;+h&#8323;&#947;&#8323; (kN/m&sup2;)',r2(s1+s2+s3),2,'kN/m&sup2;')+
       makeQ('a4-s4','&#9313; ph&#7847;n l&#7899;p 4: (z&minus;&Sigma;h&#8323;)&middot;&#947;&#8324; (kN/m&sup2;)',s4,r2(s4*0.03+0.3),'kN/m&sup2;')+
@@ -1038,10 +1033,7 @@ window.onload = function(){
   TOTAL_QUESTIONS = Object.keys(ANS).length;
   // Khởi tạo nhãn nút nộp bài với minPct từ config
   (function(){
-    var cfg={};
-    try{cfg=JSON.parse(localStorage.getItem('ncm_cfg_v1'))||{};}catch(e){}
-    var minPct=(cfg.schedule&&cfg.schedule['c2']&&cfg.schedule['c2'].minPct!=null)
-      ? cfg.schedule['c2'].minPct : 5;
+    var minPct=(typeof window.MIN_ATTEMPT_PCT!=='undefined')?window.MIN_ATTEMPT_PCT:5;
     var btn=document.getElementById('btn-nop');
     if(btn) btn.innerHTML='🔒 Nộp bài &nbsp;<span style="font-size:10px;opacity:.8">(đã làm 0%/cần '+minPct+'%)</span>';
   })();
