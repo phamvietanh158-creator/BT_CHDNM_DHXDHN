@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<script src="../config.js" onerror="console.log('[NCM] config.js not found')"></script>
 <style>
 :root{--P:#1565C0;--Pdk:#0D47A1;--Plt:#E3F2FD;--Pmd:#1976D2;--G:#2E7D32;--Glt:#E8F5E9;--Gdk:#1B5E20;--R:#C62828;--Rlt:#FFEBEE;--A:#FF8F00;--bg:#E8F4FD;--sur:#fff;--brd:#90CAF9;--muted:#546E7A;--text:#0D1B2A;--sans:'Plus Jakarta Sans',sans-serif;--mono:'JetBrains Mono',monospace;--r:12px;--sh:0 2px 16px rgba(21,101,192,.10)}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -180,10 +181,16 @@ main{max-width:960px;margin:0 auto;padding:24px 20px 80px}
 </main>
 <script>
 window.onload=function(){
-  var sv=parseInt(localStorage.getItem('sv_code'))||1;
-  sv=Math.max(1,Math.min(200,sv));
-  document.getElementById('sv-display').textContent='Sinh viên số thứ tự #'+sv;
-  document.getElementById('sv-badge').textContent='#'+sv;
+  // Đọc SV từ sessionStorage (thống nhất với trang chủ)
+  var sv=null;
+  try{sv=JSON.parse(sessionStorage.getItem('ncm_sv'));}catch(e){}
+  if(sv&&sv.name){
+    document.getElementById('sv-display').textContent=sv.name+' — MSSV: '+sv.mssv+' · STT: '+sv.stt;
+    document.getElementById('sv-badge').textContent='#'+sv.stt;
+  } else {
+    document.getElementById('sv-display').textContent='Chưa đăng nhập — về Trang chủ để nhập thông tin';
+    document.getElementById('sv-badge').textContent='–';
+  }
   var keys=['prog_c5_51','prog_c5_52','prog_c5_53','prog_c5_54','prog_c5_55'];
   var ids=['prog-51','prog-52','prog-53','prog-54','prog-55'];
   var tD=0,tA=0;
