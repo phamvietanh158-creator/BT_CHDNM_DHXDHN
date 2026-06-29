@@ -138,7 +138,7 @@ table.tbl tr:nth-child(even) td{background:#F0F7FF}
 <div id="toast"></div>
 
 <header class="hdr"><div class="hdr-in">
-  <a href="index_C2.html" class="hdr-back"><i class="ti ti-arrow-left"></i> Ch&#432;&#417;ng 2</a>
+  <a href="index.html" class="hdr-back"><i class="ti ti-arrow-left"></i> Ch&#432;&#417;ng 2</a>
   <div class="hdr-t">
     <h1>D&#7841;ng 1 &mdash; &#7912;ng Su&#7845;t B&#7843;n Th&#226;n (Kh&#244;ng MNN)</h1>
     <p>Ch&#432;&#417;ng 2 &middot; C&#417; H&#7885;c &#272;&#7845;t &middot; TS. Ph&#7841;m Vi&#7879;t Anh &middot; &#272;HXD H&#224; N&#7897;i</p>
@@ -553,7 +553,7 @@ table.tbl tr:nth-child(even) td{background:#F0F7FF}
     <span id="nav-prog" style="font-family:var(--mono);font-size:12px">0/0</span>
     <button class="sticky-btn" onclick="scrollNext()">&#9660; C&#226;u ti&#7871;p</button>
     <button class="sticky-btn" id="btn-nop" onclick="submitResult()" style="background:rgba(150,150,150,.35);border-color:rgba(200,200,200,.4)">🔒 N&#7897;p b&#224;i &nbsp;<span style="font-size:10px;opacity:.8">(0%/70%)</span></button>
-    <a href="index_C2.html" class="sticky-btn">&larr; Ch.2</a>
+    <a href="index.html" class="sticky-btn">&larr; Ch.2</a>
     <a href="2.2_DANG_2.html" class="sticky-btn">D&#7841;ng 2 &rarr;</a>
   </div>
 </div>
@@ -563,45 +563,41 @@ table.tbl tr:nth-child(even) td{background:#F0F7FF}
 var DANG_ID = 'dang1';
 var ANS = {};
 var _submitted = false;
+var TOTAL_QUESTIONS = 0; // đếm sau genAll()
 
 /* ── SUBMIT KẾT QUẢ → WORKER → GOOGLE SHEET ── */
 function submitResult(){
   var sv=getSV();
-  if(!sv||!sv.name){toast('⚠️ Không tìm thấy thông tin sinh viên. Vui lòng về trang chủ và đăng nhập lại.');return;}
-
-  // Tính điểm hiện tại
-  var total=0,done=0;
-  Object.keys(ANS).forEach(function(k){
-    if(ANS[k]!==null&&ANS[k]!==undefined){total++;if(ANS[k]===true)done++;}
-  });
-  var pct=total?Math.round(done/total*100):0;
-
-  if(total===0){toast('⚠️ Chưa làm câu nào!');return;}
+  if(!sv||!sv.name){toast('⚠️ Không tìm thấy thông tin sinh viên. Vui lòng về trang chủ đăng nhập lại.');return;}
   if(_submitted){toast('ℹ️ Bài đã được nộp rồi.');return;}
 
-  // Đọc % tối thiểu do GV cài (từ config chương c2)
+  // Tính tiến độ
+  var total=TOTAL_QUESTIONS||Object.keys(ANS).length;
+  var attempted=0,done=0;
+  Object.keys(ANS).forEach(function(k){
+    if(ANS[k]!==null&&ANS[k]!==undefined){attempted++;if(ANS[k]===true)done++;}
+  });
+  var attemPct=total?Math.round(attempted/total*100):0;
+  var scorePct =total?Math.round(done/total*100):0;
+
+  if(attempted===0){toast('⚠️ Chưa làm câu nào!');return;}
+
+  // Đọc % tối thiểu ĐÃ LÀM từ config GV
   var cfg={};
   try{cfg=JSON.parse(localStorage.getItem('ncm_cfg_v1'))||{};}catch(e){}
-  var workerUrl=cfg.workerUrl||'';
+  var workerUrl=cfg.workerUrl||'https://dqt-chdnm.phamvietanh158.workers.dev';
   var minPct=(cfg.schedule&&cfg.schedule['c2']&&cfg.schedule['c2'].minPct!=null)
-    ? cfg.schedule['c2'].minPct : 70;
+    ? cfg.schedule['c2'].minPct : 5;
 
-  // Chặn nộp nếu chưa đủ %
-  if(pct<minPct){
-    toast('⚠️ Cần đạt tối thiểu '+minPct+'% mới được nộp bài. Hiện tại: '+pct+'% ('+done+'/'+total+' câu đúng).',4000);
-    // Rung nút cho nổi bật
+  // Chặn nếu chưa làm đủ %
+  if(attemPct<minPct){
+    toast('⚠️ Cần làm tối thiểu '+minPct+'% số câu mới được nộp! Đã làm: '+attemPct+'% ('+attempted+'/'+total+' câu)',4000);
     var btn=document.getElementById('btn-nop');
-    btn.style.transition='transform .1s';
-    [0,1,2,3].forEach(function(i){setTimeout(function(){btn.style.transform=i%2?'translateX(4px)':'translateX(-4px)';},i*80);});
-    setTimeout(function(){btn.style.transform='';},340);
-    return;
-  }
-
-  if(!workerUrl){
-    toast('✅ Đã lưu kết quả cục bộ! (Chưa cài Worker URL → không gửi lên Sheet)');
-    _submitted=true;
-    document.getElementById('btn-nop').textContent='✓ Đã nộp';
-    document.getElementById('btn-nop').disabled=true;
+    if(btn){
+      btn.style.transition='transform .08s';
+      [0,1,2,3,4].forEach(function(i){setTimeout(function(){btn.style.transform=i%2?'translateX(5px)':'translateX(-5px)';},i*70);});
+      setTimeout(function(){btn.style.transform='';},380);
+    }
     return;
   }
 
@@ -611,27 +607,26 @@ function submitResult(){
     method:'POST',
     headers:{'Content-Type':'application/json'},
     body:JSON.stringify({
-      name:   sv.name,
-      mssv:   sv.mssv,
-      stt:    Number(sv.stt)||0,
-      classId:sv.classId,
+      name:    sv.name,
+      mssv:    sv.mssv,
+      stt:     Number(sv.stt)||0,
+      classId: sv.classId,
       chapterId:'C2-Dang1',
-      score:  pct,
-      correct:done,
-      total:  total,
+      score:   scorePct,   // % câu đúng → ghi Sheet
+      correct: done,
+      total:   total,
       duration:0
     })
   })
   .then(function(r){return r.json();})
   .then(function(d){
     if(d.ok){
-      toast('✅ Nộp bài thành công! Điểm: '+pct+'% ('+done+'/'+total+' câu đúng)',5000);
+      toast('✅ Nộp thành công! Đã làm: '+attemPct+'% · Đúng: '+scorePct+'% ('+done+'/'+total+')',5000);
       _submitted=true;
       var btn=document.getElementById('btn-nop');
-      btn.textContent='✓ Đã nộp ('+pct+'%)';
-      btn.disabled=true;
+      if(btn){btn.innerHTML='✓ Đã nộp ('+scorePct+'%)';btn.disabled=true;btn.style.background='rgba(46,125,50,.5)';}
     } else {
-      toast('❌ Lỗi gửi bài: '+(d.error||'unknown'),5000);
+      toast('❌ Lỗi: '+(d.error||'Không rõ nguyên nhân'),5000);
     }
   })
   .catch(function(err){
@@ -670,27 +665,34 @@ function pickMCQ(name,idx,correct,expText){
   ANS['mcq-'+name]=ok;updateProg();
 }
 function updateProg(){
-  var total=0,done=0;
-  Object.keys(ANS).forEach(function(k){if(ANS[k]!==null&&ANS[k]!==undefined){total++;if(ANS[k]===true)done++;}});
-  var pct=total?Math.round(done/total*100):0;
-  var fill=document.getElementById('prog-bar');if(fill)fill.style.width=pct+'%';
-  var pt=document.getElementById('prog-txt');if(pt)pt.textContent=done+' / '+total+' ('+pct+'%)';
-  var np=document.getElementById('nav-prog');if(np)np.textContent=done+'/'+total;
-  localStorage.setItem('prog_c2_dang1',JSON.stringify({done:done,total:total}));
+  var attempted=0,done=0,total=TOTAL_QUESTIONS||Object.keys(ANS).length;
+  Object.keys(ANS).forEach(function(k){
+    if(ANS[k]!==null&&ANS[k]!==undefined){attempted++;if(ANS[k]===true)done++;}
+  });
+  var donePct  = total ? Math.round(done/total*100)     : 0;
+  var attemPct = total ? Math.round(attempted/total*100): 0;
 
-  // Cập nhật nút nộp bài: màu + label theo tiến độ
+  var fill=document.getElementById('prog-bar');if(fill)fill.style.width=attemPct+'%';
+  var pt=document.getElementById('prog-txt');
+  if(pt)pt.textContent='Đã làm: '+attempted+'/'+total+' câu ('+attemPct+'%) · Đúng: '+done+' ('+donePct+'%)';
+  var np=document.getElementById('nav-prog');if(np)np.textContent=attempted+'/'+total;
+  localStorage.setItem('prog_c2_dang1',JSON.stringify({done:done,total:total,attempted:attempted}));
+
+  // Cập nhật nút nộp bài theo % ĐÃ LÀM
   if(!_submitted){
     var cfg={};
     try{cfg=JSON.parse(localStorage.getItem('ncm_cfg_v1'))||{};}catch(e){}
     var minPct=(cfg.schedule&&cfg.schedule['c2']&&cfg.schedule['c2'].minPct!=null)
-      ? cfg.schedule['c2'].minPct : 70;
+      ? cfg.schedule['c2'].minPct : 5;
     var btn=document.getElementById('btn-nop');
     if(btn){
-      var ready=(pct>=minPct&&total>0);
+      var ready=(attemPct>=minPct&&attempted>0);
       btn.style.background=ready?'rgba(46,125,50,.7)':'rgba(150,150,150,.35)';
       btn.style.borderColor=ready?'rgba(165,214,167,.7)':'rgba(200,200,200,.4)';
-      btn.title=ready?'Đủ điều kiện nộp bài':'Cần đạt tối thiểu '+minPct+'% (hiện tại: '+pct+'%)';
-      btn.innerHTML=(ready?'✅':'🔒')+' N&#7897;p b&#224;i &nbsp;<span style="font-size:10px;opacity:.8">('+pct+'%/'+minPct+'%)</span>';
+      btn.title=ready
+        ?'Đủ điều kiện nộp bài (đã làm '+attemPct+'%)'
+        :'Cần làm tối thiểu '+minPct+'% số câu (hiện tại: '+attemPct+'%)';
+      btn.innerHTML=(ready?'✅':'🔒')+' Nộp bài &nbsp;<span style="font-size:10px;opacity:.8">(đã làm '+attemPct+'%/cần '+minPct+'%)</span>';
     }
   }
 }
@@ -1032,14 +1034,16 @@ function genAll(){
 window.onload = function(){
   renderSV();
   genAll();
+  // Đếm tổng câu sau khi gen xong (tất cả key ANS đã được khởi tạo = null)
+  TOTAL_QUESTIONS = Object.keys(ANS).length;
   // Khởi tạo nhãn nút nộp bài với minPct từ config
   (function(){
     var cfg={};
     try{cfg=JSON.parse(localStorage.getItem('ncm_cfg_v1'))||{};}catch(e){}
     var minPct=(cfg.schedule&&cfg.schedule['c2']&&cfg.schedule['c2'].minPct!=null)
-      ? cfg.schedule['c2'].minPct : 70;
+      ? cfg.schedule['c2'].minPct : 5;
     var btn=document.getElementById('btn-nop');
-    if(btn) btn.innerHTML='🔒 N&#7897;p b&#224;i &nbsp;<span style="font-size:10px;opacity:.8">(0%/'+minPct+'%)</span>';
+    if(btn) btn.innerHTML='🔒 Nộp bài &nbsp;<span style="font-size:10px;opacity:.8">(đã làm 0%/cần '+minPct+'%)</span>';
   })();
 };
 
