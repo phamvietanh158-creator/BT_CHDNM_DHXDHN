@@ -1,19 +1,104 @@
-const CHAPTERS_DEF = [
-  { id:'ch1', icon:'🌱', name:'Chương 1', desc:'Tính chất vật lý của đất' },
-  { id:'ch2', icon:'⚡', name:'Chương 2', desc:'Ứng suất trong đất' },
-  { id:'ch3', icon:'🔬', name:'Chương 3', desc:'Tính chất cơ học đất' },
-  { id:'ch4', icon:'🔩', name:'Chương 4', desc:'Thí nghiệm hiện trường' },
-  { id:'ch5', icon:'📉', name:'Chương 5', desc:'Biến dạng & Lún' },
-  { id:'ch6', icon:'🏗️', name:'Chương 6', desc:'SCT & Ổn định mái dốc' },
-  { id:'ch7', icon:'🧱', name:'Chương 7', desc:'Áp lực đất lên tường chắn' },
-];
+// ═══════════════════════════════════════════════════════
+//  config.js — Cơ Học Đất · Nền Móng
+//  ► GV chỉ cần sửa file này → git commit → git push
+//  ► Tất cả SV thấy ngay (~1 phút sau khi push)
+//  ► KHÔNG cần sửa index.html
+// ═══════════════════════════════════════════════════════
 
 window.CHAPTER_SCHEDULE = {
-  ch1: { active: true },
-  ch2: { active: true },
-  ch3: { active: true },
-  ch4: { active: true },
-  ch5: { active: true },
-  ch6: { active: true },
-  ch7: { active: true },
+
+  // ── PHẦN I: CƠ HỌC ĐẤT ─────────────────────────────
+  c0: {          // Chương Mở Đầu
+    active: true,
+    open:   null,          // null = mở ngay, không giới hạn
+    close:  null,          // null = không tự đóng
+    minPct: 60,            // % tối thiểu để nộp bài
+  },
+  c1: {          // Chương 1 — Tính Chất Vật Lý
+    active: true,
+    open:   null,
+    close:  null,
+    minPct: 70,
+  },
+  c2: {          // Chương 2 — Ứng Suất Trong Đất
+    active: true,
+    open:   null,
+    close:  null,
+    minPct: 70,
+  },
+  c3: {          // Chương 3 — Tính Chất Cơ Học
+    active: false,         // ← chưa dạy, khóa
+    open:   null,
+    close:  null,
+    minPct: 70,
+  },
+  c4: {          // Chương 4 — Độ Lún
+    active: false,
+    open:   null,
+    close:  null,
+    minPct: 70,
+  },
+  c5: {          // Chương 5 — SCT & Ổn Định Mái
+    active: true,
+    open:   null,
+    close:  null,
+    minPct: 70,
+  },
+  c6: {          // Chương 6 — Áp Lực Đất Lên Tường Chắn
+    active: false,
+    open:   null,
+    close:  null,
+    minPct: 70,
+  },
+
+  // ── PHẦN II: NỀN MÓNG ───────────────────────────────
+  c7: {          // Chương 7 — Vấn Đề Chung Nền & Móng
+    active: false,
+    open:   null,
+    close:  null,
+    minPct: 70,
+  },
+  c8: {          // Chương 8 — Móng Nông
+    active: false,
+    open:   null,
+    close:  null,
+    minPct: 70,
+  },
+  c9: {          // Chương 9 — Nền Đất Yếu
+    active: false,
+    open:   null,
+    close:  null,
+    minPct: 70,
+  },
+  c10: {         // Chương 10 — Móng Cọc
+    active: false,
+    open:   null,
+    close:  null,
+    minPct: 70,
+  },
+
 };
+
+// ═══════════════════════════════════════════════════════
+//  VÍ DỤ ĐẶT LỊCH CÓ GIỜ MỞ/ĐÓNG:
+//
+//  c3: {
+//    active: true,
+//    open:  "2025-10-01T07:00:00",   ← mở lúc 7h sáng 01/10
+//    close: "2025-10-08T23:59:00",   ← đóng cuối ngày 08/10
+//    minPct: 70,
+//  },
+//
+//  CẤU TRÚC THƯ MỤC GITHUB:
+//
+//  📁 nen-mong-baitap/
+//  ├── index.html          ← Trang chủ
+//  ├── config.js           ← File này — GV sửa ở đây
+//  ├── chuong-2/
+//  │   └── index.html      ← Bài tập C2 ✅
+//  ├── chuong-5/
+//  │   └── index.html      ← Bài tập C5 ✅
+//  └── chuong-X/
+//      └── index.html      ← Thêm dần khi build xong
+//
+// ═══════════════════════════════════════════════════════
