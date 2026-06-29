@@ -204,9 +204,11 @@ var MODULES = [
 ];
 
 function getProg(id){
+  // Key khớp với từng file dạng bài: localStorage.setItem('prog_c2_dang1',...)
   try{var v=localStorage.getItem('prog_c2_'+id);return v?JSON.parse(v):{done:0,total:0};}
   catch(e){return{done:0,total:0};}
 }
+
 
 function renderModules(){
   var list=document.getElementById('module-list');
@@ -259,7 +261,7 @@ function updateTotalProg(){
   var pct=total?Math.round(done/total*100):0;
   document.getElementById('prog-bar').style.width=pct+'%';
   document.getElementById('prog-txt').textContent=done+' / '+total+' ('+pct+'%)';
-  // Cập nhật localStorage tổng để index.html đọc
+  // Lưu key 'prog_c2' để trang chủ (index.html) đọc được
   localStorage.setItem('prog_c2',JSON.stringify({done:done,total:total}));
 }
 
