@@ -27,6 +27,7 @@ main{max-width:960px;margin:0 auto;padding:20px 20px 80px}
 .card{background:var(--sur);border:1px solid var(--brd);border-radius:var(--r);box-shadow:var(--sh);margin-bottom:16px;overflow:hidden}
 .card-hd{padding:13px 20px;display:flex;align-items:center;gap:11px;border-bottom:1.5px solid var(--brd);background:var(--Plt)}
 .card-hd i{font-size:20px;color:var(--P)}.card-hd h2{font-size:14px;font-weight:700;color:var(--Pdk);flex:1}
+.card-hd p{font-size:11px;color:var(--muted);margin-top:2px}
 .cbadge{font-size:10px;font-weight:700;padding:3px 9px;border-radius:6px;background:var(--P);color:#fff;letter-spacing:.6px;white-space:nowrap}
 .card-body{padding:16px 20px;display:flex;flex-direction:column;gap:12px}
 .fml-box{background:#F8FBFF;border:1.5px solid #BBDEFB;border-left:4px solid var(--P);border-radius:0 8px 8px 0;padding:12px 16px;font-family:var(--mono);font-size:13px;line-height:1.9}
@@ -52,7 +53,7 @@ table.tbl th{background:var(--Pdk);color:#fff;padding:6px 9px;text-align:center;
 table.tbl td{padding:5px 9px;text-align:center;border-bottom:1px solid var(--Plt)}
 table.tbl tr:nth-child(even) td{background:#F0F7FF}
 table.tbl .rowlabel{background:var(--Plt);font-weight:700;color:var(--Pdk)}
-.mcq-wrap{border:1px solid var(--brd);border-radius:var(--r);overflow:hidden}
+.mcq-wrap{border:1px solid var(--brd);border-radius:var(--r);overflow:hidden;margin-bottom:4px}
 .mcq-q{padding:10px 14px 8px;font-size:13px;font-weight:600;border-bottom:1px solid var(--Plt);background:#FAFCFF;line-height:1.5}
 .mcq-num{font-family:var(--mono);font-size:10px;font-weight:700;color:var(--P);background:var(--Plt);padding:2px 6px;border-radius:4px;margin-right:5px}
 .mcq-opts{display:grid;gap:0}.mcq-opts.g2{grid-template-columns:1fr 1fr}
@@ -71,7 +72,11 @@ table.tbl .rowlabel{background:var(--Plt);font-weight:700;color:var(--Pdk)}
 .btn-ghost{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25)}
 .btn:hover{opacity:.85}
 .sticky-nav{position:fixed;bottom:0;left:0;right:0;background:var(--Pdk);color:#fff;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;z-index:200;font-size:13px;box-shadow:0 -2px 12px rgba(0,0,0,.2)}
-@media(max-width:620px){.mcq-opts.g2{grid-template-columns:1fr}}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.tcard{border-radius:8px;padding:11px 13px;font-size:12px;line-height:1.65}
+svg.diag{width:100%;max-width:420px;display:block;margin:6px auto}
+@media(max-width:620px){.mcq-opts.g2{grid-template-columns:1fr}.two-col{grid-template-columns:1fr}.three-col{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -80,7 +85,7 @@ table.tbl .rowlabel{background:var(--Plt);font-weight:700;color:var(--Pdk)}
     <a href="index_C3.html" class="back-btn"><i class="ti ti-arrow-left"></i> Chương 3</a>
     <div class="hdr-title">
       <h1>3.2 — Biến Dạng & Độ Lún Của Đất</h1>
-      <p>Thí nghiệm Oedometer · e, S, a, m<sub>v</sub> · Nội suy</p>
+      <p>Quy luật nền · Thí nghiệm cố kết · Oedometer · Cố kết Terzaghi</p>
     </div>
     <div class="hdr-right">
       <div class="hdr-prog" id="hdr-prog">0 / 0</div>
@@ -101,39 +106,386 @@ table.tbl .rowlabel{background:var(--Plt);font-weight:700;color:var(--Pdk)}
   <div id="sv-chip" style="font-family:var(--mono);font-size:22px;font-weight:700;background:rgba(255,255,255,.15);padding:6px 16px;border-radius:8px">–</div>
 </div>
 
-<!-- ══ LÝ THUYẾT ══ -->
+<!-- ══ 1. ĐỊNH NGHĨA LÚN ══ -->
 <div class="card">
   <div class="card-hd"><i class="ti ti-arrow-bar-down"></i>
-    <div><h2>Lý thuyết — Thí nghiệm Oedometer (nén cố kết 1 trục)</h2></div>
+    <div><h2>1 — Lún là gì? Các thành phần độ lún</h2></div>
     <span class="cbadge">LÝ THUYẾT</span></div>
   <div class="card-body">
-    <div class="theory">💡 <b>TN Oedometer</b>: mẫu đất bị nén 1 chiều (không nở hông), tăng dần cấp tải σ và đo chiều cao mẫu h tương ứng. Từ đó suy ra hệ số rỗng e, hệ số nén a, hệ số nén thể tích m<sub>v</sub> để tính độ lún công trình.</div>
+    <div class="theory">💡 <b>Lún (Settlement)</b> là sự dịch chuyển thẳng đứng xuống dưới của bề mặt đất hoặc công trình do <b>thể tích đất bên dưới bị giảm</b> khi chịu tải trọng. Theo mô hình 3 pha (bài 1.2): khi chịu tải, hạt rắn (V<sub>h</sub>) hầu như không đổi — lún thực chất là <b>nước/khí trong lỗ rỗng bị ép thoát ra</b>, làm thể tích lỗ rỗng V<sub>r</sub> giảm.</div>
+    <div class="three-col">
+      <div class="tcard" style="background:#FFF3E0;border-left:4px solid #E65100">
+        <b style="color:#BF360C">LÚN TỨC THỜI (S<sub>i</sub>)</b><br>
+        Xảy ra ngay khi đặt tải, do biến dạng đàn hồi của đất, gần như không thoát nước. Thường nhỏ, ít được tính riêng.
+      </div>
+      <div class="tcard" style="background:#1565C0;color:#fff;border-left:4px solid #0D47A1">
+        <b style="color:#fff">⭐ LÚN CỐ KẾT (S<sub>c</sub>)</b><br>
+        Xảy ra từ từ theo thời gian, do nước trong lỗ rỗng <b>thoát dần ra ngoài</b> dưới tác dụng của tải trọng. <b>Đây là thành phần lún chính được nghiên cứu trong chương này.</b>
+      </div>
+      <div class="tcard" style="background:#E8F5E9;border-left:4px solid #2E7D32">
+        <b style="color:#1B5E20">LÚN TỪ BIẾN (S<sub>s</sub>)</b><br>
+        Xảy ra rất chậm sau khi quá trình cố kết đã hoàn thành, do biến dạng dẻo của khung hạt đất. Thường bỏ qua hoặc tính riêng cho đất yếu.
+      </div>
+    </div>
+    <div class="earth-box">📌 <b>Vì sao chỉ quan tâm lún cố kết?</b> Lún cố kết chiếm tỷ trọng lớn nhất trong tổng độ lún của đất sét/đất dính bão hòa nước, và là thành phần <b>tính toán được bằng công thức</b> dựa trên đặc trưng nén lún của đất (e, a, m<sub>v</sub>). Lún tức thời thường nhỏ, lún từ biến khó định lượng chính xác — nên môn học tập trung vào lún cố kết.</div>
+  </div>
+</div>
+
+<!-- ══ 2. BỐN QUY LUẬT NỀN (TN BÀN NÉN) ══ -->
+<div class="card">
+  <div class="card-hd"><i class="ti ti-chart-line"></i>
+    <div><h2>2 — Bốn quy luật biến dạng của nền đất (Thí nghiệm bàn nén hiện trường)</h2><p>Mọi loại đất khi chịu tải đều tuân theo 4 quy luật này — chỉ khác về giá trị, độ dốc</p></div>
+    <span class="cbadge">LÝ THUYẾT</span></div>
+  <div class="card-body">
+    <div class="theory">💡 <b>Thí nghiệm bàn nén</b> (đặt tấm nén lên mặt đất, tăng dần tải trọng p, đo độ lún S) là cách trực quan nhất để quan sát 4 quy luật biến dạng cơ bản của nền đất. Bất kỳ loại đất nào (cát, sét, ở trạng thái nào) khi chịu tải đều thể hiện đủ 4 quy luật này — khác nhau chỉ ở <b>giá trị tải trọng tới hạn và độ dốc đường cong</b>, bản chất quy luật là giống nhau.</div>
+
+    <!-- Quy luật 1: theo thời gian -->
+    <div class="ftitle" style="margin-top:4px">Quy luật 1 — Biến dạng theo thời gian (S–t)</div>
+    <svg class="diag" viewBox="0 0 380 230" xmlns="http://www.w3.org/2000/svg">
+      <line x1="40" y1="20" x2="40" y2="200" stroke="#0D47A1" stroke-width="2"/>
+      <line x1="40" y1="200" x2="350" y2="200" stroke="#0D47A1" stroke-width="2" marker-end="url(#ar1)"/>
+      <defs><marker id="ar1" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><path d="M0,0L8,3L0,6Z" fill="#0D47A1"/></marker></defs>
+      <text x="335" y="195" font-size="13" font-weight="700" fill="#0D47A1">t</text>
+      <text x="15" y="218" font-size="13" font-weight="700" fill="#0D47A1">S</text>
+      <line x1="40" y1="28" x2="44" y2="28" stroke="#C62828" stroke-width="3"/>
+      <path d="M44,28 Q70,50 110,95" stroke="#C62828" stroke-width="3" fill="none"/>
+      <path d="M110,95 Q200,128 330,130" stroke="#C62828" stroke-width="3" fill="none"/>
+      <path d="M44,30 Q90,70 150,128" stroke="#1565C0" stroke-width="2.5" fill="none"/>
+      <path d="M150,128 Q260,170 320,195" stroke="#1565C0" stroke-width="2.5" fill="none"/>
+      <line x1="40" y1="130" x2="330" y2="130" stroke="#333" stroke-width="1" stroke-dasharray="3,3"/>
+      <text x="200" y="80" font-size="11" fill="#C62828">∂S/∂t → 0 (ổn định)</text>
+      <text x="220" y="180" font-size="11" fill="#1565C0">∂S/∂t → a≠0 (chưa ổn định)</text>
+    </svg>
     <div class="fml-box">
-      <div class="ftitle"><i class="ti ti-sigma"></i> Bốn công thức cốt lõi</div>
+      <div class="frow"><b>Ý nghĩa:</b> Với mỗi cấp tải, độ lún S tăng nhanh lúc đầu rồi <b>chậm dần theo thời gian t</b>.</div>
+      <div class="frow">Nếu tốc độ lún ∂S/∂t → <em>0</em>: nền đã đạt trạng thái <b>ổn định</b> ở cấp tải đó (đường đỏ) — đất tốt, đủ khả năng chịu tải.</div>
+      <div class="frow">Nếu ∂S/∂t → <em>a≠0</em> (không tắt dần): nền <b>chưa ổn định</b>, vẫn tiếp tục lún (đường xanh) — đất sẽ tiếp tục biến dạng nếu duy trì tải, cảnh báo nguy cơ lún quá mức hoặc phá hoại.</div>
+    </div>
+
+    <!-- Quy luật 2: tuyến tính-phi tuyến -->
+    <div class="ftitle" style="margin-top:10px">Quy luật 2 — Quan hệ S–p có 2 giai đoạn: tuyến tính rồi phi tuyến</div>
+    <svg class="diag" viewBox="0 0 380 280" xmlns="http://www.w3.org/2000/svg">
+      <line x1="40" y1="20" x2="40" y2="250" stroke="#0D47A1" stroke-width="2"/>
+      <line x1="40" y1="250" x2="350" y2="250" stroke="#0D47A1" stroke-width="2" marker-end="url(#ar2)"/>
+      <defs><marker id="ar2" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><path d="M0,0L8,3L0,6Z" fill="#0D47A1"/></marker></defs>
+      <text x="335" y="245" font-size="13" font-weight="700" fill="#0D47A1">p</text>
+      <text x="15" y="268" font-size="13" font-weight="700" fill="#0D47A1">S</text>
+      <text x="245" y="38" font-size="12" font-weight="700" fill="#333">p<tspan font-size="9" dy="2">u</tspan></text>
+      <line x1="40" y1="28" x2="170" y2="65" stroke="#1565C0" stroke-width="2"/>
+      <path d="M170,65 Q230,110 290,230" stroke="#C62828" stroke-width="3" fill="none"/>
+      <line x1="40" y1="65" x2="170" y2="65" stroke="#333" stroke-width="1" stroke-dasharray="3,3"/>
+      <line x1="170" y1="65" x2="170" y2="250" stroke="#333" stroke-width="1" stroke-dasharray="3,3"/>
+      <line x1="40" y1="103" x2="260" y2="40" stroke="#1976D2" stroke-width="1"/>
+      <line x1="250" y1="95" x2="250" y2="65" stroke="#1976D2" stroke-width="1.2" marker-end="url(#ar2b)" marker-start="url(#ar2b)"/>
+      <defs><marker id="ar2b" markerWidth="6" markerHeight="5" refX="4" refY="2.5" orient="auto"><path d="M0,0L6,2.5L0,5Z" fill="#1976D2"/></marker></defs>
+      <text x="195" y="22" font-size="10" fill="#1976D2">điểm bắt đầu chảy dẻo</text>
+    </svg>
+    <div class="fml-box">
+      <div class="frow"><b>Giai đoạn 1 (tuyến tính, p &lt; p<sub>u</sub>):</b> S tỷ lệ gần như bậc nhất với p — đất biến dạng đàn hồi, các hạt chỉ sắp xếp lại, chưa bị phá hoại cấu trúc.</div>
+      <div class="frow"><b>Giai đoạn 2 (phi tuyến, p ≥ p<sub>u</sub>):</b> Độ dốc đường cong tăng dần, độ lún tăng nhanh hơn nhiều so với mức tăng tải — bắt đầu xuất hiện biến dạng dẻo, trượt cục bộ tại vùng biên móng.</div>
+      <div class="frow"><b>p<sub>u</sub>:</b> Tải trọng giới hạn tuyến tính — ranh giới giữa 2 giai đoạn, là cơ sở xác định <b>tải trọng tiêu chuẩn cho phép</b> trong thiết kế nền móng (luôn lấy p &lt; p<sub>u</sub> để đảm bảo công trình làm việc trong vùng đàn hồi).</div>
+    </div>
+
+    <!-- Quy luật 3: phá hoại -->
+    <div class="ftitle" style="margin-top:10px">Quy luật 3 — Đường cong nén lún kéo dài đến phá hoại</div>
+    <svg class="diag" viewBox="0 0 380 280" xmlns="http://www.w3.org/2000/svg">
+      <line x1="40" y1="20" x2="40" y2="250" stroke="#0D47A1" stroke-width="2"/>
+      <line x1="40" y1="250" x2="350" y2="250" stroke="#0D47A1" stroke-width="2" marker-end="url(#ar3)"/>
+      <defs><marker id="ar3" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><path d="M0,0L8,3L0,6Z" fill="#0D47A1"/></marker></defs>
+      <text x="335" y="245" font-size="13" font-weight="700" fill="#0D47A1">p</text>
+      <text x="15" y="268" font-size="13" font-weight="700" fill="#0D47A1">S</text>
+      <path d="M40,28 Q90,32 150,55" stroke="#C62828" stroke-width="3" fill="none"/>
+      <path d="M40,38 Q90,45 150,60" stroke="#1565C0" stroke-width="2.5" fill="none"/>
+      <path d="M40,42 Q90,48 150,62" stroke="#2E7D32" stroke-width="2.5" fill="none"/>
+      <path d="M150,55 Q220,95 295,235" stroke="#1B5E20" stroke-width="3.5" fill="none" stroke-dasharray="6,3"/>
+      <path d="M150,58 Q220,100 295,240" stroke="#333" stroke-width="2" fill="none"/>
+      <line x1="150" y1="20" x2="150" y2="250" stroke="#333" stroke-width="1" stroke-dasharray="3,3"/>
+      <line x1="295" y1="20" x2="295" y2="250" stroke="#333" stroke-width="1" stroke-dasharray="3,3"/>
+    </svg>
+    <div class="fml-box">
+      <div class="frow">Ba đường cong (đỏ/xanh dương/xanh lá) ứng với <b>3 đất khác nhau hoặc 3 cách thí nghiệm khác nhau</b> nhưng đều <b>hội tụ về cùng 1 đường cong phá hoại</b> (nét đứt) khi p đủ lớn.</div>
+      <div class="frow">Đây là minh chứng cho thấy <b>4 quy luật biến dạng là bản chất chung của đất</b> — dù giá trị p<sub>u</sub>, độ dốc khác nhau theo từng loại đất/trạng thái, nhưng đến giai đoạn phá hoại thì ứng xử đều quy về 1 quy luật.</div>
+    </div>
+
+    <!-- Quy luật 4: tiệm cận -->
+    <div class="ftitle" style="margin-top:10px">Quy luật 4 — Vùng phá hoại có đường tiệm cận chung (p<sub>gh</sub>)</div>
+    <svg class="diag" viewBox="0 0 380 280" xmlns="http://www.w3.org/2000/svg">
+      <line x1="40" y1="20" x2="40" y2="250" stroke="#0D47A1" stroke-width="2"/>
+      <line x1="40" y1="250" x2="350" y2="250" stroke="#0D47A1" stroke-width="2" marker-end="url(#ar4)"/>
+      <defs><marker id="ar4" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><path d="M0,0L8,3L0,6Z" fill="#0D47A1"/></marker></defs>
+      <text x="335" y="245" font-size="13" font-weight="700" fill="#0D47A1">p</text>
+      <text x="15" y="268" font-size="13" font-weight="700" fill="#0D47A1">S</text>
+      <path d="M40,28 Q90,32 150,55" stroke="#C62828" stroke-width="3" fill="none"/>
+      <path d="M40,38 Q90,45 150,60" stroke="#1565C0" stroke-width="2.5" fill="none"/>
+      <path d="M40,42 Q90,48 150,62" stroke="#2E7D32" stroke-width="2.5" fill="none"/>
+      <line x1="150" y1="58" x2="290" y2="200" stroke="#1B5E20" stroke-width="2.5" stroke-dasharray="2,2"/>
+      <path d="M150,60 Q200,100 250,190" stroke="#333" stroke-width="2" fill="none"/>
+      <line x1="150" y1="20" x2="150" y2="250" stroke="#333" stroke-width="1" stroke-dasharray="3,3"/>
+      <line x1="295" y1="20" x2="295" y2="250" stroke="#333" stroke-width="1" stroke-dasharray="3,3"/>
+    </svg>
+    <div class="fml-box">
+      <div class="frow">Trong vùng phá hoại, đường nén lún của các đất khác nhau dần dần <b>tiệm cận về một đường thẳng chung</b> (nét đứt xanh lá) thay vì cong dần như quy luật 3.</div>
+      <div class="frow">Đường tiệm cận này tương ứng với <b>tải trọng giới hạn phá hoại p<sub>gh</sub></b> của nền — vượt qua mức này, đất mất hoàn toàn khả năng chịu tải, độ lún tăng vô hạn (sụp đổ).</div>
+      <div class="frow" style="font-size:12px;color:var(--muted)">→ p<sub>gh</sub> chính là cơ sở của công thức sức chịu tải Terzaghi đã học ở chương 5.</div>
+    </div>
+
+    <div class="earth-box">📌 <b>Tổng kết 4 quy luật:</b> (1) Lún tắt dần theo thời gian khi ổn định &nbsp;·&nbsp; (2) Quan hệ S-p có giai đoạn tuyến tính trước p<sub>u</sub> &nbsp;·&nbsp; (3) Sau p<sub>u</sub>, đường cong tiến dần về đường phá hoại chung &nbsp;·&nbsp; (4) Vùng phá hoại tiệm cận đường thẳng ứng với p<sub>gh</sub>. <b>Mọi loại đất đều tuân theo 4 quy luật này</b>, chỉ khác giá trị p<sub>u</sub>, p<sub>gh</sub> và độ dốc.</div>
+  </div>
+</div>
+
+<!-- ══ 3. THÍ NGHIỆM NÉN CỐ KẾT TRONG PHÒNG ══ -->
+<div class="card">
+  <div class="card-hd"><i class="ti ti-flask"></i>
+    <div><h2>3 — Thí nghiệm nén cố kết trong phòng (Oedometer)</h2><p>Mô phỏng quy luật nền trên mẫu đất nguyên dạng</p></div>
+    <span class="cbadge">LÝ THUYẾT</span></div>
+  <div class="card-body">
+    <div class="theory">💡 TN bàn nén hiện trường (mục 2) tốn kém, khó thực hiện đại trà. <b>TN nén cố kết (Oedometer)</b> mô phỏng lại đúng quy luật đó trên mẫu đất nhỏ trong phòng thí nghiệm — mẫu đất bị nén <b>1 chiều (không nở hông)</b>, mô phỏng điều kiện chịu tải thực tế dưới móng (lớp đất rộng, chỉ biến dạng theo phương đứng).</div>
+    <div class="fml-box">
+      <div class="ftitle"><i class="ti ti-list-numbers"></i> Quá trình thí nghiệm</div>
+      <div class="frow">① Đặt mẫu đất nguyên dạng (hình trụ) vào hộp cứng (vòng kim loại, không cho nở hông)</div>
+      <div class="frow">② Tăng dần cấp tải trọng σ (thường nhân đôi mỗi cấp: 0.12 → 0.25 → 0.5 → 1 → 2 → 4 → 8 kG/cm²)</div>
+      <div class="frow">③ Ở mỗi cấp tải, chờ đến khi mẫu lún ổn định (∂S/∂t→0, theo quy luật 1), đo chiều cao mẫu h<sub>i</sub></div>
+      <div class="frow">④ Lặp lại cho các cấp tải tiếp theo → thu được bảng quan hệ (σ, h)</div>
+    </div>
+    <div class="fml-box">
+      <div class="ftitle"><i class="ti ti-sigma"></i> Các đặc trưng thu được</div>
       <div class="frow">Độ lún: S<sub>i</sub> = h₀ − h<sub>i</sub> &nbsp;·&nbsp; S<sub>i→j</sub> = h<sub>i</sub> − h<sub>j</sub></div>
       <div class="frow">Hệ số rỗng: e<sub>i</sub> = e₀ − (S<sub>i</sub>/h₀)×(1+e₀)</div>
       <div class="frow">Hệ số nén: a<sub>i-j</sub> = (e<sub>i</sub>−e<sub>j</sub>) / (σ<sub>j</sub>−σ<sub>i</sub>)</div>
       <div class="frow">Hệ số nén thể tích: m<sub>v</sub> = a / (1+e₀)</div>
+      <div class="frow" style="font-size:12px;color:var(--muted);margin-top:4px">Đường cong e-σ chính là biểu hiện thu nhỏ của quy luật 2 (S-p) đã học ở mục 2 — chỉ thay S bằng e, thay p bằng σ.</div>
     </div>
-    <div class="mcq-wrap"><div class="mcq-q"><span class="mcq-num">Q1</span>Trong TN oedometer, đại lượng nào được đo trực tiếp?</div>
+  </div>
+</div>
+
+<!-- ══ 4. HIỆN TƯỢNG CỐ KẾT ══ -->
+<div class="card">
+  <div class="card-hd"><i class="ti ti-droplet-off"></i>
+    <div><h2>4 — Hiện tượng cố kết Terzaghi — Vì sao lún xảy ra theo thời gian?</h2></div>
+    <span class="cbadge">LÝ THUYẾT</span></div>
+  <div class="card-body">
+    <div class="theory">💡 <b>Cố kết (Consolidation)</b> là quá trình đất bị nén chặt dần theo thời gian do <b>nước trong lỗ rỗng thoát ra ngoài</b> dưới tác dụng của tải trọng. Đây chính là lý do tại sao lún không xảy ra tức thời mà "tắt dần theo t" như quy luật 1 đã mô tả.</div>
+
+    <svg class="diag" viewBox="0 0 420 200" xmlns="http://www.w3.org/2000/svg">
+      <text x="60" y="18" font-size="11" font-weight="700" fill="#0D47A1">t = 0 (vừa đặt tải)</text>
+      <rect x="10" y="25" width="110" height="130" fill="#E3F2FD" stroke="#1565C0" stroke-width="1.5"/>
+      <circle cx="30" cy="45" r="4" fill="#1565C0"/><circle cx="55" cy="50" r="4" fill="#1565C0"/><circle cx="85" cy="42" r="4" fill="#1565C0"/>
+      <circle cx="35" cy="75" r="4" fill="#1565C0"/><circle cx="70" cy="80" r="4" fill="#1565C0"/><circle cx="95" cy="72" r="4" fill="#1565C0"/>
+      <circle cx="25" cy="110" r="4" fill="#1565C0"/><circle cx="60" cy="115" r="4" fill="#1565C0"/><circle cx="90" cy="108" r="4" fill="#1565C0"/>
+      <circle cx="40" cy="140" r="4" fill="#1565C0"/><circle cx="75" cy="135" r="4" fill="#1565C0"/>
+      <text x="20" y="170" font-size="9" fill="#01579B">Toàn bộ tải trọng do NƯỚC chịu (u=σ)</text>
+      <line x1="65" y1="10" x2="65" y2="25" stroke="#C62828" stroke-width="3" marker-end="url(#ard)"/>
+      <defs><marker id="ard" markerWidth="7" markerHeight="6" refX="6" refY="3" orient="auto"><path d="M0,0L7,3L0,6Z" fill="#C62828"/></marker></defs>
+
+      <text x="170" y="18" font-size="11" font-weight="700" fill="#0D47A1">t đang trôi qua</text>
+      <rect x="150" y="25" width="110" height="130" fill="#E1F5FE" stroke="#1565C0" stroke-width="1.5"/>
+      <circle cx="165" cy="50" r="4.5" fill="#5D4037"/><circle cx="195" cy="55" r="4.5" fill="#5D4037"/><circle cx="225" cy="48" r="4.5" fill="#5D4037"/>
+      <circle cx="172" cy="85" r="4.5" fill="#5D4037"/><circle cx="205" cy="90" r="4.5" fill="#5D4037"/><circle cx="235" cy="82" r="4.5" fill="#5D4037"/>
+      <circle cx="160" cy="120" r="4.5" fill="#5D4037"/><circle cx="195" cy="125" r="4.5" fill="#5D4037"/><circle cx="225" cy="118" r="4.5" fill="#5D4037"/>
+      <path d="M180,30 L185,15" stroke="#0288D1" stroke-width="2" marker-end="url(#arw)"/>
+      <path d="M210,30 L215,15" stroke="#0288D1" stroke-width="2" marker-end="url(#arw)"/>
+      <defs><marker id="arw" markerWidth="6" markerHeight="5" refX="5" refY="2.5" orient="auto"><path d="M0,0L6,2.5L0,5Z" fill="#0288D1"/></marker></defs>
+      <text x="158" y="170" font-size="9" fill="#01579B">Nước thoát dần ra, hạt dịch lại gần nhau</text>
+      <line x1="205" y1="10" x2="205" y2="25" stroke="#C62828" stroke-width="3" marker-end="url(#ard)"/>
+
+      <text x="320" y="18" font-size="11" font-weight="700" fill="#0D47A1">t = ∞ (cố kết xong)</text>
+      <rect x="295" y="55" width="110" height="100" fill="#EFEBE9" stroke="#1565C0" stroke-width="1.5"/>
+      <circle cx="310" cy="70" r="5.5" fill="#5D4037"/><circle cx="335" cy="68" r="5.5" fill="#5D4037"/><circle cx="362" cy="72" r="5.5" fill="#5D4037"/><circle cx="388" cy="69" r="5.5" fill="#5D4037"/>
+      <circle cx="315" cy="100" r="5.5" fill="#5D4037"/><circle cx="345" cy="98" r="5.5" fill="#5D4037"/><circle cx="375" cy="101" r="5.5" fill="#5D4037"/>
+      <circle cx="320" cy="130" r="5.5" fill="#5D4037"/><circle cx="350" cy="132" r="5.5" fill="#5D4037"/><circle cx="380" cy="129" r="5.5" fill="#5D4037"/>
+      <text x="298" y="170" font-size="9" fill="#01579B">Khung hạt chịu toàn bộ tải (u=0, σ'=σ)</text>
+      <line x1="350" y1="10" x2="350" y2="55" stroke="#C62828" stroke-width="3" marker-end="url(#ard)"/>
+    </svg>
+
+    <div class="fml-box">
+      <div class="ftitle"><i class="ti ti-arrows-right"></i> Cơ chế truyền tải (nguyên lý ứng suất hữu hiệu Terzaghi)</div>
+      <div class="frow">σ = σ' + u &nbsp;(ứng suất tổng = ứng suất hữu hiệu + áp lực nước lỗ rỗng)</div>
+      <div class="frow"><b>Lúc đầu (t=0):</b> nước chưa kịp thoát → toàn bộ tải trọng do <b>nước</b> chịu (u≈σ, σ'≈0)</div>
+      <div class="frow"><b>Trong quá trình cố kết:</b> nước thoát dần qua các lớp thấm → u giảm dần, σ' tăng dần (khung hạt bắt đầu chịu tải, các hạt xích lại gần nhau → đất lún)</div>
+      <div class="frow"><b>Khi cố kết hoàn thành (t=∞):</b> nước thoát hết phần dư thừa → u=0, toàn bộ tải trọng do <b>khung hạt</b> chịu (σ'=σ) — đất đạt trạng thái ổn định mới</div>
+    </div>
+    <div class="earth-box">📌 <b>Liên hệ thực tế:</b> Đất sét có hệ số thấm k rất nhỏ (nước thoát chậm) → quá trình cố kết kéo dài hàng tháng, hàng năm sau khi xây dựng — đây là lý do công trình trên nền đất sét yếu thường lún kéo dài nhiều năm sau khi hoàn thành. Đất cát có k lớn → cố kết gần như tức thời, ít gây vấn đề lún theo thời gian.</div>
+  </div>
+</div>
+
+<!-- ══ MCQ: ĐỊNH NGHĨA LÚN ══ -->
+<div class="card">
+  <div class="card-hd"><i class="ti ti-help-circle"></i>
+    <div><h2>Câu hỏi ôn tập — Định nghĩa độ lún & các thành phần</h2></div>
+    <span class="cbadge" style="background:#6A1B9A">MCQ</span></div>
+  <div class="card-body">
+    <div class="mcq-wrap"><div class="mcq-q"><span class="mcq-num">Đ1</span>Lún cố kết của đất xảy ra chủ yếu do nguyên nhân nào?</div>
       <div class="mcq-opts g2">
-        <div class="mcq-opt" id="mco-lt1-0" onclick="pickMCQ('lt1',0,1,'❌ e tính gián tiếp từ h.')"><span class="mkey">A</span><span>Hệ số rỗng e</span></div>
-        <div class="mcq-opt" id="mco-lt1-1" onclick="pickMCQ('lt1',1,1,'✓ Đo trực tiếp chiều cao mẫu h ứng với từng cấp tải σ, từ đó suy ra các đại lượng khác.')"><span class="mkey">B</span><span>Chiều cao mẫu h theo cấp tải σ</span></div>
-        <div class="mcq-opt" id="mco-lt1-2" onclick="pickMCQ('lt1',2,1,'❌')"><span class="mkey">C</span><span>Hệ số nén a</span></div>
-        <div class="mcq-opt" id="mco-lt1-3" onclick="pickMCQ('lt1',3,1,'❌')"><span class="mkey">D</span><span>Mô đun biến dạng E</span></div>
-      </div><div class="mcq-exp" id="exp-lt1"></div></div>
-    <div class="mcq-wrap"><div class="mcq-q"><span class="mcq-num">Q2</span>Hệ số nén thể tích m<sub>v</sub> liên hệ với hệ số nén a theo công thức nào?</div>
+        <div class="mcq-opt" id="mco-d1-0" onclick="pickMCQ('d1',0,1,'❌ Hạt rắn (Vh) hầu như không co lại.')"><span class="mkey">A</span><span>Hạt rắn bị nén co lại</span></div>
+        <div class="mcq-opt" id="mco-d1-1" onclick="pickMCQ('d1',1,1,'✓ Lún cố kết do nước/khí trong lỗ rỗng bị ép thoát ra ngoài, làm thể tích lỗ rỗng giảm.')"><span class="mkey">B</span><span>Nước/khí trong lỗ rỗng bị ép thoát ra</span></div>
+        <div class="mcq-opt" id="mco-d1-2" onclick="pickMCQ('d1',2,1,'❌')"><span class="mkey">C</span><span>Khối lượng đất tăng lên</span></div>
+        <div class="mcq-opt" id="mco-d1-3" onclick="pickMCQ('d1',3,1,'❌')"><span class="mkey">D</span><span>Tỷ trọng hạt Δ thay đổi</span></div>
+      </div><div class="mcq-exp" id="exp-d1"></div></div>
+
+    <div class="mcq-wrap"><div class="mcq-q"><span class="mcq-num">Đ2</span>Vì sao môn học chỉ tập trung tính toán thành phần lún cố kết, mà không tính lún tức thời và lún từ biến?</div>
       <div class="mcq-opts g2">
-        <div class="mcq-opt" id="mco-lt2-0" onclick="pickMCQ('lt2',0,1,'❌ Ngược dấu phép tính.')"><span class="mkey">A</span><span>m<sub>v</sub> = a·(1+e₀)</span></div>
-        <div class="mcq-opt" id="mco-lt2-1" onclick="pickMCQ('lt2',1,1,'✓ m_v = a/(1+e₀) là công thức quy đổi từ hệ số nén sang hệ số nén thể tích.')"><span class="mkey">B</span><span>m<sub>v</sub> = a/(1+e₀)</span></div>
-        <div class="mcq-opt" id="mco-lt2-2" onclick="pickMCQ('lt2',2,1,'❌')"><span class="mkey">C</span><span>m<sub>v</sub> = a/e₀</span></div>
-        <div class="mcq-opt" id="mco-lt2-3" onclick="pickMCQ('lt2',3,1,'❌')"><span class="mkey">D</span><span>m<sub>v</sub> = a·e₀</span></div>
-      </div><div class="mcq-exp" id="exp-lt2"></div></div>
+        <div class="mcq-opt" id="mco-d2-0" onclick="pickMCQ('d2',0,0,'✓ Lún cố kết chiếm tỷ trọng lớn nhất ở đất sét bão hòa và có công thức tính toán rõ ràng dựa trên e, a, mv.')"><span class="mkey">A</span><span>Lún cố kết chiếm tỷ trọng lớn, có công thức tính rõ ràng</span></div>
+        <div class="mcq-opt" id="mco-d2-1" onclick="pickMCQ('d2',1,0,'❌')"><span class="mkey">B</span><span>Lún tức thời và lún từ biến không tồn tại trong thực tế</span></div>
+        <div class="mcq-opt" id="mco-d2-2" onclick="pickMCQ('d2',2,0,'❌')"><span class="mkey">C</span><span>Lún cố kết luôn bằng 0</span></div>
+        <div class="mcq-opt" id="mco-d2-3" onclick="pickMCQ('d2',3,0,'❌')"><span class="mkey">D</span><span>Vì lún tức thời lớn hơn lún cố kết</span></div>
+      </div><div class="mcq-exp" id="exp-d2"></div></div>
+
+    <div class="mcq-wrap"><div class="mcq-q"><span class="mcq-num">Đ3</span>Đất nào sau đây có khả năng xảy ra lún cố kết lớn và kéo dài nhất?</div>
+      <div class="mcq-opts g2">
+        <div class="mcq-opt" id="mco-d3-0" onclick="pickMCQ('d3',0,2,'❌ Cát khô không có lỗ rỗng chứa nước đáng kể để thoát.')"><span class="mkey">A</span><span>Cát khô, rời</span></div>
+        <div class="mcq-opt" id="mco-d3-1" onclick="pickMCQ('d3',1,2,'❌ Sỏi gần như không nén lún.')"><span class="mkey">B</span><span>Sỏi sạn</span></div>
+        <div class="mcq-opt" id="mco-d3-2" onclick="pickMCQ('d3',2,2,'✓ Đất sét bão hòa nước có hệ số thấm k rất nhỏ, lượng nước nhiều trong lỗ rỗng → lún cố kết lớn và rất kéo dài.')"><span class="mkey">C</span><span>Đất sét bão hòa nước</span></div>
+        <div class="mcq-opt" id="mco-d3-3" onclick="pickMCQ('d3',3,2,'❌')"><span class="mkey">D</span><span>Đá gốc</span></div>
+      </div><div class="mcq-exp" id="exp-d3"></div></div>
+  </div>
+</div>
+
+<!-- ══ MCQ: 4 QUY LUẬT NỀN (8-10 câu) ══ -->
+<div class="card">
+  <div class="card-hd"><i class="ti ti-help-circle"></i>
+    <div><h2>Câu hỏi ôn tập — 4 quy luật biến dạng của nền đất</h2></div>
+    <span class="cbadge" style="background:#6A1B9A">MCQ</span></div>
+  <div class="card-body">
+    <div class="mcq-wrap"><div class="mcq-q"><span class="mcq-num">QL1</span>Khi nền đạt trạng thái ổn định ở 1 cấp tải, tốc độ lún ∂S/∂t có xu hướng gì?</div>
+      <div class="mcq-opts g2">
+        <div class="mcq-opt" id="mco-ql1-0" onclick="pickMCQ('ql1',0,1,'❌ Tăng dần là dấu hiệu chưa ổn định/mất ổn định.')"><span class="mkey">A</span><span>Tăng dần theo thời gian</span></div>
+        <div class="mcq-opt" id="mco-ql1-1" onclick="pickMCQ('ql1',1,1,'✓ Nền ổn định khi tốc độ lún tắt dần về 0 (∂S/∂t→0).')"><span class="mkey">B</span><span>Giảm dần và tiến về 0</span></div>
+        <div class="mcq-opt" id="mco-ql1-2" onclick="pickMCQ('ql1',2,1,'❌')"><span class="mkey">C</span><span>Không đổi, giữ nguyên giá trị ban đầu</span></div>
+        <div class="mcq-opt" id="mco-ql1-3" onclick="pickMCQ('ql1',3,1,'❌')"><span class="mkey">D</span><span>Dao động không theo quy luật</span></div>
+      </div><div class="mcq-exp" id="exp-ql1"></div></div>
+
+    <div class="mcq-wrap"><div class="mcq-q"><span class="mcq-num">QL2</span>Khi ∂S/∂t → a ≠ 0 (không tắt dần), điều này cho biết gì về nền đất?</div>
+      <div class="mcq-opts g2">
+        <div class="mcq-opt" id="mco-ql2-0" onclick="pickMCQ('ql2',0,1,'❌')"><span class="mkey">A</span><span>Nền đã ổn định hoàn toàn</span></div>
+        <div class="mcq-opt" id="mco-ql2-1" onclick="pickMCQ('ql2',1,1,'✓ Nền chưa ổn định, vẫn tiếp tục biến dạng nếu duy trì tải — cảnh báo nguy cơ lún quá mức.')"><span class="mkey">B</span><span>Nền chưa ổn định, vẫn tiếp tục lún</span></div>
+        <div class="mcq-opt" id="mco-ql2-2" onclick="pickMCQ('ql2',2,1,'❌')"><span class="mkey">C</span><span>Tải trọng đã được dỡ bỏ</span></div>
+        <div class="mcq-opt" id="mco-ql2-3" onclick="pickMCQ('ql2',3,1,'❌')"><span class="mkey">D</span><span>Đất đã chuyển sang trạng thái đàn hồi hoàn toàn</span></div>
+      </div><div class="mcq-exp" id="exp-ql2"></div></div>
+
+    <div class="mcq-wrap"><div class="mcq-q"><span class="mcq-num">QL3</span>Trong quan hệ S-p, giai đoạn tuyến tính (p &lt; p<sub>u</sub>) thể hiện đặc tính gì của đất?</div>
+      <div class="mcq-opts g2">
+        <div class="mcq-opt" id="mco-ql3-0" onclick="pickMCQ('ql3',0,0,'✓ Trong giai đoạn này, đất biến dạng đàn hồi, các hạt chỉ sắp xếp lại mà chưa bị phá hoại cấu trúc.')"><span class="mkey">A</span><span>Biến dạng đàn hồi, chưa phá hoại cấu trúc</span></div>
+        <div class="mcq-opt" id="mco-ql3-1" onclick="pickMCQ('ql3',1,0,'❌')"><span class="mkey">B</span><span>Đất đã bị phá hoại hoàn toàn</span></div>
+        <div class="mcq-opt" id="mco-ql3-2" onclick="pickMCQ('ql3',2,0,'❌')"><span class="mkey">C</span><span>Nền không chịu được bất kỳ tải trọng nào</span></div>
+        <div class="mcq-opt" id="mco-ql3-3" onclick="pickMCQ('ql3',3,0,'❌')"><span class="mkey">D</span><span>Không liên quan đến biến dạng</span></div>
+      </div><div class="mcq-exp" id="exp-ql3"></div></div>
+
+    <div class="mcq-wrap"><div class="mcq-q"><span class="mcq-num">QL4</span>Khi p ≥ p<sub>u</sub> (giai đoạn phi tuyến), độ dốc đường cong S-p thay đổi như thế nào?</div>
+      <div class="mcq-opts g2">
+        <div class="mcq-opt" id="mco-ql4-0" onclick="pickMCQ('ql4',0,1,'❌')"><span class="mkey">A</span><span>Giảm dần về 0</span></div>
+        <div class="mcq-opt" id="mco-ql4-1" onclick="pickMCQ('ql4',1,1,'✓ Sau pu, độ dốc đường cong tăng dần — độ lún tăng nhanh hơn nhiều so với mức tăng tải, biểu hiện biến dạng dẻo.')"><span class="mkey">B</span><span>Tăng dần — lún tăng nhanh hơn tải</span></div>
+        <div class="mcq-opt" id="mco-ql4-2" onclick="pickMCQ('ql4',2,1,'❌')"><span class="mkey">C</span><span>Không đổi, vẫn tuyến tính</span></div>
+        <div class="mcq-opt" id="mco-ql4-3" onclick="pickMCQ('ql4',3,1,'❌')"><span class="mkey">D</span><span>Trở thành đường nằm ngang</span></div>
+      </div><div class="mcq-exp" id="exp-ql4"></div></div>
+
+    <div class="mcq-wrap"><div class="mcq-q"><span class="mcq-num">QL5</span>Tải trọng giới hạn tuyến tính p<sub>u</sub> được dùng để làm gì trong thiết kế nền móng?</div>
+      <div class="mcq-opts g2">
+        <div class="mcq-opt" id="mco-ql5-0" onclick="pickMCQ('ql5',0,1,'❌ Đó là pgh chứ không phải pu.')"><span class="mkey">A</span><span>Xác định tải trọng phá hoại hoàn toàn</span></div>
+        <div class="mcq-opt" id="mco-ql5-1" onclick="pickMCQ('ql5',1,1,'✓ p_u là cơ sở để xác định tải trọng tiêu chuẩn cho phép, luôn thiết kế với p < pu để công trình làm việc trong vùng đàn hồi.')"><span class="mkey">B</span><span>Xác định tải trọng tiêu chuẩn cho phép (thiết kế p&lt;p<sub>u</sub>)</span></div>
+        <div class="mcq-opt" id="mco-ql5-2" onclick="pickMCQ('ql5',2,1,'❌')"><span class="mkey">C</span><span>Tính khối lượng bê tông móng</span></div>
+        <div class="mcq-opt" id="mco-ql5-3" onclick="pickMCQ('ql5',3,1,'❌')"><span class="mkey">D</span><span>Không có ứng dụng thực tế</span></div>
+      </div><div class="mcq-exp" id="exp-ql5"></div></div>
+
+    <div class="mcq-wrap"><div class="mcq-q"><span class="mcq-num">QL6</span>Theo quy luật 3, các đường cong nén lún của các loại đất khác nhau có đặc điểm chung gì khi p đủ lớn?</div>
+      <div class="mcq-opts g2">
+        <div class="mcq-opt" id="mco-ql6-0" onclick="pickMCQ('ql6',0,0,'✓ Dù xuất phát khác nhau (p_u, độ dốc khác), các đường cong đều hội tụ về cùng 1 đường cong phá hoại chung khi p đủ lớn.')"><span class="mkey">A</span><span>Hội tụ về cùng 1 đường cong phá hoại chung</span></div>
+        <div class="mcq-opt" id="mco-ql6-1" onclick="pickMCQ('ql6',1,0,'❌')"><span class="mkey">B</span><span>Tách xa nhau hơn theo từng cấp tải</span></div>
+        <div class="mcq-opt" id="mco-ql6-2" onclick="pickMCQ('ql6',2,0,'❌')"><span class="mkey">C</span><span>Trở thành đường thẳng nằm ngang</span></div>
+        <div class="mcq-opt" id="mco-ql6-3" onclick="pickMCQ('ql6',3,0,'❌')"><span class="mkey">D</span><span>Không có mối liên hệ nào</span></div>
+      </div><div class="mcq-exp" id="exp-ql6"></div></div>
+
+    <div class="mcq-wrap"><div class="mcq-q"><span class="mcq-num">QL7</span>Đường tiệm cận trong vùng phá hoại (quy luật 4) tương ứng với đại lượng nào?</div>
+      <div class="mcq-opts g2">
+        <div class="mcq-opt" id="mco-ql7-0" onclick="pickMCQ('ql7',0,1,'❌ pu là ranh giới tuyến tính/phi tuyến, không phải đường tiệm cận phá hoại.')"><span class="mkey">A</span><span>Tải trọng giới hạn tuyến tính p<sub>u</sub></span></div>
+        <div class="mcq-opt" id="mco-ql7-1" onclick="pickMCQ('ql7',1,1,'✓ Đường tiệm cận trong vùng phá hoại ứng với tải trọng giới hạn phá hoại pgh — cơ sở công thức SCT Terzaghi.')"><span class="mkey">B</span><span>Tải trọng giới hạn phá hoại p<sub>gh</sub></span></div>
+        <div class="mcq-opt" id="mco-ql7-2" onclick="pickMCQ('ql7',2,1,'❌')"><span class="mkey">C</span><span>Hệ số nén a</span></div>
+        <div class="mcq-opt" id="mco-ql7-3" onclick="pickMCQ('ql7',3,1,'❌')"><span class="mkey">D</span><span>Hệ số rỗng e₀</span></div>
+      </div><div class="mcq-exp" id="exp-ql7"></div></div>
+
+    <div class="mcq-wrap"><div class="mcq-q"><span class="mcq-num">QL8</span>Hai loại đất khác nhau (ví dụ cát chặt và sét mềm) khi thí nghiệm bàn nén có thể hiện đủ cả 4 quy luật không?</div>
+      <div class="mcq-opts g2">
+        <div class="mcq-opt" id="mco-ql8-0" onclick="pickMCQ('ql8',0,0,'✓ Cả 2 loại đất đều tuân theo 4 quy luật như nhau — chỉ khác giá trị pu, pgh và độ dốc đường cong, bản chất quy luật giống nhau.')"><span class="mkey">A</span><span>Có, chỉ khác giá trị p<sub>u</sub>, p<sub>gh</sub> và độ dốc</span></div>
+        <div class="mcq-opt" id="mco-ql8-1" onclick="pickMCQ('ql8',1,0,'❌')"><span class="mkey">B</span><span>Không, mỗi loại đất tuân theo quy luật hoàn toàn riêng biệt</span></div>
+        <div class="mcq-opt" id="mco-ql8-2" onclick="pickMCQ('ql8',2,0,'❌')"><span class="mkey">C</span><span>Chỉ đất sét mới có 4 quy luật, đất cát thì không</span></div>
+        <div class="mcq-opt" id="mco-ql8-3" onclick="pickMCQ('ql8',3,0,'❌')"><span class="mkey">D</span><span>Chỉ đất cát mới có 4 quy luật, đất sét thì không</span></div>
+      </div><div class="mcq-exp" id="exp-ql8"></div></div>
+  </div>
+</div>
+
+<!-- ══ MCQ: THÍ NGHIỆM CỐ KẾT ══ -->
+<div class="card">
+  <div class="card-hd"><i class="ti ti-help-circle"></i>
+    <div><h2>Câu hỏi ôn tập — Thí nghiệm nén cố kết (Oedometer)</h2></div>
+    <span class="cbadge" style="background:#6A1B9A">MCQ</span></div>
+  <div class="card-body">
+    <div class="mcq-wrap"><div class="mcq-q"><span class="mcq-num">TN1</span>Trong TN oedometer, mẫu đất bị nén theo điều kiện nào?</div>
+      <div class="mcq-opts g2">
+        <div class="mcq-opt" id="mco-tn1-0" onclick="pickMCQ('tn1',0,1,'❌ Đây là điều kiện nén 3 trục, không phải oedometer.')"><span class="mkey">A</span><span>Nén 3 chiều tự do</span></div>
+        <div class="mcq-opt" id="mco-tn1-1" onclick="pickMCQ('tn1',1,1,'✓ Mẫu đặt trong vòng kim loại cứng, chỉ biến dạng theo phương đứng (1 chiều, không nở hông) — mô phỏng điều kiện nền dưới móng rộng.')"><span class="mkey">B</span><span>Nén 1 chiều, không nở hông</span></div>
+        <div class="mcq-opt" id="mco-tn1-2" onclick="pickMCQ('tn1',2,1,'❌')"><span class="mkey">C</span><span>Kéo dãn theo phương ngang</span></div>
+        <div class="mcq-opt" id="mco-tn1-3" onclick="pickMCQ('tn1',3,1,'❌')"><span class="mkey">D</span><span>Xoắn mẫu</span></div>
+      </div><div class="mcq-exp" id="exp-tn1"></div></div>
+
+    <div class="mcq-wrap"><div class="mcq-q"><span class="mcq-num">TN2</span>Ở mỗi cấp tải trong TN oedometer, khi nào mới được đọc số liệu chiều cao mẫu h<sub>i</sub>?</div>
+      <div class="mcq-opts g2">
+        <div class="mcq-opt" id="mco-tn2-0" onclick="pickMCQ('tn2',0,1,'❌ Đọc ngay lập tức sẽ chưa phản ánh đúng kết quả ổn định.')"><span class="mkey">A</span><span>Ngay khi vừa đặt cấp tải</span></div>
+        <div class="mcq-opt" id="mco-tn2-1" onclick="pickMCQ('tn2',1,1,'✓ Phải chờ mẫu lún ổn định (∂S/∂t→0, theo quy luật 1) mới đọc h_i, đảm bảo số liệu phản ánh đúng trạng thái ổn định ở cấp tải đó.')"><span class="mkey">B</span><span>Khi mẫu lún đạt ổn định (∂S/∂t→0)</span></div>
+        <div class="mcq-opt" id="mco-tn2-2" onclick="pickMCQ('tn2',2,1,'❌')"><span class="mkey">C</span><span>Sau đúng 1 giờ, bất kể trạng thái mẫu</span></div>
+        <div class="mcq-opt" id="mco-tn2-3" onclick="pickMCQ('tn2',3,1,'❌')"><span class="mkey">D</span><span>Trước khi đặt tải</span></div>
+      </div><div class="mcq-exp" id="exp-tn2"></div></div>
+
+    <div class="mcq-wrap"><div class="mcq-q"><span class="mcq-num">TN3</span>Đường cong e-σ thu được từ TN oedometer là biểu hiện thu nhỏ của quy luật nào đã học ở mục 2?</div>
+      <div class="mcq-opts g2">
+        <div class="mcq-opt" id="mco-tn3-0" onclick="pickMCQ('tn3',0,1,'✓ Đường e-σ chính là quy luật S-p (quy luật 2), chỉ thay S bằng e và p bằng σ.')"><span class="mkey">A</span><span>Quy luật 2 (S-p có 2 giai đoạn)</span></div>
+        <div class="mcq-opt" id="mco-tn3-1" onclick="pickMCQ('tn3',1,1,'❌')"><span class="mkey">B</span><span>Quy luật 1 (S-t)</span></div>
+        <div class="mcq-opt" id="mco-tn3-2" onclick="pickMCQ('tn3',2,1,'❌')"><span class="mkey">C</span><span>Không liên quan đến quy luật nào</span></div>
+        <div class="mcq-opt" id="mco-tn3-3" onclick="pickMCQ('tn3',3,1,'❌')"><span class="mkey">D</span><span>Quy luật 4 (đường tiệm cận)</span></div>
+      </div><div class="mcq-exp" id="exp-tn3"></div></div>
+  </div>
+</div>
+
+<!-- ══ MCQ: HIỆN TƯỢNG CỐ KẾT TERZAGHI ══ -->
+<div class="card">
+  <div class="card-hd"><i class="ti ti-help-circle"></i>
+    <div><h2>Câu hỏi ôn tập — Hiện tượng cố kết Terzaghi</h2></div>
+    <span class="cbadge" style="background:#6A1B9A">MCQ</span></div>
+  <div class="card-body">
+    <div class="mcq-wrap"><div class="mcq-q"><span class="mcq-num">CK1</span>Theo nguyên lý ứng suất hữu hiệu Terzaghi, công thức nào sau đây đúng?</div>
+      <div class="mcq-opts g2">
+        <div class="mcq-opt" id="mco-ck1-0" onclick="pickMCQ('ck1',0,0,'✓ σ = σ\' + u: ứng suất tổng bằng ứng suất hữu hiệu cộng áp lực nước lỗ rỗng.')"><span class="mkey">A</span><span>σ = σ' + u</span></div>
+        <div class="mcq-opt" id="mco-ck1-1" onclick="pickMCQ('ck1',1,0,'❌')"><span class="mkey">B</span><span>σ = σ' − u</span></div>
+        <div class="mcq-opt" id="mco-ck1-2" onclick="pickMCQ('ck1',2,0,'❌')"><span class="mkey">C</span><span>σ = σ' × u</span></div>
+        <div class="mcq-opt" id="mco-ck1-3" onclick="pickMCQ('ck1',3,0,'❌')"><span class="mkey">D</span><span>σ = u/σ'</span></div>
+      </div><div class="mcq-exp" id="exp-ck1"></div></div>
+
+    <div class="mcq-wrap"><div class="mcq-q"><span class="mcq-num">CK2</span>Ngay tại thời điểm vừa đặt tải (t=0), ai chịu phần lớn tải trọng?</div>
+      <div class="mcq-opts g2">
+        <div class="mcq-opt" id="mco-ck2-0" onclick="pickMCQ('ck2',0,1,'❌ Lúc t=0, nước chưa kịp thoát nên chịu hầu hết tải.')"><span class="mkey">A</span><span>Khung hạt rắn</span></div>
+        <div class="mcq-opt" id="mco-ck2-1" onclick="pickMCQ('ck2',1,1,'✓ Tại t=0, nước chưa kịp thoát nên gần như toàn bộ tải trọng do nước chịu (u≈σ, σ\'≈0).')"><span class="mkey">B</span><span>Nước trong lỗ rỗng</span></div>
+        <div class="mcq-opt" id="mco-ck2-2" onclick="pickMCQ('ck2',2,1,'❌')"><span class="mkey">C</span><span>Khí trong lỗ rỗng</span></div>
+        <div class="mcq-opt" id="mco-ck2-3" onclick="pickMCQ('ck2',3,1,'❌')"><span class="mkey">D</span><span>Không ai chịu tải</span></div>
+      </div><div class="mcq-exp" id="exp-ck2"></div></div>
+
+    <div class="mcq-wrap"><div class="mcq-q"><span class="mcq-num">CK3</span>Khi quá trình cố kết hoàn thành (t→∞), trạng thái áp lực nước lỗ rỗng u như thế nào?</div>
+      <div class="mcq-opts g2">
+        <div class="mcq-opt" id="mco-ck3-0" onclick="pickMCQ('ck3',0,1,'❌')"><span class="mkey">A</span><span>u = σ (bằng ứng suất tổng)</span></div>
+        <div class="mcq-opt" id="mco-ck3-1" onclick="pickMCQ('ck3',1,1,'✓ Khi cố kết hoàn thành, nước dư thừa thoát hết, u trở về 0, toàn bộ tải trọng do khung hạt chịu (σ\'=σ).')"><span class="mkey">B</span><span>u = 0, σ' = σ</span></div>
+        <div class="mcq-opt" id="mco-ck3-2" onclick="pickMCQ('ck3',2,1,'❌')"><span class="mkey">C</span><span>u tăng lên gấp đôi</span></div>
+        <div class="mcq-opt" id="mco-ck3-3" onclick="pickMCQ('ck3',3,1,'❌')"><span class="mkey">D</span><span>u không xác định được</span></div>
+      </div><div class="mcq-exp" id="exp-ck3"></div></div>
+
+    <div class="mcq-wrap"><div class="mcq-q"><span class="mcq-num">CK4</span>Vì sao đất sét có thời gian cố kết lâu hơn nhiều so với đất cát?</div>
+      <div class="mcq-opts g2">
+        <div class="mcq-opt" id="mco-ck4-0" onclick="pickMCQ('ck4',0,0,'✓ Đất sét có hệ số thấm k rất nhỏ nên nước thoát rất chậm, kéo dài thời gian cố kết (có thể nhiều năm).')"><span class="mkey">A</span><span>Đất sét có hệ số thấm k nhỏ, nước thoát chậm</span></div>
+        <div class="mcq-opt" id="mco-ck4-1" onclick="pickMCQ('ck4',1,0,'❌')"><span class="mkey">B</span><span>Đất sét nặng hơn đất cát</span></div>
+        <div class="mcq-opt" id="mco-ck4-2" onclick="pickMCQ('ck4',2,0,'❌')"><span class="mkey">C</span><span>Đất sét không có lỗ rỗng</span></div>
+        <div class="mcq-opt" id="mco-ck4-3" onclick="pickMCQ('ck4',3,0,'❌')"><span class="mkey">D</span><span>Đất sét chịu tải tốt hơn</span></div>
+      </div><div class="mcq-exp" id="exp-ck4"></div></div>
   </div>
 </div>
 
 <!-- ══ NHÓM A ══ -->
-<div class="sec-lbl"><i class="ti ti-player-play" style="font-size:12px"></i> Nhóm A — Bài hướng dẫn đầy đủ</div>
+<div class="sec-lbl"><i class="ti ti-player-play" style="font-size:12px"></i> Nhóm A — Bài hướng dẫn đầy đủ (Oedometer)</div>
 
 <!-- A1: Độ lún S trực tiếp -->
 <div class="card">
@@ -223,6 +575,113 @@ table.tbl .rowlabel{background:var(--Plt);font-weight:700;color:var(--Pdk)}
   </div>
 </div>
 
+<!-- A6: Độ lún công trình từ a -->
+<div class="card">
+  <div class="card-hd"><i class="ti ti-player-play"></i>
+    <div><h2>Bài A6 — Xác định độ lún công trình S từ hệ số nén a</h2></div>
+    <span class="cbadge" style="background:#E65100">📐 A6</span>
+  </div>
+  <div class="card-body">
+    <div class="earth-box" id="a6-prob">⏳</div>
+    <div class="fml-box">
+      <div class="ftitle"><i class="ti ti-lightbulb"></i> Công thức</div>
+      <div class="frow">S = [a / (1+e₀)] × h × Δσ &nbsp;(h: bề dày lớp đất chịu nén, Δσ: gia tăng ứng suất)</div>
+      <div class="frow" id="a6-hint" style="margin-top:4px;font-size:12px;color:var(--muted)">Thay số: (...)</div>
+    </div>
+    <div id="a6-q"></div>
+  </div>
+</div>
+
+<!-- A7: Độ lún công trình từ mv -->
+<div class="card">
+  <div class="card-hd"><i class="ti ti-player-play"></i>
+    <div><h2>Bài A7 — Xác định độ lún công trình S từ hệ số nén thể tích m<sub>v</sub></h2></div>
+    <span class="cbadge" style="background:#E65100">📐 A7</span>
+  </div>
+  <div class="card-body">
+    <div class="earth-box" id="a7-prob">⏳</div>
+    <div class="fml-box">
+      <div class="ftitle"><i class="ti ti-lightbulb"></i> Công thức</div>
+      <div class="frow">S = m<sub>v</sub> × h × Δσ</div>
+      <div class="frow" style="font-size:12px;color:var(--muted)">m<sub>v</sub> đã gộp sẵn (1+e₀) nên công thức gọn hơn dùng a</div>
+      <div class="frow" id="a7-hint" style="margin-top:4px;font-size:12px;color:var(--muted)">Thay số: (...)</div>
+    </div>
+    <div id="a7-q"></div>
+  </div>
+</div>
+
+<!-- A8: Độ cố kết từ Cv, t -->
+<div class="card">
+  <div class="card-hd"><i class="ti ti-player-play"></i>
+    <div><h2>Bài A8 — Xác định độ cố kết U(%) từ hệ số cố kết C<sub>v</sub> và thời gian t</h2></div>
+    <span class="cbadge" style="background:#E65100">📐 A8</span>
+  </div>
+  <div class="card-body">
+    <div class="earth-box" id="a8-prob">⏳</div>
+    <div class="fml-box">
+      <div class="ftitle"><i class="ti ti-lightbulb"></i> Công thức cố kết Terzaghi</div>
+      <div class="frow">T<sub>v</sub> = C<sub>v</sub>·t / H² &nbsp;(hệ số thời gian)</div>
+      <div class="frow">Tra bảng T<sub>v</sub> → U(%) &nbsp;(độ cố kết, % lún đã hoàn thành)</div>
+      <div class="frow" id="a8-hint" style="margin-top:4px;font-size:12px;color:var(--muted)">Thay số: (...)</div>
+    </div>
+    <div id="a8-q"></div>
+  </div>
+</div>
+
+<!-- A9: Độ lún cố kết tại thời điểm t (St) -->
+<div class="card">
+  <div class="card-hd"><i class="ti ti-player-play"></i>
+    <div><h2>Bài A9 — Xác định độ lún cố kết S<sub>t</sub> tại thời điểm t</h2></div>
+    <span class="cbadge" style="background:#E65100">📐 A9</span>
+  </div>
+  <div class="card-body">
+    <div class="earth-box" id="a9-prob">⏳</div>
+    <div class="fml-box">
+      <div class="ftitle"><i class="ti ti-lightbulb"></i> Quy trình</div>
+      <div class="frow">① T<sub>v</sub> = C<sub>v</sub>·t/H² → tra bảng U(%)</div>
+      <div class="frow">② S<sub>t</sub> = U × S<sub>c</sub> &nbsp;(S<sub>c</sub>: tổng độ lún cố kết cuối cùng, U: % thập phân)</div>
+      <div class="frow" id="a9-hint" style="margin-top:4px;font-size:12px;color:var(--muted)">Thay số: (...)</div>
+    </div>
+    <div id="a9-q"></div>
+  </div>
+</div>
+
+<!-- A10: Tính thời gian t -->
+<div class="card">
+  <div class="card-hd"><i class="ti ti-player-play"></i>
+    <div><h2>Bài A10 — Xác định thời gian t để đạt độ cố kết U cho trước</h2></div>
+    <span class="cbadge" style="background:#E65100">📐 A10</span>
+  </div>
+  <div class="card-body">
+    <div class="earth-box" id="a10-prob">⏳</div>
+    <div class="fml-box">
+      <div class="ftitle"><i class="ti ti-lightbulb"></i> Quy trình ngược</div>
+      <div class="frow">① Tra bảng U(%) → T<sub>v</sub></div>
+      <div class="frow">② t = T<sub>v</sub>·H² / C<sub>v</sub></div>
+      <div class="frow" id="a10-hint" style="margin-top:4px;font-size:12px;color:var(--muted)">Thay số: (...)</div>
+    </div>
+    <div id="a10-q"></div>
+  </div>
+</div>
+
+<!-- ══ BẢNG TRA Tv - U ══ -->
+<div class="card">
+  <div class="card-hd"><i class="ti ti-table"></i>
+    <div><h2>Bảng tra hệ số thời gian T<sub>v</sub> theo độ cố kết U (dùng cho A8-A10, B8-B10, C8-C10)</h2></div>
+    <span class="cbadge">TRA BẢNG</span></div>
+  <div class="card-body">
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>U (%)</th><th>10</th><th>20</th><th>30</th><th>40</th><th>50</th><th>60</th><th>70</th><th>80</th><th>90</th></tr></thead>
+        <tbody>
+          <tr><td class="rowlabel">T<sub>v</sub></td><td>0.008</td><td>0.031</td><td>0.071</td><td>0.126</td><td>0.197</td><td>0.287</td><td>0.403</td><td>0.567</td><td>0.848</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="earth-box">💡 Sơ đồ thoát nước 2 mặt (H = nửa bề dày lớp đất). Nếu chỉ thoát nước 1 mặt, dùng H = toàn bộ bề dày lớp đất.</div>
+  </div>
+</div>
+
 <!-- ══ NHÓM B ══ -->
 <div class="sec-lbl" style="margin-top:8px"><i class="ti ti-pencil" style="font-size:12px"></i> Nhóm B — Có công thức · Tự thay số</div>
 <div id="b-cards"></div>
@@ -246,7 +705,16 @@ table.tbl .rowlabel{background:var(--Plt);font-weight:700;color:var(--Pdk)}
       <div class="frow">a<sub>i-j</sub> = (e<sub>i</sub>−e<sub>j</sub>) / (σ<sub>j</sub>−σ<sub>i</sub>) &nbsp;·&nbsp; m<sub>v</sub> = a/(1+e₀)</div>
       <div class="frow">Nội suy: e<sub>j</sub>=e₁+(e₂−e₁)(σ<sub>j</sub>−σ₁)/(σ₂−σ₁) &nbsp;·&nbsp; S=h₀/(1+e₀)×(e₀−e<sub>j</sub>)</div>
     </div>
-    <div class="earth-box">💡 Đơn vị: h [mm], σ [kG/cm²], e/a/m<sub>v</sub> đều không thứ nguyên hoặc [cm²/kG]. 1 kG/cm² ≈ 98 kPa.</div>
+    <div class="fml-box">
+      <div class="ftitle">Độ lún công trình</div>
+      <div class="frow">S = [a/(1+e₀)]×h×Δσ &nbsp;·&nbsp; S = m<sub>v</sub>×h×Δσ</div>
+    </div>
+    <div class="fml-box">
+      <div class="ftitle">Cố kết Terzaghi theo thời gian</div>
+      <div class="frow">T<sub>v</sub> = C<sub>v</sub>·t/H² &nbsp;(tra bảng U(%))</div>
+      <div class="frow">S<sub>t</sub> = U × S<sub>c</sub> &nbsp;·&nbsp; t = T<sub>v</sub>·H²/C<sub>v</sub></div>
+    </div>
+    <div class="earth-box">💡 Đơn vị: h [mm], σ [kG/cm²], e/a/m<sub>v</sub> đều không thứ nguyên hoặc [cm²/kG]. 1 kG/cm² ≈ 98 kPa. C<sub>v</sub> [cm²/s hoặc cm²/năm], H [cm].</div>
   </div>
 </div>
 
@@ -349,7 +817,7 @@ function submitResult(){
   .catch(function(err){alert('❌ Không kết nối được Worker: '+err.message);});
 }
 
-// Sinh bảng TN oedometer (giống _genOedo trong ch3.js)
+// Sinh bảng TN oedometer
 function genOedo(rng){
   var e0=r3(1.25+rng()*0.20);
   var h0=20;
@@ -365,6 +833,17 @@ function tableOedo(d){
     +'<tr><td class="rowlabel">h (mm)</td>'+hCells+'</tr>'
     +'</table></div>'
     +'<div style="font-size:11px;color:var(--muted);margin-top:-2px">h₀ = '+d.h0+' mm, e₀ = '+r2(d.e0)+'</div>';
+}
+
+// Bảng tra Tv-U (Terzaghi cố kết 1D)
+var TV_TABLE={10:0.008,20:0.031,30:0.071,40:0.126,50:0.197,60:0.287,70:0.403,80:0.567,90:0.848};
+var U_LIST=[10,20,30,40,50,60,70,80,90];
+function tvFromU(U){return TV_TABLE[U];}
+function uClosestFromTv(Tv){
+  // tìm U có Tv gần nhất trong bảng (vì bài tập chỉ dùng U tròn chục để khớp bảng)
+  var bestU=10,bestDiff=Infinity;
+  U_LIST.forEach(function(u){var diff=Math.abs(TV_TABLE[u]-Tv);if(diff<bestDiff){bestDiff=diff;bestU=u;}});
+  return bestU;
 }
 
 function genA(stt){
@@ -470,6 +949,98 @@ function genA(stt){
       +makeQ('a5-ej','e<sub>j</sub> nội suy',ej,0.006,'')
       +makeQ('a5-S','S (mm)',S,0.12,'mm');
   })();
+
+  // A6: Độ lún công trình từ a
+  (function(){
+    var rng=seededRng(stt*23+3201);
+    var a=r3(0.015+rng()*0.045);
+    var e0=r2(0.75+rng()*0.55);
+    var h=r1(2+rng()*4); // m
+    var dSig=r1(0.5+rng()*1.5); // kG/cm²
+    var S=r1((a/(1+e0))*h*dSig*1000); // mm, h(m)->mm conv via *1000 with a in cm2/kG... đơn giản hóa theo tỷ lệ
+    document.getElementById('a6-prob').innerHTML=
+      '🏗️ <b>Đề bài</b> (STT <b>'+stt+'</b>): Lớp đất sét dày h=<b>'+h+' m</b>, hệ số rỗng ban đầu e₀=<b>'+e0+'</b>, hệ số nén a=<b>'+a+' cm²/kG</b>. '
+      +'Gia tăng ứng suất do tải trọng công trình Δσ=<b>'+dSig+' kG/cm²</b>. Tính độ lún công trình S.';
+    document.getElementById('a6-hint').innerHTML=
+      'S = [a/(1+e₀)] × h × Δσ = ['+a+'/(1+'+e0+')] × '+h+'×1000(mm) × '+dSig+' = ?';
+    document.getElementById('a6-q').innerHTML=
+      makeQ('a6-S','S (mm)',S,Math.max(Math.abs(S)*0.07,3),'mm');
+  })();
+
+  // A7: Độ lún công trình từ mv
+  (function(){
+    var rng=seededRng(stt*29+3203);
+    var mv=r3(0.008+rng()*0.025);
+    var h=r1(2+rng()*4);
+    var dSig=r1(0.5+rng()*1.5);
+    var S=r1(mv*h*dSig*1000);
+    document.getElementById('a7-prob').innerHTML=
+      '🏗️ <b>Đề bài</b> (STT <b>'+stt+'</b>): Lớp đất sét dày h=<b>'+h+' m</b>, hệ số nén thể tích m<sub>v</sub>=<b>'+mv+' cm²/kG</b>. '
+      +'Gia tăng ứng suất Δσ=<b>'+dSig+' kG/cm²</b>. Tính độ lún công trình S.';
+    document.getElementById('a7-hint').innerHTML=
+      'S = m<sub>v</sub> × h × Δσ = '+mv+' × '+h+'×1000(mm) × '+dSig+' = ?';
+    document.getElementById('a7-q').innerHTML=
+      makeQ('a7-S','S (mm)',S,Math.max(Math.abs(S)*0.07,3),'mm');
+  })();
+
+  // A8: Độ cố kết từ Cv, t
+  (function(){
+    var rng=seededRng(stt*31+3205);
+    var Uchon=U_LIST[Math.floor(rng()*U_LIST.length)];
+    var Tv=tvFromU(Uchon);
+    var H=r1(200+rng()*300); // cm
+    var Cv=r2((Tv*H*H)/(Math.round(2+rng()*8)*1e7)*1e7); // placeholder sẽ tính lại bên dưới chuẩn
+    // tính lại chuẩn: chọn t hợp lý rồi suy Cv để khớp đúng U
+    var t_nam=r1(0.5+rng()*4.5); // năm
+    var t_s=t_nam*365*24*3600;
+    var Cv_cms2=r2((Tv*H*H)/t_s*1e4)/1e4; // cm2/s xấp xỉ
+    Cv_cms2=r3((Tv*H*H)/t_s);
+    document.getElementById('a8-prob').innerHTML=
+      '🏗️ <b>Đề bài</b> (STT <b>'+stt+'</b>): Lớp đất sét chiều dày thoát nước H=<b>'+H+' cm</b>, hệ số cố kết C<sub>v</sub>=<b>'+Cv_cms2.toExponential(2)+' cm²/s</b>. '
+      +'Sau thời gian t=<b>'+t_nam+' năm</b> kể từ khi đặt tải, xác định độ cố kết U(%) của lớp đất.';
+    document.getElementById('a8-hint').innerHTML=
+      't(s) = '+t_nam+'×365×24×3600 = ?<br>'
+      +'T<sub>v</sub> = C<sub>v</sub>×t / H² = ?<br>'
+      +'Tra bảng T<sub>v</sub> → U(%) = '+Uchon+'%';
+    document.getElementById('a8-q').innerHTML=
+      makeQ('a8-Tv','T<sub>v</sub> = C<sub>v</sub>t/H²',Tv,r2(Tv*0.08+0.005),'')
+      +makeQ('a8-U','U (%)',Uchon,2,'%');
+  })();
+
+  // A9: Độ lún cố kết St
+  (function(){
+    var rng=seededRng(stt*37+3207);
+    var Uchon=U_LIST[Math.floor(rng()*U_LIST.length)];
+    var Sc=r1(80+rng()*120); // mm tổng lún cố kết cuối cùng
+    var St=r1(Sc*Uchon/100);
+    document.getElementById('a9-prob').innerHTML=
+      '🏗️ <b>Đề bài</b> (STT <b>'+stt+'</b>): Lớp đất sét có tổng độ lún cố kết cuối cùng (khi cố kết hoàn toàn) S<sub>c</sub>=<b>'+Sc+' mm</b>. '
+      +'Tại thời điểm khảo sát, độ cố kết đạt U=<b>'+Uchon+'%</b>. Xác định độ lún cố kết S<sub>t</sub> đã xảy ra tại thời điểm đó.';
+    document.getElementById('a9-hint').innerHTML=
+      'S<sub>t</sub> = U × S<sub>c</sub> = '+(Uchon/100)+' × '+Sc+' = ?';
+    document.getElementById('a9-q').innerHTML=
+      makeQ('a9-St','S<sub>t</sub> (mm)',St,Math.max(Math.abs(St)*0.05,2),'mm');
+  })();
+
+  // A10: Tính thời gian t
+  (function(){
+    var rng=seededRng(stt*41+3209);
+    var Uchon=U_LIST[Math.floor(rng()*U_LIST.length)];
+    var Tv=tvFromU(Uchon);
+    var H=r1(200+rng()*300);
+    var Cv_cms2=r3((1+rng()*9)*1e-3); // cm2/s, khoảng hợp lý
+    var t_s=r1(Tv*H*H/Cv_cms2);
+    var t_nam=r2(t_s/(365*24*3600));
+    document.getElementById('a10-prob').innerHTML=
+      '🏗️ <b>Đề bài</b> (STT <b>'+stt+'</b>): Lớp đất sét chiều dày thoát nước H=<b>'+H+' cm</b>, hệ số cố kết C<sub>v</sub>=<b>'+Cv_cms2.toExponential(2)+' cm²/s</b>. '
+      +'Xác định thời gian t (năm) cần thiết để đạt độ cố kết U=<b>'+Uchon+'%</b>.';
+    document.getElementById('a10-hint').innerHTML=
+      'Tra bảng U='+Uchon+'% → T<sub>v</sub> = ?<br>'
+      +'t(s) = T<sub>v</sub>×H²/C<sub>v</sub> = ? → quy đổi sang năm';
+    document.getElementById('a10-q').innerHTML=
+      makeQ('a10-Tv','T<sub>v</sub> (tra bảng)',Tv,0.01,'')
+      +makeQ('a10-t','t (năm)',t_nam,Math.max(Math.abs(t_nam)*0.08,0.1),'năm');
+  })();
 }
 
 function genBC(stt){
@@ -479,6 +1050,11 @@ function genBC(stt){
     {id:'3',title:'Hệ số rỗng e tại cấp tải',fml:'e<sub>i</sub> = e₀ − (S<sub>i</sub>/h₀)×(1+e₀)',type:'e'},
     {id:'4',title:'Hệ số nén a và m<sub>v</sub>',fml:'a=(e₁−e₂)/(σ₂−σ₁) &nbsp;·&nbsp; m<sub>v</sub>=a/(1+e₁)',type:'amv'},
     {id:'5',title:'Độ lún tại tải trọng cho trước (nội suy)',fml:'e<sub>j</sub>=e₁+(e₂−e₁)(σ<sub>j</sub>−σ₁)/(σ₂−σ₁) &nbsp;·&nbsp; S=h₀/(1+e₀)(e₀−e<sub>j</sub>)',type:'interp'},
+    {id:'6',title:'Độ lún công trình từ hệ số nén a',fml:'S = [a/(1+e₀)]×h×Δσ',type:'fromA'},
+    {id:'7',title:'Độ lún công trình từ m<sub>v</sub>',fml:'S = m<sub>v</sub>×h×Δσ',type:'fromMv'},
+    {id:'8',title:'Độ cố kết U từ C<sub>v</sub>, t',fml:'T<sub>v</sub>=C<sub>v</sub>t/H² &nbsp;→ tra bảng U(%)',type:'Ufrom'},
+    {id:'9',title:'Độ lún cố kết S<sub>t</sub> tại thời điểm t',fml:'S<sub>t</sub> = U × S<sub>c</sub>',type:'St'},
+    {id:'10',title:'Thời gian t để đạt độ cố kết U',fml:'t = T<sub>v</sub>H²/C<sub>v</sub>',type:'tfrom'},
   ];
 
   var bhtml='',chtml='';
@@ -502,7 +1078,7 @@ function genBC(stt){
   document.getElementById('c-cards').innerHTML=chtml;
 
   CFG.forEach(function(c,idx){
-    var seedBase=[23,29,31,37,41][idx];
+    var seedBase=[43,47,53,59,61,67,71,73,79,83][idx];
     genOne('b'+c.id,c.type,stt,seedBase,4101+idx*20);
     genOne('c'+c.id,c.type,stt,seedBase+97,4201+idx*20);
   });
@@ -510,21 +1086,23 @@ function genBC(stt){
 
 function genOne(id,type,stt,s1,s2){
   var rng=seededRng(stt*s1+s2);
-  var od=genOedo(rng);
 
   if(type==='S1'){
+    var od=genOedo(rng);
     var idx=1+Math.floor(rng()*5);
     var sig=od.sigma[idx];var hi=od.h[idx];var S=r2(od.h0-hi);
     document.getElementById(id+'-prob').innerHTML=tableOedo(od)+'<div style="margin-top:8px">Tính S tại σ='+sig+' kG/cm².</div>';
     document.getElementById(id+'-q').innerHTML=makeQ(id+'-hi','h tại σ (mm)',hi,0.05,'mm')+makeQ(id+'-S','S (mm)',S,0.05,'mm');
   }
   else if(type==='S2'){
+    var od=genOedo(rng);
     var i1=1+Math.floor(rng()*3);var i2=i1+1+Math.floor(rng()*2);
     var sig1=od.sigma[i1],sig2=od.sigma[i2];var h1=od.h[i1],h2=od.h[i2];var S=r2(h1-h2);
     document.getElementById(id+'-prob').innerHTML=tableOedo(od)+'<div style="margin-top:8px">Tính S từ σ='+sig1+' đến σ='+sig2+' kG/cm².</div>';
     document.getElementById(id+'-q').innerHTML=makeQ(id+'-S','S = h₁−h₂ (mm)',S,0.05,'mm');
   }
   else if(type==='e'){
+    var od=genOedo(rng);
     var idx=1+Math.floor(rng()*5);
     var sig=od.sigma[idx];var hi=od.h[idx];var Si=r2(od.h0-hi);
     var ei=r3(od.e0-(Si/od.h0)*(1+od.e0));
@@ -532,6 +1110,7 @@ function genOne(id,type,stt,s1,s2){
     document.getElementById(id+'-q').innerHTML=makeQ(id+'-e','e tại σ',ei,0.005,'');
   }
   else if(type==='amv'){
+    var od=genOedo(rng);
     var i1=Math.floor(rng()*4);var i2=i1+1;
     var s1v=od.sigma[i1],s2v=od.sigma[i2];var h1=od.h[i1],h2=od.h[i2];
     var S1=r2(od.h0-h1),S2=r2(od.h0-h2);
@@ -542,6 +1121,7 @@ function genOne(id,type,stt,s1,s2){
     document.getElementById(id+'-q').innerHTML=makeQ(id+'-a','a (cm²/kG)',a,r3(Math.abs(a)*0.07+0.001),'cm²/kG')+makeQ(id+'-mv','m<sub>v</sub> (cm²/kG)',mv,r3(Math.abs(mv)*0.07+0.0005),'cm²/kG');
   }
   else if(type==='interp'){
+    var od=genOedo(rng);
     var i1=1+Math.floor(rng()*3);var i2=i1+1;
     var s1v=od.sigma[i1],s2v=od.sigma[i2];var h1=od.h[i1],h2=od.h[i2];
     var e1=r3(od.e0-(r2(od.h0-h1)/od.h0)*(1+od.e0));
@@ -551,6 +1131,42 @@ function genOne(id,type,stt,s1,s2){
     var S=r2(od.h0/(1+od.e0)*(od.e0-ej));
     document.getElementById(id+'-prob').innerHTML=tableOedo(od)+'<div style="margin-top:8px">Tính S tại σ<sub>j</sub>='+sig+' kG/cm² (nội suy).</div>';
     document.getElementById(id+'-q').innerHTML=makeQ(id+'-ej','e<sub>j</sub> nội suy',ej,0.006,'')+makeQ(id+'-S','S (mm)',S,0.13,'mm');
+  }
+  else if(type==='fromA'){
+    var a=r3(0.015+rng()*0.045);var e0=r2(0.75+rng()*0.55);
+    var h=r1(2+rng()*4);var dSig=r1(0.5+rng()*1.5);
+    var S=r1((a/(1+e0))*h*dSig*1000);
+    document.getElementById(id+'-prob').innerHTML='🏗️ <b>Đề bài</b>: h='+h+'m, e₀='+e0+', a='+a+'cm²/kG, Δσ='+dSig+'kG/cm². Tính S.';
+    document.getElementById(id+'-q').innerHTML=makeQ(id+'-S','S (mm)',S,Math.max(Math.abs(S)*0.08,3),'mm');
+  }
+  else if(type==='fromMv'){
+    var mv=r3(0.008+rng()*0.025);var h=r1(2+rng()*4);var dSig=r1(0.5+rng()*1.5);
+    var S=r1(mv*h*dSig*1000);
+    document.getElementById(id+'-prob').innerHTML='🏗️ <b>Đề bài</b>: h='+h+'m, m<sub>v</sub>='+mv+'cm²/kG, Δσ='+dSig+'kG/cm². Tính S.';
+    document.getElementById(id+'-q').innerHTML=makeQ(id+'-S','S (mm)',S,Math.max(Math.abs(S)*0.08,3),'mm');
+  }
+  else if(type==='Ufrom'){
+    var Uchon=U_LIST[Math.floor(rng()*U_LIST.length)];
+    var Tv=tvFromU(Uchon);
+    var H=r1(200+rng()*300);
+    var t_nam=r1(0.5+rng()*4.5);var t_s=t_nam*365*24*3600;
+    var Cv_cms2=r3((Tv*H*H)/t_s);
+    document.getElementById(id+'-prob').innerHTML='🏗️ <b>Đề bài</b>: H='+H+'cm, C<sub>v</sub>='+Cv_cms2.toExponential(2)+'cm²/s, t='+t_nam+' năm. Tính U(%).';
+    document.getElementById(id+'-q').innerHTML=makeQ(id+'-Tv','T<sub>v</sub>',Tv,r2(Tv*0.08+0.005),'')+makeQ(id+'-U','U (%)',Uchon,2,'%');
+  }
+  else if(type==='St'){
+    var Uchon=U_LIST[Math.floor(rng()*U_LIST.length)];
+    var Sc=r1(80+rng()*120);var St=r1(Sc*Uchon/100);
+    document.getElementById(id+'-prob').innerHTML='🏗️ <b>Đề bài</b>: S<sub>c</sub>='+Sc+'mm, U='+Uchon+'%. Tính S<sub>t</sub>.';
+    document.getElementById(id+'-q').innerHTML=makeQ(id+'-St','S<sub>t</sub> (mm)',St,Math.max(Math.abs(St)*0.06,2),'mm');
+  }
+  else if(type==='tfrom'){
+    var Uchon=U_LIST[Math.floor(rng()*U_LIST.length)];
+    var Tv=tvFromU(Uchon);var H=r1(200+rng()*300);
+    var Cv_cms2=r3((1+rng()*9)*1e-3);
+    var t_s=r1(Tv*H*H/Cv_cms2);var t_nam=r2(t_s/(365*24*3600));
+    document.getElementById(id+'-prob').innerHTML='🏗️ <b>Đề bài</b>: H='+H+'cm, C<sub>v</sub>='+Cv_cms2.toExponential(2)+'cm²/s, U='+Uchon+'%. Tính t (năm).';
+    document.getElementById(id+'-q').innerHTML=makeQ(id+'-Tv','T<sub>v</sub>',Tv,0.01,'')+makeQ(id+'-t','t (năm)',t_nam,Math.max(Math.abs(t_nam)*0.09,0.12),'năm');
   }
 }
 
@@ -566,7 +1182,10 @@ window.onload=function(){
     document.getElementById('sv-display').textContent='Chưa đăng nhập — về Trang chủ nhập thông tin';
     document.getElementById('sv-chip').textContent='–';
   }
-  ANS['mcq-lt1']=null;ANS['mcq-lt2']=null;
+  ['d1','d2','d3'].forEach(function(k){ANS['mcq-'+k]=null;});
+  ['ql1','ql2','ql3','ql4','ql5','ql6','ql7','ql8'].forEach(function(k){ANS['mcq-'+k]=null;});
+  ['tn1','tn2','tn3'].forEach(function(k){ANS['mcq-'+k]=null;});
+  ['ck1','ck2','ck3','ck4'].forEach(function(k){ANS['mcq-'+k]=null;});
   genA(stt);
   genBC(stt);
   TOTAL_QUESTIONS=Object.keys(ANS).length;
