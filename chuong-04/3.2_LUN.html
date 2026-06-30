@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3.2 — Biến Dạng & Độ Lún Của Đất</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<script src="../config.js" onerror="console.log('[NCM] config.js not found')"></script>
+<style>
+:root{--P:#1565C0;--Pdk:#0D47A1;--Plt:#E3F2FD;--G:#2E7D32;--Glt:#E8F5E9;--Gdk:#1B5E20;--R:#C62828;--Rlt:#FFEBEE;--A:#FF8F00;--Alt:#FFF8E1;--bg:#E8F4FD;--sur:#fff;--brd:#90CAF9;--muted:#546E7A;--text:#0D1B2A;--sans:'Plus Jakarta Sans',sans-serif;--mono:'JetBrains Mono',monospace;--r:12px;--sh:0 2px 16px rgba(21,101,192,.10)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);font-family:var(--sans);color:var(--text);font-size:14px;line-height:1.6}
+.hdr{background:var(--Pdk);color:#fff;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.2)}
+.hdr-in{max-width:960px;margin:0 auto;padding:0 20px;height:60px;display:flex;align-items:center;gap:14px}
+.back-btn{color:rgba(255,255,255,.75);text-decoration:none;font-size:13px;display:flex;align-items:center;gap:5px;padding:6px 10px;border-radius:8px;border:1px solid rgba(255,255,255,.2)}
+.hdr-title{flex:1}.hdr-title h1{font-size:15px;font-weight:700}.hdr-title p{font-size:11px;color:rgba(255,255,255,.6)}
+.hdr-right{display:flex;flex-direction:column;align-items:flex-end;gap:3px}
+.hdr-prog{font-family:var(--mono);font-size:12px;background:rgba(255,255,255,.15);padding:5px 12px;border-radius:20px}
+.sv-badge{font-size:11px;color:rgba(255,255,255,.55);font-family:var(--mono)}
+main{max-width:960px;margin:0 auto;padding:20px 20px 80px}
+.prog-wrap{margin-bottom:18px;background:var(--sur);border-radius:var(--r);border:1px solid var(--brd);padding:12px 18px;box-shadow:var(--sh)}
+.prog-top{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:7px;font-weight:500}
+.prog-track{height:8px;background:var(--Plt);border-radius:4px;overflow:hidden}
+.prog-fill{height:100%;background:var(--P);border-radius:4px;transition:width .4s}
+.sv-infobar{background:linear-gradient(135deg,var(--Pdk),var(--P));color:#fff;border-radius:var(--r);padding:12px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+.card{background:var(--sur);border:1px solid var(--brd);border-radius:var(--r);box-shadow:var(--sh);margin-bottom:16px;overflow:hidden}
+.card-hd{padding:13px 20px;display:flex;align-items:center;gap:11px;border-bottom:1.5px solid var(--brd);background:var(--Plt)}
+.card-hd i{font-size:20px;color:var(--P)}.card-hd h2{font-size:14px;font-weight:700;color:var(--Pdk);flex:1}
+.cbadge{font-size:10px;font-weight:700;padding:3px 9px;border-radius:6px;background:var(--P);color:#fff;letter-spacing:.6px;white-space:nowrap}
+.card-body{padding:16px 20px;display:flex;flex-direction:column;gap:12px}
+.fml-box{background:#F8FBFF;border:1.5px solid #BBDEFB;border-left:4px solid var(--P);border-radius:0 8px 8px 0;padding:12px 16px;font-family:var(--mono);font-size:13px;line-height:1.9}
+.ftitle{font-family:var(--sans);font-size:11px;font-weight:700;color:var(--P);text-transform:uppercase;letter-spacing:.7px;margin-bottom:8px}
+.frow{margin-bottom:3px;color:var(--Pdk)}
+.frow em{color:var(--Gdk);font-weight:700;font-style:normal}
+.earth-box{background:#FFF8E1;border-left:4px solid #FF8F00;border-radius:0 8px 8px 0;padding:11px 15px;font-size:13px;line-height:1.7;color:#4E342E}
+.theory{background:var(--Plt);border-left:4px solid var(--P);border-radius:0 8px 8px 0;padding:10px 14px;font-size:13px;line-height:1.7}
+.sec-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--P);display:flex;align-items:center;gap:7px;margin:6px 0 12px}
+.sec-lbl::after{content:'';flex:1;height:1px;background:var(--brd)}
+.ans-row{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding:8px 12px;background:#FAFCFF;border:1px solid var(--brd);border-radius:8px}
+.ans-label{font-size:13px;font-weight:600;color:var(--text);flex:1;min-width:200px;font-family:var(--mono)}
+.ans-inp{width:120px;padding:7px 10px;border:1.5px solid var(--brd);border-radius:7px;font-family:var(--mono);font-size:13px;font-weight:700;outline:none;text-align:center}
+.ans-inp.ok{border-color:var(--G);background:var(--Glt);color:var(--Gdk)}
+.ans-inp.no{border-color:var(--R);background:var(--Rlt);color:var(--R)}
+.ans-unit{font-size:12px;color:var(--muted);font-family:var(--mono);white-space:nowrap}
+.chip{font-size:12px;font-weight:700;padding:2px 8px;border-radius:6px;min-width:24px;text-align:center}
+.chip.ok{background:var(--Glt);color:var(--Gdk);border:1px solid #A5D6A7}
+.chip.no{background:var(--Rlt);color:var(--R);border:1px solid #FFCDD2}
+.tbl-wrap{overflow-x:auto;border-radius:8px;border:1px solid var(--brd);margin:6px 0}
+table.tbl{border-collapse:collapse;width:100%;font-size:12px;font-family:var(--mono)}
+table.tbl th{background:var(--Pdk);color:#fff;padding:6px 9px;text-align:center;white-space:nowrap}
+table.tbl td{padding:5px 9px;text-align:center;border-bottom:1px solid var(--Plt)}
+table.tbl tr:nth-child(even) td{background:#F0F7FF}
+table.tbl .rowlabel{background:var(--Plt);font-weight:700;color:var(--Pdk)}
+.mcq-wrap{border:1px solid var(--brd);border-radius:var(--r);overflow:hidden}
+.mcq-q{padding:10px 14px 8px;font-size:13px;font-weight:600;border-bottom:1px solid var(--Plt);background:#FAFCFF;line-height:1.5}
+.mcq-num{font-family:var(--mono);font-size:10px;font-weight:700;color:var(--P);background:var(--Plt);padding:2px 6px;border-radius:4px;margin-right:5px}
+.mcq-opts{display:grid;gap:0}.mcq-opts.g2{grid-template-columns:1fr 1fr}
+.mcq-opt{padding:9px 12px;cursor:pointer;display:flex;align-items:flex-start;gap:8px;font-size:13px;border-top:1px solid var(--Plt);transition:background .12s;line-height:1.4}
+.mcq-opt:hover{background:var(--Plt)}
+.mkey{font-family:var(--mono);font-size:10px;font-weight:700;min-width:20px;height:20px;background:var(--Plt);color:var(--P);border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.mcq-opt.ok{background:var(--Glt)!important}.mcq-opt.ok .mkey{background:var(--G);color:#fff}
+.mcq-opt.no{background:var(--Rlt)!important}.mcq-opt.no .mkey{background:var(--R);color:#fff}
+.mcq-opt.reveal{background:var(--Glt)!important;opacity:.65}.mcq-opt.reveal .mkey{background:var(--G);color:#fff}
+.mcq-exp{padding:9px 13px;font-size:12px;line-height:1.6;border-top:1px solid var(--brd);display:none}
+.mcq-exp.show{display:block}
+.mcq-exp.ok-e{background:var(--Glt);color:var(--Gdk)}
+.mcq-exp.no-e{background:var(--Rlt);color:#b71c1c}
+.btn{padding:8px 16px;border-radius:8px;border:none;cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:6px}
+.btn-sm{padding:6px 13px;font-size:12px}
+.btn-ghost{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25)}
+.btn:hover{opacity:.85}
+.sticky-nav{position:fixed;bottom:0;left:0;right:0;background:var(--Pdk);color:#fff;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;z-index:200;font-size:13px;box-shadow:0 -2px 12px rgba(0,0,0,.2)}
+@media(max-width:620px){.mcq-opts.g2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="hdr">
+  <div class="hdr-in">
+    <a href="index_C3.html" class="back-btn"><i class="ti ti-arrow-left"></i> Chương 3</a>
+    <div class="hdr-title">
+      <h1>3.2 — Biến Dạng & Độ Lún Của Đất</h1>
+      <p>Thí nghiệm Oedometer · e, S, a, m<sub>v</sub> · Nội suy</p>
+    </div>
+    <div class="hdr-right">
+      <div class="hdr-prog" id="hdr-prog">0 / 0</div>
+      <div class="sv-badge" id="sv-badge">SV #–</div>
+    </div>
+  </div>
+</header>
+
+<main>
+<div class="prog-wrap">
+  <div class="prog-top"><span><i class="ti ti-target" style="vertical-align:-2px;margin-right:4px"></i>Tiến độ 3.2 — Biến Dạng & Độ Lún</span><span id="prog-text">0 / 0 (0%)</span></div>
+  <div class="prog-track"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+</div>
+<div class="sv-infobar">
+  <i class="ti ti-id-badge" style="font-size:20px;opacity:.8"></i>
+  <div style="flex:1"><div style="font-size:14px;font-weight:700" id="sv-display">đang tải...</div>
+  <div style="font-size:12px;color:rgba(255,255,255,.65)">Số liệu sinh theo STT sinh viên</div></div>
+  <div id="sv-chip" style="font-family:var(--mono);font-size:22px;font-weight:700;background:rgba(255,255,255,.15);padding:6px 16px;border-radius:8px">–</div>
+</div>
+
+<!-- ══ LÝ THUYẾT ══ -->
+<div class="card">
+  <div class="card-hd"><i class="ti ti-arrow-bar-down"></i>
+    <div><h2>Lý thuyết — Thí nghiệm Oedometer (nén cố kết 1 trục)</h2></div>
+    <span class="cbadge">LÝ THUYẾT</span></div>
+  <div class="card-body">
+    <div class="theory">💡 <b>TN Oedometer</b>: mẫu đất bị nén 1 chiều (không nở hông), tăng dần cấp tải σ và đo chiều cao mẫu h tương ứng. Từ đó suy ra hệ số rỗng e, hệ số nén a, hệ số nén thể tích m<sub>v</sub> để tính độ lún công trình.</div>
+    <div class="fml-box">
+      <div class="ftitle"><i class="ti ti-sigma"></i> Bốn công thức cốt lõi</div>
+      <div class="frow">Độ lún: S<sub>i</sub> = h₀ − h<sub>i</sub> &nbsp;·&nbsp; S<sub>i→j</sub> = h<sub>i</sub> − h<sub>j</sub></div>
+      <div class="frow">Hệ số rỗng: e<sub>i</sub> = e₀ − (S<sub>i</sub>/h₀)×(1+e₀)</div>
+      <div class="frow">Hệ số nén: a<sub>i-j</sub> = (e<sub>i</sub>−e<sub>j</sub>) / (σ<sub>j</sub>−σ<sub>i</sub>)</div>
+      <div class="frow">Hệ số nén thể tích: m<sub>v</sub> = a / (1+e₀)</div>
+    </div>
+    <div class="mcq-wrap"><div class="mcq-q"><span class="mcq-num">Q1</span>Trong TN oedometer, đại lượng nào được đo trực tiếp?</div>
+      <div class="mcq-opts g2">
+        <div class="mcq-opt" id="mco-lt1-0" onclick="pickMCQ('lt1',0,1,'❌ e tính gián tiếp từ h.')"><span class="mkey">A</span><span>Hệ số rỗng e</span></div>
+        <div class="mcq-opt" id="mco-lt1-1" onclick="pickMCQ('lt1',1,1,'✓ Đo trực tiếp chiều cao mẫu h ứng với từng cấp tải σ, từ đó suy ra các đại lượng khác.')"><span class="mkey">B</span><span>Chiều cao mẫu h theo cấp tải σ</span></div>
+        <div class="mcq-opt" id="mco-lt1-2" onclick="pickMCQ('lt1',2,1,'❌')"><span class="mkey">C</span><span>Hệ số nén a</span></div>
+        <div class="mcq-opt" id="mco-lt1-3" onclick="pickMCQ('lt1',3,1,'❌')"><span class="mkey">D</span><span>Mô đun biến dạng E</span></div>
+      </div><div class="mcq-exp" id="exp-lt1"></div></div>
+    <div class="mcq-wrap"><div class="mcq-q"><span class="mcq-num">Q2</span>Hệ số nén thể tích m<sub>v</sub> liên hệ với hệ số nén a theo công thức nào?</div>
+      <div class="mcq-opts g2">
+        <div class="mcq-opt" id="mco-lt2-0" onclick="pickMCQ('lt2',0,1,'❌ Ngược dấu phép tính.')"><span class="mkey">A</span><span>m<sub>v</sub> = a·(1+e₀)</span></div>
+        <div class="mcq-opt" id="mco-lt2-1" onclick="pickMCQ('lt2',1,1,'✓ m_v = a/(1+e₀) là công thức quy đổi từ hệ số nén sang hệ số nén thể tích.')"><span class="mkey">B</span><span>m<sub>v</sub> = a/(1+e₀)</span></div>
+        <div class="mcq-opt" id="mco-lt2-2" onclick="pickMCQ('lt2',2,1,'❌')"><span class="mkey">C</span><span>m<sub>v</sub> = a/e₀</span></div>
+        <div class="mcq-opt" id="mco-lt2-3" onclick="pickMCQ('lt2',3,1,'❌')"><span class="mkey">D</span><span>m<sub>v</sub> = a·e₀</span></div>
+      </div><div class="mcq-exp" id="exp-lt2"></div></div>
+  </div>
+</div>
+
+<!-- ══ NHÓM A ══ -->
+<div class="sec-lbl"><i class="ti ti-player-play" style="font-size:12px"></i> Nhóm A — Bài hướng dẫn đầy đủ</div>
+
+<!-- A1: Độ lún S trực tiếp -->
+<div class="card">
+  <div class="card-hd"><i class="ti ti-player-play"></i>
+    <div><h2>Bài A1 — Độ lún S tại cấp tải σ (trực tiếp từ bảng)</h2></div>
+    <span class="cbadge" style="background:#E65100">📐 A1</span>
+  </div>
+  <div class="card-body">
+    <div class="earth-box" id="a1-prob">⏳</div>
+    <div class="fml-box">
+      <div class="ftitle"><i class="ti ti-lightbulb"></i> Công thức</div>
+      <div class="frow">S = h₀ − h<sub>i</sub> &nbsp;(tính từ trạng thái ban đầu)</div>
+      <div class="frow" id="a1-hint" style="margin-top:4px;font-size:12px;color:var(--muted)">Đọc bảng: (...)</div>
+    </div>
+    <div id="a1-q"></div>
+  </div>
+</div>
+
+<!-- A2: Độ lún giữa 2 cấp tải -->
+<div class="card">
+  <div class="card-hd"><i class="ti ti-player-play"></i>
+    <div><h2>Bài A2 — Độ lún S từ cấp tải này sang cấp tải khác</h2></div>
+    <span class="cbadge" style="background:#E65100">📐 A2</span>
+  </div>
+  <div class="card-body">
+    <div class="earth-box" id="a2-prob">⏳</div>
+    <div class="fml-box">
+      <div class="ftitle"><i class="ti ti-lightbulb"></i> Công thức</div>
+      <div class="frow">S<sub>i→j</sub> = h<sub>i</sub> − h<sub>j</sub></div>
+      <div class="frow" id="a2-hint" style="margin-top:4px;font-size:12px;color:var(--muted)">Đọc bảng: (...)</div>
+    </div>
+    <div id="a2-q"></div>
+  </div>
+</div>
+
+<!-- A3: Hệ số rỗng e tại cấp tải -->
+<div class="card">
+  <div class="card-hd"><i class="ti ti-player-play"></i>
+    <div><h2>Bài A3 — Hệ số rỗng e tại cấp tải</h2></div>
+    <span class="cbadge" style="background:#E65100">📐 A3</span>
+  </div>
+  <div class="card-body">
+    <div class="earth-box" id="a3-prob">⏳</div>
+    <div class="fml-box">
+      <div class="ftitle"><i class="ti ti-lightbulb"></i> Công thức</div>
+      <div class="frow">S<sub>i</sub> = h₀−h<sub>i</sub> &nbsp;·&nbsp; e<sub>i</sub> = e₀ − (S<sub>i</sub>/h₀)×(1+e₀)</div>
+      <div class="frow" id="a3-hint" style="margin-top:4px;font-size:12px;color:var(--muted)">Thay số: (...)</div>
+    </div>
+    <div id="a3-q"></div>
+  </div>
+</div>
+
+<!-- A4: Hệ số nén a và mv -->
+<div class="card">
+  <div class="card-hd"><i class="ti ti-player-play"></i>
+    <div><h2>Bài A4 — Hệ số nén a và hệ số nén thể tích m<sub>v</sub></h2></div>
+    <span class="cbadge" style="background:#E65100">📐 A4</span>
+  </div>
+  <div class="card-body">
+    <div class="earth-box" id="a4-prob">⏳</div>
+    <div class="fml-box">
+      <div class="ftitle"><i class="ti ti-lightbulb"></i> Quy trình</div>
+      <div class="frow">① Tính e₁, e₂ tại 2 cấp tải σ₁, σ₂</div>
+      <div class="frow">② a = (e₁−e₂)/(σ₂−σ₁) &nbsp;·&nbsp; ③ m<sub>v</sub> = a/(1+e₁)</div>
+      <div class="frow" id="a4-hint" style="margin-top:4px;font-size:12px;color:var(--muted)">Thay số: (...)</div>
+    </div>
+    <div id="a4-q"></div>
+  </div>
+</div>
+
+<!-- A5: Nội suy độ lún -->
+<div class="card">
+  <div class="card-hd"><i class="ti ti-player-play"></i>
+    <div><h2>Bài A5 — Độ lún tại tải trọng cho trước (nội suy)</h2></div>
+    <span class="cbadge" style="background:#E65100">📐 A5</span>
+  </div>
+  <div class="card-body">
+    <div class="earth-box" id="a5-prob">⏳</div>
+    <div class="fml-box">
+      <div class="ftitle"><i class="ti ti-lightbulb"></i> Quy trình</div>
+      <div class="frow">① Tính e₁, e₂ tại 2 cấp tải kề bảng σ₁, σ₂</div>
+      <div class="frow">② Nội suy tuyến tính: e<sub>j</sub> = e₁ + (e₂−e₁)×(σ<sub>j</sub>−σ₁)/(σ₂−σ₁)</div>
+      <div class="frow">③ S = h₀/(1+e₀) × (e₀−e<sub>j</sub>)</div>
+      <div class="frow" id="a5-hint" style="margin-top:4px;font-size:12px;color:var(--muted)">Thay số: (...)</div>
+    </div>
+    <div id="a5-q"></div>
+  </div>
+</div>
+
+<!-- ══ NHÓM B ══ -->
+<div class="sec-lbl" style="margin-top:8px"><i class="ti ti-pencil" style="font-size:12px"></i> Nhóm B — Có công thức · Tự thay số</div>
+<div id="b-cards"></div>
+
+<!-- ══ NHÓM C ══ -->
+<div class="sec-lbl" style="margin-top:4px"><i class="ti ti-brain" style="font-size:12px"></i> Nhóm C — Tự nhận biết · Chỉ cho đầu bài</div>
+<div id="c-cards"></div>
+
+<!-- ══ TỔNG HỢP CÔNG THỨC ══ -->
+<div class="sec-lbl" style="margin-top:8px"><i class="ti ti-file-description" style="font-size:12px"></i> Tổng hợp công thức (phần thi)</div>
+<div class="card">
+  <div class="card-hd"><i class="ti ti-math-function"></i>
+    <div><h2>Công thức trọng tâm — Thi cử</h2></div>
+    <span class="cbadge">📋 CF</span>
+  </div>
+  <div class="card-body">
+    <div class="fml-box">
+      <div class="ftitle">Bộ công thức xử lý số liệu Oedometer</div>
+      <div class="frow">S<sub>i</sub> = h₀ − h<sub>i</sub> &nbsp;·&nbsp; S<sub>i→j</sub> = h<sub>i</sub> − h<sub>j</sub></div>
+      <div class="frow">e<sub>i</sub> = e₀ − (S<sub>i</sub>/h₀)×(1+e₀)</div>
+      <div class="frow">a<sub>i-j</sub> = (e<sub>i</sub>−e<sub>j</sub>) / (σ<sub>j</sub>−σ<sub>i</sub>) &nbsp;·&nbsp; m<sub>v</sub> = a/(1+e₀)</div>
+      <div class="frow">Nội suy: e<sub>j</sub>=e₁+(e₂−e₁)(σ<sub>j</sub>−σ₁)/(σ₂−σ₁) &nbsp;·&nbsp; S=h₀/(1+e₀)×(e₀−e<sub>j</sub>)</div>
+    </div>
+    <div class="earth-box">💡 Đơn vị: h [mm], σ [kG/cm²], e/a/m<sub>v</sub> đều không thứ nguyên hoặc [cm²/kG]. 1 kG/cm² ≈ 98 kPa.</div>
+  </div>
+</div>
+
+</main>
+
+<div class="sticky-nav">
+  <span>3.2 · Biến Dạng & Độ Lún</span>
+  <div style="display:flex;align-items:center;gap:10px">
+    <span id="nav-prog">0/0</span>
+    <button class="btn btn-sm btn-ghost" onclick="scrollNext()">▼ Câu chưa làm</button>
+    <button class="btn btn-sm btn-ghost" id="btn-nop" onclick="submitResult()" style="background:rgba(150,150,150,.35);border-color:rgba(200,200,200,.4)">🔒 Nộp bài <span style="font-size:10px;opacity:.8">(0%/?%)</span></button>
+    <a href="3.3_TRUOT.html" class="btn btn-sm btn-ghost">Bài tiếp ›</a>
+  </div>
+</div>
+
+<script>
+var ANS={};
+var _submitted=false;
+var TOTAL_QUESTIONS=0;
+function r1(v){return Math.round(v*10)/10}
+function r2(v){return Math.round(v*100)/100}
+function r3(v){return Math.round(v*1000)/1000}
+function seededRng(seed){var s=seed%2147483647;if(s<=0)s+=2147483646;return function(){s=s*16807%2147483647;return(s-1)/2147483646;};}
+function getSV(){try{return JSON.parse(sessionStorage.getItem('ncm_sv'));}catch(e){return null;}}
+function scrollNext(){var inp=document.querySelector('.ans-inp:not(.ok)');if(inp)inp.closest('.ans-row').scrollIntoView({behavior:'smooth',block:'center'});}
+
+function chkFill(id,ans,tol){
+  var inp=document.getElementById(id);var chip=document.getElementById('ck-'+id);
+  if(!inp||!chip)return;
+  var v=parseFloat(inp.value);
+  if(isNaN(v)){inp.classList.remove('ok','no');chip.className='chip';chip.textContent='';ANS[id]=null;updateProg();return;}
+  var ok=Math.abs(v-ans)<=tol;
+  inp.classList.toggle('ok',ok);inp.classList.toggle('no',!ok);
+  chip.className='chip '+(ok?'ok':'no');chip.textContent=ok?'✓':'✗';
+  ANS[id]=ok;updateProg();
+}
+function pickMCQ(name,picked,correct,expText){
+  if(ANS['mcq-'+name]!=null)return;
+  var ok=(picked===correct);
+  document.querySelectorAll('[id^="mco-'+name+'-"]').forEach(function(el){el.style.pointerEvents='none';});
+  document.getElementById('mco-'+name+'-'+picked).className='mcq-opt '+(ok?'ok':'no');
+  if(!ok)document.getElementById('mco-'+name+'-'+correct).className='mcq-opt reveal';
+  var exp=document.getElementById('exp-'+name);
+  if(exp){exp.classList.add('show');exp.classList.add(ok?'ok-e':'no-e');if(expText)exp.innerHTML=expText;}
+  ANS['mcq-'+name]=ok;updateProg();
+}
+function makeQ(id,label,ans,tol,unit){
+  ANS[id]=null;
+  return '<div class="ans-row"><span class="ans-label">'+label+'</span>'
+    +'<input class="ans-inp" id="'+id+'" type="number" step="any" placeholder="?" oninput="chkFill(\''+id+'\','+ans+','+tol+')">'
+    +'<span class="ans-unit">'+unit+'</span><span class="chip" id="ck-'+id+'"></span></div>';
+}
+function updateProg(){
+  var attempted=0,done=0,total=TOTAL_QUESTIONS||Object.keys(ANS).length;
+  Object.keys(ANS).forEach(function(k){if(ANS[k]!==null&&ANS[k]!==undefined){attempted++;if(ANS[k]===true)done++;}});
+  var attemPct=total?Math.round(attempted/total*100):0;
+  var donePct=total?Math.round(done/total*100):0;
+  document.getElementById('prog-fill').style.width=attemPct+'%';
+  document.getElementById('prog-text').textContent='Đã làm: '+attempted+'/'+total+' ('+attemPct+'%) · Đúng: '+done+' ('+donePct+'%)';
+  document.getElementById('nav-prog').textContent=attempted+'/'+total;
+  document.getElementById('hdr-prog').textContent=attempted+' / '+total;
+  try{localStorage.setItem('prog_c3_32',JSON.stringify({done:done,total:total,attempted:attempted}));}catch(e){}
+  if(!_submitted){
+    var minPct=(typeof window.MIN_ATTEMPT_PCT!=='undefined')?window.MIN_ATTEMPT_PCT:5;
+    var btn=document.getElementById('btn-nop');
+    if(btn){
+      var ready=(attemPct>=minPct&&attempted>0);
+      btn.style.background=ready?'rgba(46,125,50,.7)':'rgba(150,150,150,.35)';
+      btn.style.borderColor=ready?'rgba(165,214,167,.6)':'rgba(200,200,200,.4)';
+      btn.innerHTML=(ready?'✅':'🔒')+' Nộp bài <span style="font-size:10px;opacity:.8">('+attemPct+'%/'+minPct+'%)</span>';
+    }
+  }
+}
+function submitResult(){
+  var sv=getSV();
+  if(!sv||!sv.name){alert('⚠️ Chưa đăng nhập. Về trang chủ nhập thông tin trước!');return;}
+  if(_submitted){return;}
+  var total=TOTAL_QUESTIONS||Object.keys(ANS).length;
+  var attempted=0,done=0;
+  Object.keys(ANS).forEach(function(k){if(ANS[k]!==null&&ANS[k]!==undefined){attempted++;if(ANS[k]===true)done++;}});
+  var attemPct=total?Math.round(attempted/total*100):0;
+  var scorePct=total?Math.round(done/total*100):0;
+  if(attempted===0){alert('⚠️ Chưa làm câu nào!');return;}
+  var minPct=(typeof window.MIN_ATTEMPT_PCT!=='undefined')?window.MIN_ATTEMPT_PCT:5;
+  if(attemPct<minPct){alert('⚠️ Cần làm tối thiểu '+minPct+'% số câu mới được nộp! Đã làm: '+attemPct+'%');return;}
+  var workerUrl=(typeof window.WORKER_URL!=='undefined')?window.WORKER_URL:'https://dqt-chdnm.phamvietanh158.workers.dev';
+  fetch(workerUrl,{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({name:sv.name,mssv:sv.mssv,stt:Number(sv.stt)||0,classId:sv.classId,
+      chapterId:'C3-32-Lun',score:scorePct,correct:done,total:total,duration:0})
+  })
+  .then(function(r){return r.json();})
+  .then(function(d){
+    if(d.ok){
+      _submitted=true;
+      var btn=document.getElementById('btn-nop');
+      if(btn){btn.innerHTML='✓ Đã nộp ('+scorePct+'%)';btn.disabled=true;btn.style.background='rgba(46,125,50,.5)';}
+      alert('✅ Nộp thành công! Đúng: '+scorePct+'% ('+done+'/'+total+')');
+    } else {alert('❌ Lỗi: '+(d.error||'Không rõ'));}
+  })
+  .catch(function(err){alert('❌ Không kết nối được Worker: '+err.message);});
+}
+
+// Sinh bảng TN oedometer (giống _genOedo trong ch3.js)
+function genOedo(rng){
+  var e0=r3(1.25+rng()*0.20);
+  var h0=20;
+  var sigma=[0.12,0.25,0.50,1.00,2.00,4.00,8.00];
+  var h=[19.8,19.4,19.0,18.5,18.2,17.9,17.7];
+  return {e0:e0,h0:h0,sigma:sigma,h:h};
+}
+function tableOedo(d){
+  var sigCells=d.sigma.map(function(s){return '<th>'+s+'</th>';}).join('');
+  var hCells=d.h.map(function(hv){return '<td>'+hv+'</td>';}).join('');
+  return '<div class="tbl-wrap"><table class="tbl">'
+    +'<tr><th>σ (kG/cm²)</th>'+sigCells+'</tr>'
+    +'<tr><td class="rowlabel">h (mm)</td>'+hCells+'</tr>'
+    +'</table></div>'
+    +'<div style="font-size:11px;color:var(--muted);margin-top:-2px">h₀ = '+d.h0+' mm, e₀ = '+r2(d.e0)+'</div>';
+}
+
+function genA(stt){
+  // A1: Độ lún S trực tiếp
+  (function(){
+    var rng=seededRng(stt*7+3101);
+    var od=genOedo(rng);
+    var idx=1+Math.floor(rng()*5);
+    var sig=od.sigma[idx];
+    var hi=od.h[idx];
+    var S=r2(od.h0-hi);
+    document.getElementById('a1-prob').innerHTML=tableOedo(od)
+      +'<div style="margin-top:8px"><b>Xác định độ lún S</b> ở cấp tải σ = <b>'+sig+' kG/cm²</b>.</div>';
+    document.getElementById('a1-hint').innerHTML='Tra bảng tại σ='+sig+' → h=? mm. S = '+od.h0+' − h = ?';
+    document.getElementById('a1-q').innerHTML=
+      makeQ('a1-hi','h tại σ (mm)',hi,0.05,'mm')
+      +makeQ('a1-S','S = h₀−h (mm)',S,0.05,'mm');
+  })();
+
+  // A2: Độ lún giữa 2 cấp tải
+  (function(){
+    var rng=seededRng(stt*11+3103);
+    var od=genOedo(rng);
+    var i1=1+Math.floor(rng()*3);
+    var i2=i1+1+Math.floor(rng()*2);
+    var sig1=od.sigma[i1],sig2=od.sigma[i2];
+    var h1=od.h[i1],h2=od.h[i2];
+    var S=r2(h1-h2);
+    document.getElementById('a2-prob').innerHTML=tableOedo(od)
+      +'<div style="margin-top:8px"><b>Xác định độ lún S</b> từ σ='+sig1+' kG/cm² đến σ='+sig2+' kG/cm².</div>';
+    document.getElementById('a2-hint').innerHTML='Tra h tại σ₁='+sig1+' và σ₂='+sig2+' → S=h₁−h₂=?';
+    document.getElementById('a2-q').innerHTML=
+      makeQ('a2-h1','h₁ tại σ₁ (mm)',h1,0.05,'mm')
+      +makeQ('a2-h2','h₂ tại σ₂ (mm)',h2,0.05,'mm')
+      +makeQ('a2-S','S = h₁−h₂ (mm)',S,0.05,'mm');
+  })();
+
+  // A3: Hệ số rỗng e tại cấp tải
+  (function(){
+    var rng=seededRng(stt*13+3105);
+    var od=genOedo(rng);
+    var idx=1+Math.floor(rng()*5);
+    var sig=od.sigma[idx];
+    var hi=od.h[idx];
+    var Si=r2(od.h0-hi);
+    var ei=r3(od.e0-(Si/od.h0)*(1+od.e0));
+    document.getElementById('a3-prob').innerHTML=tableOedo(od)
+      +'<div style="margin-top:8px"><b>Xác định hệ số rỗng e</b> ở cấp tải σ = <b>'+sig+' kG/cm²</b>.</div>';
+    document.getElementById('a3-hint').innerHTML='S='+od.h0+'−h=? &nbsp;·&nbsp; e = '+r2(od.e0)+' − (S/'+od.h0+')×(1+'+r2(od.e0)+') = ?';
+    document.getElementById('a3-q').innerHTML=
+      makeQ('a3-S','S = h₀−h (mm)',Si,0.05,'mm')
+      +makeQ('a3-e','e tại σ',ei,0.005,'');
+  })();
+
+  // A4: Hệ số nén a, mv
+  (function(){
+    var rng=seededRng(stt*17+3107);
+    var od=genOedo(rng);
+    var i1=Math.floor(rng()*4);
+    var i2=i1+1;
+    var s1=od.sigma[i1],s2=od.sigma[i2];
+    var h1=od.h[i1],h2=od.h[i2];
+    var S1=r2(od.h0-h1),S2=r2(od.h0-h2);
+    var e1=r3(od.e0-(S1/od.h0)*(1+od.e0));
+    var e2=r3(od.e0-(S2/od.h0)*(1+od.e0));
+    var a=r3((e1-e2)/(s2-s1));
+    var mv=r3(a/(1+e1));
+    document.getElementById('a4-prob').innerHTML=tableOedo(od)
+      +'<div style="margin-top:8px">Xác định <b>hệ số nén a</b> và <b>m<sub>v</sub></b> từ σ₁=<b>'+s1+'</b> đến σ₂=<b>'+s2+' kG/cm²</b>.</div>';
+    document.getElementById('a4-hint').innerHTML=
+      'e₁ tại σ₁ = ? &nbsp;·&nbsp; e₂ tại σ₂ = ?<br>a = (e₁−e₂)/('+s2+'−'+s1+') = ? &nbsp;·&nbsp; m<sub>v</sub> = a/(1+e₁) = ?';
+    document.getElementById('a4-q').innerHTML=
+      makeQ('a4-e1','e₁ tại σ₁',e1,0.005,'')
+      +makeQ('a4-e2','e₂ tại σ₂',e2,0.005,'')
+      +makeQ('a4-a','a (cm²/kG)',a,r3(Math.abs(a)*0.06+0.001),'cm²/kG')
+      +makeQ('a4-mv','m<sub>v</sub> (cm²/kG)',mv,r3(Math.abs(mv)*0.06+0.0005),'cm²/kG');
+  })();
+
+  // A5: Nội suy độ lún
+  (function(){
+    var rng=seededRng(stt*19+3109);
+    var od=genOedo(rng);
+    var i1=1+Math.floor(rng()*3);
+    var i2=i1+1;
+    var s1=od.sigma[i1],s2=od.sigma[i2];
+    var h1=od.h[i1],h2=od.h[i2];
+    var e1=r3(od.e0-(r2(od.h0-h1)/od.h0)*(1+od.e0));
+    var e2=r3(od.e0-(r2(od.h0-h2)/od.h0)*(1+od.e0));
+    var t=0.3+rng()*0.4;
+    var sig=r2(s1+t*(s2-s1));
+    var ej=r3(e1+(e2-e1)*(sig-s1)/(s2-s1));
+    var S=r2(od.h0/(1+od.e0)*(od.e0-ej));
+    document.getElementById('a5-prob').innerHTML=tableOedo(od)
+      +'<div style="margin-top:8px">Xác định <b>độ lún S</b> ứng với σ<sub>j</sub> = <b>'+sig+' kG/cm²</b> (nội suy tuyến tính, không có trong bảng).</div>';
+    document.getElementById('a5-hint').innerHTML=
+      'σ<sub>j</sub>='+sig+' nằm giữa σ₁='+s1+' và σ₂='+s2+'<br>'
+      +'e₁=? &nbsp;·&nbsp; e₂=?<br>'
+      +'e<sub>j</sub> = e₁+(e₂−e₁)×(σ<sub>j</sub>−σ₁)/(σ₂−σ₁) = ?<br>'
+      +'S = h₀/(1+e₀)×(e₀−e<sub>j</sub>) = ?';
+    document.getElementById('a5-q').innerHTML=
+      makeQ('a5-e1','e₁ tại σ₁ (bảng)',e1,0.005,'')
+      +makeQ('a5-e2','e₂ tại σ₂ (bảng)',e2,0.005,'')
+      +makeQ('a5-ej','e<sub>j</sub> nội suy',ej,0.006,'')
+      +makeQ('a5-S','S (mm)',S,0.12,'mm');
+  })();
+}
+
+function genBC(stt){
+  var CFG=[
+    {id:'1',title:'Độ lún S tại cấp tải σ (trực tiếp)',fml:'S = h₀ − h<sub>i</sub>',type:'S1'},
+    {id:'2',title:'Độ lún S từ cấp tải này sang cấp tải khác',fml:'S<sub>i→j</sub> = h<sub>i</sub> − h<sub>j</sub>',type:'S2'},
+    {id:'3',title:'Hệ số rỗng e tại cấp tải',fml:'e<sub>i</sub> = e₀ − (S<sub>i</sub>/h₀)×(1+e₀)',type:'e'},
+    {id:'4',title:'Hệ số nén a và m<sub>v</sub>',fml:'a=(e₁−e₂)/(σ₂−σ₁) &nbsp;·&nbsp; m<sub>v</sub>=a/(1+e₁)',type:'amv'},
+    {id:'5',title:'Độ lún tại tải trọng cho trước (nội suy)',fml:'e<sub>j</sub>=e₁+(e₂−e₁)(σ<sub>j</sub>−σ₁)/(σ₂−σ₁) &nbsp;·&nbsp; S=h₀/(1+e₀)(e₀−e<sub>j</sub>)',type:'interp'},
+  ];
+
+  var bhtml='',chtml='';
+  CFG.forEach(function(c,idx){
+    var bid='b'+c.id, cid='c'+c.id;
+    bhtml+='<div class="card"><div class="card-hd"><i class="ti ti-pencil"></i>'
+      +'<div><h2>Bài '+bid.toUpperCase()+' · '+c.title+'</h2></div>'
+      +'<span class="cbadge" style="background:#6A1B9A">✏️ '+bid.toUpperCase()+'</span></div>'
+      +'<div class="card-body">'
+      +'<div class="earth-box" id="'+bid+'-prob">⏳</div>'
+      +'<div class="fml-box"><div class="ftitle">Công thức</div><div class="frow">'+c.fml+'</div></div>'
+      +'<div id="'+bid+'-q"></div></div></div>';
+    chtml+='<div class="card"><div class="card-hd"><i class="ti ti-brain"></i>'
+      +'<div><h2>Bài '+cid.toUpperCase()+' · Tự nhận biết — '+c.title+'</h2></div>'
+      +'<span class="cbadge" style="background:#E65100">🧠 '+cid.toUpperCase()+'</span></div>'
+      +'<div class="card-body">'
+      +'<div class="earth-box" id="'+cid+'-prob">⏳</div>'
+      +'<div id="'+cid+'-q"></div></div></div>';
+  });
+  document.getElementById('b-cards').innerHTML=bhtml;
+  document.getElementById('c-cards').innerHTML=chtml;
+
+  CFG.forEach(function(c,idx){
+    var seedBase=[23,29,31,37,41][idx];
+    genOne('b'+c.id,c.type,stt,seedBase,4101+idx*20);
+    genOne('c'+c.id,c.type,stt,seedBase+97,4201+idx*20);
+  });
+}
+
+function genOne(id,type,stt,s1,s2){
+  var rng=seededRng(stt*s1+s2);
+  var od=genOedo(rng);
+
+  if(type==='S1'){
+    var idx=1+Math.floor(rng()*5);
+    var sig=od.sigma[idx];var hi=od.h[idx];var S=r2(od.h0-hi);
+    document.getElementById(id+'-prob').innerHTML=tableOedo(od)+'<div style="margin-top:8px">Tính S tại σ='+sig+' kG/cm².</div>';
+    document.getElementById(id+'-q').innerHTML=makeQ(id+'-hi','h tại σ (mm)',hi,0.05,'mm')+makeQ(id+'-S','S (mm)',S,0.05,'mm');
+  }
+  else if(type==='S2'){
+    var i1=1+Math.floor(rng()*3);var i2=i1+1+Math.floor(rng()*2);
+    var sig1=od.sigma[i1],sig2=od.sigma[i2];var h1=od.h[i1],h2=od.h[i2];var S=r2(h1-h2);
+    document.getElementById(id+'-prob').innerHTML=tableOedo(od)+'<div style="margin-top:8px">Tính S từ σ='+sig1+' đến σ='+sig2+' kG/cm².</div>';
+    document.getElementById(id+'-q').innerHTML=makeQ(id+'-S','S = h₁−h₂ (mm)',S,0.05,'mm');
+  }
+  else if(type==='e'){
+    var idx=1+Math.floor(rng()*5);
+    var sig=od.sigma[idx];var hi=od.h[idx];var Si=r2(od.h0-hi);
+    var ei=r3(od.e0-(Si/od.h0)*(1+od.e0));
+    document.getElementById(id+'-prob').innerHTML=tableOedo(od)+'<div style="margin-top:8px">Tính e tại σ='+sig+' kG/cm².</div>';
+    document.getElementById(id+'-q').innerHTML=makeQ(id+'-e','e tại σ',ei,0.005,'');
+  }
+  else if(type==='amv'){
+    var i1=Math.floor(rng()*4);var i2=i1+1;
+    var s1v=od.sigma[i1],s2v=od.sigma[i2];var h1=od.h[i1],h2=od.h[i2];
+    var S1=r2(od.h0-h1),S2=r2(od.h0-h2);
+    var e1=r3(od.e0-(S1/od.h0)*(1+od.e0));
+    var e2=r3(od.e0-(S2/od.h0)*(1+od.e0));
+    var a=r3((e1-e2)/(s2v-s1v));var mv=r3(a/(1+e1));
+    document.getElementById(id+'-prob').innerHTML=tableOedo(od)+'<div style="margin-top:8px">Tính a, m<sub>v</sub> từ σ₁='+s1v+' đến σ₂='+s2v+' kG/cm².</div>';
+    document.getElementById(id+'-q').innerHTML=makeQ(id+'-a','a (cm²/kG)',a,r3(Math.abs(a)*0.07+0.001),'cm²/kG')+makeQ(id+'-mv','m<sub>v</sub> (cm²/kG)',mv,r3(Math.abs(mv)*0.07+0.0005),'cm²/kG');
+  }
+  else if(type==='interp'){
+    var i1=1+Math.floor(rng()*3);var i2=i1+1;
+    var s1v=od.sigma[i1],s2v=od.sigma[i2];var h1=od.h[i1],h2=od.h[i2];
+    var e1=r3(od.e0-(r2(od.h0-h1)/od.h0)*(1+od.e0));
+    var e2=r3(od.e0-(r2(od.h0-h2)/od.h0)*(1+od.e0));
+    var t=0.3+rng()*0.4;var sig=r2(s1v+t*(s2v-s1v));
+    var ej=r3(e1+(e2-e1)*(sig-s1v)/(s2v-s1v));
+    var S=r2(od.h0/(1+od.e0)*(od.e0-ej));
+    document.getElementById(id+'-prob').innerHTML=tableOedo(od)+'<div style="margin-top:8px">Tính S tại σ<sub>j</sub>='+sig+' kG/cm² (nội suy).</div>';
+    document.getElementById(id+'-q').innerHTML=makeQ(id+'-ej','e<sub>j</sub> nội suy',ej,0.006,'')+makeQ(id+'-S','S (mm)',S,0.13,'mm');
+  }
+}
+
+window.onload=function(){
+  var sv=getSV();
+  var stt=1;
+  if(sv&&sv.name){
+    document.getElementById('sv-display').textContent=sv.name+' — STT: '+sv.stt;
+    document.getElementById('sv-chip').textContent='#'+sv.stt;
+    document.getElementById('sv-badge').textContent='SV #'+sv.stt;
+    stt=parseInt(sv.stt)||1;
+  } else {
+    document.getElementById('sv-display').textContent='Chưa đăng nhập — về Trang chủ nhập thông tin';
+    document.getElementById('sv-chip').textContent='–';
+  }
+  ANS['mcq-lt1']=null;ANS['mcq-lt2']=null;
+  genA(stt);
+  genBC(stt);
+  TOTAL_QUESTIONS=Object.keys(ANS).length;
+  var minPct=(typeof window.MIN_ATTEMPT_PCT!=='undefined')?window.MIN_ATTEMPT_PCT:5;
+  var btn=document.getElementById('btn-nop');
+  if(btn)btn.innerHTML='🔒 Nộp bài <span style="font-size:10px;opacity:.8">(0%/'+minPct+'%)</span>';
+  updateProg();
+};
+</script>
+</body>
+</html>
