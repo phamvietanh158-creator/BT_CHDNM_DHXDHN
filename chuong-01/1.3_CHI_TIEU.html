@@ -220,6 +220,176 @@ main{max-width:960px;margin:0 auto;padding:20px 20px 80px}
   </div>
 </div>
 
+<!-- ══ NHÓM A — ỨNG DỤNG: SUY CHÉO CHỈ TIÊU ══ -->
+<div class="sec-lbl" style="margin-top:8px"><i class="ti ti-arrows-shuffle" style="font-size:12px"></i> Nhóm A (tiếp) — Ứng dụng: tính chỉ tiêu khác từ chỉ tiêu đã biết</div>
+
+<!-- A7: từ gamma_tn, n, Delta -> w -->
+<div class="card">
+  <div class="card-hd"><i class="ti ti-player-play"></i>
+    <div><h2>Bài A7 — Biết γ<sub>tn</sub>, n, Δ → tính độ ẩm w</h2></div>
+    <span class="cbadge" style="background:#E65100">📐 A7</span>
+  </div>
+  <div class="card-body">
+    <div class="earth-box" id="a7-prob">⏳</div>
+    <div class="fml-box">
+      <div class="ftitle"><i class="ti ti-lightbulb"></i> Quy trình ngược</div>
+      <div class="frow">γ<sub>k</sub> = (1−n)×Δ×10 &nbsp;(suy từ n = 1−γ<sub>k</sub>/(Δ×10))</div>
+      <div class="frow">w = (γ<sub>tn</sub>/γ<sub>k</sub> − 1)×100%</div>
+      <div class="frow" id="a7-hint" style="margin-top:4px;font-size:12px;color:var(--muted)">Thay số: (...)</div>
+    </div>
+    <div id="a7-q"></div>
+  </div>
+</div>
+
+<!-- A8: từ e, w, Delta -> S, gamma_tn -->
+<div class="card">
+  <div class="card-hd"><i class="ti ti-player-play"></i>
+    <div><h2>Bài A8 — Biết e, w, Δ → tính S và γ<sub>tn</sub></h2></div>
+    <span class="cbadge" style="background:#E65100">📐 A8</span>
+  </div>
+  <div class="card-body">
+    <div class="earth-box" id="a8-prob">⏳</div>
+    <div class="fml-box">
+      <div class="ftitle"><i class="ti ti-lightbulb"></i> Quy trình</div>
+      <div class="frow">S = 0.01×w×Δ/e &nbsp;·&nbsp; n = e/(1+e)</div>
+      <div class="frow">γ<sub>k</sub> = (1−n)×Δ×10 &nbsp;·&nbsp; γ<sub>tn</sub> = γ<sub>k</sub>×(1+0.01w)</div>
+      <div class="frow" id="a8-hint" style="margin-top:4px;font-size:12px;color:var(--muted)">Thay số: (...)</div>
+    </div>
+    <div id="a8-q"></div>
+  </div>
+</div>
+
+<!-- A9: từ gamma_k, Delta -> n, e -->
+<div class="card">
+  <div class="card-hd"><i class="ti ti-player-play"></i>
+    <div><h2>Bài A9 — Biết γ<sub>k</sub>, Δ → tính n và e</h2></div>
+    <span class="cbadge" style="background:#E65100">📐 A9</span>
+  </div>
+  <div class="card-body">
+    <div class="earth-box" id="a9-prob">⏳</div>
+    <div class="fml-box">
+      <div class="ftitle"><i class="ti ti-lightbulb"></i> Công thức</div>
+      <div class="frow">n = 1 − γ<sub>k</sub>/(Δ×10) &nbsp;·&nbsp; e = n/(1−n)</div>
+      <div class="frow" id="a9-hint" style="margin-top:4px;font-size:12px;color:var(--muted)">Thay số: (...)</div>
+    </div>
+    <div id="a9-q"></div>
+  </div>
+</div>
+
+<!-- A10: từ gamma_bh, Delta -> e, n -->
+<div class="card">
+  <div class="card-hd"><i class="ti ti-player-play"></i>
+    <div><h2>Bài A10 — Biết γ<sub>bh</sub>, Δ → tính e và n</h2></div>
+    <span class="cbadge" style="background:#E65100">📐 A10</span>
+  </div>
+  <div class="card-body">
+    <div class="earth-box" id="a10-prob">⏳</div>
+    <div class="fml-box">
+      <div class="ftitle"><i class="ti ti-lightbulb"></i> Quy trình ngược từ γ<sub>bh</sub> = (Δ−1)×10/(1+e) + 10</div>
+      <div class="frow">e = (Δ−1)×10/(γ<sub>bh</sub>−10) − 1</div>
+      <div class="frow">n = e/(1+e)</div>
+      <div class="frow" id="a10-hint" style="margin-top:4px;font-size:12px;color:var(--muted)">Thay số: (...)</div>
+    </div>
+    <div id="a10-q"></div>
+  </div>
+</div>
+
+<!-- A11: từ n, S, Delta -> w, gamma_tn -->
+<div class="card">
+  <div class="card-hd"><i class="ti ti-player-play"></i>
+    <div><h2>Bài A11 — Biết n, S, Δ → tính w và γ<sub>tn</sub></h2></div>
+    <span class="cbadge" style="background:#E65100">📐 A11</span>
+  </div>
+  <div class="card-body">
+    <div class="earth-box" id="a11-prob">⏳</div>
+    <div class="fml-box">
+      <div class="ftitle"><i class="ti ti-lightbulb"></i> Quy trình</div>
+      <div class="frow">e = n/(1−n) &nbsp;·&nbsp; w = S×e/(0.01×Δ)</div>
+      <div class="frow">γ<sub>k</sub> = (1−n)×Δ×10 &nbsp;·&nbsp; γ<sub>tn</sub> = γ<sub>k</sub>×(1+0.01w)</div>
+      <div class="frow" id="a11-hint" style="margin-top:4px;font-size:12px;color:var(--muted)">Thay số: (...)</div>
+    </div>
+    <div id="a11-q"></div>
+  </div>
+</div>
+
+<!-- A12: từ gamma_dn, Delta -> e, n -->
+<div class="card">
+  <div class="card-hd"><i class="ti ti-player-play"></i>
+    <div><h2>Bài A12 — Biết γ<sub>dn</sub>, Δ → tính e và n</h2></div>
+    <span class="cbadge" style="background:#E65100">📐 A12</span>
+  </div>
+  <div class="card-body">
+    <div class="earth-box" id="a12-prob">⏳</div>
+    <div class="fml-box">
+      <div class="ftitle"><i class="ti ti-lightbulb"></i> Quy trình ngược từ γ<sub>dn</sub> = (Δ−1)×10/(1+e)</div>
+      <div class="frow">e = (Δ−1)×10/γ<sub>dn</sub> − 1</div>
+      <div class="frow">n = e/(1+e)</div>
+      <div class="frow" id="a12-hint" style="margin-top:4px;font-size:12px;color:var(--muted)">Thay số: (...)</div>
+    </div>
+    <div id="a12-q"></div>
+  </div>
+</div>
+
+<!-- ══ NHÓM A — ỨNG DỤNG THỰC TẾ ══ -->
+<div class="sec-lbl" style="margin-top:8px"><i class="ti ti-building-bridge-2" style="font-size:12px"></i> Nhóm A (tiếp) — Ứng dụng thực tế: sự thay đổi pha trong thi công</div>
+
+<!-- A13: Mưa làm tăng độ ẩm -->
+<div class="card">
+  <div class="card-hd"><i class="ti ti-player-play"></i>
+    <div><h2>Bài A13 — Trời mưa: nước ngấm vào đất, độ ẩm tăng</h2></div>
+    <span class="cbadge" style="background:#1565C0">🌧️ A13</span>
+  </div>
+  <div class="card-body">
+    <div class="earth-box" id="a13-prob">⏳</div>
+    <div class="fml-box">
+      <div class="ftitle"><i class="ti ti-lightbulb"></i> Bản chất vật lý</div>
+      <div class="frow">Mưa → nước thấm vào lỗ rỗng, <b>chiếm chỗ của pha khí</b> (V<sub>h</sub> không đổi, V không đổi nếu đất chưa bị trương nở)</div>
+      <div class="frow">γ<sub>k</sub> không đổi (V<sub>h</sub>, Δ không đổi) &nbsp;·&nbsp; w tăng → γ<sub>tn</sub> = γ<sub>k</sub>×(1+0.01w) <b>tăng</b></div>
+      <div class="frow">S tăng dần đến S=100% (bão hòa) nếu mưa đủ lâu</div>
+      <div class="frow" id="a13-hint" style="margin-top:4px;font-size:12px;color:var(--muted)">Thay số: (...)</div>
+    </div>
+    <div id="a13-q"></div>
+  </div>
+</div>
+
+<!-- A14: Đào đất tự nhiên lên thành đất khai thác (tơi xốp) -->
+<div class="card">
+  <div class="card-hd"><i class="ti ti-player-play"></i>
+    <div><h2>Bài A14 — Đào đất: đất tự nhiên → đất khai thác (tơi xốp ra)</h2></div>
+    <span class="cbadge" style="background:#FF8F00">🚜 A14</span>
+  </div>
+  <div class="card-body">
+    <div class="earth-box" id="a14-prob">⏳</div>
+    <div class="fml-box">
+      <div class="ftitle"><i class="ti ti-lightbulb"></i> Bản chất vật lý — Hệ số tơi xốp K<sub>p</sub></div>
+      <div class="frow">Khi đào, cấu trúc liên kết hạt bị phá vỡ → <b>thể tích lỗ rỗng tăng</b> (n tăng), V<sub>h</sub> không đổi</div>
+      <div class="frow">K<sub>p</sub> = V<sub>khai thác</sub> / V<sub>tự nhiên</sub> &gt; 1 &nbsp;(thường 1.1–1.4 tùy loại đất)</div>
+      <div class="frow">γ<sub>k,khai thác</sub> = γ<sub>k,tự nhiên</sub> / K<sub>p</sub> &nbsp;(γ<sub>k</sub> giảm vì cùng khối lượng hạt nhưng thể tích tăng)</div>
+      <div class="frow" id="a14-hint" style="margin-top:4px;font-size:12px;color:var(--muted)">Thay số: (...)</div>
+    </div>
+    <div id="a14-q"></div>
+  </div>
+</div>
+
+<!-- A15: Đầm nén lu lèn -->
+<div class="card">
+  <div class="card-hd"><i class="ti ti-player-play"></i>
+    <div><h2>Bài A15 — Đầm nén, lu lèn nền đường: đất chặt lại</h2></div>
+    <span class="cbadge" style="background:#2E7D32">🛞 A15</span>
+  </div>
+  <div class="card-body">
+    <div class="earth-box" id="a15-prob">⏳</div>
+    <div class="fml-box">
+      <div class="ftitle"><i class="ti ti-lightbulb"></i> Bản chất vật lý — Hệ số đầm chặt K</div>
+      <div class="frow">Lu lèn ép khí thoát ra khỏi lỗ rỗng → <b>n giảm</b>, V<sub>h</sub> không đổi, γ<sub>k</sub> tăng</div>
+      <div class="frow">K = γ<sub>k,sau đầm</sub> / γ<sub>k,max(Proctor)</sub> &nbsp;(yêu cầu thi công K≥0.90–0.98, xem chương 3.4)</div>
+      <div class="frow">Thể tích giảm: V<sub>sau</sub> = V<sub>trước</sub> × γ<sub>k,trước</sub>/γ<sub>k,sau</sub></div>
+      <div class="frow" id="a15-hint" style="margin-top:4px;font-size:12px;color:var(--muted)">Thay số: (...)</div>
+    </div>
+    <div id="a15-q"></div>
+  </div>
+</div>
+
 <!-- ══ NHÓM B ══ -->
 <div class="sec-lbl" style="margin-top:8px"><i class="ti ti-pencil" style="font-size:12px"></i> Nhóm B — Có công thức · Tự thay số</div>
 <div id="b-cards"></div>
@@ -449,6 +619,186 @@ function genA(stt){
       +makeQ('a6-gbh','γ<sub>bh</sub> (kN/m³)',d.g_bh,0.1,'kN/m³')
       +makeQ('a6-gdn','γ<sub>dn</sub> (kN/m³)',d.g_dn,0.1,'kN/m³');
   })();
+
+  // A7: từ gamma_tn, n, Delta -> w
+  (function(){
+    var rng=seededRng(stt*29+2201);
+    var D=r2(2.65+rng()*0.1);
+    var n=r2(0.32+rng()*0.18);
+    var gk=r2((1-n)*D*10);
+    var w=r1(8+rng()*22);
+    var gtn=r2(gk*(1+0.01*w));
+    document.getElementById('a7-prob').innerHTML=
+      '🏗️ <b>Đề bài</b> (STT <b>'+stt+'</b>): Mẫu đất có trọng lượng riêng tự nhiên γ<sub>tn</sub>=<b>'+gtn+' kN/m³</b>, độ rỗng n=<b>'+n+'</b>, tỷ trọng hạt Δ=<b>'+D+'</b>. '
+      +'Xác định độ ẩm w (%) của mẫu.';
+    document.getElementById('a7-hint').innerHTML=
+      'γ<sub>k</sub> = (1−'+n+')×'+D+'×10 = ?<br>w = ('+gtn+'/γ<sub>k</sub> − 1)×100 = ?';
+    document.getElementById('a7-q').innerHTML=
+      makeQ('a7-gk','γ<sub>k</sub> (kN/m³)',gk,0.15,'kN/m³')
+      +makeQ('a7-w','w (%)',w,0.5,'%');
+  })();
+
+  // A8: từ e, w, Delta -> S, gamma_tn
+  (function(){
+    var rng=seededRng(stt*31+2203);
+    var D=r2(2.65+rng()*0.1);
+    var e=r3(0.55+rng()*0.45);
+    var w=r1(8+rng()*22);
+    var S=r3(0.01*w*D/e);
+    var n=r3(e/(1+e));
+    var gk=r2((1-n)*D*10);
+    var gtn=r2(gk*(1+0.01*w));
+    document.getElementById('a8-prob').innerHTML=
+      '🏗️ <b>Đề bài</b> (STT <b>'+stt+'</b>): Mẫu đất có hệ số rỗng e=<b>'+e+'</b>, độ ẩm w=<b>'+w+'%</b>, tỷ trọng hạt Δ=<b>'+D+'</b>. '
+      +'Xác định độ bão hòa S và trọng lượng riêng tự nhiên γ<sub>tn</sub>.';
+    document.getElementById('a8-hint').innerHTML=
+      'S = 0.01×'+w+'×'+D+'/'+e+' = ?<br>n = '+e+'/(1+'+e+') = ? → γ<sub>k</sub> = (1−n)×'+D+'×10 = ?<br>γ<sub>tn</sub> = γ<sub>k</sub>×(1+0.01×'+w+') = ?';
+    document.getElementById('a8-q').innerHTML=
+      makeQ('a8-S','S = 0.01·w·Δ/e',S,0.015,'')
+      +makeQ('a8-gtn','γ<sub>tn</sub> (kN/m³)',gtn,0.15,'kN/m³');
+  })();
+
+  // A9: từ gamma_k, Delta -> n, e
+  (function(){
+    var rng=seededRng(stt*37+2207);
+    var D=r2(2.65+rng()*0.1);
+    var gk=r2(13.5+rng()*4);
+    var n=r3(1-gk/(D*10));
+    var e=r3(n/(1-n));
+    document.getElementById('a9-prob').innerHTML=
+      '🏗️ <b>Đề bài</b> (STT <b>'+stt+'</b>): Mẫu đất có trọng lượng riêng khô γ<sub>k</sub>=<b>'+gk+' kN/m³</b>, tỷ trọng hạt Δ=<b>'+D+'</b>. '
+      +'Xác định độ rỗng n và hệ số rỗng e.';
+    document.getElementById('a9-hint').innerHTML=
+      'n = 1 − '+gk+'/('+D+'×10) = ?<br>e = n/(1−n) = ?';
+    document.getElementById('a9-q').innerHTML=
+      makeQ('a9-n','n',n,0.01,'')
+      +makeQ('a9-e','e',e,0.015,'');
+  })();
+
+  // A10: từ gamma_bh, Delta -> e, n
+  (function(){
+    var rng=seededRng(stt*41+2209);
+    var D=r2(2.65+rng()*0.1);
+    var e=r3(0.55+rng()*0.45);
+    var gbh=r2((D-1)*10/(1+e)+10);
+    document.getElementById('a10-prob').innerHTML=
+      '🏗️ <b>Đề bài</b> (STT <b>'+stt+'</b>): Mẫu đất bão hòa nước có γ<sub>bh</sub>=<b>'+gbh+' kN/m³</b>, tỷ trọng hạt Δ=<b>'+D+'</b>. '
+      +'Xác định hệ số rỗng e và độ rỗng n.';
+    document.getElementById('a10-hint').innerHTML=
+      'e = ('+D+'−1)×10/('+gbh+'−10) − 1 = ?<br>n = e/(1+e) = ?';
+    var n_check=r3(e/(1+e));
+    document.getElementById('a10-q').innerHTML=
+      makeQ('a10-e','e',e,0.02,'')
+      +makeQ('a10-n','n',n_check,0.012,'');
+  })();
+
+  // A11: từ n, S, Delta -> w, gamma_tn
+  (function(){
+    var rng=seededRng(stt*43+2211);
+    var D=r2(2.65+rng()*0.1);
+    var n=r2(0.32+rng()*0.18);
+    var e=r3(n/(1-n));
+    var S=r2(0.55+rng()*0.4);
+    var w=r1(S*e/(0.01*D));
+    var gk=r2((1-n)*D*10);
+    var gtn=r2(gk*(1+0.01*w));
+    document.getElementById('a11-prob').innerHTML=
+      '🏗️ <b>Đề bài</b> (STT <b>'+stt+'</b>): Mẫu đất có độ rỗng n=<b>'+n+'</b>, độ bão hòa S=<b>'+S+'</b>, tỷ trọng hạt Δ=<b>'+D+'</b>. '
+      +'Xác định độ ẩm w (%) và trọng lượng riêng tự nhiên γ<sub>tn</sub>.';
+    document.getElementById('a11-hint').innerHTML=
+      'e = '+n+'/(1−'+n+') = ?<br>w = '+S+'×e/(0.01×'+D+') = ?<br>γ<sub>k</sub>=(1−'+n+')×'+D+'×10=? → γ<sub>tn</sub>=γ<sub>k</sub>×(1+0.01w)=?';
+    document.getElementById('a11-q').innerHTML=
+      makeQ('a11-w','w (%)',w,0.6,'%')
+      +makeQ('a11-gtn','γ<sub>tn</sub> (kN/m³)',gtn,0.15,'kN/m³');
+  })();
+
+  // A12: từ gamma_dn, Delta -> e, n
+  (function(){
+    var rng=seededRng(stt*47+2213);
+    var D=r2(2.65+rng()*0.1);
+    var e=r3(0.55+rng()*0.45);
+    var gdn=r2((D-1)*10/(1+e));
+    document.getElementById('a12-prob').innerHTML=
+      '🏗️ <b>Đề bài</b> (STT <b>'+stt+'</b>): Mẫu đất ngập nước có trọng lượng riêng đẩy nổi γ<sub>dn</sub>=<b>'+gdn+' kN/m³</b>, tỷ trọng hạt Δ=<b>'+D+'</b>. '
+      +'Xác định hệ số rỗng e và độ rỗng n.';
+    document.getElementById('a12-hint').innerHTML=
+      'e = ('+D+'−1)×10/'+gdn+' − 1 = ?<br>n = e/(1+e) = ?';
+    var n_check2=r3(e/(1+e));
+    document.getElementById('a12-q').innerHTML=
+      makeQ('a12-e','e',e,0.02,'')
+      +makeQ('a12-n','n',n_check2,0.012,'');
+  })();
+
+  // A13: Mưa làm tăng độ ẩm
+  (function(){
+    var rng=seededRng(stt*53+2301);
+    var D=r2(2.65+rng()*0.1);
+    var gk=r2(14.5+rng()*3);
+    var w0=r1(8+rng()*8);
+    var dw=r1(6+rng()*10);
+    var w1=r1(w0+dw);
+    var gtn0=r2(gk*(1+0.01*w0));
+    var gtn1=r2(gk*(1+0.01*w1));
+    var n=r3(1-gk/(D*10));
+    var e=r3(n/(1-n));
+    var S0=r2(0.01*w0*D/e);
+    var S1=r2(0.01*w1*D/e);
+    document.getElementById('a13-prob').innerHTML=
+      '🌧️ <b>Tình huống thực tế</b> (STT <b>'+stt+'</b>): Bãi đất đắp có γ<sub>k</sub>=<b>'+gk+' kN/m³</b> (không đổi), Δ=<b>'+D+'</b>, ban đầu w<sub>0</sub>=<b>'+w0+'%</b>. '
+      +'Sau trận mưa lớn, nước ngấm làm độ ẩm tăng lên w<sub>1</sub>=<b>'+w1+'%</b>. '
+      +'Tính γ<sub>tn</sub> trước và sau mưa, và độ bão hòa S trước/sau mưa (γ<sub>w</sub>=10).';
+    document.getElementById('a13-hint').innerHTML=
+      'γ<sub>tn,0</sub> = '+gk+'×(1+0.01×'+w0+') = ? &nbsp;·&nbsp; γ<sub>tn,1</sub> = '+gk+'×(1+0.01×'+w1+') = ?<br>'
+      +'n = 1−γ<sub>k</sub>/(Δ×10) = ? → e = n/(1−n) = ?<br>'
+      +'S<sub>0</sub> = 0.01×'+w0+'×'+D+'/e = ? &nbsp;·&nbsp; S<sub>1</sub> = 0.01×'+w1+'×'+D+'/e = ?';
+    document.getElementById('a13-q').innerHTML=
+      makeQ('a13-gtn0','γ<sub>tn</sub> trước mưa (kN/m³)',gtn0,0.15,'kN/m³')
+      +makeQ('a13-gtn1','γ<sub>tn</sub> sau mưa (kN/m³)',gtn1,0.15,'kN/m³')
+      +makeQ('a13-S0','S trước mưa',S0,0.02,'')
+      +makeQ('a13-S1','S sau mưa',S1,0.02,'');
+  })();
+
+  // A14: Đào đất tự nhiên -> đất khai thác (tơi xốp)
+  (function(){
+    var rng=seededRng(stt*59+2303);
+    var gk_tn=r2(15+rng()*3);
+    var Kp=r2(1.12+rng()*0.22);
+    var Vtn=Math.round(80+rng()*60);
+    var gk_kt=r2(gk_tn/Kp);
+    var Vkt=r1(Vtn*Kp);
+    document.getElementById('a14-prob').innerHTML=
+      '🚜 <b>Tình huống thực tế</b> (STT <b>'+stt+'</b>): Đất nền tự nhiên có γ<sub>k,tn</sub>=<b>'+gk_tn+' kN/m³</b>. '
+      +'Khi đào lên (phá vỡ cấu trúc liên kết), đất trở nên tơi xốp với hệ số tơi xốp K<sub>p</sub>=<b>'+Kp+'</b>. '
+      +'Thể tích đất tự nhiên cần đào V<sub>tn</sub>=<b>'+Vtn+' m³</b>. '
+      +'Tính γ<sub>k</sub> của đất sau khi đào (đất khai thác) và thể tích đất khai thác.';
+    document.getElementById('a14-hint').innerHTML=
+      'γ<sub>k,khai thác</sub> = '+gk_tn+'/'+Kp+' = ?<br>'
+      +'V<sub>khai thác</sub> = '+Vtn+'×'+Kp+' = ?';
+    document.getElementById('a14-q').innerHTML=
+      makeQ('a14-gk','γ<sub>k</sub> đất khai thác (kN/m³)',gk_kt,0.15,'kN/m³')
+      +makeQ('a14-V','V đất khai thác (m³)',Vkt,1,'m³');
+  })();
+
+  // A15: Đầm nén lu lèn
+  (function(){
+    var rng=seededRng(stt*61+2307);
+    var gk_truoc=r2(13.5+rng()*2.5);
+    var gkmax=r2(17+rng()*2.5);
+    var K=r3(0.86+rng()*0.1);
+    var gk_sau=r2(K*gkmax);
+    var Vtruoc=Math.round(100+rng()*80);
+    var Vsau=r1(Vtruoc*gk_truoc/gk_sau);
+    document.getElementById('a15-prob').innerHTML=
+      '🛞 <b>Tình huống thực tế</b> (STT <b>'+stt+'</b>): Lớp đất đắp trước khi lu lèn có γ<sub>k,trước</sub>=<b>'+gk_truoc+' kN/m³</b>, thể tích V<sub>trước</sub>=<b>'+Vtruoc+' m³</b>. '
+      +'TN Proctor cho γ<sub>k,max</sub>=<b>'+gkmax+' kN/m³</b>. Sau khi lu lèn đạt hệ số đầm chặt K=<b>'+K+'</b>. '
+      +'Tính γ<sub>k</sub> sau khi lu lèn và thể tích đất sau khi lu lèn (khối lượng hạt không đổi).';
+    document.getElementById('a15-hint').innerHTML=
+      'γ<sub>k,sau</sub> = '+K+'×'+gkmax+' = ?<br>'
+      +'V<sub>sau</sub> = V<sub>trước</sub>×γ<sub>k,trước</sub>/γ<sub>k,sau</sub> = '+Vtruoc+'×'+gk_truoc+'/γ<sub>k,sau</sub> = ?';
+    document.getElementById('a15-q').innerHTML=
+      makeQ('a15-gk','γ<sub>k</sub> sau lu lèn (kN/m³)',gk_sau,0.15,'kN/m³')
+      +makeQ('a15-V','V sau lu lèn (m³)',Vsau,Math.max(Vsau*0.02,0.8),'m³');
+  })();
 }
 
 function genBC(stt){
@@ -493,22 +843,22 @@ function genOne(id,type,stt,s1,s2){
 
   if(type==='nm'){
     var d=genType1(rng);
-    document.getElementById(id+'-prob').innerHTML='🏗️ <b>Đề bài</b>: Q='+d.Q+'g, Qk='+d.Qk+'g, V='+d.V+'cm³, Vh='+d.Vh+'cm³. Tính Vr, n, m.';
+    document.getElementById(id+'-prob').innerHTML='🏗️ <b>Đề bài</b>: Q='+d.Q+'g, Q<sub>k</sub>='+d.Qk+'g, V='+d.V+'cm³, V<sub>h</sub>='+d.Vh+'cm³. Tính V<sub>r</sub>, n, m.';
     document.getElementById(id+'-q').innerHTML=makeQ(id+'-Vr','V<sub>r</sub> (cm³)',d.Vr,0.5,'cm³')+makeQ(id+'-n','n',d.n,0.01,'')+makeQ(id+'-m','m',d.m,0.01,'');
   }
   else if(type==='eS'){
     var d=genType1(rng);
-    document.getElementById(id+'-prob').innerHTML='🏗️ <b>Đề bài</b>: Q='+d.Q+'g, Qk='+d.Qk+'g, V='+d.V+'cm³, Vh='+d.Vh+'cm³, Vr='+d.Vr+'cm³. Tính e, S.';
+    document.getElementById(id+'-prob').innerHTML='🏗️ <b>Đề bài</b>: Q='+d.Q+'g, Q<sub>k</sub>='+d.Qk+'g, V='+d.V+'cm³, V<sub>h</sub>='+d.Vh+'cm³, V<sub>r</sub>='+d.Vr+'cm³. Tính e, S.';
     document.getElementById(id+'-q').innerHTML=makeQ(id+'-e','e',d.e,0.01,'')+makeQ(id+'-S','S',d.S,0.01,'');
   }
   else if(type==='wgtn'){
     var d=genType1(rng);
-    document.getElementById(id+'-prob').innerHTML='🏗️ <b>Đề bài</b>: Q='+d.Q+'g, Qk='+d.Qk+'g, V='+d.V+'cm³. Tính w, γ<sub>tn</sub>.';
+    document.getElementById(id+'-prob').innerHTML='🏗️ <b>Đề bài</b>: Q='+d.Q+'g, Q<sub>k</sub>='+d.Qk+'g, V='+d.V+'cm³. Tính w, γ<sub>tn</sub>.';
     document.getElementById(id+'-q').innerHTML=makeQ(id+'-w','w (%)',d.w,0.4,'%')+makeQ(id+'-gtn','γ<sub>tn</sub> (kN/m³)',d.g_tn,0.1,'kN/m³');
   }
   else if(type==='gks'){
     var d=genType1(rng);
-    document.getElementById(id+'-prob').innerHTML='🏗️ <b>Đề bài</b>: Qk='+d.Qk+'g, V='+d.V+'cm³, Vh='+d.Vh+'cm³, Vr='+d.Vr+'cm³. Tính γ<sub>k</sub>, γ<sub>bh</sub>, γ<sub>dn</sub>.';
+    document.getElementById(id+'-prob').innerHTML='🏗️ <b>Đề bài</b>: Q<sub>k</sub>='+d.Qk+'g, V='+d.V+'cm³, V<sub>h</sub>='+d.Vh+'cm³, V<sub>r</sub>='+d.Vr+'cm³. Tính γ<sub>k</sub>, γ<sub>bh</sub>, γ<sub>dn</sub>.';
     document.getElementById(id+'-q').innerHTML=makeQ(id+'-gk','γ<sub>k</sub> (kN/m³)',d.g_k,0.1,'kN/m³')+makeQ(id+'-gbh','γ<sub>bh</sub> (kN/m³)',d.g_bh,0.1,'kN/m³')+makeQ(id+'-gdn','γ<sub>dn</sub> (kN/m³)',d.g_dn,0.1,'kN/m³');
   }
   else if(type==='gkne'){
