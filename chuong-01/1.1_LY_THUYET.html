@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1.1 — Lý Thuyết Tổng Quan Chương 1</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<script src="../config.js" onerror="console.log('[NCM] config.js not found')"></script>
+<style>
+:root{--P:#1565C0;--Pdk:#0D47A1;--Plt:#E3F2FD;--G:#2E7D32;--Glt:#E8F5E9;--Gdk:#1B5E20;--R:#C62828;--Rlt:#FFEBEE;--A:#FF8F00;--Alt:#FFF8E1;--bg:#E8F4FD;--sur:#fff;--brd:#90CAF9;--muted:#546E7A;--text:#0D1B2A;--sans:'Plus Jakarta Sans',sans-serif;--mono:'JetBrains Mono',monospace;--r:12px;--sh:0 2px 16px rgba(21,101,192,.10)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);font-family:var(--sans);color:var(--text);font-size:14px;line-height:1.6}
+.hdr{background:var(--Pdk);color:#fff;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.2)}
+.hdr-in{max-width:960px;margin:0 auto;padding:0 20px;height:60px;display:flex;align-items:center;gap:14px}
+.back-btn{color:rgba(255,255,255,.75);text-decoration:none;font-size:13px;display:flex;align-items:center;gap:5px;padding:6px 10px;border-radius:8px;border:1px solid rgba(255,255,255,.2)}
+.hdr-title{flex:1}.hdr-title h1{font-size:15px;font-weight:700}.hdr-title p{font-size:11px;color:rgba(255,255,255,.6)}
+.hdr-right{display:flex;flex-direction:column;align-items:flex-end;gap:3px}
+.hdr-prog{font-family:var(--mono);font-size:12px;background:rgba(255,255,255,.15);padding:5px 12px;border-radius:20px}
+.sv-badge{font-size:11px;color:rgba(255,255,255,.55);font-family:var(--mono)}
+main{max-width:960px;margin:0 auto;padding:20px 20px 80px}
+.prog-wrap{margin-bottom:18px;background:var(--sur);border-radius:var(--r);border:1px solid var(--brd);padding:12px 18px;box-shadow:var(--sh)}
+.prog-top{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:7px;font-weight:500}
+.prog-track{height:8px;background:var(--Plt);border-radius:4px;overflow:hidden}
+.prog-fill{height:100%;background:var(--P);border-radius:4px;transition:width .4s}
+.sv-infobar{background:linear-gradient(135deg,var(--Pdk),var(--P));color:#fff;border-radius:var(--r);padding:12px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+.card{background:var(--sur);border:1px solid var(--brd);border-radius:var(--r);box-shadow:var(--sh);margin-bottom:16px;overflow:hidden}
+.card-hd{padding:13px 20px;display:flex;align-items:center;gap:11px;border-bottom:1.5px solid var(--brd);background:var(--Plt)}
+.card-hd i{font-size:20px;color:var(--P)}.card-hd h2{font-size:14px;font-weight:700;color:var(--Pdk);flex:1}
+.card-hd p{font-size:11px;color:var(--muted);margin-top:2px}
+.cbadge{font-size:10px;font-weight:700;padding:3px 9px;border-radius:6px;background:var(--P);color:#fff;letter-spacing:.6px;white-space:nowrap}
+.card-body{padding:16px 20px;display:flex;flex-direction:column;gap:12px}
+.theory{background:var(--Plt);border-left:4px solid var(--P);border-radius:0 8px 8px 0;padding:10px 14px;font-size:13px;line-height:1.7}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.tcard{border-radius:8px;padding:11px 13px;font-size:12px;line-height:1.65}
+.tbl-wrap{overflow-x:auto;border-radius:8px;border:1px solid var(--brd)}
+table.tbl{border-collapse:collapse;width:100%;font-size:12px;font-family:var(--sans)}
+table.tbl th{background:var(--Pdk);color:#fff;padding:7px 10px;text-align:left;white-space:nowrap}
+table.tbl td{padding:6px 10px;border-bottom:1px solid var(--Plt)}
+table.tbl tr:nth-child(even) td{background:#F0F7FF}
+.mcq-item{border:1px solid var(--brd);border-radius:var(--r);overflow:hidden;margin-bottom:4px}
+.mcq-q{padding:10px 14px 8px;font-size:13px;font-weight:600;border-bottom:1px solid var(--Plt);background:#FAFCFF;line-height:1.5}
+.mcq-num{font-family:var(--mono);font-size:10px;font-weight:700;color:var(--P);background:var(--Plt);padding:2px 6px;border-radius:4px;margin-right:5px}
+.mcq-opts{display:grid;gap:0}.mcq-opts.g2{grid-template-columns:1fr 1fr}
+.mcq-opt{padding:9px 12px;cursor:pointer;display:flex;align-items:flex-start;gap:8px;font-size:13px;border-top:1px solid var(--Plt);transition:background .12s;line-height:1.4}
+.mcq-opt:hover{background:var(--Plt)}
+.mkey{font-family:var(--mono);font-size:10px;font-weight:700;min-width:20px;height:20px;background:var(--Plt);color:var(--P);border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.mcq-opt.ok{background:var(--Glt)!important}.mcq-opt.ok .mkey{background:var(--G);color:#fff}
+.mcq-opt.no{background:var(--Rlt)!important}.mcq-opt.no .mkey{background:var(--R);color:#fff}
+.mcq-opt.reveal{background:var(--Glt)!important;opacity:.65}.mcq-opt.reveal .mkey{background:var(--G);color:#fff}
+.mcq-exp{padding:9px 13px;font-size:12px;line-height:1.6;border-top:1px solid var(--brd);display:none}
+.mcq-exp.show{display:block}
+.mcq-exp.ok-e{background:var(--Glt);color:var(--Gdk)}
+.mcq-exp.no-e{background:var(--Rlt);color:#b71c1c}
+.btn{padding:8px 16px;border-radius:8px;border:none;cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:6px}
+.btn-sm{padding:6px 13px;font-size:12px}
+.btn-ghost{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25)}
+.btn:hover{opacity:.85}
+.sticky-nav{position:fixed;bottom:0;left:0;right:0;background:var(--Pdk);color:#fff;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;z-index:200;font-size:13px;box-shadow:0 -2px 12px rgba(0,0,0,.2)}
+svg.diag{width:100%;max-width:480px;display:block;margin:8px auto}
+@media(max-width:620px){.three-col{grid-template-columns:1fr}.mcq-opts.g2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="hdr">
+  <div class="hdr-in">
+    <a href="index_C1.html" class="back-btn"><i class="ti ti-arrow-left"></i> Chương 1</a>
+    <div class="hdr-title">
+      <h1>1.1 — Lý Thuyết Tính Chất Vật Lý Của Đất</h1>
+      <p>Cấu tạo 3 pha · Phân nhóm hạt · Nước trong đất</p>
+    </div>
+    <div class="hdr-right">
+      <div class="hdr-prog" id="hdr-prog">0 / 0</div>
+      <div class="sv-badge" id="sv-badge">SV #–</div>
+    </div>
+  </div>
+</header>
+
+<main>
+<div class="prog-wrap">
+  <div class="prog-top"><span><i class="ti ti-target" style="vertical-align:-2px;margin-right:4px"></i>1.1 — Lý Thuyết — Câu hỏi ôn tập</span><span id="prog-text">0 / 0 (0%)</span></div>
+  <div class="prog-track"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+</div>
+<div class="sv-infobar">
+  <i class="ti ti-id-badge" style="font-size:20px;opacity:.8"></i>
+  <div style="flex:1"><div style="font-size:14px;font-weight:700" id="sv-display">đang tải...</div></div>
+  <div id="sv-chip" style="font-family:var(--mono);font-size:22px;font-weight:700;background:rgba(255,255,255,.15);padding:6px 16px;border-radius:8px">–</div>
+</div>
+
+<!-- 1. CẤU TẠO 3 PHA -->
+<div class="card">
+  <div class="card-hd"><i class="ti ti-atom-2"></i>
+    <div><h2>1 — Đất là vật thể 3 pha</h2></div>
+    <span class="cbadge">LT 1.1</span></div>
+  <div class="card-body">
+    <div class="theory">💡 Đất tự nhiên gồm <b>3 thành phần (pha)</b>: hạt rắn (Solid), nước (Water), khí (Air). Tùy điều kiện, đất có thể chỉ còn 2 pha:</div>
+    <div class="three-col">
+      <div class="tcard" style="background:#F5F5F5;border-left:4px solid #757575">
+        <b style="color:#424242">ĐẤT TỰ NHIÊN (3 pha)</b><br>
+        Khí + Nước + Hạt đất<br>
+        Trường hợp phổ biến ngoài thực địa
+      </div>
+      <div class="tcard" style="background:#E8F5E9;border-left:4px solid #2E7D32">
+        <b style="color:#1B5E20">ĐẤT BÃO HÒA (2 pha)</b><br>
+        Nước + Hạt đất (V<sub>w</sub>=V<sub>r</sub>, S=1)<br>
+        Toàn bộ lỗ rỗng chứa đầy nước
+      </div>
+      <div class="tcard" style="background:#FFF8E1;border-left:4px solid #FF8F00">
+        <b style="color:#E65100">ĐẤT KHÔ (2 pha)</b><br>
+        Khí + Hạt đất (V<sub>k</sub>=V<sub>r</sub>, w=0)<br>
+        Hoàn toàn không có nước
+      </div>
+    </div>
+    <div class="mcq-item"><div class="mcq-q"><span class="mcq-num">Q1</span>Đất bão hòa nước có đặc điểm gì về thể tích?</div>
+      <div class="mcq-opts g2">
+        <div class="mcq-opt" id="mco-lt1-0" onclick="pickMCQ('lt1',0,1,'❌ Đây là đặc điểm của đất khô.')"><span class="mkey">A</span><span>V<sub>k</sub> = V<sub>r</sub> (khí lấp đầy lỗ rỗng)</span></div>
+        <div class="mcq-opt" id="mco-lt1-1" onclick="pickMCQ('lt1',1,1,'✓ Bão hòa nghĩa là nước lấp đầy toàn bộ lỗ rỗng: Vw = Vr, độ bão hòa S = 1 (100%).')"><span class="mkey">B</span><span>V<sub>w</sub> = V<sub>r</sub> (nước lấp đầy lỗ rỗng)</span></div>
+        <div class="mcq-opt" id="mco-lt1-2" onclick="pickMCQ('lt1',2,1,'❌')"><span class="mkey">C</span><span>V<sub>k</sub> = V<sub>w</sub></span></div>
+        <div class="mcq-opt" id="mco-lt1-3" onclick="pickMCQ('lt1',3,1,'❌')"><span class="mkey">D</span><span>V<sub>h</sub> = 0</span></div>
+      </div><div class="mcq-exp" id="exp-lt1"></div></div>
+  </div>
+</div>
+
+<!-- 2. PHÂN NHÓM HẠT -->
+<div class="card">
+  <div class="card-hd"><i class="ti ti-grain"></i>
+    <div><h2>2 — Phân nhóm hạt theo kích thước</h2></div>
+    <span class="cbadge">LT 1.1</span></div>
+  <div class="card-body">
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Nhóm hạt</th><th>Kích thước (mm)</th><th>Tính chất</th></tr></thead>
+        <tbody>
+          <tr><td>Đá lăn, dăm cuội, sỏi sạn</td><td>800 – 2</td><td>Thấm nước lớn, không dính, mao dẫn nhỏ</td></tr>
+          <tr><td>Hạt cát (to, vừa, nhỏ)</td><td>2 – 0.05</td><td>Dễ thấm nước, không dính, không dẻo</td></tr>
+          <tr><td>Hạt bụi (to, nhỏ)</td><td>0.05 – 0.005</td><td>Thấm nước nhỏ, ướt hơi dính, gặp nước <b>nở ra</b></td></tr>
+          <tr><td>Hạt sét, hạt keo</td><td>&lt; 0.005</td><td>Hầu như <b>không thấm</b>, khi ẩm có tính dẻo, dính lớn</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="mcq-item"><div class="mcq-q"><span class="mcq-num">Q2</span>Nhận xét đúng về tính chất nhóm hạt?</div>
+      <div class="mcq-opts"  style="grid-template-columns:1fr">
+        <div class="mcq-opt" id="mco-lt2-0" onclick="pickMCQ('lt2',0,2,'❌ Hạt to thấm nước lớn, không dính — ngược lại.')"><span class="mkey">A</span><span>Kích thước hạt càng to, tính thấm nước càng nhỏ, tính dính lớn</span></div>
+        <div class="mcq-opt" id="mco-lt2-1" onclick="pickMCQ('lt2',1,2,'❌ Sét hầu như không thấm.')"><span class="mkey">B</span><span>Các hạt sét có tính thấm nước lớn, có tính dính lớn</span></div>
+        <div class="mcq-opt" id="mco-lt2-2" onclick="pickMCQ('lt2',2,2,'✓ Hạt rời (cát, sỏi) thấm nước lớn, không dính; ngược lại với hạt sét.')"><span class="mkey">C</span><span>Các hạt đất rời có tính thấm nước lớn, không có tính dính</span></div>
+        <div class="mcq-opt" id="mco-lt2-3" onclick="pickMCQ('lt2',3,2,'❌ Hạt bụi gặp nước nở ra, không co vào.')"><span class="mkey">D</span><span>Các hạt bụi gặp nước co vào, tính thấm nước lớn</span></div>
+      </div><div class="mcq-exp" id="exp-lt2"></div></div>
+  </div>
+</div>
+
+<!-- 3. NƯỚC TRONG ĐẤT -->
+<div class="card">
+  <div class="card-hd"><i class="ti ti-droplet"></i>
+    <div><h2>3 — Nước trong đất</h2></div>
+    <span class="cbadge">LT 1.1</span></div>
+  <div class="card-body">
+    <div class="theory">💡 Nước trong đất tồn tại dưới nhiều dạng: <b>nước liên kết</b> (hút bám vào bề mặt hạt, không di chuyển tự do) và <b>nước tự do</b> (nước mao dẫn và nước trọng lực — chịu tác dụng trọng lực, di chuyển trong lỗ rỗng).</div>
+    <div class="mcq-item"><div class="mcq-q"><span class="mcq-num">Q3</span>Loại nước nào trong đất KHÔNG di chuyển tự do dưới tác dụng trọng lực?</div>
+      <div class="mcq-opts g2">
+        <div class="mcq-opt" id="mco-lt3-0" onclick="pickMCQ('lt3',0,0,'✓ Nước liên kết bị hút bám chặt vào bề mặt hạt đất bởi lực hút phân tử, không tuân theo trọng lực.')"><span class="mkey">A</span><span>Nước liên kết</span></div>
+        <div class="mcq-opt" id="mco-lt3-1" onclick="pickMCQ('lt3',1,0,'❌ Nước trọng lực di chuyển tự do theo trọng lực.')"><span class="mkey">B</span><span>Nước trọng lực</span></div>
+        <div class="mcq-opt" id="mco-lt3-2" onclick="pickMCQ('lt3',2,0,'❌')"><span class="mkey">C</span><span>Nước ngầm</span></div>
+        <div class="mcq-opt" id="mco-lt3-3" onclick="pickMCQ('lt3',3,0,'❌')"><span class="mkey">D</span><span>Nước mưa thấm</span></div>
+      </div><div class="mcq-exp" id="exp-lt3"></div></div>
+  </div>
+</div>
+
+<!-- 4. LỘ TRÌNH -->
+<div class="card">
+  <div class="card-hd"><i class="ti ti-map-route"></i>
+    <div><h2>4 — Lộ trình các dạng bài tập Chương 1</h2><p>Bấm vào từng dạng để làm bài tập</p></div>
+    <span class="cbadge">LT 1.1</span></div>
+  <div class="card-body">
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <a href="1.2_RAY_SANG.html" style="display:flex;align-items:center;gap:12px;padding:10px 14px;background:#FAFCFF;border:1px solid var(--brd);border-radius:10px;text-decoration:none;color:inherit">
+        <div style="min-width:32px;height:32px;border-radius:50%;background:var(--P);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px">1</div>
+        <div><div style="font-size:13px;font-weight:700;color:var(--Pdk)">1.2 — Cấu tạo đất & rây sàng</div><div style="font-size:12px;color:var(--muted)">Bảng rây, hàm lượng tích lũy, cấp phối hạt</div></div>
+      </a>
+      <a href="1.3_CHI_TIEU.html" style="display:flex;align-items:center;gap:12px;padding:10px 14px;background:#FAFCFF;border:1px solid var(--brd);border-radius:10px;text-decoration:none;color:inherit">
+        <div style="min-width:32px;height:32px;border-radius:50%;background:var(--P);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px">2</div>
+        <div><div style="font-size:13px;font-weight:700;color:var(--Pdk)">1.3 — Chỉ tiêu vật lý</div><div style="font-size:12px;color:var(--muted)">n, e, S, w, γtn, γk, γbh, γdn</div></div>
+      </a>
+      <a href="1.4_TRANG_THAI.html" style="display:flex;align-items:center;gap:12px;padding:10px 14px;background:#FAFCFF;border:1px solid var(--brd);border-radius:10px;text-decoration:none;color:inherit">
+        <div style="min-width:32px;height:32px;border-radius:50%;background:var(--P);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px">3</div>
+        <div><div style="font-size:13px;font-weight:700;color:var(--Pdk)">1.4 — Trạng thái & phân loại đất</div><div style="font-size:12px;color:var(--muted)">Ip, IL, Dr, tên đất theo TCVN</div></div>
+      </a>
+      <a href="1.5_TONG_HOP.html" style="display:flex;align-items:center;gap:12px;padding:10px 14px;background:#FAFCFF;border:1px solid var(--brd);border-radius:10px;text-decoration:none;color:inherit">
+        <div style="min-width:32px;height:32px;border-radius:50%;background:var(--P);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px">4</div>
+        <div><div style="font-size:13px;font-weight:700;color:var(--Pdk)">1.5 — Ôn tập & tổng hợp công thức</div><div style="font-size:12px;color:var(--muted)">Bảng công thức toàn chương + MCQ ôn tập</div></div>
+      </a>
+    </div>
+  </div>
+</div>
+
+</main>
+<div class="sticky-nav">
+  <span>1.1 · Lý Thuyết Tổng Quan</span>
+  <div style="display:flex;align-items:center;gap:10px">
+    <span id="nav-prog" style="font-family:var(--mono);font-size:12px">0/0</span>
+    <a href="index_C1.html" class="btn btn-sm btn-ghost">← Chương 1</a>
+    <a href="1.2_RAY_SANG.html" class="btn btn-sm btn-ghost">Dạng 1.2 →</a>
+  </div>
+</div>
+<script>
+var ANS={};
+function getSV(){try{return JSON.parse(sessionStorage.getItem('ncm_sv'));}catch(e){return null;}}
+function pickMCQ(name,idx,correct,expText){
+  if(ANS['mcq-'+name]!=null)return;
+  var ok=(idx===correct);
+  document.querySelectorAll('[id^="mco-'+name+'-"]').forEach(function(el){el.style.pointerEvents='none';});
+  document.getElementById('mco-'+name+'-'+idx).className='mcq-opt '+(ok?'ok':'no');
+  if(!ok)document.getElementById('mco-'+name+'-'+correct).className='mcq-opt reveal';
+  var exp=document.getElementById('exp-'+name);
+  if(exp){exp.style.display='block';exp.className='mcq-exp show '+(ok?'ok-e':'no-e');if(expText)exp.innerHTML=expText;}
+  ANS['mcq-'+name]=ok;updateProg();
+}
+function updateProg(){
+  var total=0,done=0;
+  Object.keys(ANS).forEach(function(k){if(ANS[k]!==null&&ANS[k]!==undefined){total++;if(ANS[k]===true)done++;}});
+  var pct=total?Math.round(done/total*100):0;
+  document.getElementById('prog-fill').style.width=pct+'%';
+  document.getElementById('prog-text').textContent=done+' / '+total+' câu đúng ('+pct+'%)';
+  document.getElementById('nav-prog').textContent=done+'/'+total;
+  try{localStorage.setItem('prog_c1_11',JSON.stringify({done:done,total:total}));}catch(e){}
+}
+window.onload=function(){
+  var sv=getSV();
+  if(sv&&sv.name){
+    document.getElementById('sv-display').textContent=sv.name+' — STT: '+sv.stt;
+    document.getElementById('sv-chip').textContent='#'+sv.stt;
+    document.getElementById('sv-badge').textContent='SV #'+sv.stt;
+  } else {
+    document.getElementById('sv-display').textContent='Chưa đăng nhập — về Trang chủ';
+  }
+  ANS['mcq-lt1']=null;ANS['mcq-lt2']=null;ANS['mcq-lt3']=null;
+  updateProg();
+};
+</script>
+</body>
+</html>
