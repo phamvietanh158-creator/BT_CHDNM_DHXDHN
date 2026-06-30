@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>1.1 — Lý Thuyết Tổng Quan Chương 1</title>
+<title>1.1 — Nguồn Gốc Của Đất</title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
 <script src="../config.js" onerror="console.log('[NCM] config.js not found')"></script>
@@ -32,12 +32,8 @@ main{max-width:960px;margin:0 auto;padding:20px 20px 80px}
 .card-body{padding:16px 20px;display:flex;flex-direction:column;gap:12px}
 .theory{background:var(--Plt);border-left:4px solid var(--P);border-radius:0 8px 8px 0;padding:10px 14px;font-size:13px;line-height:1.7}
 .three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .tcard{border-radius:8px;padding:11px 13px;font-size:12px;line-height:1.65}
-.tbl-wrap{overflow-x:auto;border-radius:8px;border:1px solid var(--brd)}
-table.tbl{border-collapse:collapse;width:100%;font-size:12px;font-family:var(--sans)}
-table.tbl th{background:var(--Pdk);color:#fff;padding:7px 10px;text-align:left;white-space:nowrap}
-table.tbl td{padding:6px 10px;border-bottom:1px solid var(--Plt)}
-table.tbl tr:nth-child(even) td{background:#F0F7FF}
 .mcq-item{border:1px solid var(--brd);border-radius:var(--r);overflow:hidden;margin-bottom:4px}
 .mcq-q{padding:10px 14px 8px;font-size:13px;font-weight:600;border-bottom:1px solid var(--Plt);background:#FAFCFF;line-height:1.5}
 .mcq-num{font-family:var(--mono);font-size:10px;font-weight:700;color:var(--P);background:var(--Plt);padding:2px 6px;border-radius:4px;margin-right:5px}
@@ -57,8 +53,7 @@ table.tbl tr:nth-child(even) td{background:#F0F7FF}
 .btn-ghost{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25)}
 .btn:hover{opacity:.85}
 .sticky-nav{position:fixed;bottom:0;left:0;right:0;background:var(--Pdk);color:#fff;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;z-index:200;font-size:13px;box-shadow:0 -2px 12px rgba(0,0,0,.2)}
-svg.diag{width:100%;max-width:480px;display:block;margin:8px auto}
-@media(max-width:620px){.three-col{grid-template-columns:1fr}.mcq-opts.g2{grid-template-columns:1fr}}
+@media(max-width:620px){.three-col{grid-template-columns:1fr}.two-col{grid-template-columns:1fr}.mcq-opts.g2{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -66,8 +61,8 @@ svg.diag{width:100%;max-width:480px;display:block;margin:8px auto}
   <div class="hdr-in">
     <a href="index_C1.html" class="back-btn"><i class="ti ti-arrow-left"></i> Chương 1</a>
     <div class="hdr-title">
-      <h1>1.1 — Lý Thuyết Tính Chất Vật Lý Của Đất</h1>
-      <p>Cấu tạo 3 pha · Phân nhóm hạt · Nước trong đất</p>
+      <h1>1.1 — Nguồn Gốc Của Đất</h1>
+      <p>Phong hóa · Vận chuyển · Trầm tích</p>
     </div>
     <div class="hdr-right">
       <div class="hdr-prog" id="hdr-prog">0 / 0</div>
@@ -78,7 +73,7 @@ svg.diag{width:100%;max-width:480px;display:block;margin:8px auto}
 
 <main>
 <div class="prog-wrap">
-  <div class="prog-top"><span><i class="ti ti-target" style="vertical-align:-2px;margin-right:4px"></i>1.1 — Lý Thuyết — Câu hỏi ôn tập</span><span id="prog-text">0 / 0 (0%)</span></div>
+  <div class="prog-top"><span><i class="ti ti-target" style="vertical-align:-2px;margin-right:4px"></i>1.1 — Nguồn gốc của đất — Câu hỏi ôn tập</span><span id="prog-text">0 / 0 (0%)</span></div>
   <div class="prog-track"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
 </div>
 <div class="sv-infobar">
@@ -87,81 +82,118 @@ svg.diag{width:100%;max-width:480px;display:block;margin:8px auto}
   <div id="sv-chip" style="font-family:var(--mono);font-size:22px;font-weight:700;background:rgba(255,255,255,.15);padding:6px 16px;border-radius:8px">–</div>
 </div>
 
-<!-- 1. CẤU TẠO 3 PHA -->
+<!-- 1. KHÁI NIỆM & QUÁ TRÌNH PHONG HÓA -->
 <div class="card">
-  <div class="card-hd"><i class="ti ti-atom-2"></i>
-    <div><h2>1 — Đất là vật thể 3 pha</h2></div>
+  <div class="card-hd"><i class="ti ti-mountain"></i>
+    <div><h2>1 — Đất là sản phẩm phong hóa của đá gốc</h2></div>
     <span class="cbadge">LT 1.1</span></div>
   <div class="card-body">
-    <div class="theory">💡 Đất tự nhiên gồm <b>3 thành phần (pha)</b>: hạt rắn (Solid), nước (Water), khí (Air). Tùy điều kiện, đất có thể chỉ còn 2 pha:</div>
+    <div class="theory">💡 <b>Đất</b> trong xây dựng là sản phẩm phong hóa của đá gốc dưới tác dụng của các yếu tố vật lý, hóa học và sinh học, sau đó có thể được vận chuyển và lắng đọng (trầm tích) ở vị trí mới. Nguồn gốc hình thành quyết định nhiều tính chất cơ lý quan trọng của đất.</div>
     <div class="three-col">
-      <div class="tcard" style="background:#F5F5F5;border-left:4px solid #757575">
-        <b style="color:#424242">ĐẤT TỰ NHIÊN (3 pha)</b><br>
-        Khí + Nước + Hạt đất<br>
-        Trường hợp phổ biến ngoài thực địa
+      <div class="tcard" style="background:#FFF3E0;border-left:4px solid #E65100">
+        <b style="color:#BF360C">PHONG HÓA VẬT LÝ</b><br>
+        Nứt vỡ cơ học do nhiệt độ, băng giá, áp lực<br>
+        Không thay đổi thành phần hóa học, chỉ vỡ vụn kích thước
+      </div>
+      <div class="tcard" style="background:#E3F2FD;border-left:4px solid #1565C0">
+        <b style="color:#0D47A1">PHONG HÓA HÓA HỌC</b><br>
+        Phản ứng hòa tan, oxy hóa, thủy phân với nước, khí CO₂, O₂<br>
+        Thay đổi thành phần khoáng vật → tạo khoáng sét
       </div>
       <div class="tcard" style="background:#E8F5E9;border-left:4px solid #2E7D32">
-        <b style="color:#1B5E20">ĐẤT BÃO HÒA (2 pha)</b><br>
-        Nước + Hạt đất (V<sub>w</sub>=V<sub>r</sub>, S=1)<br>
-        Toàn bộ lỗ rỗng chứa đầy nước
+        <b style="color:#1B5E20">PHONG HÓA SINH HỌC</b><br>
+        Rễ cây, vi sinh vật, axit hữu cơ phân hủy đá<br>
+        Thường đi kèm phong hóa hóa học
+      </div>
+    </div>
+    <div class="mcq-item"><div class="mcq-q"><span class="mcq-num">Q1</span>Đất trong xây dựng có nguồn gốc từ đâu?</div>
+      <div class="mcq-opts g2">
+        <div class="mcq-opt" id="mco-q1-0" onclick="pickMCQ('q1',0,1,'❌ Đất hình thành từ đá gốc bị phá hủy, không phải sinh ra từ hư không.')"><span class="mkey">A</span><span>Sinh ra độc lập, không liên quan đến đá</span></div>
+        <div class="mcq-opt" id="mco-q1-1" onclick="pickMCQ('q1',1,1,'✓ Đất là sản phẩm phong hóa (vỡ vụn, biến đổi) của đá gốc theo thời gian địa chất.')"><span class="mkey">B</span><span>Sản phẩm phong hóa của đá gốc</span></div>
+        <div class="mcq-opt" id="mco-q1-2" onclick="pickMCQ('q1',2,1,'❌')"><span class="mkey">C</span><span>Chỉ hình thành từ hoạt động núi lửa</span></div>
+        <div class="mcq-opt" id="mco-q1-3" onclick="pickMCQ('q1',3,1,'❌')"><span class="mkey">D</span><span>Chỉ hình thành dưới đáy biển</span></div>
+      </div><div class="mcq-exp" id="exp-q1"></div></div>
+    <div class="mcq-item"><div class="mcq-q"><span class="mcq-num">Q2</span>Phong hóa vật lý làm thay đổi điều gì của đá gốc?</div>
+      <div class="mcq-opts g2">
+        <div class="mcq-opt" id="mco-q2-0" onclick="pickMCQ('q2',0,0,'✓ Phong hóa vật lý chỉ làm đá vỡ vụn về kích thước, không đổi thành phần hóa học.')"><span class="mkey">A</span><span>Kích thước hạt (vỡ vụn cơ học), không đổi thành phần hóa học</span></div>
+        <div class="mcq-opt" id="mco-q2-1" onclick="pickMCQ('q2',1,0,'❌ Đây là phong hóa hóa học.')"><span class="mkey">B</span><span>Thành phần khoáng vật và hóa học</span></div>
+        <div class="mcq-opt" id="mco-q2-2" onclick="pickMCQ('q2',2,0,'❌')"><span class="mkey">C</span><span>Không thay đổi gì cả</span></div>
+        <div class="mcq-opt" id="mco-q2-3" onclick="pickMCQ('q2',3,0,'❌')"><span class="mkey">D</span><span>Chỉ thay đổi màu sắc</span></div>
+      </div><div class="mcq-exp" id="exp-q2"></div></div>
+    <div class="mcq-item"><div class="mcq-q"><span class="mcq-num">Q3</span>Khoáng sét (như kaolinit, montmorillonit) được hình thành chủ yếu qua quá trình nào?</div>
+      <div class="mcq-opts g2">
+        <div class="mcq-opt" id="mco-q3-0" onclick="pickMCQ('q3',0,1,'❌ Phong hóa vật lý chỉ vỡ vụn, không tạo khoáng mới.')"><span class="mkey">A</span><span>Phong hóa vật lý</span></div>
+        <div class="mcq-opt" id="mco-q3-1" onclick="pickMCQ('q3',1,1,'✓ Phong hóa hóa học (thủy phân fenspat, mica...) tạo ra các khoáng sét mới có cấu trúc tinh thể đặc trưng.')"><span class="mkey">B</span><span>Phong hóa hóa học</span></div>
+        <div class="mcq-opt" id="mco-q3-2" onclick="pickMCQ('q3',2,1,'❌')"><span class="mkey">C</span><span>Hoạt động núi lửa</span></div>
+        <div class="mcq-opt" id="mco-q3-3" onclick="pickMCQ('q3',3,1,'❌')"><span class="mkey">D</span><span>Áp lực kiến tạo</span></div>
+      </div><div class="mcq-exp" id="exp-q3"></div></div>
+  </div>
+</div>
+
+<!-- 2. VẬN CHUYỂN VÀ TRẦM TÍCH -->
+<div class="card">
+  <div class="card-hd"><i class="ti ti-route"></i>
+    <div><h2>2 — Vận chuyển và trầm tích đất</h2></div>
+    <span class="cbadge">LT 1.1</span></div>
+  <div class="card-body">
+    <div class="theory">💡 Sau khi phong hóa, vật liệu có thể ở lại tại chỗ (<b>đất tàn tích</b>) hoặc bị các tác nhân (nước, gió, băng, trọng lực) vận chuyển đi nơi khác rồi lắng đọng thành <b>đất trầm tích</b>. Quá trình vận chuyển càng xa, hạt càng được phân loại và mài tròn tốt hơn.</div>
+    <div class="two-col">
+      <div class="tcard" style="background:#F3E5F5;border-left:4px solid #6A1B9A">
+        <b style="color:#4A148C">ĐẤT TÀN TÍCH (Eluvi)</b><br>
+        Ở lại tại chỗ phong hóa, không bị vận chuyển<br>
+        Thành phần hạt không đều, góc cạnh
       </div>
       <div class="tcard" style="background:#FFF8E1;border-left:4px solid #FF8F00">
-        <b style="color:#E65100">ĐẤT KHÔ (2 pha)</b><br>
-        Khí + Hạt đất (V<sub>k</sub>=V<sub>r</sub>, w=0)<br>
-        Hoàn toàn không có nước
+        <b style="color:#E65100">ĐẤT TRẦM TÍCH (Bồi tích/Aluvi)</b><br>
+        Bị nước, gió vận chuyển rồi lắng đọng<br>
+        Hạt tròn cạnh, phân lớp theo kích thước
       </div>
     </div>
-    <div class="mcq-item"><div class="mcq-q"><span class="mcq-num">Q1</span>Đất bão hòa nước có đặc điểm gì về thể tích?</div>
+    <div class="mcq-item"><div class="mcq-q"><span class="mcq-num">Q4</span>Đất tàn tích (eluvi) khác đất trầm tích (bồi tích) ở điểm nào?</div>
       <div class="mcq-opts g2">
-        <div class="mcq-opt" id="mco-lt1-0" onclick="pickMCQ('lt1',0,1,'❌ Đây là đặc điểm của đất khô.')"><span class="mkey">A</span><span>V<sub>k</sub> = V<sub>r</sub> (khí lấp đầy lỗ rỗng)</span></div>
-        <div class="mcq-opt" id="mco-lt1-1" onclick="pickMCQ('lt1',1,1,'✓ Bão hòa nghĩa là nước lấp đầy toàn bộ lỗ rỗng: Vw = Vr, độ bão hòa S = 1 (100%).')"><span class="mkey">B</span><span>V<sub>w</sub> = V<sub>r</sub> (nước lấp đầy lỗ rỗng)</span></div>
-        <div class="mcq-opt" id="mco-lt1-2" onclick="pickMCQ('lt1',2,1,'❌')"><span class="mkey">C</span><span>V<sub>k</sub> = V<sub>w</sub></span></div>
-        <div class="mcq-opt" id="mco-lt1-3" onclick="pickMCQ('lt1',3,1,'❌')"><span class="mkey">D</span><span>V<sub>h</sub> = 0</span></div>
-      </div><div class="mcq-exp" id="exp-lt1"></div></div>
+        <div class="mcq-opt" id="mco-q4-0" onclick="pickMCQ('q4',0,0,'✓ Tàn tích ở nguyên vị trí phong hóa; trầm tích đã bị vận chuyển đi nơi khác rồi lắng đọng.')"><span class="mkey">A</span><span>Tàn tích không bị vận chuyển, trầm tích thì có</span></div>
+        <div class="mcq-opt" id="mco-q4-1" onclick="pickMCQ('q4',1,0,'❌')"><span class="mkey">B</span><span>Tàn tích chỉ có ở đáy biển</span></div>
+        <div class="mcq-opt" id="mco-q4-2" onclick="pickMCQ('q4',2,0,'❌')"><span class="mkey">C</span><span>Không có sự khác biệt</span></div>
+        <div class="mcq-opt" id="mco-q4-3" onclick="pickMCQ('q4',3,0,'❌')"><span class="mkey">D</span><span>Trầm tích chỉ hình thành từ núi lửa</span></div>
+      </div><div class="mcq-exp" id="exp-q4"></div></div>
+    <div class="mcq-item"><div class="mcq-q"><span class="mcq-num">Q5</span>Đất được vận chuyển bởi dòng nước (sông, suối) rồi lắng đọng gọi là gì?</div>
+      <div class="mcq-opts g2">
+        <div class="mcq-opt" id="mco-q5-0" onclick="pickMCQ('q5',0,1,'❌ Đây là đất do gió, gọi là phong tích (eoli).')"><span class="mkey">A</span><span>Đất phong tích (eoli)</span></div>
+        <div class="mcq-opt" id="mco-q5-1" onclick="pickMCQ('q5',1,1,'✓ Đất bồi tích (aluvi) là đất do dòng nước vận chuyển và lắng đọng, phổ biến ở đồng bằng, châu thổ.')"><span class="mkey">B</span><span>Đất bồi tích (aluvi)</span></div>
+        <div class="mcq-opt" id="mco-q5-2" onclick="pickMCQ('q5',2,1,'❌ Đây là đất do băng hà.')"><span class="mkey">C</span><span>Đất băng tích</span></div>
+        <div class="mcq-opt" id="mco-q5-3" onclick="pickMCQ('q5',3,1,'❌')"><span class="mkey">D</span><span>Đất tàn tích</span></div>
+      </div><div class="mcq-exp" id="exp-q5"></div></div>
+    <div class="mcq-item"><div class="mcq-q"><span class="mcq-num">Q6</span>Hạt đất được vận chuyển càng xa (theo dòng nước, gió) thì có xu hướng gì?</div>
+      <div class="mcq-opts g2">
+        <div class="mcq-opt" id="mco-q6-0" onclick="pickMCQ('q6',0,0,'✓ Quãng đường vận chuyển càng dài → hạt càng được mài mòn tròn cạnh và phân loại tốt theo kích thước (do tốc độ dòng giảm dần).')"><span class="mkey">A</span><span>Càng tròn cạnh và phân loại tốt theo kích thước</span></div>
+        <div class="mcq-opt" id="mco-q6-1" onclick="pickMCQ('q6',1,0,'❌')"><span class="mkey">B</span><span>Càng góc cạnh, sắc nhọn hơn</span></div>
+        <div class="mcq-opt" id="mco-q6-2" onclick="pickMCQ('q6',2,0,'❌')"><span class="mkey">C</span><span>Kích thước hạt không đổi</span></div>
+        <div class="mcq-opt" id="mco-q6-3" onclick="pickMCQ('q6',3,0,'❌')"><span class="mkey">D</span><span>Không có quy luật</span></div>
+      </div><div class="mcq-exp" id="exp-q6"></div></div>
   </div>
 </div>
 
-<!-- 2. PHÂN NHÓM HẠT -->
+<!-- 3. PHÂN LOẠI THEO NGUỒN GỐC TÁC NHÂN VẬN CHUYỂN -->
 <div class="card">
-  <div class="card-hd"><i class="ti ti-grain"></i>
-    <div><h2>2 — Phân nhóm hạt theo kích thước</h2></div>
+  <div class="card-hd"><i class="ti ti-list-check"></i>
+    <div><h2>3 — Phân loại đất theo tác nhân vận chuyển</h2></div>
     <span class="cbadge">LT 1.1</span></div>
   <div class="card-body">
-    <div class="tbl-wrap">
-      <table class="tbl">
-        <thead><tr><th>Nhóm hạt</th><th>Kích thước (mm)</th><th>Tính chất</th></tr></thead>
-        <tbody>
-          <tr><td>Đá lăn, dăm cuội, sỏi sạn</td><td>800 – 2</td><td>Thấm nước lớn, không dính, mao dẫn nhỏ</td></tr>
-          <tr><td>Hạt cát (to, vừa, nhỏ)</td><td>2 – 0.05</td><td>Dễ thấm nước, không dính, không dẻo</td></tr>
-          <tr><td>Hạt bụi (to, nhỏ)</td><td>0.05 – 0.005</td><td>Thấm nước nhỏ, ướt hơi dính, gặp nước <b>nở ra</b></td></tr>
-          <tr><td>Hạt sét, hạt keo</td><td>&lt; 0.005</td><td>Hầu như <b>không thấm</b>, khi ẩm có tính dẻo, dính lớn</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="mcq-item"><div class="mcq-q"><span class="mcq-num">Q2</span>Nhận xét đúng về tính chất nhóm hạt?</div>
-      <div class="mcq-opts"  style="grid-template-columns:1fr">
-        <div class="mcq-opt" id="mco-lt2-0" onclick="pickMCQ('lt2',0,2,'❌ Hạt to thấm nước lớn, không dính — ngược lại.')"><span class="mkey">A</span><span>Kích thước hạt càng to, tính thấm nước càng nhỏ, tính dính lớn</span></div>
-        <div class="mcq-opt" id="mco-lt2-1" onclick="pickMCQ('lt2',1,2,'❌ Sét hầu như không thấm.')"><span class="mkey">B</span><span>Các hạt sét có tính thấm nước lớn, có tính dính lớn</span></div>
-        <div class="mcq-opt" id="mco-lt2-2" onclick="pickMCQ('lt2',2,2,'✓ Hạt rời (cát, sỏi) thấm nước lớn, không dính; ngược lại với hạt sét.')"><span class="mkey">C</span><span>Các hạt đất rời có tính thấm nước lớn, không có tính dính</span></div>
-        <div class="mcq-opt" id="mco-lt2-3" onclick="pickMCQ('lt2',3,2,'❌ Hạt bụi gặp nước nở ra, không co vào.')"><span class="mkey">D</span><span>Các hạt bụi gặp nước co vào, tính thấm nước lớn</span></div>
-      </div><div class="mcq-exp" id="exp-lt2"></div></div>
-  </div>
-</div>
-
-<!-- 3. NƯỚC TRONG ĐẤT -->
-<div class="card">
-  <div class="card-hd"><i class="ti ti-droplet"></i>
-    <div><h2>3 — Nước trong đất</h2></div>
-    <span class="cbadge">LT 1.1</span></div>
-  <div class="card-body">
-    <div class="theory">💡 Nước trong đất tồn tại dưới nhiều dạng: <b>nước liên kết</b> (hút bám vào bề mặt hạt, không di chuyển tự do) và <b>nước tự do</b> (nước mao dẫn và nước trọng lực — chịu tác dụng trọng lực, di chuyển trong lỗ rỗng).</div>
-    <div class="mcq-item"><div class="mcq-q"><span class="mcq-num">Q3</span>Loại nước nào trong đất KHÔNG di chuyển tự do dưới tác dụng trọng lực?</div>
+    <div class="theory">💡 Tùy tác nhân vận chuyển (nước, gió, băng hà, trọng lực), đất trầm tích được chia thành nhiều loại với đặc điểm cấu tạo khác nhau, ảnh hưởng trực tiếp đến tính chất xây dựng.</div>
+    <div class="mcq-item"><div class="mcq-q"><span class="mcq-num">Q7</span>Đất hoàng thổ (loess) — lớp đất xốp, mịn ở một số vùng — được hình thành chủ yếu do tác nhân nào vận chuyển?</div>
       <div class="mcq-opts g2">
-        <div class="mcq-opt" id="mco-lt3-0" onclick="pickMCQ('lt3',0,0,'✓ Nước liên kết bị hút bám chặt vào bề mặt hạt đất bởi lực hút phân tử, không tuân theo trọng lực.')"><span class="mkey">A</span><span>Nước liên kết</span></div>
-        <div class="mcq-opt" id="mco-lt3-1" onclick="pickMCQ('lt3',1,0,'❌ Nước trọng lực di chuyển tự do theo trọng lực.')"><span class="mkey">B</span><span>Nước trọng lực</span></div>
-        <div class="mcq-opt" id="mco-lt3-2" onclick="pickMCQ('lt3',2,0,'❌')"><span class="mkey">C</span><span>Nước ngầm</span></div>
-        <div class="mcq-opt" id="mco-lt3-3" onclick="pickMCQ('lt3',3,0,'❌')"><span class="mkey">D</span><span>Nước mưa thấm</span></div>
-      </div><div class="mcq-exp" id="exp-lt3"></div></div>
+        <div class="mcq-opt" id="mco-q7-0" onclick="pickMCQ('q7',0,1,'❌')"><span class="mkey">A</span><span>Dòng nước (sông)</span></div>
+        <div class="mcq-opt" id="mco-q7-1" onclick="pickMCQ('q7',1,1,'✓ Hoàng thổ là đất phong tích — hạt mịn do gió vận chuyển và lắng đọng, đặc trưng có lỗ rỗng lớn, dễ lún sập khi gặp nước.')"><span class="mkey">B</span><span>Gió (phong tích)</span></div>
+        <div class="mcq-opt" id="mco-q7-2" onclick="pickMCQ('q7',2,1,'❌')"><span class="mkey">C</span><span>Băng hà</span></div>
+        <div class="mcq-opt" id="mco-q7-3" onclick="pickMCQ('q7',3,1,'❌')"><span class="mkey">D</span><span>Trọng lực (sườn tích)</span></div>
+      </div><div class="mcq-exp" id="exp-q7"></div></div>
+    <div class="mcq-item"><div class="mcq-q"><span class="mcq-num">Q8</span>Đất sườn tích (deluvi) hình thành như thế nào?</div>
+      <div class="mcq-opts g2">
+        <div class="mcq-opt" id="mco-q8-0" onclick="pickMCQ('q8',0,0,'✓ Vật liệu phong hóa trên sườn dốc di chuyển xuống dưới chủ yếu do trọng lực kết hợp với nước mưa chảy tràn, tích tụ ở chân dốc.')"><span class="mkey">A</span><span>Trọng lực + nước mặt cuốn vật liệu từ sườn dốc xuống chân dốc</span></div>
+        <div class="mcq-opt" id="mco-q8-1" onclick="pickMCQ('q8',1,0,'❌')"><span class="mkey">B</span><span>Lắng đọng dưới đáy biển sâu</span></div>
+        <div class="mcq-opt" id="mco-q8-2" onclick="pickMCQ('q8',2,0,'❌')"><span class="mkey">C</span><span>Gió thổi cát sa mạc</span></div>
+        <div class="mcq-opt" id="mco-q8-3" onclick="pickMCQ('q8',3,0,'❌')"><span class="mkey">D</span><span>Phun trào núi lửa</span></div>
+      </div><div class="mcq-exp" id="exp-q8"></div></div>
   </div>
 </div>
 
@@ -194,15 +226,18 @@ svg.diag{width:100%;max-width:480px;display:block;margin:8px auto}
 
 </main>
 <div class="sticky-nav">
-  <span>1.1 · Lý Thuyết Tổng Quan</span>
+  <span>1.1 · Nguồn Gốc Của Đất</span>
   <div style="display:flex;align-items:center;gap:10px">
     <span id="nav-prog" style="font-family:var(--mono);font-size:12px">0/0</span>
+    <button class="btn btn-sm btn-ghost" id="btn-nop" onclick="submitResult()" style="background:rgba(150,150,150,.35);border-color:rgba(200,200,200,.4)">🔒 Nộp bài <span style="font-size:10px;opacity:.8">(0%/?%)</span></button>
     <a href="index_C1.html" class="btn btn-sm btn-ghost">← Chương 1</a>
     <a href="1.2_RAY_SANG.html" class="btn btn-sm btn-ghost">Dạng 1.2 →</a>
   </div>
 </div>
 <script>
 var ANS={};
+var _submitted=false;
+var TOTAL_QUESTIONS=0;
 function getSV(){try{return JSON.parse(sessionStorage.getItem('ncm_sv'));}catch(e){return null;}}
 function pickMCQ(name,idx,correct,expText){
   if(ANS['mcq-'+name]!=null)return;
@@ -215,13 +250,53 @@ function pickMCQ(name,idx,correct,expText){
   ANS['mcq-'+name]=ok;updateProg();
 }
 function updateProg(){
-  var total=0,done=0;
-  Object.keys(ANS).forEach(function(k){if(ANS[k]!==null&&ANS[k]!==undefined){total++;if(ANS[k]===true)done++;}});
-  var pct=total?Math.round(done/total*100):0;
-  document.getElementById('prog-fill').style.width=pct+'%';
-  document.getElementById('prog-text').textContent=done+' / '+total+' câu đúng ('+pct+'%)';
-  document.getElementById('nav-prog').textContent=done+'/'+total;
-  try{localStorage.setItem('prog_c1_11',JSON.stringify({done:done,total:total}));}catch(e){}
+  var attempted=0,done=0,total=TOTAL_QUESTIONS||Object.keys(ANS).length;
+  Object.keys(ANS).forEach(function(k){if(ANS[k]!==null&&ANS[k]!==undefined){attempted++;if(ANS[k]===true)done++;}});
+  var attemPct=total?Math.round(attempted/total*100):0;
+  var donePct=total?Math.round(done/total*100):0;
+  document.getElementById('prog-fill').style.width=attemPct+'%';
+  document.getElementById('prog-text').textContent='Đã làm: '+attempted+'/'+total+' ('+attemPct+'%) · Đúng: '+done+' ('+donePct+'%)';
+  document.getElementById('nav-prog').textContent=attempted+'/'+total;
+  document.getElementById('hdr-prog').textContent=attempted+' / '+total;
+  try{localStorage.setItem('prog_c1_11',JSON.stringify({done:done,total:total,attempted:attempted}));}catch(e){}
+  if(!_submitted){
+    var minPct=(typeof window.MIN_ATTEMPT_PCT!=='undefined')?window.MIN_ATTEMPT_PCT:5;
+    var btn=document.getElementById('btn-nop');
+    if(btn){
+      var ready=(attemPct>=minPct&&attempted>0);
+      btn.style.background=ready?'rgba(46,125,50,.7)':'rgba(150,150,150,.35)';
+      btn.style.borderColor=ready?'rgba(165,214,167,.6)':'rgba(200,200,200,.4)';
+      btn.innerHTML=(ready?'✅':'🔒')+' Nộp bài <span style="font-size:10px;opacity:.8">('+attemPct+'%/'+minPct+'%)</span>';
+    }
+  }
+}
+function submitResult(){
+  var sv=getSV();
+  if(!sv||!sv.name){alert('⚠️ Chưa đăng nhập. Về trang chủ nhập thông tin trước!');return;}
+  if(_submitted){return;}
+  var total=TOTAL_QUESTIONS||Object.keys(ANS).length;
+  var attempted=0,done=0;
+  Object.keys(ANS).forEach(function(k){if(ANS[k]!==null&&ANS[k]!==undefined){attempted++;if(ANS[k]===true)done++;}});
+  var attemPct=total?Math.round(attempted/total*100):0;
+  var scorePct=total?Math.round(done/total*100):0;
+  if(attempted===0){alert('⚠️ Chưa làm câu nào!');return;}
+  var minPct=(typeof window.MIN_ATTEMPT_PCT!=='undefined')?window.MIN_ATTEMPT_PCT:5;
+  if(attemPct<minPct){alert('⚠️ Cần làm tối thiểu '+minPct+'% số câu mới được nộp! Đã làm: '+attemPct+'%');return;}
+  var workerUrl=(typeof window.WORKER_URL!=='undefined')?window.WORKER_URL:'https://dqt-chdnm.phamvietanh158.workers.dev';
+  fetch(workerUrl,{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({name:sv.name,mssv:sv.mssv,stt:Number(sv.stt)||0,classId:sv.classId,
+      chapterId:'C1-11-NguonGoc',score:scorePct,correct:done,total:total,duration:0})
+  })
+  .then(function(r){return r.json();})
+  .then(function(d){
+    if(d.ok){
+      _submitted=true;
+      var btn=document.getElementById('btn-nop');
+      if(btn){btn.innerHTML='✓ Đã nộp ('+scorePct+'%)';btn.disabled=true;btn.style.background='rgba(46,125,50,.5)';}
+      alert('✅ Nộp thành công! Đúng: '+scorePct+'% ('+done+'/'+total+')');
+    } else {alert('❌ Lỗi: '+(d.error||'Không rõ'));}
+  })
+  .catch(function(err){alert('❌ Không kết nối được Worker: '+err.message);});
 }
 window.onload=function(){
   var sv=getSV();
@@ -232,7 +307,11 @@ window.onload=function(){
   } else {
     document.getElementById('sv-display').textContent='Chưa đăng nhập — về Trang chủ';
   }
-  ANS['mcq-lt1']=null;ANS['mcq-lt2']=null;ANS['mcq-lt3']=null;
+  ['q1','q2','q3','q4','q5','q6','q7','q8'].forEach(function(k){ANS['mcq-'+k]=null;});
+  TOTAL_QUESTIONS=Object.keys(ANS).length;
+  var minPct=(typeof window.MIN_ATTEMPT_PCT!=='undefined')?window.MIN_ATTEMPT_PCT:5;
+  var btn=document.getElementById('btn-nop');
+  if(btn)btn.innerHTML='🔒 Nộp bài <span style="font-size:10px;opacity:.8">(0%/'+minPct+'%)</span>';
   updateProg();
 };
 </script>
