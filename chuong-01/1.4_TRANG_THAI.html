@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1.4 — Trạng Thái & Phân Loại Đất</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<script src="../config.js" onerror="console.log('[NCM] config.js not found')"></script>
+<style>
+:root{--P:#1565C0;--Pdk:#0D47A1;--Plt:#E3F2FD;--G:#2E7D32;--Glt:#E8F5E9;--Gdk:#1B5E20;--R:#C62828;--Rlt:#FFEBEE;--A:#FF8F00;--Alt:#FFF8E1;--bg:#E8F4FD;--sur:#fff;--brd:#90CAF9;--muted:#546E7A;--text:#0D1B2A;--sans:'Plus Jakarta Sans',sans-serif;--mono:'JetBrains Mono',monospace;--r:12px;--sh:0 2px 16px rgba(21,101,192,.10)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);font-family:var(--sans);color:var(--text);font-size:14px;line-height:1.6}
+.hdr{background:var(--Pdk);color:#fff;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.2)}
+.hdr-in{max-width:960px;margin:0 auto;padding:0 20px;height:60px;display:flex;align-items:center;gap:14px}
+.back-btn{color:rgba(255,255,255,.75);text-decoration:none;font-size:13px;display:flex;align-items:center;gap:5px;padding:6px 10px;border-radius:8px;border:1px solid rgba(255,255,255,.2)}
+.hdr-title{flex:1}.hdr-title h1{font-size:15px;font-weight:700}.hdr-title p{font-size:11px;color:rgba(255,255,255,.6)}
+.hdr-right{display:flex;flex-direction:column;align-items:flex-end;gap:3px}
+.hdr-prog{font-family:var(--mono);font-size:12px;background:rgba(255,255,255,.15);padding:5px 12px;border-radius:20px}
+.sv-badge{font-size:11px;color:rgba(255,255,255,.55);font-family:var(--mono)}
+main{max-width:960px;margin:0 auto;padding:20px 20px 80px}
+.prog-wrap{margin-bottom:18px;background:var(--sur);border-radius:var(--r);border:1px solid var(--brd);padding:12px 18px;box-shadow:var(--sh)}
+.prog-top{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:7px;font-weight:500}
+.prog-track{height:8px;background:var(--Plt);border-radius:4px;overflow:hidden}
+.prog-fill{height:100%;background:var(--P);border-radius:4px;transition:width .4s}
+.sv-infobar{background:linear-gradient(135deg,var(--Pdk),var(--P));color:#fff;border-radius:var(--r);padding:12px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+.card{background:var(--sur);border:1px solid var(--brd);border-radius:var(--r);box-shadow:var(--sh);margin-bottom:16px;overflow:hidden}
+.card-hd{padding:13px 20px;display:flex;align-items:center;gap:11px;border-bottom:1.5px solid var(--brd);background:var(--Plt)}
+.card-hd i{font-size:20px;color:var(--P)}.card-hd h2{font-size:14px;font-weight:700;color:var(--Pdk);flex:1}
+.cbadge{font-size:10px;font-weight:700;padding:3px 9px;border-radius:6px;background:var(--P);color:#fff;letter-spacing:.6px;white-space:nowrap}
+.card-body{padding:16px 20px;display:flex;flex-direction:column;gap:12px}
+.fml-box{background:#F8FBFF;border:1.5px solid #BBDEFB;border-left:4px solid var(--P);border-radius:0 8px 8px 0;padding:12px 16px;font-family:var(--mono);font-size:13px;line-height:1.9}
+.ftitle{font-family:var(--sans);font-size:11px;font-weight:700;color:var(--P);text-transform:uppercase;letter-spacing:.7px;margin-bottom:8px}
+.frow{margin-bottom:3px;color:var(--Pdk)}
+.frow em{color:var(--Gdk);font-weight:700;font-style:normal}
+.earth-box{background:#FFF8E1;border-left:4px solid #FF8F00;border-radius:0 8px 8px 0;padding:11px 15px;font-size:13px;line-height:1.7;color:#4E342E}
+.sec-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--P);display:flex;align-items:center;gap:7px;margin:6px 0 12px}
+.sec-lbl::after{content:'';flex:1;height:1px;background:var(--brd)}
+.ans-row{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding:8px 12px;background:#FAFCFF;border:1px solid var(--brd);border-radius:8px}
+.ans-label{font-size:13px;font-weight:600;color:var(--text);flex:1;min-width:200px;font-family:var(--mono)}
+.ans-inp{width:110px;padding:7px 10px;border:1.5px solid var(--brd);border-radius:7px;font-family:var(--mono);font-size:13px;font-weight:700;outline:none;text-align:center}
+.ans-inp.ok{border-color:var(--G);background:var(--Glt);color:var(--Gdk)}
+.ans-inp.no{border-color:var(--R);background:var(--Rlt);color:var(--R)}
+.ans-unit{font-size:12px;color:var(--muted);font-family:var(--mono);white-space:nowrap}
+.chip{font-size:12px;font-weight:700;padding:2px 8px;border-radius:6px;min-width:24px;text-align:center}
+.chip.ok{background:var(--Glt);color:var(--Gdk);border:1px solid #A5D6A7}
+.chip.no{background:var(--Rlt);color:var(--R);border:1px solid #FFCDD2}
+.tbl-wrap{overflow-x:auto;border-radius:8px;border:1px solid var(--brd)}
+table.tbl{border-collapse:collapse;width:100%;font-size:12px;font-family:var(--sans)}
+table.tbl th{background:var(--Pdk);color:#fff;padding:6px 10px;text-align:left;white-space:nowrap}
+table.tbl td{padding:5px 10px;border-bottom:1px solid var(--Plt)}
+table.tbl tr:nth-child(even) td{background:#F0F7FF}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.mcq-wrap{border:1px solid var(--brd);border-radius:var(--r);overflow:hidden;margin-top:4px}
+.mcq-q{padding:10px 14px 8px;font-size:13px;font-weight:600;border-bottom:1px solid var(--Plt);background:#FAFCFF;line-height:1.5}
+.mcq-num{font-family:var(--mono);font-size:10px;font-weight:700;color:var(--P);background:var(--Plt);padding:2px 6px;border-radius:4px;margin-right:5px}
+.mcq-opts{display:grid;gap:0}
+.mcq-opt{padding:9px 12px;cursor:pointer;display:flex;align-items:flex-start;gap:8px;font-size:13px;border-top:1px solid var(--Plt);transition:background .12s;line-height:1.4}
+.mcq-opt:hover{background:var(--Plt)}
+.mkey{font-family:var(--mono);font-size:10px;font-weight:700;min-width:20px;height:20px;background:var(--Plt);color:var(--P);border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.mcq-opt.ok{background:var(--Glt)!important}.mcq-opt.ok .mkey{background:var(--G);color:#fff}
+.mcq-opt.no{background:var(--Rlt)!important}.mcq-opt.no .mkey{background:var(--R);color:#fff}
+.mcq-opt.reveal{background:var(--Glt)!important;opacity:.65}.mcq-opt.reveal .mkey{background:var(--G);color:#fff}
+.btn{padding:8px 16px;border-radius:8px;border:none;cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:6px}
+.btn-sm{padding:6px 13px;font-size:12px}
+.btn-ghost{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25)}
+.btn:hover{opacity:.85}
+.sticky-nav{position:fixed;bottom:0;left:0;right:0;background:var(--Pdk);color:#fff;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;z-index:200;font-size:13px;box-shadow:0 -2px 12px rgba(0,0,0,.2)}
+@media(max-width:620px){.two-col{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="hdr">
+  <div class="hdr-in">
+    <a href="index_C1.html" class="back-btn"><i class="ti ti-arrow-left"></i> Chương 1</a>
+    <div class="hdr-title">
+      <h1>1.4 — Trạng Thái & Phân Loại Đất</h1>
+      <p>I<sub>P</sub>, I<sub>L</sub> (đất dính) · D<sub>r</sub> (đất rời) · Tên đất TCVN</p>
+    </div>
+    <div class="hdr-right">
+      <div class="hdr-prog" id="hdr-prog">0 / 0</div>
+      <div class="sv-badge" id="sv-badge">SV #–</div>
+    </div>
+  </div>
+</header>
+
+<main>
+<div class="prog-wrap">
+  <div class="prog-top"><span><i class="ti ti-target" style="vertical-align:-2px;margin-right:4px"></i>Tiến độ 1.4 — Trạng Thái Đất</span><span id="prog-text">0 / 0 (0%)</span></div>
+  <div class="prog-track"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+</div>
+<div class="sv-infobar">
+  <i class="ti ti-id-badge" style="font-size:20px;opacity:.8"></i>
+  <div style="flex:1"><div style="font-size:14px;font-weight:700" id="sv-display">đang tải...</div>
+  <div style="font-size:12px;color:rgba(255,255,255,.65)">Số liệu sinh theo STT sinh viên</div></div>
+  <div id="sv-chip" style="font-family:var(--mono);font-size:22px;font-weight:700;background:rgba(255,255,255,.15);padding:6px 16px;border-radius:8px">–</div>
+</div>
+
+<!-- LÝ THUYẾT -->
+<div class="card">
+  <div class="card-hd"><i class="ti ti-gauge"></i>
+    <div><h2>Công thức Trạng Thái & Tên Đất TCVN</h2></div>
+    <span class="cbadge">CÔNG THỨC</span></div>
+  <div class="card-body">
+    <div class="two-col">
+      <div class="fml-box">
+        <div class="ftitle"><i class="ti ti-sigma"></i> Đất dính (I<sub>P</sub>, I<sub>L</sub>)</div>
+        <div class="frow">I<sub>P</sub> = W<sub>L</sub> − W<sub>P</sub></div>
+        <div class="frow">I<sub>L</sub> = (w − W<sub>P</sub>) / I<sub>P</sub></div>
+      </div>
+      <div class="fml-box">
+        <div class="ftitle"><i class="ti ti-sigma"></i> Đất rời (D<sub>r</sub>)</div>
+        <div class="frow">D<sub>r</sub> = (e<sub>max</sub>−e) / (e<sub>max</sub>−e<sub>min</sub>) × 100%</div>
+      </div>
+    </div>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Trạng thái đất dính</th><th>Điều kiện I<sub>L</sub></th></tr></thead>
+        <tbody>
+          <tr><td>Cứng (rắn)</td><td>I<sub>L</sub> &lt; 0</td></tr>
+          <tr><td>Nửa cứng</td><td>0 ≤ I<sub>L</sub> &lt; 0.25</td></tr>
+          <tr><td>Dẻo cứng</td><td>0.25 ≤ I<sub>L</sub> &lt; 0.50</td></tr>
+          <tr><td>Dẻo mềm</td><td>0.50 ≤ I<sub>L</sub> &lt; 0.75</td></tr>
+          <tr><td>Dẻo chảy</td><td>0.75 ≤ I<sub>L</sub> ≤ 1.0</td></tr>
+          <tr><td>Chảy</td><td>I<sub>L</sub> &gt; 1.0</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Trạng thái đất rời</th><th>Điều kiện D<sub>r</sub></th><th>Tên đất dính (TCVN)</th><th>Điều kiện I<sub>P</sub></th></tr></thead>
+        <tbody>
+          <tr><td>Rời</td><td>D<sub>r</sub> &lt; 33%</td><td>Cát pha (Á cát)</td><td>1 ≤ I<sub>P</sub> &lt; 7</td></tr>
+          <tr><td>Chặt vừa</td><td>33% ≤ D<sub>r</sub> &lt; 67%</td><td>Sét pha (Á sét)</td><td>7 ≤ I<sub>P</sub> &lt; 17</td></tr>
+          <tr><td>Chặt</td><td>D<sub>r</sub> ≥ 67%</td><td>Sét</td><td>I<sub>P</sub> ≥ 17</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══ NHÓM A ══ -->
+<div class="sec-lbl"><i class="ti ti-player-play" style="font-size:12px"></i> Nhóm A — Bài hướng dẫn đầy đủ</div>
+
+<!-- A1: Ip, IL, trạng thái đất dính -->
+<div class="card">
+  <div class="card-hd"><i class="ti ti-player-play"></i>
+    <div><h2>Bài A1 — Tính I<sub>P</sub>, I<sub>L</sub> và xác định trạng thái đất dính</h2></div>
+    <span class="cbadge" style="background:#E65100">📐 A1</span>
+  </div>
+  <div class="card-body">
+    <div class="earth-box" id="a1-prob">⏳</div>
+    <div class="fml-box">
+      <div class="ftitle"><i class="ti ti-lightbulb"></i> Công thức</div>
+      <div class="frow">I<sub>P</sub> = W<sub>L</sub> − W<sub>P</sub> &nbsp;·&nbsp; I<sub>L</sub> = (w−W<sub>P</sub>)/I<sub>P</sub></div>
+      <div class="frow" id="a1-hint" style="margin-top:4px;font-size:12px;color:var(--muted)">Thay số: (...)</div>
+    </div>
+    <div id="a1-q"></div>
+    <div class="mcq-wrap" id="a1-mcq-wrap" style="display:none">
+      <div class="mcq-q"><span class="mcq-num">?</span>Trạng thái của đất là:</div>
+      <div class="mcq-opts" id="a1-opts"></div>
+    </div>
+  </div>
+</div>
+
+<!-- A2: Dr, trạng thái đất rời -->
+<div class="card">
+  <div class="card-hd"><i class="ti ti-player-play"></i>
+    <div><h2>Bài A2 — Tính độ chặt tương đối D<sub>r</sub> và xác định trạng thái đất rời</h2></div>
+    <span class="cbadge" style="background:#E65100">📐 A2</span>
+  </div>
+  <div class="card-body">
+    <div class="earth-box" id="a2-prob">⏳</div>
+    <div class="fml-box">
+      <div class="ftitle"><i class="ti ti-lightbulb"></i> Công thức</div>
+      <div class="frow">D<sub>r</sub> = (e<sub>max</sub>−e)/(e<sub>max</sub>−e<sub>min</sub>) × 100%</div>
+      <div class="frow" id="a2-hint" style="margin-top:4px;font-size:12px;color:var(--muted)">Thay số: (...)</div>
+    </div>
+    <div id="a2-q"></div>
+    <div class="mcq-wrap" id="a2-mcq-wrap" style="display:none">
+      <div class="mcq-q"><span class="mcq-num">?</span>Trạng thái đất rời:</div>
+      <div class="mcq-opts" id="a2-opts"></div>
+    </div>
+  </div>
+</div>
+
+<!-- A3: Tên đất dính theo Ip -->
+<div class="card">
+  <div class="card-hd"><i class="ti ti-player-play"></i>
+    <div><h2>Bài A3 — Xác định tên đất dính theo I<sub>P</sub> (TCVN)</h2></div>
+    <span class="cbadge" style="background:#E65100">📐 A3</span>
+  </div>
+  <div class="card-body">
+    <div class="earth-box" id="a3-prob">⏳</div>
+    <div class="fml-box">
+      <div class="ftitle"><i class="ti ti-lightbulb"></i> Công thức</div>
+      <div class="frow">I<sub>P</sub> = W<sub>L</sub> − W<sub>P</sub></div>
+      <div class="frow">Á cát: 1≤I<sub>P</sub>&lt;7 · Á sét: 7≤I<sub>P</sub>&lt;17 · Sét: I<sub>P</sub>≥17</div>
+      <div class="frow" id="a3-hint" style="margin-top:4px;font-size:12px;color:var(--muted)">Thay số: (...)</div>
+    </div>
+    <div id="a3-q"></div>
+    <div class="mcq-wrap" id="a3-mcq-wrap" style="display:none">
+      <div class="mcq-q"><span class="mcq-num">?</span>Tên đất theo TCVN:</div>
+      <div class="mcq-opts" id="a3-opts"></div>
+    </div>
+  </div>
+</div>
+
+<!-- A4: Bài tổng hợp - Ip, IL, trạng thái, tên đất -->
+<div class="card">
+  <div class="card-hd"><i class="ti ti-player-play"></i>
+    <div><h2>Bài A4 — Bài tổng hợp: tính I<sub>P</sub>, I<sub>L</sub>, xác định trạng thái VÀ tên đất</h2></div>
+    <span class="cbadge" style="background:#E65100">📐 A4</span>
+  </div>
+  <div class="card-body">
+    <div class="earth-box" id="a4-prob">⏳</div>
+    <div class="fml-box">
+      <div class="ftitle"><i class="ti ti-lightbulb"></i> Quy trình</div>
+      <div class="frow">① I<sub>P</sub> = W<sub>L</sub>−W<sub>P</sub> → tên đất &nbsp;·&nbsp; ② I<sub>L</sub> = (w−W<sub>P</sub>)/I<sub>P</sub> → trạng thái</div>
+      <div class="frow" id="a4-hint" style="margin-top:4px;font-size:12px;color:var(--muted)">Thay số: (...)</div>
+    </div>
+    <div id="a4-q"></div>
+    <div class="mcq-wrap" id="a4-mcq-wrap" style="display:none">
+      <div class="mcq-q"><span class="mcq-num">?</span>Tên đất + trạng thái:</div>
+      <div class="mcq-opts" id="a4-opts"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ NHÓM B ══ -->
+<div class="sec-lbl" style="margin-top:8px"><i class="ti ti-pencil" style="font-size:12px"></i> Nhóm B — Có công thức · Tự thay số</div>
+<div id="b-cards"></div>
+
+<!-- ══ NHÓM C ══ -->
+<div class="sec-lbl" style="margin-top:4px"><i class="ti ti-brain" style="font-size:12px"></i> Nhóm C — Tự nhận biết · Chỉ cho đầu bài</div>
+<div id="c-cards"></div>
+
+</main>
+
+<div class="sticky-nav">
+  <span>1.4 · Trạng Thái Đất</span>
+  <div style="display:flex;align-items:center;gap:10px">
+    <span id="nav-prog">0/0</span>
+    <button class="btn btn-sm btn-ghost" onclick="scrollNext()">▼ Câu chưa làm</button>
+    <button class="btn btn-sm btn-ghost" id="btn-nop" onclick="submitResult()" style="background:rgba(150,150,150,.35);border-color:rgba(200,200,200,.4)">🔒 Nộp bài <span style="font-size:10px;opacity:.8">(0%/?%)</span></button>
+    <a href="1.5_TONG_HOP.html" class="btn btn-sm btn-ghost">Bài tiếp ›</a>
+  </div>
+</div>
+
+<script>
+var ANS={};
+var _submitted=false;
+var TOTAL_QUESTIONS=0;
+function r1(v){return Math.round(v*10)/10}
+function r2(v){return Math.round(v*100)/100}
+function r3(v){return Math.round(v*1000)/1000}
+function seededRng(seed){var s=seed%2147483647;if(s<=0)s+=2147483646;return function(){s=s*16807%2147483647;return(s-1)/2147483646;};}
+function getSV(){try{return JSON.parse(sessionStorage.getItem('ncm_sv'));}catch(e){return null;}}
+function scrollNext(){var inp=document.querySelector('.ans-inp:not(.ok)');if(inp)inp.closest('.ans-row').scrollIntoView({behavior:'smooth',block:'center'});}
+
+function chkFill(id,ans,tol){
+  var inp=document.getElementById(id);var chip=document.getElementById('ck-'+id);
+  if(!inp||!chip)return;
+  var v=parseFloat(inp.value);
+  if(isNaN(v)){inp.classList.remove('ok','no');chip.className='chip';chip.textContent='';ANS[id]=null;updateProg();return;}
+  var ok=Math.abs(v-ans)<=tol;
+  inp.classList.toggle('ok',ok);inp.classList.toggle('no',!ok);
+  chip.className='chip '+(ok?'ok':'no');chip.textContent=ok?'✓':'✗';
+  ANS[id]=ok;
+  checkShowMCQ(id);
+  updateProg();
+}
+function checkShowMCQ(id){
+  if(id==='a1-IL'){var el=document.getElementById('a1-mcq-wrap');if(el)el.style.display='block';}
+  if(id==='a2-Dr'){var el=document.getElementById('a2-mcq-wrap');if(el)el.style.display='block';}
+  if(id==='a3-Ip'){var el=document.getElementById('a3-mcq-wrap');if(el)el.style.display='block';}
+  if(id==='a4-IL'){var el=document.getElementById('a4-mcq-wrap');if(el)el.style.display='block';}
+}
+function makeQ(id,label,ans,tol,unit){
+  ANS[id]=null;
+  return '<div class="ans-row"><span class="ans-label">'+label+'</span>'
+    +'<input class="ans-inp" id="'+id+'" type="number" step="any" placeholder="?" oninput="chkFill(\''+id+'\','+ans+','+tol+')">'
+    +'<span class="ans-unit">'+unit+'</span><span class="chip" id="ck-'+id+'"></span></div>';
+}
+function pickMCQ(name,picked,correct,expText){
+  if(ANS['mcq-'+name]!=null)return;
+  var ok=(picked===correct);
+  document.querySelectorAll('[id^="mco-'+name+'-"]').forEach(function(el){el.style.pointerEvents='none';});
+  document.getElementById('mco-'+name+'-'+picked).className='mcq-opt '+(ok?'ok':'no');
+  if(!ok)document.getElementById('mco-'+name+'-'+correct).className='mcq-opt reveal';
+  ANS['mcq-'+name]=ok;updateProg();
+}
+function makeMCQTrangThaiDinh(name,correct){
+  var opts=['Cứng (rắn) – I<sub>L</sub>&lt;0','Nửa cứng – 0≤I<sub>L</sub>&lt;0.25','Dẻo cứng – 0.25≤I<sub>L</sub>&lt;0.50','Dẻo mềm – 0.50≤I<sub>L</sub>&lt;0.75','Dẻo chảy – 0.75≤I<sub>L</sub>≤1.0','Chảy – I<sub>L</sub>&gt;1.0'];
+  var html=opts.map(function(o,i){return '<div class="mcq-opt" id="mco-'+name+'-'+i+'" onclick="pickMCQ(\''+name+'\','+i+','+correct+')"><span class="mkey">'+String.fromCharCode(65+i)+'</span><span>'+o+'</span></div>';}).join('');
+  document.getElementById(name+'-opts').innerHTML=html;
+  ANS['mcq-'+name]=null;
+}
+function makeMCQTrangThaiRoi(name,correct){
+  var opts=['Rời – D<sub>r</sub>&lt;33%','Chặt vừa – 33%≤D<sub>r</sub>&lt;67%','Chặt – D<sub>r</sub>≥67%'];
+  var html=opts.map(function(o,i){return '<div class="mcq-opt" id="mco-'+name+'-'+i+'" onclick="pickMCQ(\''+name+'\','+i+','+correct+')"><span class="mkey">'+String.fromCharCode(65+i)+'</span><span>'+o+'</span></div>';}).join('');
+  document.getElementById(name+'-opts').innerHTML=html;
+  ANS['mcq-'+name]=null;
+}
+function makeMCQTenDat(name,correct){
+  var opts=['Cát pha (Á cát) – 1≤I<sub>P</sub>&lt;7','Sét pha (Á sét) – 7≤I<sub>P</sub>&lt;17','Sét – I<sub>P</sub>≥17'];
+  var html=opts.map(function(o,i){return '<div class="mcq-opt" id="mco-'+name+'-'+i+'" onclick="pickMCQ(\''+name+'\','+i+','+correct+')"><span class="mkey">'+String.fromCharCode(65+i)+'</span><span>'+o+'</span></div>';}).join('');
+  document.getElementById(name+'-opts').innerHTML=html;
+  ANS['mcq-'+name]=null;
+}
+function makeMCQTenVaTrangThai(name,correct){
+  var opts=[
+    'Cát pha + Dẻo cứng','Sét pha + Dẻo mềm','Sét + Dẻo chảy',
+    'Cát pha + Dẻo mềm','Sét pha + Dẻo cứng','Sét + Nửa cứng'
+  ];
+  var html=opts.map(function(o,i){return '<div class="mcq-opt" id="mco-'+name+'-'+i+'" onclick="pickMCQ(\''+name+'\','+i+','+correct+')"><span class="mkey">'+String.fromCharCode(65+i)+'</span><span>'+o+'</span></div>';}).join('');
+  document.getElementById(name+'-opts').innerHTML=html;
+  ANS['mcq-'+name]=null;
+}
+
+function getTrangThaiDinhIdx(IL){
+  if(IL<0)return 0; if(IL<0.25)return 1; if(IL<0.5)return 2; if(IL<0.75)return 3; if(IL<=1.0)return 4; return 5;
+}
+function getTrangThaiRoiIdx(Dr){
+  if(Dr<33)return 0; if(Dr<67)return 1; return 2;
+}
+function getTenDatIdx(Ip){
+  if(Ip<7)return 0; if(Ip<17)return 1; return 2;
+}
+
+function updateProg(){
+  var attempted=0,done=0,total=TOTAL_QUESTIONS||Object.keys(ANS).length;
+  Object.keys(ANS).forEach(function(k){if(ANS[k]!==null&&ANS[k]!==undefined){attempted++;if(ANS[k]===true)done++;}});
+  var attemPct=total?Math.round(attempted/total*100):0;
+  var donePct=total?Math.round(done/total*100):0;
+  document.getElementById('prog-fill').style.width=attemPct+'%';
+  document.getElementById('prog-text').textContent='Đã làm: '+attempted+'/'+total+' ('+attemPct+'%) · Đúng: '+done+' ('+donePct+'%)';
+  document.getElementById('nav-prog').textContent=attempted+'/'+total;
+  document.getElementById('hdr-prog').textContent=attempted+' / '+total;
+  try{localStorage.setItem('prog_c1_14',JSON.stringify({done:done,total:total,attempted:attempted}));}catch(e){}
+  if(!_submitted){
+    var minPct=(typeof window.MIN_ATTEMPT_PCT!=='undefined')?window.MIN_ATTEMPT_PCT:5;
+    var btn=document.getElementById('btn-nop');
+    if(btn){
+      var ready=(attemPct>=minPct&&attempted>0);
+      btn.style.background=ready?'rgba(46,125,50,.7)':'rgba(150,150,150,.35)';
+      btn.style.borderColor=ready?'rgba(165,214,167,.6)':'rgba(200,200,200,.4)';
+      btn.innerHTML=(ready?'✅':'🔒')+' Nộp bài <span style="font-size:10px;opacity:.8">('+attemPct+'%/'+minPct+'%)</span>';
+    }
+  }
+}
+function submitResult(){
+  var sv=getSV();
+  if(!sv||!sv.name){alert('⚠️ Chưa đăng nhập. Về trang chủ nhập thông tin trước!');return;}
+  if(_submitted){return;}
+  var total=TOTAL_QUESTIONS||Object.keys(ANS).length;
+  var attempted=0,done=0;
+  Object.keys(ANS).forEach(function(k){if(ANS[k]!==null&&ANS[k]!==undefined){attempted++;if(ANS[k]===true)done++;}});
+  var attemPct=total?Math.round(attempted/total*100):0;
+  var scorePct=total?Math.round(done/total*100):0;
+  if(attempted===0){alert('⚠️ Chưa làm câu nào!');return;}
+  var minPct=(typeof window.MIN_ATTEMPT_PCT!=='undefined')?window.MIN_ATTEMPT_PCT:5;
+  if(attemPct<minPct){alert('⚠️ Cần làm tối thiểu '+minPct+'% số câu mới được nộp! Đã làm: '+attemPct+'%');return;}
+  var workerUrl=(typeof window.WORKER_URL!=='undefined')?window.WORKER_URL:'https://dqt-chdnm.phamvietanh158.workers.dev';
+  fetch(workerUrl,{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({name:sv.name,mssv:sv.mssv,stt:Number(sv.stt)||0,classId:sv.classId,
+      chapterId:'C1-14-TrangThai',score:scorePct,correct:done,total:total,duration:0})
+  })
+  .then(function(r){return r.json();})
+  .then(function(d){
+    if(d.ok){
+      _submitted=true;
+      var btn=document.getElementById('btn-nop');
+      if(btn){btn.innerHTML='✓ Đã nộp ('+scorePct+'%)';btn.disabled=true;btn.style.background='rgba(46,125,50,.5)';}
+      alert('✅ Nộp thành công! Đúng: '+scorePct+'% ('+done+'/'+total+')');
+    } else {alert('❌ Lỗi: '+(d.error||'Không rõ'));}
+  })
+  .catch(function(err){alert('❌ Không kết nối được Worker: '+err.message);});
+}
+
+function genA(stt){
+  // A1: Ip, IL, trạng thái đất dính
+  (function(){
+    var rng=seededRng(stt*7+4101);
+    var Wp=r2(18+rng()*12);
+    var Ip=r2(8+rng()*22);
+    var WL=r2(Wp+Ip);
+    var w=r2(Wp+(-0.15+rng()*1.4)*Ip);
+    var IL=r3((w-Wp)/Ip);
+    var ttIdx=getTrangThaiDinhIdx(IL);
+    document.getElementById('a1-prob').innerHTML=
+      '🏗️ <b>Đề bài</b> (STT <b>'+stt+'</b>): Đất sét có giới hạn chảy W<sub>L</sub>=<b>'+WL+'%</b>, giới hạn dẻo W<sub>P</sub>=<b>'+Wp+'%</b>. '
+      +'Độ ẩm tự nhiên w=<b>'+w+'%</b>. Xác định chỉ số dẻo I<sub>P</sub>, độ sệt I<sub>L</sub> và trạng thái của đất.';
+    document.getElementById('a1-hint').innerHTML=
+      'I<sub>P</sub> = '+WL+' − '+Wp+' = ?<br>I<sub>L</sub> = ('+w+'−'+Wp+')/I<sub>P</sub> = ?';
+    document.getElementById('a1-q').innerHTML=
+      makeQ('a1-Ip','I<sub>P</sub> = W<sub>L</sub>−W<sub>P</sub> (%)',Ip,0.15,'%')
+      +makeQ('a1-IL','I<sub>L</sub> = (w−W<sub>P</sub>)/I<sub>P</sub>',IL,0.02,'');
+    makeMCQTrangThaiDinh('a1',ttIdx);
+  })();
+
+  // A2: Dr, trạng thái đất rời
+  (function(){
+    var rng=seededRng(stt*11+4103);
+    var eMin=r3(0.40+rng()*0.15);
+    var eMax=r3(eMin+0.35+rng()*0.25);
+    var DrPct=r2(10+rng()*85);
+    var e=r3(eMax-DrPct/100*(eMax-eMin));
+    var ttIdx=getTrangThaiRoiIdx(DrPct);
+    document.getElementById('a2-prob').innerHTML=
+      '🏗️ <b>Đề bài</b> (STT <b>'+stt+'</b>): Đất cát có hệ số rỗng tự nhiên e=<b>'+e+'</b>. '
+      +'Từ TN xác định được e<sub>max</sub>=<b>'+eMax+'</b> (rời nhất), e<sub>min</sub>=<b>'+eMin+'</b> (chặt nhất). '
+      +'Tính độ chặt tương đối D<sub>r</sub> và xác định trạng thái đất.';
+    document.getElementById('a2-hint').innerHTML=
+      'D<sub>r</sub> = ('+eMax+'−'+e+')/('+eMax+'−'+eMin+')×100 = ?';
+    document.getElementById('a2-q').innerHTML=
+      makeQ('a2-Dr','D<sub>r</sub> (%)',DrPct,1,'%');
+    makeMCQTrangThaiRoi('a2',ttIdx);
+  })();
+
+  // A3: Tên đất dính theo Ip
+  (function(){
+    var rng=seededRng(stt*13+4105);
+    var Wp=r2(16+rng()*14);
+    var loaiIdx=Math.floor(rng()*3);
+    var Ip;
+    if(loaiIdx===0){Ip=r2(1+rng()*5.9);}
+    else if(loaiIdx===1){Ip=r2(7+rng()*9.9);}
+    else{Ip=r2(17+rng()*18);}
+    var WL=r2(Wp+Ip);
+    document.getElementById('a3-prob').innerHTML=
+      '🏗️ <b>Đề bài</b> (STT <b>'+stt+'</b>): Đất dính có W<sub>L</sub>=<b>'+WL+'%</b>, W<sub>P</sub>=<b>'+Wp+'%</b>. '
+      +'Xác định chỉ số dẻo I<sub>P</sub> và tên đất theo TCVN.';
+    document.getElementById('a3-hint').innerHTML=
+      'I<sub>P</sub> = '+WL+' − '+Wp+' = ?';
+    document.getElementById('a3-q').innerHTML=
+      makeQ('a3-Ip','I<sub>P</sub> (%)',Ip,0.15,'%');
+    makeMCQTenDat('a3',loaiIdx);
+  })();
+
+  // A4: Tổng hợp - Ip, IL, trạng thái, tên đất
+  (function(){
+    var rng=seededRng(stt*17+4107);
+    var Wp=r2(17+rng()*13);
+    var loaiIdx=Math.floor(rng()*3);
+    var Ip;
+    if(loaiIdx===0){Ip=r2(1+rng()*5.9);}
+    else if(loaiIdx===1){Ip=r2(7+rng()*9.9);}
+    else{Ip=r2(17+rng()*15);}
+    var WL=r2(Wp+Ip);
+    var w=r2(Wp+(-0.1+rng()*1.2)*Ip);
+    var IL=r3((w-Wp)/Ip);
+    var ttIdx=getTrangThaiDinhIdx(IL);
+    // gộp idx tên đất + trạng thái thành 1 mã 6 lựa chọn đại diện (tao chỉ map 1 lựa chọn đúng cụ thể)
+    var combos=[
+      {name:'Cát pha',state:'Dẻo cứng'},{name:'Sét pha',state:'Dẻo mềm'},{name:'Sét',state:'Dẻo chảy'},
+      {name:'Cát pha',state:'Dẻo mềm'},{name:'Sét pha',state:'Dẻo cứng'},{name:'Sét',state:'Nửa cứng'}
+    ];
+    var tenDatArr=['Cát pha','Sét pha','Sét'];
+    var ttArr=['Cứng (rắn)','Nửa cứng','Dẻo cứng','Dẻo mềm','Dẻo chảy','Chảy'];
+    var correctCombo=tenDatArr[loaiIdx]+' + '+ttArr[ttIdx];
+    document.getElementById('a4-prob').innerHTML=
+      '🏗️ <b>Đề bài</b> (STT <b>'+stt+'</b>): Đất dính có W<sub>L</sub>=<b>'+WL+'%</b>, W<sub>P</sub>=<b>'+Wp+'%</b>, độ ẩm tự nhiên w=<b>'+w+'%</b>. '
+      +'Xác định I<sub>P</sub>, tên đất theo TCVN, I<sub>L</sub> và trạng thái của đất.';
+    document.getElementById('a4-hint').innerHTML=
+      'I<sub>P</sub> = '+WL+'−'+Wp+' = ? → tên đất theo bảng<br>'
+      +'I<sub>L</sub> = ('+w+'−'+Wp+')/I<sub>P</sub> = ? → trạng thái theo bảng';
+    document.getElementById('a4-q').innerHTML=
+      makeQ('a4-Ip','① I<sub>P</sub> (%)',Ip,0.15,'%')
+      +makeQ('a4-IL','② I<sub>L</sub>',IL,0.02,'');
+    // MCQ riêng cho A4: render trực tiếp đáp án đúng = correctCombo trong list cố định, tìm idx
+    var optList=['Cát pha + Dẻo cứng','Sét pha + Dẻo mềm','Sét + Dẻo chảy','Cát pha + Dẻo mềm','Sét pha + Dẻo cứng','Sét + Nửa cứng'];
+    var foundIdx=optList.indexOf(correctCombo);
+    if(foundIdx<0){
+      // nếu tổ hợp không nằm trong list cố định, thay option đầu bằng đáp án đúng
+      optList[0]=correctCombo;foundIdx=0;
+    }
+    var html=optList.map(function(o,i){return '<div class="mcq-opt" id="mco-a4-'+i+'" onclick="pickMCQ(\'a4\','+i+','+foundIdx+')"><span class="mkey">'+String.fromCharCode(65+i)+'</span><span>'+o+'</span></div>';}).join('');
+    document.getElementById('a4-opts').innerHTML=html;
+    ANS['mcq-a4']=null;
+  })();
+}
+
+function genBC(stt){
+  var CFG=[
+    {id:'1',title:'I<sub>P</sub>, I<sub>L</sub> và trạng thái đất dính',fml:'I<sub>P</sub>=W<sub>L</sub>−W<sub>P</sub> &nbsp;·&nbsp; I<sub>L</sub>=(w−W<sub>P</sub>)/I<sub>P</sub>',type:'dinh'},
+    {id:'2',title:'D<sub>r</sub> và trạng thái đất rời',fml:'D<sub>r</sub>=(e<sub>max</sub>−e)/(e<sub>max</sub>−e<sub>min</sub>)×100%',type:'roi'},
+    {id:'3',title:'Tên đất dính theo I<sub>P</sub> (TCVN)',fml:'I<sub>P</sub>=W<sub>L</sub>−W<sub>P</sub> &nbsp;·&nbsp; Tra bảng tên đất',type:'ten'},
+    {id:'4',title:'Bài tổng hợp: I<sub>P</sub>, I<sub>L</sub>, tên đất + trạng thái',fml:'I<sub>P</sub>→tên đất &nbsp;·&nbsp; I<sub>L</sub>→trạng thái',type:'tonghop'},
+  ];
+
+  var bhtml='',chtml='';
+  CFG.forEach(function(c,idx){
+    var bid='b'+c.id, cid='c'+c.id;
+    bhtml+='<div class="card"><div class="card-hd"><i class="ti ti-pencil"></i>'
+      +'<div><h2>Bài '+bid.toUpperCase()+' · '+c.title+'</h2></div>'
+      +'<span class="cbadge" style="background:#6A1B9A">✏️ '+bid.toUpperCase()+'</span></div>'
+      +'<div class="card-body">'
+      +'<div class="earth-box" id="'+bid+'-prob">⏳</div>'
+      +'<div class="fml-box"><div class="ftitle">Công thức</div><div class="frow">'+c.fml+'</div></div>'
+      +'<div id="'+bid+'-q"></div>'
+      +'<div class="mcq-wrap" id="'+bid+'-mcq-wrap" style="display:none"><div class="mcq-q"><span class="mcq-num">?</span>Kết luận:</div><div class="mcq-opts" id="'+bid+'-opts"></div></div>'
+      +'</div></div>';
+    chtml+='<div class="card"><div class="card-hd"><i class="ti ti-brain"></i>'
+      +'<div><h2>Bài '+cid.toUpperCase()+' · Tự nhận biết — '+c.title+'</h2></div>'
+      +'<span class="cbadge" style="background:#E65100">🧠 '+cid.toUpperCase()+'</span></div>'
+      +'<div class="card-body">'
+      +'<div class="earth-box" id="'+cid+'-prob">⏳</div>'
+      +'<div id="'+cid+'-q"></div>'
+      +'<div class="mcq-wrap" id="'+cid+'-mcq-wrap" style="display:none"><div class="mcq-q"><span class="mcq-num">?</span>Kết luận:</div><div class="mcq-opts" id="'+cid+'-opts"></div></div>'
+      +'</div></div>';
+  });
+  document.getElementById('b-cards').innerHTML=bhtml;
+  document.getElementById('c-cards').innerHTML=chtml;
+
+  CFG.forEach(function(c,idx){
+    var seedBase=[23,29,31,37][idx];
+    genOne('b'+c.id,c.type,stt,seedBase,5101+idx*20);
+    genOne('c'+c.id,c.type,stt,seedBase+97,5201+idx*20);
+  });
+}
+
+function genOne(id,type,stt,s1,s2){
+  var rng=seededRng(stt*s1+s2);
+
+  if(type==='dinh'){
+    var Wp=r2(18+rng()*12);var Ip=r2(8+rng()*22);var WL=r2(Wp+Ip);
+    var w=r2(Wp+(-0.15+rng()*1.4)*Ip);var IL=r3((w-Wp)/Ip);
+    var ttIdx=getTrangThaiDinhIdx(IL);
+    document.getElementById(id+'-prob').innerHTML='🏗️ <b>Đề bài</b>: Đất sét W<sub>L</sub>='+WL+'%, W<sub>P</sub>='+Wp+'%, w='+w+'%. Tính I<sub>P</sub>, I<sub>L</sub>, trạng thái.';
+    document.getElementById(id+'-q').innerHTML=makeQ(id+'-Ip','I<sub>P</sub> (%)',Ip,0.15,'%')+makeQ(id+'-IL','I<sub>L</sub>',IL,0.02,'');
+    var origOnInput=document.getElementById(id+'-IL');
+    // ghi đè để hiện MCQ tương ứng id
+    origOnInput.setAttribute('oninput',"chkFill('"+id+"-IL',"+IL+",0.02);document.getElementById('"+id+"-mcq-wrap').style.display='block';");
+    makeMCQTrangThaiDinhFor(id,ttIdx);
+  }
+  else if(type==='roi'){
+    var eMin=r3(0.40+rng()*0.15);var eMax=r3(eMin+0.35+rng()*0.25);
+    var DrPct=r2(10+rng()*85);var e=r3(eMax-DrPct/100*(eMax-eMin));
+    var ttIdx=getTrangThaiRoiIdx(DrPct);
+    document.getElementById(id+'-prob').innerHTML='🏗️ <b>Đề bài</b>: Đất cát e='+e+', e<sub>max</sub>='+eMax+', e<sub>min</sub>='+eMin+'. Tính D<sub>r</sub>, trạng thái.';
+    document.getElementById(id+'-q').innerHTML=makeQ(id+'-Dr','D<sub>r</sub> (%)',DrPct,1,'%');
+    var inp=document.getElementById(id+'-Dr');
+    inp.setAttribute('oninput',"chkFill('"+id+"-Dr',"+DrPct+",1);document.getElementById('"+id+"-mcq-wrap').style.display='block';");
+    makeMCQTrangThaiRoiFor(id,ttIdx);
+  }
+  else if(type==='ten'){
+    var Wp=r2(16+rng()*14);var loaiIdx=Math.floor(rng()*3);var Ip;
+    if(loaiIdx===0){Ip=r2(1+rng()*5.9);}else if(loaiIdx===1){Ip=r2(7+rng()*9.9);}else{Ip=r2(17+rng()*18);}
+    var WL=r2(Wp+Ip);
+    document.getElementById(id+'-prob').innerHTML='🏗️ <b>Đề bài</b>: Đất dính W<sub>L</sub>='+WL+'%, W<sub>P</sub>='+Wp+'%. Tính I<sub>P</sub> và tên đất.';
+    document.getElementById(id+'-q').innerHTML=makeQ(id+'-Ip','I<sub>P</sub> (%)',Ip,0.15,'%');
+    var inp=document.getElementById(id+'-Ip');
+    inp.setAttribute('oninput',"chkFill('"+id+"-Ip',"+Ip+",0.15);document.getElementById('"+id+"-mcq-wrap').style.display='block';");
+    makeMCQTenDatFor(id,loaiIdx);
+  }
+  else if(type==='tonghop'){
+    var Wp=r2(17+rng()*13);var loaiIdx=Math.floor(rng()*3);var Ip;
+    if(loaiIdx===0){Ip=r2(1+rng()*5.9);}else if(loaiIdx===1){Ip=r2(7+rng()*9.9);}else{Ip=r2(17+rng()*15);}
+    var WL=r2(Wp+Ip);var w=r2(Wp+(-0.1+rng()*1.2)*Ip);var IL=r3((w-Wp)/Ip);
+    var ttIdx=getTrangThaiDinhIdx(IL);
+    var tenDatArr=['Cát pha','Sét pha','Sét'];var ttArr=['Cứng (rắn)','Nửa cứng','Dẻo cứng','Dẻo mềm','Dẻo chảy','Chảy'];
+    var correctCombo=tenDatArr[loaiIdx]+' + '+ttArr[ttIdx];
+    document.getElementById(id+'-prob').innerHTML='🏗️ <b>Đề bài</b>: Đất dính W<sub>L</sub>='+WL+'%, W<sub>P</sub>='+Wp+'%, w='+w+'%. Tính I<sub>P</sub>, I<sub>L</sub>, tên đất, trạng thái.';
+    document.getElementById(id+'-q').innerHTML=makeQ(id+'-Ip','I<sub>P</sub> (%)',Ip,0.15,'%')+makeQ(id+'-IL','I<sub>L</sub>',IL,0.02,'');
+    var inp=document.getElementById(id+'-IL');
+    inp.setAttribute('oninput',"chkFill('"+id+"-IL',"+IL+",0.02);document.getElementById('"+id+"-mcq-wrap').style.display='block';");
+    var optList=['Cát pha + Dẻo cứng','Sét pha + Dẻo mềm','Sét + Dẻo chảy','Cát pha + Dẻo mềm','Sét pha + Dẻo cứng','Sét + Nửa cứng'];
+    var foundIdx=optList.indexOf(correctCombo);
+    if(foundIdx<0){optList[0]=correctCombo;foundIdx=0;}
+    var html=optList.map(function(o,i){return '<div class="mcq-opt" id="mco-'+id+'-'+i+'" onclick="pickMCQ(\''+id+'\','+i+','+foundIdx+')"><span class="mkey">'+String.fromCharCode(65+i)+'</span><span>'+o+'</span></div>';}).join('');
+    document.getElementById(id+'-opts').innerHTML=html;
+    ANS['mcq-'+id]=null;
+  }
+}
+
+function makeMCQTrangThaiDinhFor(id,correct){
+  var opts=['Cứng (rắn) – I<sub>L</sub>&lt;0','Nửa cứng – 0≤I<sub>L</sub>&lt;0.25','Dẻo cứng – 0.25≤I<sub>L</sub>&lt;0.50','Dẻo mềm – 0.50≤I<sub>L</sub>&lt;0.75','Dẻo chảy – 0.75≤I<sub>L</sub>≤1.0','Chảy – I<sub>L</sub>&gt;1.0'];
+  var html=opts.map(function(o,i){return '<div class="mcq-opt" id="mco-'+id+'-'+i+'" onclick="pickMCQ(\''+id+'\','+i+','+correct+')"><span class="mkey">'+String.fromCharCode(65+i)+'</span><span>'+o+'</span></div>';}).join('');
+  document.getElementById(id+'-opts').innerHTML=html;
+  ANS['mcq-'+id]=null;
+}
+function makeMCQTrangThaiRoiFor(id,correct){
+  var opts=['Rời – D<sub>r</sub>&lt;33%','Chặt vừa – 33%≤D<sub>r</sub>&lt;67%','Chặt – D<sub>r</sub>≥67%'];
+  var html=opts.map(function(o,i){return '<div class="mcq-opt" id="mco-'+id+'-'+i+'" onclick="pickMCQ(\''+id+'\','+i+','+correct+')"><span class="mkey">'+String.fromCharCode(65+i)+'</span><span>'+o+'</span></div>';}).join('');
+  document.getElementById(id+'-opts').innerHTML=html;
+  ANS['mcq-'+id]=null;
+}
+function makeMCQTenDatFor(id,correct){
+  var opts=['Cát pha (Á cát) – 1≤I<sub>P</sub>&lt;7','Sét pha (Á sét) – 7≤I<sub>P</sub>&lt;17','Sét – I<sub>P</sub>≥17'];
+  var html=opts.map(function(o,i){return '<div class="mcq-opt" id="mco-'+id+'-'+i+'" onclick="pickMCQ(\''+id+'\','+i+','+correct+')"><span class="mkey">'+String.fromCharCode(65+i)+'</span><span>'+o+'</span></div>';}).join('');
+  document.getElementById(id+'-opts').innerHTML=html;
+  ANS['mcq-'+id]=null;
+}
+
+window.onload=function(){
+  var sv=getSV();
+  var stt=1;
+  if(sv&&sv.name){
+    document.getElementById('sv-display').textContent=sv.name+' — STT: '+sv.stt;
+    document.getElementById('sv-chip').textContent='#'+sv.stt;
+    document.getElementById('sv-badge').textContent='SV #'+sv.stt;
+    stt=parseInt(sv.stt)||1;
+  } else {
+    document.getElementById('sv-display').textContent='Chưa đăng nhập — về Trang chủ nhập thông tin';
+    document.getElementById('sv-chip').textContent='–';
+  }
+  genA(stt);
+  genBC(stt);
+  TOTAL_QUESTIONS=Object.keys(ANS).length;
+  var minPct=(typeof window.MIN_ATTEMPT_PCT!=='undefined')?window.MIN_ATTEMPT_PCT:5;
+  var btn=document.getElementById('btn-nop');
+  if(btn)btn.innerHTML='🔒 Nộp bài <span style="font-size:10px;opacity:.8">(0%/'+minPct+'%)</span>';
+  updateProg();
+};
+</script>
+</body>
+</html>
