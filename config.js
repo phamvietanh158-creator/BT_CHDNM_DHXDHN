@@ -135,7 +135,7 @@ window.CHAPTER_SCHEDULE = {
     minPct: 70,
   },
   c6: {          // Chương 6 — Áp Lực Đất Lên Tường Chắn
-    active: false,
+    active: true,
     open:   null,
     close:  null,
     minPct: 70,
