@@ -46,7 +46,7 @@ window.CHAPTER_SCHEDULE = {
     close:  null,
   },
   c6: {          // Chương 6 — Áp Lực Đất Lên Tường Chắn
-    active: false,
+    active: true,
     open:   null,
     close:  null,
   },
