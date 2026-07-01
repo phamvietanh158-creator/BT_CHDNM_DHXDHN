@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<script src="../config.js"></script>
 <style>
 :root{
   --P:#1565C0;--Pdk:#0D47A1;--Plt:#E3F2FD;--Pmd:#1976D2;
@@ -131,6 +132,7 @@ main{max-width:900px;margin:0 auto;padding:24px 20px 40px}
       <p>Cơ Học Đất · Nền Móng · TS. Phạm Việt Anh — ĐHXD Hà Nội</p>
     </div>
     <div class="hdr-prog" id="hdr-prog">0 / 21</div>
+    <div id="sv-badge" style="font-size:11px;background:rgba(255,255,255,.13);padding:4px 10px;border-radius:16px;white-space:nowrap;max-width:140px;overflow:hidden;text-overflow:ellipsis"></div>
   </div>
 </header>
 
@@ -564,6 +566,7 @@ main{max-width:900px;margin:0 auto;padding:24px 20px 40px}
 <!-- BOTTOM NAV -->
 <div class="bottom-nav">
   <a href="index_C0.html" class="btn btn-ghost-light"><i class="ti ti-arrow-left"></i> Chương 0</a>
+  <button id="btn-nop" class="btn btn-p" onclick="submitResult()"><i class="ti ti-send"></i> Nộp bài</button>
   <button class="btn btn-a" onclick="goNext()">0.2 — Sự cố nền móng <i class="ti ti-arrow-right"></i></button>
 </div>
 
@@ -715,14 +718,67 @@ function scrollNext() {
 }
 
 function goNext() {
-  alert('Bài 0.2 — Sự cố Nền Móng Trong Thực Tế\n\nModule này đang được xây dựng!');
+  window.location.href = '0.2_SU_CO.html';
+}
+
+var _sv = {};
+var _submitted = false;
+
+function submitResult() {
+  var done = 0, correct = 0;
+  questions.forEach(function(q) { if (ANS[q] !== null) { done++; if (ANS[q]) correct++; } });
+  var pct = Math.round(done / TOTAL * 100);
+  var minPct = (typeof window.MIN_ATTEMPT_PCT !== 'undefined') ? window.MIN_ATTEMPT_PCT : 50;
+  if (pct < minPct) {
+    alert('Bạn cần hoàn thành ít nhất ' + minPct + '% số câu trước khi nộp bài.\nHiện tại: ' + pct + '% (' + done + '/' + TOTAL + ' câu).');
+    return;
+  }
+  if (_submitted) { alert('Bài đã được nộp rồi!'); return; }
+  if (!_sv.name) {
+    alert('Không tìm thấy thông tin sinh viên. Vui lòng quay lại trang chủ và đăng nhập lại.');
+    return;
+  }
+  var btn = document.getElementById('btn-nop');
+  btn.disabled = true;
+  btn.innerHTML = '<i class="ti ti-loader"></i> Đang nộp...';
+  var payload = {
+    chapterId: 'c0_01',
+    sv: _sv,
+    score: correct,
+    total: TOTAL,
+    pct: Math.round(correct / TOTAL * 100),
+    attempted: done,
+    ts: new Date().toISOString()
+  };
+  var workerUrl = (typeof window.WORKER_URL !== 'undefined') ? window.WORKER_URL : 'https://dqt-chdnm.phamvietanh158.workers.dev';
+  fetch(workerUrl, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    _submitted = true;
+    btn.innerHTML = '<i class="ti ti-circle-check"></i> Đã nộp';
+    btn.style.background = 'var(--G)';
+    localStorage.setItem('prog_c0_01', JSON.stringify({ done: TOTAL, total: TOTAL }));
+    alert('✅ Nộp bài thành công!\nĐiểm: ' + correct + '/' + TOTAL + ' (' + Math.round(correct/TOTAL*100) + '%)');
+  })
+  .catch(function(err) {
+    btn.disabled = false;
+    btn.innerHTML = '<i class="ti ti-send"></i> Nộp bài';
+    alert('❌ Lỗi kết nối. Kiểm tra mạng và thử lại.\n' + err.message);
+  });
 }
 
 window.onload = function() {
   try {
-    var saved = localStorage.getItem('prog_c0_01_state');
-    // Trạng thái chi tiết không được khôi phục đầy đủ (giữ đơn giản theo chuẩn hệ thống);
-    // tiến độ tổng quát vẫn được lưu qua prog_c0_01 để hiển thị ở trang index chương.
+    var raw = sessionStorage.getItem('ncm_sv');
+    if (raw) {
+      _sv = JSON.parse(raw);
+      var badge = document.getElementById('sv-badge');
+      if (badge && _sv.name) badge.textContent = _sv.name + ' — ' + (_sv.lop || '');
+    }
   } catch(e) {}
   updateProg();
 };
