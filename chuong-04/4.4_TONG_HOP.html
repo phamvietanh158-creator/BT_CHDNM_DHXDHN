@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4.4 — Bài Toán Tổng Hợp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+:root{--P:#1565C0;--Pdk:#0D47A1;--Plt:#E3F2FD;--G:#2E7D32;--Glt:#E8F5E9;--Gdk:#1B5E20;--R:#C62828;--Rlt:#FFEBEE;--A:#FF8F00;--Alt:#FFF8E1;--V:#6A1B9A;--Vlt:#EDE7F6;--bg:#E8F4FD;--sur:#fff;--brd:#90CAF9;--muted:#546E7A;--text:#0D1B2A;--sans:'Plus Jakarta Sans',sans-serif;--mono:'JetBrains Mono',monospace;--r:12px;--sh:0 2px 16px rgba(21,101,192,.10)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);font-family:var(--sans);color:var(--text);font-size:14px;line-height:1.6}
+.hdr{background:#4A148C;color:#fff;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.2)}
+.hdr-in{max-width:960px;margin:0 auto;padding:0 20px;height:60px;display:flex;align-items:center;gap:14px}
+.back-btn{color:rgba(255,255,255,.75);text-decoration:none;font-size:13px;display:flex;align-items:center;gap:5px;padding:6px 10px;border-radius:8px;border:1px solid rgba(255,255,255,.2)}
+.hdr-title{flex:1}.hdr-title h1{font-size:15px;font-weight:700}.hdr-title p{font-size:11px;color:rgba(255,255,255,.6)}
+.hdr-right{display:flex;flex-direction:column;align-items:flex-end;gap:3px}
+.hdr-prog{font-family:var(--mono);font-size:12px;background:rgba(255,255,255,.15);padding:5px 12px;border-radius:20px}
+.sv-badge{font-size:11px;color:rgba(255,255,255,.55);font-family:var(--mono)}
+main{max-width:960px;margin:0 auto;padding:20px 20px 80px}
+.prog-wrap{margin-bottom:18px;background:var(--sur);border-radius:var(--r);border:1px solid var(--brd);padding:12px 18px;box-shadow:var(--sh)}
+.prog-top{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:7px;font-weight:500}
+.prog-track{height:8px;background:var(--Vlt);border-radius:4px;overflow:hidden}
+.prog-fill{height:100%;background:var(--V);border-radius:4px;transition:width .4s}
+.sv-infobar{background:linear-gradient(135deg,#4A148C,var(--V));color:#fff;border-radius:var(--r);padding:12px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+.card{background:var(--sur);border:1px solid var(--brd);border-radius:var(--r);box-shadow:var(--sh);margin-bottom:18px;overflow:hidden}
+.card-hd{padding:13px 20px;display:flex;align-items:center;gap:11px;border-bottom:1.5px solid var(--brd);background:var(--Vlt)}
+.card-hd i{font-size:20px;color:var(--V)}.card-hd h2{font-size:14px;font-weight:700;color:#4A148C;flex:1}
+.cbadge{font-size:10px;font-weight:700;padding:3px 9px;border-radius:6px;background:var(--V);color:#fff;letter-spacing:.6px;white-space:nowrap}
+.card-body{padding:16px 20px;display:flex;flex-direction:column;gap:13px}
+.step{border:1px solid var(--brd);border-radius:var(--r);overflow:hidden}
+.step-hd{padding:11px 16px;display:flex;align-items:center;gap:10px;cursor:pointer;background:#FAFCFF;user-select:none}
+.step-hd:hover{background:var(--Vlt)}
+.snb{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;font-weight:700;color:#fff;flex-shrink:0}
+.step-hd h3{font-size:13px;font-weight:700;color:#4A148C;flex:1}
+.stag{font-size:10px;padding:3px 8px;border-radius:5px;font-weight:600}
+.chev{font-size:16px;color:var(--muted);transition:transform .2s}
+.step-hd.open .chev{transform:rotate(180deg)}
+.step-body{padding:14px 16px;border-top:1px solid var(--brd);display:none;flex-direction:column;gap:11px}
+.step-body.open{display:flex}
+.fml-box{background:#F8FBFF;border:1.5px solid #BBDEFB;border-left:4px solid var(--V);border-radius:0 8px 8px 0;padding:12px 16px;font-family:var(--mono);font-size:13px;line-height:1.9}
+.ftitle{font-family:var(--sans);font-size:11px;font-weight:700;color:var(--V);text-transform:uppercase;letter-spacing:.7px;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.frow{margin-bottom:3px;color:#4A148C}
+.earth-box{background:#FFF8E1;border-left:4px solid #FF8F00;border-radius:0 8px 8px 0;padding:11px 15px;font-size:13px;line-height:1.7;color:#4E342E}
+.succ-box{background:var(--Glt);border-left:4px solid var(--G);border-radius:0 8px 8px 0;padding:11px 15px;font-size:13px;line-height:1.7;color:var(--Gdk);font-weight:600}
+.sec-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--V);display:flex;align-items:center;gap:7px;margin:2px 0}
+.sec-lbl::after{content:'';flex:1;height:1px;background:var(--brd)}
+.ans-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:8px 12px;background:#FAFCFF;border:1px solid var(--brd);border-radius:8px}
+.ans-label{font-size:13px;font-weight:600;color:var(--text);flex:1;min-width:180px;font-family:var(--mono)}
+.ans-inp{width:110px;padding:7px 10px;border:1.5px solid var(--brd);border-radius:7px;font-family:var(--mono);font-size:14px;font-weight:600;color:var(--text);outline:none;transition:border-color .15s;text-align:center}
+.ans-inp:focus{border-color:var(--V);background:var(--Vlt)}
+.ans-inp.ok{border-color:var(--G);background:var(--Glt);color:var(--Gdk)}
+.ans-inp.no{border-color:var(--R);background:var(--Rlt);color:var(--R)}
+.ans-unit{font-size:12px;color:var(--muted);font-family:var(--mono);white-space:nowrap}
+.chip{font-size:12px;font-weight:700;padding:3px 9px;border-radius:6px;min-width:24px;text-align:center}
+.chip.ok{background:var(--Glt);color:var(--Gdk);border:1px solid #A5D6A7}
+.chip.no{background:var(--Rlt);color:var(--R);border:1px solid #FFCDD2}
+.tbl-wrap{overflow-x:auto;border-radius:8px;border:1px solid var(--brd)}
+table.tbl{border-collapse:collapse;width:100%;font-size:12px;font-family:var(--mono)}
+table.tbl th{background:#4A148C;color:#fff;padding:6px 8px;text-align:center;white-space:nowrap}
+table.tbl td{padding:4px 8px;text-align:center;border-bottom:1px solid var(--Vlt)}
+table.tbl tr:nth-child(even) td{background:#F3E5F5}
+.btn{padding:8px 16px;border-radius:8px;border:none;cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;transition:opacity .15s}
+.btn-sm{padding:6px 13px;font-size:12px}.btn-ghost{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25)}
+.btn:hover{opacity:.85}
+.sticky-nav{position:fixed;bottom:0;left:0;right:0;background:#4A148C;color:#fff;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;z-index:200;font-size:13px;box-shadow:0 -2px 12px rgba(0,0,0,.2)}
+</style>
+</head>
+<body>
+<header class="hdr">
+  <div class="hdr-in">
+    <a href="index_C4.html" class="back-btn"><i class="ti ti-arrow-left"></i> Chương 4</a>
+    <div class="hdr-title">
+      <h1>4.4 — Bài Toán Tổng Hợp</h1>
+      <p>Từ tải P₀ → p_gl → Δσ (tra k₀) → Cộng lún Σ Sᵢ</p>
+    </div>
+    <div class="hdr-right">
+      <span class="hdr-prog" id="hdr-prog">0 / 0 ✓</span>
+      <span class="sv-badge" id="hdr-sv">SV: —</span>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="prog-wrap">
+    <div class="prog-top"><span>Tiến độ 4.4</span><span id="prog-txt">0 / 0 câu đúng</span></div>
+    <div class="prog-track"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+  </div>
+  <div class="sv-infobar">
+    <i class="ti ti-user-circle" style="font-size:22px"></i>
+    <div style="flex:1"><div style="font-weight:700;font-size:14px" id="sv-name">Chưa nhập STT</div><div style="font-size:11px;opacity:.7">Bài toán tổng hợp sinh theo STT cá nhân</div></div>
+    <div style="font-family:var(--mono);font-size:20px;font-weight:700;background:rgba(255,255,255,.15);padding:6px 18px;border-radius:10px" id="sv-code-disp">—</div>
+  </div>
+
+  <!-- Quy trình -->
+  <div class="card">
+    <div class="card-hd"><i class="ti ti-layers-intersect"></i><div style="flex:1"><h2>Quy Trình 6 Bước — Bài Toán Lún Đầy Đủ</h2></div><span class="cbadge">QUY TRÌNH</span></div>
+    <div class="card-body">
+      <div class="fml-box">
+        <div class="ftitle"><i class="ti ti-list-numbers"></i> 6 bước chuẩn TCVN</div>
+        <div class="frow">B1: p_gl = P₀/(b·l) = p_tx − γ·h_m</div>
+        <div class="frow">B2: Chia nền thành phân tố h, xác định z giữa mỗi phân tố</div>
+        <div class="frow">B3: Tính σ_bt,i = γ·z_i (ứng suất bản thân tại giữa phân tố)</div>
+        <div class="frow">B4: Tính Δσᵢ = k₀(l/b, z/b)·p_gl  (tra bảng k₀)</div>
+        <div class="frow">B5: Kiểm tra tắt lún: Δσᵢ ≤ 0.2·σ_bt,i  (dừng nếu thoả)</div>
+        <div class="frow">B6: Sᵢ = aᵢ·Δσᵢ·h/(1+e₀ᵢ) → S = Σ Sᵢ</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bài tập tổng hợp -->
+  <div class="card">
+    <div class="card-hd"><i class="ti ti-calculator"></i><div style="flex:1"><h2>Bài Tập Tổng Hợp Theo STT</h2></div><span class="cbadge">BÀI TẬP</span></div>
+    <div class="card-body">
+      <div id="th-prob" class="earth-box">Nhập STT để sinh số liệu bài toán tổng hợp…</div>
+      <div class="fml-box" id="th-hint" style="display:none">
+        <div class="ftitle"><i class="ti ti-lightbulb"></i> Bảng tính từng bước</div>
+        <div id="th-hint-content"></div>
+      </div>
+      <div id="th-table-wrap" style="display:none">
+        <div class="tbl-wrap">
+          <table class="tbl">
+            <thead><tr>
+              <th>PT</th><th>z giữa (m)</th><th>z/b</th><th>k₀</th>
+              <th>σ_bt (kN/m²)</th><th>Δσ (kN/m²)</th>
+              <th>0.2σ_bt</th><th>Tắt lún?</th><th>Sᵢ (cm)</th>
+            </tr></thead>
+            <tbody id="th-tbody"></tbody>
+          </table>
+        </div>
+        <div id="th-q" style="display:flex;flex-direction:column;gap:9px;margin-top:12px"></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div class="sticky-nav">
+  <div><span id="nav-prog">0/0</span><span style="opacity:.6;margin-left:8px">câu đúng</span></div>
+  <div style="display:flex;gap:10px">
+    <a href="4.3_CO_KET.html" class="btn btn-ghost btn-sm">← 4.3</a>
+    <a href="index_C4.html" class="btn btn-ghost btn-sm"><i class="ti ti-home"></i></a>
+    <a href="4.5_TOM_TAT.html" class="btn btn-ghost btn-sm">4.5 Tóm tắt →</a>
+  </div>
+</div>
+
+<script>
+var ANS={};
+function r1(v){return Math.round(v*10)/10}
+function r2(v){return Math.round(v*100)/100}
+function r3(v){return Math.round(v*1000)/1000}
+function r4(v){return Math.round(v*10000)/10000}
+function seededRng(seed){var s=seed%1000;return function(){s=(s*9301+49297)%233280;return s/233280;}}
+function togS(hd){hd.classList.toggle('open');hd.nextElementSibling.classList.toggle('open');}
+function chkFill(id,ans,tol){
+  var inp=document.getElementById(id);
+  var chip=document.getElementById(id+'-chip');
+  if(!inp||!chip)return;
+  var v=parseFloat(inp.value);
+  if(isNaN(v)){inp.classList.remove('ok','no');chip.className='chip';chip.textContent='';ANS[id]=null;updateProg();return;}
+  var ok=Math.abs(v-ans)<=tol;
+  inp.classList.toggle('ok',ok);inp.classList.toggle('no',!ok);
+  chip.className='chip '+(ok?'ok':'no');chip.textContent=ok?'✓':'✗';
+  ANS[id]=ok;updateProg();
+}
+function updateProg(){
+  var total=0,done=0;
+  Object.keys(ANS).forEach(function(k){total++;if(ANS[k]===true)done++;});
+  var pct=total?Math.round(done/total*100):0;
+  document.getElementById('prog-fill').style.width=pct+'%';
+  document.getElementById('prog-txt').textContent=done+' / '+total+' câu đúng';
+  document.getElementById('hdr-prog').textContent=done+' / '+total+' ✓';
+  document.getElementById('nav-prog').textContent=done+'/'+total;
+  try{localStorage.setItem('prog_c4_44',JSON.stringify({done:done,total:total}));}catch(e){}
+}
+function makeAnsRow(id,label,ans,tol,unit){
+  ANS[id]=null;
+  return '<div class="ans-row"><span class="ans-label">'+label+'</span>'+
+    '<input class="ans-inp" id="'+id+'" type="number" step="any" placeholder="?" oninput="chkFill(\''+id+'\','+ans+','+tol+')">'+
+    '<span class="ans-unit">'+unit+'</span><span class="chip" id="'+id+'-chip"></span></div>';
+}
+
+var K0_ZB=[0,0.2,0.4,0.6,0.8,1,1.2,1.5,2,2.5,3];
+var K0_LB=[1,1.5,2,3,5];
+var K0=[
+  [1,1,1,1,1],[0.960,0.970,0.974,0.977,0.977],[0.800,0.844,0.871,0.885,0.881],
+  [0.606,0.678,0.727,0.761,0.754],[0.449,0.524,0.580,0.624,0.642],
+  [0.336,0.405,0.461,0.514,0.545],[0.257,0.316,0.369,0.427,0.470],
+  [0.179,0.225,0.267,0.320,0.384],[0.108,0.138,0.165,0.204,0.242],
+  [0.070,0.090,0.109,0.137,0.166],[0.051,0.065,0.080,0.102,0.131]
+];
+function interp1(xs,ys,x){
+  if(x<=xs[0])return ys[0]; if(x>=xs[xs.length-1])return ys[ys.length-1];
+  for(var i=0;i<xs.length-1;i++){if(x>=xs[i]&&x<=xs[i+1]){var t=(x-xs[i])/(xs[i+1]-xs[i]);return ys[i]+t*(ys[i+1]-ys[i]);}}
+  return ys[ys.length-1];
+}
+function lookupK0(lb,zb){
+  var vals=K0_ZB.map(function(z,i){return interp1(K0_LB,K0[i],lb);});
+  return parseFloat(interp1(K0_ZB,vals,zb).toFixed(4));
+}
+
+function genTongHop(sv){
+  var rng=seededRng(sv*53+41);
+  var g=r1(17.5+rng()*2);
+  var b=r1(1.5+rng()*1.5);
+  var l=r1(b+0.5+rng()*2);
+  var hm=r1(0.8+rng()*0.8);
+  var P0=Math.round(300+rng()*400);
+  var lb=r2(l/b);
+  var F=r2(b*l);
+  var pgl=r2(P0/F);
+  var h_pt=r1(0.4+rng()*0.2);
+  var e0=[r2(0.80+rng()*0.2),r2(0.78+rng()*0.2),r2(0.75+rng()*0.2),r2(0.72+rng()*0.2)];
+  var a_arr=[r4(0.0002+rng()*0.0003),r4(0.00015+rng()*0.00025),r4(0.0001+rng()*0.0002),r4(0.00008+rng()*0.00015)];
+
+  var pts=[];
+  for(var i=0;i<4;i++){
+    var zmid=r2(hm+(i+0.5)*h_pt);
+    var zb=r2((i+0.5)*h_pt/b);
+    var k0v=lookupK0(lb,zb);
+    var dsz=r2(k0v*pgl);
+    var sbt=r2(g*zmid);
+    var check02=r2(0.2*sbt);
+    var chk=(dsz<=check02)?'✓':'✗';
+    var si=r2(a_arr[i]*dsz*h_pt/(1+e0[i])*100);
+    pts.push({i:i+1,zmid,zb,k0:k0v,sbt,dsz,check02,chk,si});
+  }
+  var totalS=r2(pts.reduce(function(acc,pt){return acc+pt.si;},0));
+
+  document.getElementById('th-prob').innerHTML=
+    'Nền đất γ='+g+' kN/m³. Móng <b>b×l='+b+'×'+l+' m</b>, h<sub>m</sub>='+hm+' m, P₀=<b>'+P0+' kN</b>.<br>'+
+    'Chia nền thành phân tố h='+h_pt+' m. Hệ số nén lún: '+
+    a_arr.map(function(a,i){return 'a<sub>'+(i+1)+'</sub>='+a;}).join(', ')+' m²/kN.<br>'+
+    '<b>p<sub>gl</sub></b> = '+P0+'/'+F+' = <em>'+pgl+' kN/m²</em> &nbsp;·&nbsp; l/b = '+lb;
+
+  // Bảng tính
+  var tbody=document.getElementById('th-tbody');
+  tbody.innerHTML='';
+  pts.forEach(function(pt){
+    var tr=document.createElement('tr');
+    tr.innerHTML='<td style="font-weight:700;color:var(--V)">'+pt.i+'</td>'+
+      '<td>'+pt.zmid+'</td><td>'+pt.zb+'</td>'+
+      '<td style="color:var(--V);font-weight:600">'+pt.k0+'</td>'+
+      '<td>'+pt.sbt+'</td><td>'+pt.dsz+'</td><td>'+pt.check02+'</td>'+
+      '<td style="font-weight:700;color:'+(pt.chk==='✓'?'var(--G)':'var(--R)')+'\">'+pt.chk+'</td>'+
+      '<td>'+pt.si+'</td>';
+    tbody.appendChild(tr);
+  });
+
+  // Hint
+  document.getElementById('th-hint').style.display='';
+  document.getElementById('th-hint-content').innerHTML=
+    '<div class="frow">p_gl = P₀/F = '+P0+'/'+F+' = '+pgl+' kN/m² · l/b = '+lb+'</div>'+
+    pts.map(function(pt){
+      return '<div class="frow">PT'+pt.i+': z='+pt.zmid+'m → z/b='+pt.zb+
+        ' → k₀='+pt.k0+' → Δσ='+pt.dsz+' | S='+a_arr[pt.i-1]+'×'+pt.dsz+'×'+h_pt+'/(1+'+e0[pt.i-1]+') = '+pt.si+' cm '+pt.chk+'</div>';
+    }).join('');
+
+  // Câu hỏi
+  var q='';
+  q+=makeAnsRow('th-dsz1','Δσ tại PT1 = k₀×p_gl',pts[0].dsz,r2(pts[0].dsz*0.05),'kN/m²');
+  q+=makeAnsRow('th-s1','S₁ (cm)',pts[0].si,0.05,'cm');
+  q+=makeAnsRow('th-dsz2','Δσ tại PT2',pts[1].dsz,r2(pts[1].dsz*0.05),'kN/m²');
+  q+=makeAnsRow('th-s2','S₂ (cm)',pts[1].si,0.05,'cm');
+  q+=makeAnsRow('th-s3','S₃ (cm)',pts[2].si,0.05,'cm');
+  q+=makeAnsRow('th-s4','S₄ (cm)',pts[3].si,0.05,'cm');
+  q+=makeAnsRow('th-S','S tổng = ΣSᵢ (cm)',totalS,0.2,'cm');
+  document.getElementById('th-q').innerHTML=q;
+  document.getElementById('th-table-wrap').style.display='';
+}
+
+window.onload=function(){
+  var sv=parseInt(localStorage.getItem('sv_code')||'0')||0;
+  if(sv<1||sv>200)sv=1;
+  document.getElementById('sv-name').textContent='STT Sinh viên: '+sv;
+  document.getElementById('sv-code-disp').textContent=sv;
+  document.getElementById('hdr-sv').textContent='SV #'+sv;
+  genTongHop(sv);updateProg();
+};
+</script>
+</body>
+</html>

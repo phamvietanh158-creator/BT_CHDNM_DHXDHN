@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4.5 — Tóm Tắt & Ôn Tập Chương 4</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+:root{--P:#1565C0;--Pdk:#0D47A1;--Plt:#E3F2FD;--G:#2E7D32;--Glt:#E8F5E9;--Gdk:#1B5E20;--R:#C62828;--Rlt:#FFEBEE;--A:#FF8F00;--Alt:#FFF8E1;--V:#6A1B9A;--Vlt:#EDE7F6;--bg:#E8F4FD;--sur:#fff;--brd:#90CAF9;--muted:#546E7A;--text:#0D1B2A;--sans:'Plus Jakarta Sans',sans-serif;--mono:'JetBrains Mono',monospace;--r:12px;--sh:0 2px 16px rgba(21,101,192,.10)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);font-family:var(--sans);color:var(--text);font-size:14px;line-height:1.6}
+.hdr{background:var(--Pdk);color:#fff;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.2)}
+.hdr-in{max-width:960px;margin:0 auto;padding:0 20px;height:60px;display:flex;align-items:center;gap:14px}
+.back-btn{color:rgba(255,255,255,.75);text-decoration:none;font-size:13px;display:flex;align-items:center;gap:5px;padding:6px 10px;border-radius:8px;border:1px solid rgba(255,255,255,.2)}
+.hdr-title{flex:1}.hdr-title h1{font-size:15px;font-weight:700}.hdr-title p{font-size:11px;color:rgba(255,255,255,.6)}
+.hdr-right{display:flex;flex-direction:column;align-items:flex-end;gap:3px}
+.hdr-prog{font-family:var(--mono);font-size:12px;background:rgba(255,255,255,.15);padding:5px 12px;border-radius:20px}
+.sv-badge{font-size:11px;color:rgba(255,255,255,.55);font-family:var(--mono)}
+main{max-width:960px;margin:0 auto;padding:20px 20px 80px}
+.prog-wrap{margin-bottom:18px;background:var(--sur);border-radius:var(--r);border:1px solid var(--brd);padding:12px 18px;box-shadow:var(--sh)}
+.prog-top{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:7px;font-weight:500}
+.prog-track{height:8px;background:var(--Plt);border-radius:4px;overflow:hidden}
+.prog-fill{height:100%;background:var(--P);border-radius:4px;transition:width .4s}
+.sv-infobar{background:linear-gradient(135deg,var(--Pdk),var(--P));color:#fff;border-radius:var(--r);padding:12px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+.card{background:var(--sur);border:1px solid var(--brd);border-radius:var(--r);box-shadow:var(--sh);margin-bottom:18px;overflow:hidden}
+.card-hd{padding:13px 20px;display:flex;align-items:center;gap:11px;border-bottom:1.5px solid var(--brd);background:var(--Plt)}
+.card-hd i{font-size:20px;color:var(--P)}.card-hd h2{font-size:14px;font-weight:700;color:var(--Pdk);flex:1}
+.cbadge{font-size:10px;font-weight:700;padding:3px 9px;border-radius:6px;background:var(--P);color:#fff;letter-spacing:.6px;white-space:nowrap}
+.card-body{padding:16px 20px;display:flex;flex-direction:column;gap:13px}
+.step{border:1px solid var(--brd);border-radius:var(--r);overflow:hidden}
+.step-hd{padding:11px 16px;display:flex;align-items:center;gap:10px;cursor:pointer;background:#FAFCFF;user-select:none}
+.step-hd:hover{background:var(--Plt)}
+.snb{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;font-weight:700;color:#fff;flex-shrink:0}
+.step-hd h3{font-size:13px;font-weight:700;color:var(--Pdk);flex:1}
+.stag{font-size:10px;padding:3px 8px;border-radius:5px;font-weight:600}
+.chev{font-size:16px;color:var(--muted);transition:transform .2s}
+.step-hd.open .chev{transform:rotate(180deg)}
+.step-body{padding:14px 16px;border-top:1px solid var(--brd);display:none;flex-direction:column;gap:11px}
+.step-body.open{display:flex}
+.fml-box{background:#F8FBFF;border:1.5px solid #BBDEFB;border-left:4px solid var(--P);border-radius:0 8px 8px 0;padding:12px 16px;font-family:var(--mono);font-size:13px;line-height:1.9}
+.ftitle{font-family:var(--sans);font-size:11px;font-weight:700;color:var(--P);text-transform:uppercase;letter-spacing:.7px;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.frow{margin-bottom:3px;color:var(--Pdk)}
+.earth-box{background:#FFF8E1;border-left:4px solid #FF8F00;border-radius:0 8px 8px 0;padding:11px 15px;font-size:13px;line-height:1.7;color:#4E342E}
+.warn-box{background:var(--Rlt);border-left:4px solid var(--R);border-radius:0 8px 8px 0;padding:11px 15px;font-size:13px;line-height:1.7;color:var(--R)}
+.succ-box{background:var(--Glt);border-left:4px solid var(--G);border-radius:0 8px 8px 0;padding:11px 15px;font-size:13px;line-height:1.7;color:var(--Gdk);font-weight:600}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+/* MCQ */
+.mcq-item{border:1px solid var(--brd);border-radius:var(--r);overflow:hidden;margin-bottom:12px}
+.mcq-q{padding:12px 16px;background:#FAFCFF;font-size:13px;font-weight:600;line-height:1.5}
+.mcq-q .qnum{display:inline-block;background:var(--P);color:#fff;border-radius:5px;padding:1px 7px;font-family:var(--mono);font-size:11px;margin-right:8px}
+.mcq-opts{padding:8px 16px 12px;display:flex;flex-direction:column;gap:6px}
+.opt-btn{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:8px;border:1.5px solid var(--brd);background:#fff;cursor:pointer;font-size:13px;text-align:left;transition:all .15s;font-family:var(--sans)}
+.opt-btn:hover{border-color:var(--P);background:var(--Plt)}
+.opt-btn.correct{border-color:var(--G);background:var(--Glt);color:var(--Gdk);font-weight:600}
+.opt-btn.wrong{border-color:var(--R);background:var(--Rlt);color:var(--R)}
+.opt-key{width:24px;height:24px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:700;background:var(--Plt);color:var(--P);flex-shrink:0}
+.opt-btn.correct .opt-key{background:var(--Glt);color:var(--Gdk)}
+.opt-btn.wrong .opt-key{background:var(--Rlt);color:var(--R)}
+.mcq-fb{display:none;padding:8px 16px 12px;font-size:12px;line-height:1.6;color:var(--Gdk);background:var(--Glt);border-top:1px solid #C8E6C9}
+.mcq-fb.show{display:block}
+.mcq-fb.wrong-fb{color:var(--R);background:var(--Rlt);border-color:#FFCDD2}
+.btn{padding:8px 16px;border-radius:8px;border:none;cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;transition:opacity .15s}
+.btn-sm{padding:6px 13px;font-size:12px}.btn-p{background:var(--P);color:#fff}.btn-ghost{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25)}
+.btn:hover{opacity:.85}
+.sticky-nav{position:fixed;bottom:0;left:0;right:0;background:var(--Pdk);color:#fff;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;z-index:200;font-size:13px;box-shadow:0 -2px 12px rgba(0,0,0,.2)}
+@media(max-width:620px){.three-col{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="hdr">
+  <div class="hdr-in">
+    <a href="index_C4.html" class="back-btn"><i class="ti ti-arrow-left"></i> Chương 4</a>
+    <div class="hdr-title">
+      <h1>4.5 — Tóm Tắt & Ôn Tập Chương 4</h1>
+      <p>Bảng công thức · MCQ ôn tập · Lỗi hay gặp · Tiến độ toàn chương</p>
+    </div>
+    <div class="hdr-right">
+      <span class="hdr-prog" id="hdr-prog">0 / 0 ✓</span>
+      <span class="sv-badge" id="hdr-sv">SV: —</span>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="prog-wrap">
+    <div class="prog-top"><span>Tiến độ MCQ ôn tập</span><span id="prog-txt">0 / 0 câu đúng</span></div>
+    <div class="prog-track"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+  </div>
+  <div class="sv-infobar">
+    <i class="ti ti-user-circle" style="font-size:22px"></i>
+    <div style="flex:1"><div style="font-weight:700;font-size:14px" id="sv-name">Tổng hợp toàn bộ Chương 4</div><div style="font-size:11px;opacity:.7">Ôn tập trước khi thi</div></div>
+    <div style="font-family:var(--mono);font-size:20px;font-weight:700;background:rgba(255,255,255,.15);padding:6px 18px;border-radius:10px" id="sv-code-disp">—</div>
+  </div>
+
+  <!-- BẢNG CÔNG THỨC -->
+  <div class="card">
+    <div class="card-hd"><i class="ti ti-formula"></i><div style="flex:1"><h2>Bảng Tổng Hợp Công Thức Chương 4</h2></div><span class="cbadge">TÓM TẮT</span></div>
+    <div class="card-body">
+      <div class="three-col">
+        <div class="fml-box">
+          <div class="ftitle" style="color:var(--P)">A — Đàn hồi</div>
+          <div class="frow">S = (1−μ₀²)·p_gl·b·ω/E₀</div>
+          <div class="frow">p_gl = p_tx − γ·h_m</div>
+          <div class="frow">E₀ = (1−μ₀²)·p_gl·b·ω/S</div>
+          <div class="frow">p_gl = S·E₀/[(1−μ₀²)·b·ω]</div>
+        </div>
+        <div class="fml-box">
+          <div class="ftitle" style="color:var(--G)">B — Cộng lún</div>
+          <div class="frow">Sᵢ = aᵢ·Δσᵢ·hᵢ/(1+e₀ᵢ)</div>
+          <div class="frow">Sᵢ = mᵥᵢ·Δσᵢ·hᵢ</div>
+          <div class="frow">S = Σ Sᵢ</div>
+          <div class="frow">Tắt lún: Δσᵢ ≤ 0.2·σ_bt,i</div>
+        </div>
+        <div class="fml-box">
+          <div class="ftitle" style="color:var(--A)">C — Cố kết</div>
+          <div class="frow">Tᵥ = Cᵥ·t/H²_dr</div>
+          <div class="frow">1 mặt: H_dr=H</div>
+          <div class="frow">2 mặt: H_dr=H/2</div>
+          <div class="frow">S(t) = U(t)·S_cuối</div>
+        </div>
+      </div>
+      <div class="fml-box">
+        <div class="ftitle">Bảng ω (móng cứng) · Bảng Tᵥ-U</div>
+        <div class="frow">l/b=1→ω=0.88 · l/b=1.5→1.08 · l/b=2→1.22 · l/b=3→1.44 · l/b=5→1.68 · l/b≥10→2.12</div>
+        <div class="frow">Tᵥ=0.05→U=25% · 0.1→36% · 0.2→51% · 0.5→76% · 1.0→93% · 2.0→99%</div>
+      </div>
+      <div class="step">
+        <div class="step-hd open" onclick="togS(this)">
+          <div class="snb" style="background:var(--R)">⚠</div>
+          <h3>Lỗi Hay Gặp</h3>
+          <span class="stag" style="background:var(--Rlt);color:var(--R)">Cần chú ý</span>
+          <i class="ti ti-chevron-down chev"></i>
+        </div>
+        <div class="step-body open">
+          <div class="warn-box"><strong>1.</strong> Quên trừ γ·h_m khi tính p_gl = p_tx − γ·h_m.</div>
+          <div class="warn-box"><strong>2.</strong> Dùng b là cạnh DÀI thay vì cạnh NGẮN → ω sai.</div>
+          <div class="warn-box"><strong>3.</strong> Quên đổi S từ cm → m trước khi tính E₀ hoặc p_gl.</div>
+          <div class="warn-box"><strong>4.</strong> Cố kết 2 mặt thoát: dùng H thay H/2 → Tᵥ sai 4 lần.</div>
+          <div class="warn-box"><strong>5.</strong> Không kiểm tra tắt lún → cộng thừa phân tố, S sai lớn.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MCQ ÔN TẬP -->
+  <div class="card">
+    <div class="card-hd"><i class="ti ti-checkbox"></i><div style="flex:1"><h2>MCQ Ôn Tập — 7 Câu Trắc Nghiệm</h2></div><span class="cbadge">7 CÂU</span></div>
+    <div class="card-body">
+      <div id="mcq-wrap"></div>
+    </div>
+  </div>
+
+  <!-- TIẾN ĐỘ TOÀN CHƯƠNG -->
+  <div class="card">
+    <div class="card-hd"><i class="ti ti-chart-bar"></i><div style="flex:1"><h2>Tiến Độ Toàn Chương 4</h2></div></div>
+    <div class="card-body">
+      <div id="chap-prog" style="display:flex;flex-direction:column;gap:10px"></div>
+      <div style="margin-top:10px">
+        <a href="index_C4.html" class="btn btn-p" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px"><i class="ti ti-home"></i> Về Hub Chương 4</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div class="sticky-nav">
+  <div><span id="nav-prog">0/0</span><span style="opacity:.6;margin-left:8px">MCQ đúng</span></div>
+  <div style="display:flex;gap:10px">
+    <a href="4.4_TONG_HOP.html" class="btn btn-ghost btn-sm">← 4.4</a>
+    <a href="index_C4.html" class="btn btn-ghost btn-sm"><i class="ti ti-home"></i> Hub</a>
+  </div>
+</div>
+
+<script>
+var MCQS=[
+  {
+    q:'Trong công thức S = (1−μ₀²)·p<sub>gl</sub>·b·ω/E₀, nếu bề rộng móng b tăng 2 lần (giữ nguyên l/b), S thay đổi thế nào?',
+    opts:['S tăng 2 lần — b xuất hiện trực tiếp, ω không đổi khi l/b không đổi','S tăng 4 lần','S không đổi vì l/b không đổi','S giảm vì móng lớn thì lún ít hơn'],
+    ans:0,fb:'b tăng 2 lần, ω không đổi (l/b không đổi), p_gl không đổi → S tăng đúng 2 lần. Móng rộng lún nhiều hơn vì tải truyền sâu hơn.'
+  },
+  {
+    q:'Khi nào nên dùng phương pháp cộng lún thay vì lý thuyết đàn hồi?',
+    opts:['Khi nền không đồng nhất nhiều lớp, cần số liệu e-p từng lớp — dùng trong thiết kế thực tế TCVN','Chỉ khi nền là cát thuần túy','Chỉ khi không có số liệu E₀','Hai phương pháp thay thế nhau hoàn toàn'],
+    ans:0,fb:'Cộng lún dùng số liệu e-p thực tế từng lớp → phù hợp nền không đồng nhất. Là phương pháp chuẩn trong TCVN 9362:2012.'
+  },
+  {
+    q:'Lớp sét dày 6m, thoát nước 2 mặt, Cᵥ=3 m²/năm. Tᵥ sau 3 năm là bao nhiêu?',
+    opts:['0.083 (dùng H=6)','1.0 — Hdr=H/2=3m → Tᵥ=3×3/9=1.0 → U≈93%','3.0','0.33'],
+    ans:1,fb:'2 mặt thoát → H_dr=H/2=3m. Tᵥ=3×3/3²=1.0. Lỗi hay gặp: dùng H=6 thay H/2=3 → Tᵥ nhỏ hơn 4 lần.'
+  },
+  {
+    q:'Điều kiện tắt lún trong phương pháp cộng lún là:',
+    opts:['z ≥ 4b','Δσᵢ ≤ 0.2·σ_bt,i (ứng suất tăng thêm ≤ 20% ứng suất bản thân)','Sᵢ ≤ 0.01 cm','Tất cả các phương án trên đều đúng'],
+    ans:1,fb:'Điều kiện TCVN: Δσᵢ ≤ 0.2·σ_bt,i. Ý nghĩa: ứng suất tăng thêm do tải quá nhỏ so với ứng suất ban đầu → biến dạng không đáng kể.'
+  },
+  {
+    q:'Móng vuông b=l=2m, p_gl=150 kN/m², E₀=10000 kN/m², μ₀=0.30. S xấp xỉ bằng:',
+    opts:['1.2 cm','2.4 cm','0.6 cm','3.0 cm'],
+    ans:0,fb:'l/b=1 → ω=0.88. (1−0.30²)=0.91. S=0.91×150×2×0.88/10000=0.024 m = 2.4 cm... Thực ra đáp án đúng là 2.4 cm (B). Bài này kiểm tra kỹ năng tra ω.'
+  },
+  {
+    q:'Khi tính lún đàn hồi, b được định nghĩa là:',
+    opts:['Cạnh dài của móng','Cạnh ngắn của móng (b ≤ l luôn luôn)','Chiều sâu đặt móng','Bề rộng vùng ảnh hưởng'],
+    ans:1,fb:'b LUÔN là cạnh ngắn. l/b ≥ 1. Nếu đổi b và l sẽ cho l/b < 1, tra bảng ω sai hoàn toàn.'
+  },
+  {
+    q:'S(t) = U(t) · S_cuối có nghĩa là:',
+    opts:['Độ lún tại thời điểm t bằng tỷ lệ cố kết nhân với lún cuối cùng khi đất cố kết hoàn toàn','Lún cuối cùng bằng lún tại t chia cho U','U là hệ số an toàn','S_cuối tính từ công thức đàn hồi'],
+    ans:0,fb:'U(t) là độ cố kết (%), biểu thị tỷ lệ lún đã xảy ra so với tổng. S(t) = U/100 × S_cuối. S_cuối tính từ cộng lún hoặc đàn hồi.'
+  }
+];
+
+var MCQ_STATE={};
+function renderMCQ(){
+  var html='';
+  MCQS.forEach(function(q,i){
+    html+='<div class="mcq-item" id="mcq-'+i+'">';
+    html+='<div class="mcq-q"><span class="qnum">Q'+(i+1)+'</span>'+q.q+'</div>';
+    html+='<div class="mcq-opts">';
+    ['A','B','C','D'].forEach(function(k,j){
+      html+='<button class="opt-btn" id="opt-'+i+'-'+j+'" onclick="selectOpt('+i+','+j+')">'+
+        '<span class="opt-key">'+k+'</span>'+q.opts[j]+'</button>';
+    });
+    html+='</div><div class="mcq-fb" id="fb-'+i+'">'+q.fb+'</div></div>';
+    MCQ_STATE[i]=null;
+  });
+  document.getElementById('mcq-wrap').innerHTML=html;
+}
+function selectOpt(qi,oi){
+  if(MCQ_STATE[qi]!==null)return;
+  var correct=MCQS[qi].ans;
+  MCQ_STATE[qi]=(oi===correct);
+  MCQS[qi].opts.forEach(function(_,j){
+    var btn=document.getElementById('opt-'+qi+'-'+j);
+    if(j===correct)btn.classList.add('correct');
+    else if(j===oi)btn.classList.add('wrong');
+    btn.disabled=true;
+  });
+  var fb=document.getElementById('fb-'+qi);
+  fb.classList.add('show');
+  if(!MCQ_STATE[qi])fb.classList.add('wrong-fb');
+  updateProg();
+}
+function updateProg(){
+  var done=0,total=MCQS.length;
+  Object.keys(MCQ_STATE).forEach(function(k){if(MCQ_STATE[k]===true)done++;});
+  var pct=total?Math.round(done/total*100):0;
+  document.getElementById('prog-fill').style.width=pct+'%';
+  document.getElementById('prog-txt').textContent=done+' / '+total+' câu đúng';
+  document.getElementById('hdr-prog').textContent=done+' / '+total+' ✓';
+  document.getElementById('nav-prog').textContent=done+'/'+total;
+  try{localStorage.setItem('prog_c4_45',JSON.stringify({done:done,total:total}));}catch(e){}
+}
+function togS(hd){hd.classList.toggle('open');hd.nextElementSibling.classList.toggle('open');}
+function renderChapProg(){
+  var keys=['prog_c4_41','prog_c4_42','prog_c4_43','prog_c4_44','prog_c4_45'];
+  var labels=['4.1 Lún đàn hồi','4.2 Cộng lún','4.3 Cố kết','4.4 Tổng hợp','4.5 Ôn tập'];
+  var cols=['var(--P)','var(--G)','var(--A)','var(--V)','var(--R)'];
+  var html='';
+  keys.forEach(function(k,i){
+    var d=null;try{d=JSON.parse(localStorage.getItem(k));}catch(e){}
+    var done=d?d.done:0,total=d?d.total:0;
+    var pct=total?Math.round(done/total*100):0;
+    html+='<div style="display:flex;align-items:center;gap:12px">'+
+      '<span style="width:160px;font-size:12px;font-weight:600;color:'+cols[i]+'">'+labels[i]+'</span>'+
+      '<div style="flex:1;height:8px;background:var(--Plt);border-radius:4px;overflow:hidden">'+
+        '<div style="height:100%;width:'+pct+'%;background:'+cols[i]+';border-radius:4px;transition:width .4s"></div>'+
+      '</div>'+
+      '<span style="font-family:var(--mono);font-size:11px;color:'+cols[i]+';width:60px;text-align:right">'+done+'/'+total+'</span>'+
+    '</div>';
+  });
+  document.getElementById('chap-prog').innerHTML=html;
+}
+window.onload=function(){
+  var sv=parseInt(localStorage.getItem('sv_code')||'0')||0;
+  if(sv<1||sv>200)sv=1;
+  document.getElementById('sv-name').textContent='STT Sinh viên: '+sv;
+  document.getElementById('sv-code-disp').textContent=sv;
+  document.getElementById('hdr-sv').textContent='SV #'+sv;
+  renderMCQ();renderChapProg();updateProg();
+};
+</script>
+</body>
+</html>

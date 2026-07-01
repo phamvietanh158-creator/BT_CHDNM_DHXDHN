@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4.2 — Cộng Lún Từng Phân Tố</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+:root{--P:#1565C0;--Pdk:#0D47A1;--Plt:#E3F2FD;--G:#2E7D32;--Glt:#E8F5E9;--Gdk:#1B5E20;--R:#C62828;--Rlt:#FFEBEE;--A:#FF8F00;--Alt:#FFF8E1;--bg:#E8F4FD;--sur:#fff;--brd:#90CAF9;--muted:#546E7A;--text:#0D1B2A;--sans:'Plus Jakarta Sans',sans-serif;--mono:'JetBrains Mono',monospace;--r:12px;--sh:0 2px 16px rgba(21,101,192,.10)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);font-family:var(--sans);color:var(--text);font-size:14px;line-height:1.6}
+.hdr{background:var(--Pdk);color:#fff;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.2)}
+.hdr-in{max-width:960px;margin:0 auto;padding:0 20px;height:60px;display:flex;align-items:center;gap:14px}
+.back-btn{color:rgba(255,255,255,.75);text-decoration:none;font-size:13px;display:flex;align-items:center;gap:5px;padding:6px 10px;border-radius:8px;border:1px solid rgba(255,255,255,.2)}
+.hdr-title{flex:1}.hdr-title h1{font-size:15px;font-weight:700}.hdr-title p{font-size:11px;color:rgba(255,255,255,.6)}
+.hdr-right{display:flex;flex-direction:column;align-items:flex-end;gap:3px}
+.hdr-prog{font-family:var(--mono);font-size:12px;background:rgba(255,255,255,.15);padding:5px 12px;border-radius:20px}
+.sv-badge{font-size:11px;color:rgba(255,255,255,.55);font-family:var(--mono)}
+main{max-width:960px;margin:0 auto;padding:20px 20px 80px}
+.prog-wrap{margin-bottom:18px;background:var(--sur);border-radius:var(--r);border:1px solid var(--brd);padding:12px 18px;box-shadow:var(--sh)}
+.prog-top{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:7px;font-weight:500}
+.prog-track{height:8px;background:var(--Plt);border-radius:4px;overflow:hidden}
+.prog-fill{height:100%;background:var(--G);border-radius:4px;transition:width .4s}
+.sv-infobar{background:linear-gradient(135deg,var(--Gdk),var(--G));color:#fff;border-radius:var(--r);padding:12px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+.card{background:var(--sur);border:1px solid var(--brd);border-radius:var(--r);box-shadow:var(--sh);margin-bottom:18px;overflow:hidden}
+.card-hd{padding:13px 20px;display:flex;align-items:center;gap:11px;border-bottom:1.5px solid var(--brd);background:var(--Glt)}
+.card-hd i{font-size:20px;color:var(--G)}.card-hd h2{font-size:14px;font-weight:700;color:var(--Gdk);flex:1}
+.card-hd p{font-size:11px;color:var(--muted);margin-top:2px}
+.cbadge{font-size:10px;font-weight:700;padding:3px 9px;border-radius:6px;background:var(--G);color:#fff;letter-spacing:.6px;white-space:nowrap}
+.card-body{padding:16px 20px;display:flex;flex-direction:column;gap:13px}
+.step{border:1px solid var(--brd);border-radius:var(--r);overflow:hidden}
+.step-hd{padding:11px 16px;display:flex;align-items:center;gap:10px;cursor:pointer;background:#FAFCFF;user-select:none}
+.step-hd:hover{background:var(--Glt)}
+.snb{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;font-weight:700;color:#fff;flex-shrink:0}
+.step-hd h3{font-size:13px;font-weight:700;color:var(--Gdk);flex:1}
+.stag{font-size:10px;padding:3px 8px;border-radius:5px;font-weight:600}
+.chev{font-size:16px;color:var(--muted);transition:transform .2s}
+.step-hd.open .chev{transform:rotate(180deg)}
+.step-body{padding:14px 16px;border-top:1px solid var(--brd);display:none;flex-direction:column;gap:11px}
+.step-body.open{display:flex}
+.fml-box{background:#F8FBFF;border:1.5px solid #BBDEFB;border-left:4px solid var(--G);border-radius:0 8px 8px 0;padding:12px 16px;font-family:var(--mono);font-size:13px;line-height:1.9}
+.ftitle{font-family:var(--sans);font-size:11px;font-weight:700;color:var(--G);text-transform:uppercase;letter-spacing:.7px;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.frow{margin-bottom:3px;color:var(--Gdk)}
+.earth-box{background:#FFF8E1;border-left:4px solid #FF8F00;border-radius:0 8px 8px 0;padding:11px 15px;font-size:13px;line-height:1.7;color:#4E342E}
+.warn-box{background:var(--Rlt);border-left:4px solid var(--R);border-radius:0 8px 8px 0;padding:11px 15px;font-size:13px;line-height:1.7;color:var(--R)}
+.succ-box{background:var(--Glt);border-left:4px solid var(--G);border-radius:0 8px 8px 0;padding:11px 15px;font-size:13px;line-height:1.7;color:var(--Gdk);font-weight:600}
+.sec-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--G);display:flex;align-items:center;gap:7px;margin:2px 0}
+.sec-lbl::after{content:'';flex:1;height:1px;background:var(--brd)}
+.ans-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:8px 12px;background:#FAFCFF;border:1px solid var(--brd);border-radius:8px}
+.ans-label{font-size:13px;font-weight:600;color:var(--text);flex:1;min-width:180px;font-family:var(--mono)}
+.ans-inp{width:110px;padding:7px 10px;border:1.5px solid var(--brd);border-radius:7px;font-family:var(--mono);font-size:14px;font-weight:600;color:var(--text);outline:none;transition:border-color .15s;text-align:center}
+.ans-inp:focus{border-color:var(--G);background:var(--Glt)}
+.ans-inp.ok{border-color:var(--G);background:var(--Glt);color:var(--Gdk)}
+.ans-inp.no{border-color:var(--R);background:var(--Rlt);color:var(--R)}
+.ans-unit{font-size:12px;color:var(--muted);font-family:var(--mono);white-space:nowrap}
+.chip{font-size:12px;font-weight:700;padding:3px 9px;border-radius:6px;min-width:24px;text-align:center}
+.chip.ok{background:var(--Glt);color:var(--Gdk);border:1px solid #A5D6A7}
+.chip.no{background:var(--Rlt);color:var(--R);border:1px solid #FFCDD2}
+.ex-set{border:1px solid var(--brd);border-radius:var(--r);overflow:hidden}
+.ex-tabs{display:flex;background:#FAFCFF;border-bottom:1px solid var(--brd);flex-wrap:wrap}
+.ex-tab{flex:1;padding:9px 10px;text-align:center;font-size:12px;font-weight:600;cursor:pointer;color:var(--muted);border:none;background:none;border-bottom:3px solid transparent;margin-bottom:-1px;white-space:nowrap}
+.ex-tab.on{color:var(--G);border-bottom-color:var(--G);background:#fff}
+.ex-pane{padding:14px 16px;display:none;flex-direction:column;gap:11px}
+.ex-pane.on{display:flex}
+.ex-label{font-size:12px;font-weight:700;color:var(--G);text-transform:uppercase;letter-spacing:.7px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.btn{padding:8px 16px;border-radius:8px;border:none;cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;transition:opacity .15s}
+.btn-sm{padding:6px 13px;font-size:12px}.btn-ghost{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25)}
+.btn:hover{opacity:.85}
+.sticky-nav{position:fixed;bottom:0;left:0;right:0;background:var(--Gdk);color:#fff;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;z-index:200;font-size:13px;box-shadow:0 -2px 12px rgba(0,0,0,.2)}
+@media(max-width:620px){.two-col{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="hdr">
+  <div class="hdr-in">
+    <a href="index_C4.html" class="back-btn"><i class="ti ti-arrow-left"></i> Chương 4</a>
+    <div class="hdr-title">
+      <h1>4.2 — Cộng Lún Từng Phân Tố</h1>
+      <p>Hệ số nén lún a · Hệ số mᵥ · Điều kiện tắt lún</p>
+    </div>
+    <div class="hdr-right">
+      <span class="hdr-prog" id="hdr-prog">0 / 0 ✓</span>
+      <span class="sv-badge" id="hdr-sv">SV: —</span>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="prog-wrap">
+    <div class="prog-top"><span>Tiến độ 4.2</span><span id="prog-txt">0 / 0 câu đúng</span></div>
+    <div class="prog-track"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+  </div>
+  <div class="sv-infobar">
+    <i class="ti ti-user-circle" style="font-size:22px"></i>
+    <div style="flex:1"><div style="font-weight:700;font-size:14px" id="sv-name">Chưa nhập STT</div><div style="font-size:11px;opacity:.7">Số liệu sinh theo STT cá nhân</div></div>
+    <div style="font-family:var(--mono);font-size:20px;font-weight:700;background:rgba(255,255,255,.15);padding:6px 18px;border-radius:10px" id="sv-code-disp">—</div>
+  </div>
+
+  <!-- LÝ THUYẾT -->
+  <div class="card">
+    <div class="card-hd"><i class="ti ti-stack-2"></i><div style="flex:1"><h2>Lý Thuyết — Cộng Lún Từng Phân Tố</h2><p>Công thức · Điều kiện tắt lún</p></div><span class="cbadge">LÝ THUYẾT</span></div>
+    <div class="card-body">
+      <div class="step">
+        <div class="step-hd open" onclick="togS(this)">
+          <div class="snb" style="background:var(--G)">CT</div>
+          <h3>Công thức cộng lún</h3><i class="ti ti-chevron-down chev"></i>
+        </div>
+        <div class="step-body open">
+          <div class="two-col">
+            <div class="fml-box">
+              <div class="ftitle"><i class="ti ti-sigma"></i> Lún 1 phân tố</div>
+              <div class="frow">Sᵢ = (e₀ᵢ−e₁ᵢ)·hᵢ / (1+e₀ᵢ)</div>
+              <div class="frow" style="margin-top:6px">Hoặc dùng a:</div>
+              <div class="frow">Sᵢ = aᵢ·Δσᵢ·hᵢ / (1+e₀ᵢ)</div>
+              <div class="frow" style="margin-top:6px">Hoặc dùng mᵥ:</div>
+              <div class="frow">Sᵢ = mᵥᵢ·Δσᵢ·hᵢ  [m]  →  ×100 [cm]</div>
+              <div class="frow" style="margin-top:6px">S = Σ Sᵢ (cộng đến điểm tắt lún)</div>
+            </div>
+            <div class="fml-box">
+              <div class="ftitle"><i class="ti ti-alert-circle"></i> Điều kiện tắt lún</div>
+              <div class="frow">Δσᵢ ≤ 0.2 · σ_bt,i</div>
+              <div class="frow">σ_bt = γ · z (ứng suất bản thân)</div>
+              <div class="frow">Δσ = k₀ · p_gl (ứng suất tăng thêm)</div>
+              <div class="frow" style="margin-top:6px">Nếu điều kiện chưa thoả:</div>
+              <div class="frow">→ tiếp tục chia thêm phân tố</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DẠNG 1: TÍNH S dùng a -->
+  <div class="card">
+    <div class="card-hd"><i class="ti ti-calculator"></i><div style="flex:1"><h2>Dạng 1 — Tính Sᵢ Dùng Hệ Số Nén Lún a</h2><p>Sᵢ = aᵢ·Δσᵢ·hᵢ/(1+e₀ᵢ)</p></div><span class="cbadge">DẠNG 1</span></div>
+    <div class="card-body">
+      <div class="step">
+        <div class="step-hd open" onclick="togS(this)">
+          <div class="snb" style="background:#6A1B9A">BM</div>
+          <h3>Bài mẫu — 3 phân tố h=0.5m</h3>
+          <span class="stag" style="background:#EDE7F6;color:#6A1B9A">Cố định</span>
+          <i class="ti ti-chevron-down chev"></i>
+        </div>
+        <div class="step-body open">
+          <div class="earth-box">
+            Nền 3 phân tố, h=<b>0.5m</b> mỗi cái:<br>
+            <b>PT1:</b> e₀=0.85, a=0.0003 m²/kN, Δσ=120 kN/m², σ_bt=40 kN/m²<br>
+            <b>PT2:</b> e₀=0.82, a=0.0002 m²/kN, Δσ=80 kN/m², σ_bt=60 kN/m²<br>
+            <b>PT3:</b> e₀=0.80, a=0.0002 m²/kN, Δσ=40 kN/m², σ_bt=80 kN/m²
+          </div>
+          <div class="fml-box">
+            <div class="ftitle"><i class="ti ti-calculator"></i> Sᵢ = a·Δσ·h/(1+e₀)</div>
+            <div class="frow">S₁ = 0.0003×120×0.5/(1+0.85) = 0.018/1.85 = <b>0.00973 m = 0.97 cm</b></div>
+            <div class="frow">S₂ = 0.0002×80×0.5/(1+0.82) = 0.008/1.82 = <b>0.0044 m = 0.44 cm</b></div>
+            <div class="frow">S₃ = 0.0002×40×0.5/(1+0.80) = 0.004/1.80 = <b>0.0022 m = 0.22 cm</b></div>
+            <div class="frow">S = 0.97+0.44+0.22 = <b>1.63 cm</b></div>
+            <div class="frow" style="margin-top:6px">Kiểm tra tắt lún PT3: 0.2×σ_bt = 0.2×80 = <b>16</b> kN/m²</div>
+            <div class="frow">Δσ₃ = 40 &gt; 16 → chưa tắt, phải tính thêm PT4!</div>
+          </div>
+          <div class="sec-lbl">Điền kết quả bài mẫu</div>
+          <div class="ans-row"><span class="ans-label">S₁ (cm)</span><input class="ans-inp" id="bm-cl-s1" type="number" step="0.01" placeholder="?" oninput="chkFill('bm-cl-s1',0.97,0.05)"><span class="ans-unit">cm</span><span class="chip" id="bm-cl-s1-chip"></span></div>
+          <div class="ans-row"><span class="ans-label">S₂ (cm)</span><input class="ans-inp" id="bm-cl-s2" type="number" step="0.01" placeholder="?" oninput="chkFill('bm-cl-s2',0.44,0.04)"><span class="ans-unit">cm</span><span class="chip" id="bm-cl-s2-chip"></span></div>
+          <div class="ans-row"><span class="ans-label">S₃ (cm)</span><input class="ans-inp" id="bm-cl-s3" type="number" step="0.01" placeholder="?" oninput="chkFill('bm-cl-s3',0.22,0.03)"><span class="ans-unit">cm</span><span class="chip" id="bm-cl-s3-chip"></span></div>
+          <div class="ans-row"><span class="ans-label">S tổng (cm)</span><input class="ans-inp" id="bm-cl-S" type="number" step="0.01" placeholder="?" oninput="chkFill('bm-cl-S',1.63,0.1)"><span class="ans-unit">cm</span><span class="chip" id="bm-cl-S-chip"></span></div>
+          <div class="ans-row"><span class="ans-label">0.2×σ_bt,3 = 0.2×80</span><input class="ans-inp" id="bm-cl-chk" type="number" step="1" placeholder="?" oninput="chkFill('bm-cl-chk',16,0.5)"><span class="ans-unit">kN/m²</span><span class="chip" id="bm-cl-chk-chip"></span></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-hd open" onclick="togS(this)">
+          <div class="snb" style="background:var(--G)">BT</div>
+          <h3>Bài tập theo STT</h3>
+          <span class="stag" style="background:var(--Glt);color:var(--Gdk)">Ngẫu nhiên</span>
+          <i class="ti ti-chevron-down chev"></i>
+        </div>
+        <div class="step-body open">
+          <div class="ex-set">
+            <div class="ex-tabs">
+              <button class="ex-tab on" onclick="switchEx('d1',0,this)">Tương tự 1 (gợi ý)</button>
+              <button class="ex-tab" onclick="switchEx('d1',1,this)">Tương tự 2 (tự làm)</button>
+            </div>
+            <div class="ex-pane on" id="d1-p0">
+              <div class="ex-label">Tương tự 1 — Gợi ý công thức, tự thay số</div>
+              <div id="cl1-prob" class="earth-box">Nhập STT để sinh số liệu…</div>
+              <div class="fml-box" id="cl1-fml"><div class="ftitle"><i class="ti ti-lightbulb"></i> Gợi ý — Tự thay số</div></div>
+              <div id="cl1-q"></div>
+            </div>
+            <div class="ex-pane" id="d1-p1">
+              <div class="ex-label">Tương tự 2 — Chỉ đề bài, tự làm hoàn toàn</div>
+              <div id="cl2-prob" class="earth-box">Nhập STT để sinh số liệu…</div>
+              <div id="cl2-q"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DẠNG 2: TÍNH S dùng mv -->
+  <div class="card">
+    <div class="card-hd"><i class="ti ti-stack-3"></i><div style="flex:1"><h2>Dạng 2 — Tính Sᵢ Dùng Hệ Số Nén Thể Tích mᵥ</h2><p>Sᵢ = mᵥᵢ · Δσᵢ · h</p></div><span class="cbadge">DẠNG 2</span></div>
+    <div class="card-body">
+      <div class="step">
+        <div class="step-hd open" onclick="togS(this)">
+          <div class="snb" style="background:#6A1B9A">BM</div>
+          <h3>Bài mẫu — h=0.4m, 3 phân tố dùng mᵥ</h3>
+          <span class="stag" style="background:#EDE7F6;color:#6A1B9A">Cố định</span>
+          <i class="ti ti-chevron-down chev"></i>
+        </div>
+        <div class="step-body open">
+          <div class="earth-box">Nền 3 phân tố h=<b>0.4m</b>: PT1 mᵥ=0.00015 m²/kN, Δσ=100. PT2 mᵥ=0.00010, Δσ=65. PT3 mᵥ=0.00008, Δσ=35. Tính S₁, S₂, S₃, S tổng.</div>
+          <div class="fml-box">
+            <div class="ftitle"><i class="ti ti-calculator"></i> Sᵢ = mᵥᵢ · Δσᵢ · h</div>
+            <div class="frow">S₁ = 0.00015×100×0.4 = 0.006 m = <b>0.60 cm</b></div>
+            <div class="frow">S₂ = 0.00010×65×0.4 = 0.0026 m = <b>0.26 cm</b></div>
+            <div class="frow">S₃ = 0.00008×35×0.4 = 0.00112 m = <b>0.112 cm</b></div>
+            <div class="frow">S = 0.60+0.26+0.112 = <b>0.972 cm</b></div>
+          </div>
+          <div class="sec-lbl">Điền kết quả</div>
+          <div class="ans-row"><span class="ans-label">S₁ (cm)</span><input class="ans-inp" id="bm-mv-s1" type="number" step="0.01" placeholder="?" oninput="chkFill('bm-mv-s1',0.60,0.04)"><span class="ans-unit">cm</span><span class="chip" id="bm-mv-s1-chip"></span></div>
+          <div class="ans-row"><span class="ans-label">S₂ (cm)</span><input class="ans-inp" id="bm-mv-s2" type="number" step="0.01" placeholder="?" oninput="chkFill('bm-mv-s2',0.26,0.03)"><span class="ans-unit">cm</span><span class="chip" id="bm-mv-s2-chip"></span></div>
+          <div class="ans-row"><span class="ans-label">S₃ (cm)</span><input class="ans-inp" id="bm-mv-s3" type="number" step="0.01" placeholder="?" oninput="chkFill('bm-mv-s3',0.112,0.02)"><span class="ans-unit">cm</span><span class="chip" id="bm-mv-s3-chip"></span></div>
+          <div class="ans-row"><span class="ans-label">S tổng (cm)</span><input class="ans-inp" id="bm-mv-S" type="number" step="0.01" placeholder="?" oninput="chkFill('bm-mv-S',0.972,0.08)"><span class="ans-unit">cm</span><span class="chip" id="bm-mv-S-chip"></span></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-hd open" onclick="togS(this)">
+          <div class="snb" style="background:var(--G)">BT</div>
+          <h3>Bài tập theo STT</h3>
+          <span class="stag" style="background:var(--Glt);color:var(--Gdk)">Ngẫu nhiên</span>
+          <i class="ti ti-chevron-down chev"></i>
+        </div>
+        <div class="step-body open">
+          <div class="ex-set">
+            <div class="ex-tabs"><button class="ex-tab on" onclick="switchEx('d2',0,this)">Tương tự</button></div>
+            <div class="ex-pane on" id="d2-p0">
+              <div class="ex-label">Tương tự — Gợi ý công thức, tự thay số</div>
+              <div id="cl3-prob" class="earth-box">Nhập STT để sinh số liệu…</div>
+              <div class="fml-box" id="cl3-fml"><div class="ftitle"><i class="ti ti-lightbulb"></i> Gợi ý</div></div>
+              <div id="cl3-q"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div class="sticky-nav">
+  <div><span id="nav-prog">0/0</span><span style="opacity:.6;margin-left:8px">câu đúng</span></div>
+  <div style="display:flex;gap:10px">
+    <a href="4.1_DANH_HOI.html" class="btn btn-ghost btn-sm">← 4.1</a>
+    <a href="index_C4.html" class="btn btn-ghost btn-sm"><i class="ti ti-home"></i></a>
+    <a href="4.3_CO_KET.html" class="btn btn-ghost btn-sm">4.3 Cố kết →</a>
+  </div>
+</div>
+
+<script>
+var ANS={};
+function r1(v){return Math.round(v*10)/10}
+function r2(v){return Math.round(v*100)/100}
+function r4(v){return Math.round(v*10000)/10000}
+function seededRng(seed){var s=seed%1000;return function(){s=(s*9301+49297)%233280;return s/233280;}}
+function togS(hd){hd.classList.toggle('open');hd.nextElementSibling.classList.toggle('open');}
+function switchEx(g,idx,btn){
+  document.querySelectorAll('[id^="'+g+'-p"]').forEach(function(p){p.classList.remove('on');});
+  document.getElementById(g+'-p'+idx).classList.add('on');
+  btn.closest('.ex-tabs').querySelectorAll('.ex-tab').forEach(function(t){t.classList.remove('on');});btn.classList.add('on');
+}
+function chkFill(id,ans,tol){
+  var inp=document.getElementById(id);
+  var chip=document.getElementById(id+'-chip');
+  if(!inp||!chip)return;
+  var v=parseFloat(inp.value);
+  if(isNaN(v)){inp.classList.remove('ok','no');chip.className='chip';chip.textContent='';ANS[id]=null;updateProg();return;}
+  var ok=Math.abs(v-ans)<=tol;
+  inp.classList.toggle('ok',ok);inp.classList.toggle('no',!ok);
+  chip.className='chip '+(ok?'ok':'no');chip.textContent=ok?'✓':'✗';
+  ANS[id]=ok;updateProg();
+}
+function updateProg(){
+  var total=0,done=0;
+  Object.keys(ANS).forEach(function(k){total++;if(ANS[k]===true)done++;});
+  var pct=total?Math.round(done/total*100):0;
+  document.getElementById('prog-fill').style.width=pct+'%';
+  document.getElementById('prog-txt').textContent=done+' / '+total+' câu đúng';
+  document.getElementById('hdr-prog').textContent=done+' / '+total+' ✓';
+  document.getElementById('nav-prog').textContent=done+'/'+total;
+  try{localStorage.setItem('prog_c4_42',JSON.stringify({done:done,total:total}));}catch(e){}
+}
+function makeAnsRow(id,label,ans,tol,unit){
+  ANS[id]=null;
+  return '<div class="ans-row"><span class="ans-label">'+label+'</span>'+
+    '<input class="ans-inp" id="'+id+'" type="number" step="any" placeholder="?" oninput="chkFill(\''+id+'\','+ans+','+tol+')">'+
+    '<span class="ans-unit">'+unit+'</span><span class="chip" id="'+id+'-chip"></span></div>';
+}
+function genCongLun(sv){
+  var rng=seededRng(sv*31+19);
+  var h=r1(0.4+rng()*0.3);
+  var e0=[r2(0.75+rng()*0.25),r2(0.72+rng()*0.25),r2(0.70+rng()*0.22)];
+  var a=[r4(0.0002+rng()*0.0003),r4(0.0001+rng()*0.0002),r4(0.0001+rng()*0.0002)];
+  var dsz=[Math.round(80+rng()*80),Math.round(50+rng()*60),Math.round(25+rng()*40)];
+  var sbt=[Math.round(30+rng()*30),Math.round(60+rng()*30),Math.round(90+rng()*40)];
+  var S=[],totalS=0;
+  for(var i=0;i<3;i++){var si=r4(a[i]*dsz[i]*h/(1+e0[i]));S.push(r2(si*100));totalS+=si;}
+  totalS=r2(totalS*100);
+  var chk02=r2(0.2*sbt[2]);
+  document.getElementById('cl1-prob').innerHTML=
+    'Nền 3 phân tố dày <b>h='+h+'m</b> mỗi cái. Dùng Sᵢ = aᵢ·Δσᵢ·h/(1+e₀ᵢ).<br>'+
+    '<b>PT1:</b> e₀='+e0[0]+', a='+a[0]+' m²/kN, Δσ='+dsz[0]+' kN/m², σ_bt='+sbt[0]+'<br>'+
+    '<b>PT2:</b> e₀='+e0[1]+', a='+a[1]+' m²/kN, Δσ='+dsz[1]+' kN/m², σ_bt='+sbt[1]+'<br>'+
+    '<b>PT3:</b> e₀='+e0[2]+', a='+a[2]+' m²/kN, Δσ='+dsz[2]+' kN/m², σ_bt='+sbt[2]+'<br>'+
+    'Tính S₁, S₂, S₃, S tổng và 0.2×σ_bt tại PT3.';
+  document.getElementById('cl1-fml').innerHTML=
+    '<div class="ftitle"><i class="ti ti-lightbulb"></i> Gợi ý — Tự thay số</div>'+
+    '<div class="frow">S₁ = '+a[0]+' × '+dsz[0]+' × '+h+' / (1+'+e0[0]+') = ?</div>'+
+    '<div class="frow">S₂ = '+a[1]+' × '+dsz[1]+' × '+h+' / (1+'+e0[1]+') = ?</div>'+
+    '<div class="frow">S₃ = '+a[2]+' × '+dsz[2]+' × '+h+' / (1+'+e0[2]+') = ?</div>'+
+    '<div class="frow">S = S₁+S₂+S₃ = ? cm</div>'+
+    '<div class="frow">0.2×σ_bt,3 = 0.2×'+sbt[2]+' = ?</div>';
+  document.getElementById('cl1-q').innerHTML=
+    makeAnsRow('cl1-s1','S₁ (cm)',S[0],0.05,'cm')+
+    makeAnsRow('cl1-s2','S₂ (cm)',S[1],0.05,'cm')+
+    makeAnsRow('cl1-s3','S₃ (cm)',S[2],0.04,'cm')+
+    makeAnsRow('cl1-S','S tổng (cm)',totalS,0.1,'cm')+
+    makeAnsRow('cl1-chk','0.2×σ_bt,3',chk02,0.5,'kN/m²');
+
+  var rng2=seededRng(sv*37+23);
+  var h2=r1(0.3+rng2()*0.4);
+  var e02=[r2(0.78+rng2()*0.2),r2(0.74+rng2()*0.2),r2(0.70+rng2()*0.18)];
+  var a2=[r4(0.00018+rng2()*0.00025),r4(0.00012+rng2()*0.0002),r4(0.00008+rng2()*0.00015)];
+  var dsz2=[Math.round(90+rng2()*70),Math.round(55+rng2()*55),Math.round(28+rng2()*35)];
+  var S2=[],total2=0;
+  for(var j=0;j<3;j++){var sj=r4(a2[j]*dsz2[j]*h2/(1+e02[j]));S2.push(r2(sj*100));total2+=sj;}
+  total2=r2(total2*100);
+  document.getElementById('cl2-prob').innerHTML=
+    'Nền 3 phân tố dày <b>h='+h2+'m</b>:<br>'+
+    '<b>PT1:</b> e₀='+e02[0]+', a='+a2[0]+' m²/kN, Δσ='+dsz2[0]+' kN/m²<br>'+
+    '<b>PT2:</b> e₀='+e02[1]+', a='+a2[1]+' m²/kN, Δσ='+dsz2[1]+' kN/m²<br>'+
+    '<b>PT3:</b> e₀='+e02[2]+', a='+a2[2]+' m²/kN, Δσ='+dsz2[2]+' kN/m²<br>'+
+    'Tính S₁, S₂, S₃ và S tổng.';
+  document.getElementById('cl2-q').innerHTML=
+    makeAnsRow('cl2-s1','S₁ (cm)',S2[0],0.05,'cm')+
+    makeAnsRow('cl2-s2','S₂ (cm)',S2[1],0.05,'cm')+
+    makeAnsRow('cl2-s3','S₃ (cm)',S2[2],0.04,'cm')+
+    makeAnsRow('cl2-S','S tổng (cm)',total2,0.1,'cm');
+
+  // Dạng 2: mv
+  var rng3=seededRng(sv*43+31);
+  var h3=r1(0.35+rng3()*0.35);
+  var mv=[r4(0.00008+rng3()*0.00018),r4(0.00006+rng3()*0.00014),r4(0.00004+rng3()*0.0001)];
+  var dsz3=[Math.round(85+rng3()*75),Math.round(55+rng3()*55),Math.round(28+rng3()*35)];
+  var S3=[],total3=0;
+  for(var k=0;k<3;k++){var sk=r4(mv[k]*dsz3[k]*h3);S3.push(r2(sk*100));total3+=sk;}
+  total3=r2(total3*100);
+  document.getElementById('cl3-prob').innerHTML=
+    'Nền 3 phân tố dày <b>h='+h3+'m</b>. Dùng Sᵢ = mᵥᵢ·Δσᵢ·h:<br>'+
+    '<b>PT1:</b> mᵥ='+mv[0]+' m²/kN, Δσ='+dsz3[0]+' kN/m²<br>'+
+    '<b>PT2:</b> mᵥ='+mv[1]+' m²/kN, Δσ='+dsz3[1]+' kN/m²<br>'+
+    '<b>PT3:</b> mᵥ='+mv[2]+' m²/kN, Δσ='+dsz3[2]+' kN/m²<br>'+
+    'Tính S₁, S₂, S₃ và S tổng.';
+  document.getElementById('cl3-fml').innerHTML=
+    '<div class="ftitle"><i class="ti ti-lightbulb"></i> Gợi ý</div>'+
+    '<div class="frow">S₁ = '+mv[0]+' × '+dsz3[0]+' × '+h3+' = ? m = ? cm</div>'+
+    '<div class="frow">S₂ = '+mv[1]+' × '+dsz3[1]+' × '+h3+' = ? cm</div>'+
+    '<div class="frow">S₃ = '+mv[2]+' × '+dsz3[2]+' × '+h3+' = ? cm</div>';
+  document.getElementById('cl3-q').innerHTML=
+    makeAnsRow('cl3-s1','S₁ (cm)',S3[0],0.05,'cm')+
+    makeAnsRow('cl3-s2','S₂ (cm)',S3[1],0.04,'cm')+
+    makeAnsRow('cl3-s3','S₃ (cm)',S3[2],0.03,'cm')+
+    makeAnsRow('cl3-S','S tổng (cm)',total3,0.08,'cm');
+}
+['bm-cl-s1','bm-cl-s2','bm-cl-s3','bm-cl-S','bm-cl-chk','bm-mv-s1','bm-mv-s2','bm-mv-s3','bm-mv-S'].forEach(function(k){ANS[k]=null;});
+window.onload=function(){
+  var sv=parseInt(localStorage.getItem('sv_code')||'0')||0;
+  if(sv<1||sv>200)sv=1;
+  document.getElementById('sv-name').textContent='STT Sinh viên: '+sv;
+  document.getElementById('sv-code-disp').textContent=sv;
+  document.getElementById('hdr-sv').textContent='SV #'+sv;
+  genCongLun(sv);updateProg();
+};
+</script>
+</body>
+</html>
