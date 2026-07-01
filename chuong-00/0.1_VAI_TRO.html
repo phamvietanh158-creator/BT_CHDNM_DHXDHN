@@ -109,6 +109,7 @@ main{max-width:900px;margin:0 auto;padding:24px 20px 40px}
 .grade-C{background:var(--Alt);color:#E65100}
 .grade-D{background:var(--Rlt);color:var(--R)}
 
+.sv-infobar{background:linear-gradient(135deg,var(--Pdk),var(--P));color:#fff;border-radius:var(--r);padding:12px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:18px}
 .sticky-nav{position:fixed;bottom:0;left:0;right:0;background:var(--Pdk);color:#fff;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;z-index:200;font-size:13px}
 .sticky-nav span{color:rgba(255,255,255,.7)}
 .btn{padding:8px 16px;border-radius:8px;border:none;cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;transition:opacity .15s;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
@@ -132,7 +133,6 @@ main{max-width:900px;margin:0 auto;padding:24px 20px 40px}
       <p>Cơ Học Đất · Nền Móng · TS. Phạm Việt Anh — ĐHXD Hà Nội</p>
     </div>
     <div class="hdr-prog" id="hdr-prog">0 / 28</div>
-    <div id="sv-badge" style="font-size:11px;background:rgba(255,255,255,.13);padding:4px 10px;border-radius:16px;white-space:nowrap;max-width:140px;overflow:hidden;text-overflow:ellipsis"></div>
   </div>
 </header>
 
@@ -158,6 +158,13 @@ main{max-width:900px;margin:0 auto;padding:24px 20px 40px}
     <span id="prog-text">0 / 21 câu (0%)</span>
   </div>
   <div class="prog-track"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+</div>
+
+<div class="sv-infobar">
+  <i class="ti ti-id-badge" style="font-size:20px;opacity:.8"></i>
+  <div style="flex:1"><div style="font-size:14px;font-weight:700" id="sv-display">đang tải...</div>
+  <div style="font-size:12px;color:rgba(255,255,255,.65)">Bài 0.1 — Vai Trò Của Môn Học</div></div>
+  <div id="sv-chip" style="font-family:var(--mono);font-size:18px;font-weight:700;background:rgba(255,255,255,.15);padding:6px 14px;border-radius:8px">–</div>
 </div>
 
 <div class="earth-box">
@@ -673,7 +680,6 @@ main{max-width:900px;margin:0 auto;padding:24px 20px 40px}
 <!-- BOTTOM NAV -->
 <div class="bottom-nav">
   <a href="index_C0.html" class="btn btn-ghost-light"><i class="ti ti-arrow-left"></i> Chương 0</a>
-  <button id="btn-nop" class="btn btn-p" onclick="submitResult()"><i class="ti ti-send"></i> Nộp bài</button>
   <button class="btn btn-a" onclick="goNext()">0.2 — Sự cố nền móng <i class="ti ti-arrow-right"></i></button>
 </div>
 
@@ -681,8 +687,9 @@ main{max-width:900px;margin:0 auto;padding:24px 20px 40px}
 <div class="sticky-nav">
   <span>0.1 · Vai trò của môn học</span>
   <div style="display:flex;align-items:center;gap:10px">
-    <span id="nav-prog">0/21</span>
+    <span id="nav-prog">0/28</span>
     <button class="btn btn-sm btn-ghost" onclick="scrollNext()">▼ Câu chưa làm</button>
+    <button class="btn btn-sm btn-ghost" id="btn-nop" onclick="submitResult()" style="background:rgba(150,150,150,.35);border-color:rgba(200,200,200,.4)">🔒 Nộp bài <span style="font-size:10px;opacity:.8">(0%/?%)</span></button>
   </div>
 </div>
 
@@ -749,17 +756,30 @@ function checkMatch(mid, correctArr) {
   checkComplete();
 }
 
+function getSV(){try{return JSON.parse(sessionStorage.getItem('ncm_sv'));}catch(e){return null;}}
+
 function updateProg() {
-  var done = 0, correct = 0;
+  var attempted = 0, correct = 0, total = TOTAL;
   questions.forEach(function(q) {
-    if (ANS[q] !== null) { done++; if (ANS[q]) correct++; }
+    if (ANS[q] !== null) { attempted++; if (ANS[q]) correct++; }
   });
-  var pct = Math.round(done / TOTAL * 100);
-  document.getElementById('prog-fill').style.width = pct + '%';
-  document.getElementById('prog-text').textContent = done + ' / ' + TOTAL + ' câu (' + pct + '%)';
-  document.getElementById('nav-prog').textContent = done + '/' + TOTAL;
-  document.getElementById('hdr-prog').textContent = done + ' / ' + TOTAL;
-  localStorage.setItem('prog_c0_01', JSON.stringify({done: done, total: TOTAL}));
+  var attemPct = total ? Math.round(attempted / total * 100) : 0;
+  var donePct  = total ? Math.round(correct  / total * 100) : 0;
+  document.getElementById('prog-fill').style.width = attemPct + '%';
+  document.getElementById('prog-text').textContent = 'Đã làm: ' + attempted + '/' + total + ' (' + attemPct + '%) · Đúng: ' + correct + ' (' + donePct + '%)';
+  document.getElementById('nav-prog').textContent  = attempted + '/' + total;
+  document.getElementById('hdr-prog').textContent  = attempted + ' / ' + total;
+  try { localStorage.setItem('prog_c0_01', JSON.stringify({done: correct, total: total, attempted: attempted})); } catch(e) {}
+  if (!_submitted) {
+    var minPct = (typeof window.MIN_ATTEMPT_PCT !== 'undefined') ? window.MIN_ATTEMPT_PCT : 5;
+    var btn = document.getElementById('btn-nop');
+    if (btn) {
+      var ready = (attemPct >= minPct && attempted > 0);
+      btn.style.background    = ready ? 'rgba(46,125,50,.7)' : 'rgba(150,150,150,.35)';
+      btn.style.borderColor   = ready ? 'rgba(165,214,167,.6)' : 'rgba(200,200,200,.4)';
+      btn.innerHTML = (ready ? '✅' : '🔒') + ' Nộp bài <span style="font-size:10px;opacity:.8">(' + attemPct + '%/' + minPct + '%)</span>';
+    }
+  }
 }
 
 function checkComplete() {
@@ -829,65 +849,44 @@ function goNext() {
   window.location.href = '0.2_SU_CO.html';
 }
 
-var _sv = {};
 var _submitted = false;
 
 function submitResult() {
-  var done = 0, correct = 0;
-  questions.forEach(function(q) { if (ANS[q] !== null) { done++; if (ANS[q]) correct++; } });
-  var pct = Math.round(done / TOTAL * 100);
-  var minPct = (typeof window.MIN_ATTEMPT_PCT !== 'undefined') ? window.MIN_ATTEMPT_PCT : 50;
-  if (pct < minPct) {
-    alert('Bạn cần hoàn thành ít nhất ' + minPct + '% số câu trước khi nộp bài.\nHiện tại: ' + pct + '% (' + done + '/' + TOTAL + ' câu).');
-    return;
-  }
-  if (_submitted) { alert('Bài đã được nộp rồi!'); return; }
-  if (!_sv.name) {
-    alert('Không tìm thấy thông tin sinh viên. Vui lòng quay lại trang chủ và đăng nhập lại.');
-    return;
-  }
-  var btn = document.getElementById('btn-nop');
-  btn.disabled = true;
-  btn.innerHTML = '<i class="ti ti-loader"></i> Đang nộp...';
-  var payload = {
-    chapterId: 'c0_01',
-    sv: _sv,
-    score: correct,
-    total: TOTAL,
-    pct: Math.round(correct / TOTAL * 100),
-    attempted: done,
-    ts: new Date().toISOString()
-  };
+  var sv = getSV();
+  if (!sv || !sv.name) { alert('⚠️ Chưa đăng nhập. Về trang chủ nhập thông tin trước!'); return; }
+  if (_submitted) { return; }
+  var total = TOTAL, attempted = 0, correct = 0;
+  questions.forEach(function(q) { if (ANS[q] !== null) { attempted++; if (ANS[q]) correct++; } });
+  var attemPct = total ? Math.round(attempted / total * 100) : 0;
+  var scorePct = total ? Math.round(correct  / total * 100) : 0;
+  if (attempted === 0) { alert('⚠️ Chưa làm câu nào!'); return; }
+  var minPct = (typeof window.MIN_ATTEMPT_PCT !== 'undefined') ? window.MIN_ATTEMPT_PCT : 5;
+  if (attemPct < minPct) { alert('⚠️ Cần làm tối thiểu ' + minPct + '% số câu mới được nộp! Đã làm: ' + attemPct + '%'); return; }
   var workerUrl = (typeof window.WORKER_URL !== 'undefined') ? window.WORKER_URL : 'https://dqt-chdnm.phamvietanh158.workers.dev';
-  fetch(workerUrl, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
+  fetch(workerUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name: sv.name, mssv: sv.mssv, stt: Number(sv.stt) || 0, classId: sv.classId,
+      chapterId: 'C0-01-VaiTro', score: scorePct, correct: correct, total: total, duration: 0 })
   })
   .then(function(r) { return r.json(); })
-  .then(function(data) {
-    _submitted = true;
-    btn.innerHTML = '<i class="ti ti-circle-check"></i> Đã nộp';
-    btn.style.background = 'var(--G)';
-    localStorage.setItem('prog_c0_01', JSON.stringify({ done: TOTAL, total: TOTAL }));
-    alert('✅ Nộp bài thành công!\nĐiểm: ' + correct + '/' + TOTAL + ' (' + Math.round(correct/TOTAL*100) + '%)');
+  .then(function(d) {
+    if (d.ok) {
+      _submitted = true;
+      var btn = document.getElementById('btn-nop');
+      if (btn) { btn.innerHTML = '✓ Đã nộp (' + scorePct + '%)'; btn.disabled = true; btn.style.background = 'rgba(46,125,50,.5)'; }
+      alert('✅ Nộp thành công! Đúng: ' + scorePct + '% (' + correct + '/' + total + ')');
+    } else { alert('❌ Lỗi: ' + (d.error || 'Không rõ')); }
   })
-  .catch(function(err) {
-    btn.disabled = false;
-    btn.innerHTML = '<i class="ti ti-send"></i> Nộp bài';
-    alert('❌ Lỗi kết nối. Kiểm tra mạng và thử lại.\n' + err.message);
-  });
+  .catch(function(err) { alert('❌ Không kết nối được Worker: ' + err.message); });
 }
 
 window.onload = function() {
-  try {
-    var raw = sessionStorage.getItem('ncm_sv');
-    if (raw) {
-      _sv = JSON.parse(raw);
-      var badge = document.getElementById('sv-badge');
-      if (badge && _sv.name) badge.textContent = _sv.name + ' — ' + (_sv.lop || '');
-    }
-  } catch(e) {}
+  var sv = getSV();
+  if (sv) {
+    var el = document.getElementById('sv-display');
+    var chip = document.getElementById('sv-chip');
+    if (el) el.textContent = (sv.name || '–') + (sv.classId ? ' · ' + sv.classId : '');
+    if (chip) chip.textContent = 'STT ' + (sv.stt || '–');
+  }
   updateProg();
 };
 </script>
