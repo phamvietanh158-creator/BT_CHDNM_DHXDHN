@@ -131,7 +131,7 @@ main{max-width:900px;margin:0 auto;padding:24px 20px 40px}
       <h1>0.1 — Vai Trò Của Môn Học</h1>
       <p>Cơ Học Đất · Nền Móng · TS. Phạm Việt Anh — ĐHXD Hà Nội</p>
     </div>
-    <div class="hdr-prog" id="hdr-prog">0 / 21</div>
+    <div class="hdr-prog" id="hdr-prog">0 / 28</div>
     <div id="sv-badge" style="font-size:11px;background:rgba(255,255,255,.13);padding:4px 10px;border-radius:16px;white-space:nowrap;max-width:140px;overflow:hidden;text-overflow:ellipsis"></div>
   </div>
 </header>
@@ -143,7 +143,8 @@ main{max-width:900px;margin:0 auto;padding:24px 20px 40px}
     <button class="tab" onclick="goto('s-vai-tro')"><span class="tn">B</span> Vai trò KTXD</button>
     <button class="tab" onclick="goto('s-vong-doi')"><span class="tn">C</span> Vòng đời dự án</button>
     <button class="tab" onclick="goto('s-loai-hinh')"><span class="tn">D</span> Theo loại công trình</button>
-    <button class="tab" onclick="goto('s-ghep-noi')"><span class="tn">E</span> Ghép nối</button>
+    <button class="tab" onclick="goto('s-nen-mong')"><span class="tn">F</span> Nền móng ứng dụng</button>
+    <button class="tab" onclick="goto('s-ghep-noi')"><span class="tn">G</span> Ghép nối</button>
     <button class="tab" onclick="goto('s-result')"><span class="tn">KQ</span> Kết quả</button>
   </div>
 </div>
@@ -468,6 +469,112 @@ main{max-width:900px;margin:0 auto;padding:24px 20px 40px}
   </div>
 </div>
 
+<!-- SECTION F: NỀN MÓNG ỨNG DỤNG -->
+<div id="s-nen-mong" class="card">
+  <div class="card-hd">
+    <i class="ti ti-building-arch"></i>
+    <div>
+      <h2>F. Nền Móng ứng dụng — Loại móng, gia cố nền & BPTC</h2>
+      <p>Nếu Cơ học đất cho kỹ sư hiểu hiện tượng → thì Nền móng cho biết làm gì với hiện tượng đó</p>
+    </div>
+    <span class="cbadge" style="background:var(--G)">NỀN MÓNG</span>
+  </div>
+  <div class="card-body">
+
+    <div class="theory">
+      <div class="theory-lbl"><i class="ti ti-layer-difference"></i> Hai tầng kiến thức của kỹ sư KTXD</div>
+      <b>Cơ học đất</b> → hiểu <i>tại sao</i>: đất lún vì sao, trượt khi nào, thấm bao nhiêu → nắm được rủi ro và định lượng hiện tượng.<br>
+      <b>Nền và Móng</b> → biết <i>làm gì</i>: chọn loại móng nào, gia cố nền bằng phương pháp gì, thi công ra sao, mất bao nhiêu thời gian và tiền → kiểm soát được chi phí, tiến độ và BPTC.<br><br>
+      Kỹ sư KTXD cần cả hai lớp này mới lập được dự toán sát, thẩm định được thiết kế và quản lý được tiến độ phần ngầm.
+    </div>
+
+    <div class="earth-box">
+      🏗️ <b>Phân loại móng nhanh:</b><br>
+      <b>Móng nông</b> (D/B ≤ 1–2): móng đơn, móng băng, móng bè — thi công đơn giản, chi phí thấp, phù hợp nền đất tốt.<br>
+      <b>Móng sâu</b>: cọc ép, cọc đóng, cọc khoan nhồi, cọc barrette — đưa tải xuống lớp đất tốt sâu hơn, chi phí cao hơn 3–10 lần nhưng bắt buộc khi nền đất yếu hoặc tải trọng lớn.<br>
+      <b>Gia cố nền</b>: bấc thấm + gia tải, cọc cát, cọc xi măng đất (CDM/jet grouting), cừ ván thép, vải địa kỹ thuật — mỗi phương pháp có chi phí, tốc độ và điều kiện áp dụng khác nhau.
+    </div>
+
+    <div class="sec-lbl"><i class="ti ti-help-circle" style="font-size:13px"></i> Câu 20–26 — Nền móng & BPTC</div>
+
+    <div class="mcq-wrap">
+      <div class="mcq-q"><span class="mcq-num">20</span>Điều kiện nào giúp kỹ sư KTXD ưu tiên chọn <b>móng nông</b> thay vì móng cọc khi lập dự toán so sánh phương án?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt" id="mco-q20-0" onclick="pickMCQ('q20',0,0)"><span class="mkey">A</span><span>Nền đất tốt ngay dưới đáy móng (sức chịu tải đủ lớn, lún dự báo nằm trong giới hạn cho phép) → móng nông thi công nhanh, chi phí thấp hơn cọc 3–8 lần</span></div>
+        <div class="mcq-opt" id="mco-q20-1" onclick="pickMCQ('q20',1,0)"><span class="mkey">B</span><span>Khi chủ đầu tư yêu cầu thi công nhanh bất kể điều kiện địa chất</span></div>
+        <div class="mcq-opt" id="mco-q20-2" onclick="pickMCQ('q20',2,0)"><span class="mkey">C</span><span>Khi công trình có nhiều tầng hầm sâu</span></div>
+        <div class="mcq-opt" id="mco-q20-3" onclick="pickMCQ('q20',3,0)"><span class="mkey">D</span><span>Khi muốn tiết kiệm chi phí bê tông phần thân</span></div>
+      </div>
+      <div class="mcq-exp" id="exp-q20">✓ Móng nông (đơn/băng/bè) chỉ phù hợp khi <b>đất tốt nằm gần mặt đất</b>. Nếu đủ điều kiện, đây luôn là phương án kinh tế nhất: không cần thiết bị ép cọc, không cần kiểm tra chất lượng cọc (thử tải, PDA), thi công đơn giản và nhanh hơn. Kỹ sư KTXD cần đọc địa chất để xác nhận điều kiện này trước khi loại bỏ phương án móng nông.</div>
+    </div>
+
+    <div class="mcq-wrap">
+      <div class="mcq-q"><span class="mcq-num">21</span>Cọc ép và cọc khoan nhồi khác nhau như thế nào về BPTC, tiến độ và chi phí — điều kỹ sư KTXD phải nắm để lập đơn giá?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt" id="mco-q21-0" onclick="pickMCQ('q21',0,0)"><span class="mkey">A</span><span>Cọc ép: nhanh, ít bụi/ồn, đơn giá thấp hơn, phù hợp cọc tiết diện nhỏ ≤600mm; khoan nhồi: đường kính lớn (600–2500mm), sức chịu tải cao hơn nhiều nhưng chậm hơn và đơn giá cao gấp 2–5 lần</span></div>
+        <div class="mcq-opt" id="mco-q21-1" onclick="pickMCQ('q21',1,0)"><span class="mkey">B</span><span>Hai loại hoàn toàn giống nhau về tiến độ và chi phí, chỉ khác về tên gọi</span></div>
+        <div class="mcq-opt" id="mco-q21-2" onclick="pickMCQ('q21',2,0)"><span class="mkey">C</span><span>Cọc khoan nhồi luôn nhanh hơn vì không cần đầm nén từng đoạn</span></div>
+        <div class="mcq-opt" id="mco-q21-3" onclick="pickMCQ('q21',3,0)"><span class="mkey">D</span><span>Cọc ép không cần máy móc chuyên dụng, thi công bằng tay được</span></div>
+      </div>
+      <div class="mcq-exp" id="exp-q21">✓ Đây là 2 dòng đơn giá khác nhau hoàn toàn trong dự toán. <b>Cọc ép BTCT</b>: máy ép thủy lực, cọc đúc sẵn, năng suất 80–150 m/ngày/máy, chi phí ~300–700k VND/m. <b>Cọc khoan nhồi</b>: máy khoan rotary, đổ bê tông tươi tại chỗ, năng suất 10–30 m/ca, chi phí ~1,5–5M VND/m tùy đường kính. KTXD sai loại → sai đơn giá cả chục lần.</div>
+    </div>
+
+    <div class="mcq-wrap">
+      <div class="mcq-q"><span class="mcq-num">22</span>Biện pháp gia cố nền "bấc thấm + gia tải trước" ảnh hưởng đến tiến độ tổng thể dự án như thế nào — và kỹ sư KTXD cần tính gì vào kế hoạch?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt" id="mco-q22-0" onclick="pickMCQ('q22',0,1)"><span class="mkey">A</span><span>Không ảnh hưởng tiến độ vì bấc thấm thi công rất nhanh</span></div>
+        <div class="mcq-opt" id="mco-q22-1" onclick="pickMCQ('q22',1,1)"><span class="mkey">B</span><span>Bắt buộc có thời gian chờ lún cố kết (thường 3–18 tháng) trước khi thi công phần trên — KTXD phải tính chi phí vốn chờ, chi phí quan trắc lún và điều chỉnh tiến độ tổng thể</span></div>
+        <div class="mcq-opt" id="mco-q22-2" onclick="pickMCQ('q22',2,1)"><span class="mkey">C</span><span>Chỉ ảnh hưởng chi phí vật liệu, hoàn toàn không ảnh hưởng tiến độ</span></div>
+        <div class="mcq-opt" id="mco-q22-3" onclick="pickMCQ('q22',3,1)"><span class="mkey">D</span><span>Giúp rút ngắn tiến độ vì thay thế được móng cọc</span></div>
+      </div>
+      <div class="mcq-exp" id="exp-q22">✓ Bấc thấm giúp nước lỗ rỗng thoát nhanh hơn → lún cố kết nhanh hơn tự nhiên. Nhưng vẫn phải <b>chờ</b> cho đến khi lún đạt ≥90% dự báo mới được thi công lớp mặt đường hoặc kết cấu phía trên. Dự án ĐBSCL thường có 6–18 tháng "giai đoạn chờ lún" → ảnh hưởng toàn bộ tiến độ hợp đồng, lãi vay ngân hàng và cơ cấu vốn. KTXD không biết điều này dễ lập tiến độ sai hoàn toàn.</div>
+    </div>
+
+    <div class="mcq-wrap">
+      <div class="mcq-q"><span class="mcq-num">23</span>Cọc xi măng đất (CDM / Jet grouting) khác với bấc thấm như thế nào về tiến độ và chi phí?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt" id="mco-q23-0" onclick="pickMCQ('q23',0,1)"><span class="mkey">A</span><span>CDM rẻ hơn và nhanh hơn bấc thấm trong mọi trường hợp</span></div>
+        <div class="mcq-opt" id="mco-q23-1" onclick="pickMCQ('q23',1,1)"><span class="mkey">B</span><span>CDM tốn kém hơn (xi măng + thiết bị chuyên dụng) nhưng không cần thời gian chờ lún — phù hợp khi tiến độ gấp hoặc mặt bằng chật hẹp không cho phép đắp gia tải</span></div>
+        <div class="mcq-opt" id="mco-q23-2" onclick="pickMCQ('q23',2,1)"><span class="mkey">C</span><span>Hai phương pháp hoàn toàn thay thế nhau được mà không cần cân nhắc</span></div>
+        <div class="mcq-opt" id="mco-q23-3" onclick="pickMCQ('q23',3,1)"><span class="mkey">D</span><span>CDM chỉ dùng được ở đất cát, không dùng được ở đất sét</span></div>
+      </div>
+      <div class="mcq-exp" id="exp-q23">✓ Đây là bài toán so sánh kinh tế điển hình cho kỹ sư KTXD: <b>bấc thấm + gia tải</b> chi phí thấp (~30–80k VND/m bấc) nhưng cần 6–18 tháng chờ; <b>CDM</b> chi phí cao hơn 5–10 lần nhưng hoàn thành trong vài tuần, thi công được ngay phần trên. Khi chi phí vốn chờ và phạt chậm tiến độ lớn hơn chênh lệch đơn giá → CDM lại là phương án kinh tế hơn.</div>
+    </div>
+
+    <div class="mcq-wrap">
+      <div class="mcq-q"><span class="mcq-num">24</span>Kỹ sư KTXD cần hiểu về "cừ ván thép" (sheet pile) để kiểm soát khoản chi phí nào thường bị bỏ sót trong dự toán?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt" id="mco-q24-0" onclick="pickMCQ('q24',0,1)"><span class="mkey">A</span><span>Chi phí sơn phủ bề mặt cừ thép</span></div>
+        <div class="mcq-opt" id="mco-q24-1" onclick="pickMCQ('q24',1,1)"><span class="mkey">B</span><span>Chi phí thuê cừ theo thời gian sử dụng + chi phí đóng và nhổ cừ; nếu cừ bị chôn vĩnh viễn (không nhổ được) thì toàn bộ giá mua vật tư phải tính vào chi phí</span></div>
+        <div class="mcq-opt" id="mco-q24-2" onclick="pickMCQ('q24',2,1)"><span class="mkey">C</span><span>Chỉ tính chi phí vật liệu thép theo kg, không có khoản mục nào khác</span></div>
+        <div class="mcq-opt" id="mco-q24-3" onclick="pickMCQ('q24',3,1)"><span class="mkey">D</span><span>Chi phí cừ thép luôn nhỏ hơn 1% tổng dự toán, không đáng kể</span></div>
+      </div>
+      <div class="mcq-exp" id="exp-q24">✓ Cừ ván thép thường <b>thuê</b> (đóng → dùng → nhổ về) nên đơn giá tính theo m²×tháng thuê. Nhưng khi địa chất phức tạp, cừ bị kẹt không nhổ được → chôn vĩnh viễn → chi phí bằng giá mua mới. Rủi ro này phải có trong phân tích dự toán và điều khoản hợp đồng. Nhiều dự án bị đội vốn lớn vì không dự trù tình huống này.</div>
+    </div>
+
+    <div class="mcq-wrap">
+      <div class="mcq-q"><span class="mcq-num">25</span>(Đúng/Sai) Kỹ sư KTXD không cần quan tâm đến biện pháp thi công (BPTC) cụ thể của từng loại móng, vì đó hoàn toàn là trách nhiệm của nhà thầu thi công.</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt" id="mco-q25-0" onclick="pickMCQ('q25',0,1)"><span class="mkey">Đ</span><span>Đúng</span></div>
+        <div class="mcq-opt" id="mco-q25-1" onclick="pickMCQ('q25',1,1)"><span class="mkey">S</span><span>Sai</span></div>
+      </div>
+      <div class="mcq-exp" id="exp-q25">✓ <b>Sai.</b> BPTC quyết định trực tiếp đến: (1) đơn giá máy thi công (máy ép cọc, máy khoan, cẩu tháp…), (2) tiến độ thi công phần ngầm → ảnh hưởng toàn bộ tiến độ dự án, (3) chi phí gián tiếp (lãi vay, quản lý). Kỹ sư KTXD phải đọc và thẩm định BPTC để kiểm tra đơn giá có hợp lý không, có trùng hạng mục không, và tiến độ có khả thi không.</div>
+    </div>
+
+    <div class="mcq-wrap">
+      <div class="mcq-q"><span class="mcq-num">26</span>Khi thi công cọc khoan nhồi trong đô thị, khoản chi phí nào kỹ sư KTXD thường bỏ sót khi lập dự toán?</div>
+      <div class="mcq-opts">
+        <div class="mcq-opt" id="mco-q26-0" onclick="pickMCQ('q26',0,0)"><span class="mkey">A</span><span>Xử lý bùn khoan và dung dịch bentonite thải, chi phí thử tải (PDA/tĩnh), quan trắc siêu âm kiểm tra chất lượng cọc, và chi phí hạ mực nước ngầm tạm thời</span></div>
+        <div class="mcq-opt" id="mco-q26-1" onclick="pickMCQ('q26',1,0)"><span class="mkey">B</span><span>Chi phí sơn đầu cọc</span></div>
+        <div class="mcq-opt" id="mco-q26-2" onclick="pickMCQ('q26',2,0)"><span class="mkey">C</span><span>Chi phí vận chuyển cọc từ nhà máy đến công trường</span></div>
+        <div class="mcq-opt" id="mco-q26-3" onclick="pickMCQ('q26',3,0)"><span class="mkey">D</span><span>Chi phí cốt thép đai trong lồng cốt thép cọc</span></div>
+      </div>
+      <div class="mcq-exp" id="exp-q26">✓ Các khoản hay bị bỏ sót: <b>xử lý bùn thải khoan</b> (đô thị không cho đổ tùy tiện — phải vận chuyển đến bãi thải được cấp phép), <b>thử tải cọc</b> (PDA + kiểm tra siêu âm thường 0,2–0,5% giá trị cọc), <b>phá đầu cọc</b> (mỗi cọc mất 20–60 phút nhân công chuyên dụng). Tổng các khoản này có thể chiếm 5–15% tổng giá trị gói cọc — bỏ sót là lỗi dự toán nghiêm trọng.</div>
+    </div>
+
+  </div>
+</div>
+
 <!-- SECTION E: GHÉP NỐI TỔNG HỢP -->
 <div id="s-ghep-noi" class="card">
   <div class="card-hd">
@@ -581,10 +688,11 @@ main{max-width:900px;margin:0 auto;padding:24px 20px 40px}
 
 <script>
 var ANS = {};
-var TOTAL = 21;
+var TOTAL = 28;
 
 var mcqIds = ['q1','q2','q3','q4','q5','q6','q7','q8','q9','q10',
-              'q11','q12','q13','q14','q15','q16','q17','q18','q19'];
+              'q11','q12','q13','q14','q15','q16','q17','q18','q19',
+              'q20','q21','q22','q23','q24','q25','q26'];
 var matchIds = ['m1','m2'];
 var questions = mcqIds.concat(matchIds);
 questions.forEach(function(q){ ANS[q] = null; });
@@ -700,7 +808,7 @@ function goto(id) {
   if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
   document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('on'); });
   var tabs = document.querySelectorAll('.tab');
-  var map = {'s-intro':0,'s-vai-tro':1,'s-vong-doi':2,'s-loai-hinh':3,'s-ghep-noi':4,'s-result':5};
+  var map = {'s-intro':0,'s-vai-tro':1,'s-vong-doi':2,'s-loai-hinh':3,'s-nen-mong':4,'s-ghep-noi':5,'s-result':6};
   if (map[id] !== undefined) tabs[map[id]].classList.add('on');
 }
 
