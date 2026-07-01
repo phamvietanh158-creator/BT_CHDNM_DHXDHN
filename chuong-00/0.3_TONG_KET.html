@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<script src="../config.js"></script>
 <style>
 :root{
   --P:#1565C0;--Pdk:#0D47A1;--Plt:#E3F2FD;--Pmd:#1976D2;
@@ -126,6 +127,7 @@ main{max-width:900px;margin:0 auto;padding:24px 20px 40px}
 .grade-A{background:var(--Glt);color:var(--Gdk)}.grade-B{background:#E3F2FD;color:#0D47A1}
 .grade-C{background:var(--Alt);color:#E65100}.grade-D{background:var(--Rlt);color:var(--R)}
 
+.sv-infobar{background:linear-gradient(135deg,var(--Pdk),var(--P));color:#fff;border-radius:var(--r);padding:12px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:18px}
 .sticky-nav{position:fixed;bottom:0;left:0;right:0;background:var(--Pdk);color:#fff;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;z-index:200;font-size:13px}
 .btn{padding:8px 16px;border-radius:8px;border:none;cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;transition:opacity .15s;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
 .btn-sm{padding:6px 14px;font-size:12px}
@@ -161,6 +163,13 @@ main{max-width:900px;margin:0 auto;padding:24px 20px 40px}
 </div>
 
 <main>
+
+<div class="sv-infobar">
+  <i class="ti ti-id-badge" style="font-size:20px;opacity:.8"></i>
+  <div style="flex:1"><div style="font-size:14px;font-weight:700" id="sv-display">đang tải...</div>
+  <div style="font-size:12px;color:rgba(255,255,255,.65)">Bài 0.3 — Tổng Kết Chương Mở Đầu</div></div>
+  <div id="sv-chip" style="font-family:var(--mono);font-size:18px;font-weight:700;background:rgba(255,255,255,.15);padding:6px 14px;border-radius:8px">–</div>
+</div>
 
 <div class="prog-wrap">
   <div class="prog-top">
@@ -648,6 +657,7 @@ main{max-width:900px;margin:0 auto;padding:24px 20px 40px}
   <div style="display:flex;align-items:center;gap:10px">
     <span id="nav-prog">0/19</span>
     <button class="btn btn-sm btn-ghost" onclick="scrollNext()">▼ Câu chưa làm</button>
+    <button class="btn btn-sm btn-ghost" id="btn-nop" onclick="submitResult()" style="background:rgba(150,150,150,.35);border-color:rgba(200,200,200,.4)">🔒 Nộp bài <span style="font-size:10px;opacity:.8">(0%/?%)</span></button>
   </div>
 </div>
 
@@ -703,15 +713,30 @@ function checkMatch(mid, correctArr) {
   checkComplete();
 }
 
+function getSV(){try{return JSON.parse(sessionStorage.getItem('ncm_sv'));}catch(e){return null;}}
+
 function updateProg() {
-  var done = 0, correct = 0;
-  questions.forEach(function(q) { if (ANS[q] !== null) { done++; if (ANS[q]) correct++; } });
-  var pct = Math.round(done / TOTAL * 100);
-  document.getElementById('prog-fill').style.width = pct + '%';
-  document.getElementById('prog-text').textContent = done + ' / ' + TOTAL + ' câu (' + pct + '%)';
-  document.getElementById('nav-prog').textContent = done + '/' + TOTAL;
-  document.getElementById('hdr-prog').textContent = done + ' / ' + TOTAL;
-  localStorage.setItem('prog_c0_03', JSON.stringify({done: done, total: TOTAL}));
+  var attempted = 0, correct = 0, total = TOTAL;
+  questions.forEach(function(q) {
+    if (ANS[q] !== null) { attempted++; if (ANS[q]) correct++; }
+  });
+  var attemPct = total ? Math.round(attempted / total * 100) : 0;
+  var donePct  = total ? Math.round(correct  / total * 100) : 0;
+  document.getElementById('prog-fill').style.width = attemPct + '%';
+  document.getElementById('prog-text').textContent = 'Đã làm: ' + attempted + '/' + total + ' (' + attemPct + '%) · Đúng: ' + correct + ' (' + donePct + '%)';
+  document.getElementById('nav-prog').textContent  = attempted + '/' + total;
+  document.getElementById('hdr-prog').textContent  = attempted + ' / ' + total;
+  try { localStorage.setItem('prog_c0_03', JSON.stringify({done: correct, total: total, attempted: attempted})); } catch(e) {}
+  if (!_submitted) {
+    var minPct = (typeof window.MIN_ATTEMPT_PCT !== 'undefined') ? window.MIN_ATTEMPT_PCT : 5;
+    var btn = document.getElementById('btn-nop');
+    if (btn) {
+      var ready = (attemPct >= minPct && attempted > 0);
+      btn.style.background  = ready ? 'rgba(46,125,50,.7)' : 'rgba(150,150,150,.35)';
+      btn.style.borderColor = ready ? 'rgba(165,214,167,.6)' : 'rgba(200,200,200,.4)';
+      btn.innerHTML = (ready ? '✅' : '🔒') + ' Nộp bài <span style="font-size:10px;opacity:.8">(' + attemPct + '%/' + minPct + '%)</span>';
+    }
+  }
 }
 
 function checkComplete() {
@@ -772,7 +797,46 @@ function scrollNext() {
   if (el) el.closest('.mcq-wrap').scrollIntoView({behavior:'smooth', block:'center'});
 }
 
-window.onload = function() { updateProg(); };
+var _submitted = false;
+
+function submitResult() {
+  var sv = getSV();
+  if (!sv || !sv.name) { alert('⚠️ Chưa đăng nhập. Về trang chủ nhập thông tin trước!'); return; }
+  if (_submitted) { return; }
+  var total = TOTAL, attempted = 0, correct = 0;
+  questions.forEach(function(q) { if (ANS[q] !== null) { attempted++; if (ANS[q]) correct++; } });
+  var attemPct = total ? Math.round(attempted / total * 100) : 0;
+  var scorePct = total ? Math.round(correct  / total * 100) : 0;
+  if (attempted === 0) { alert('⚠️ Chưa làm câu nào!'); return; }
+  var minPct = (typeof window.MIN_ATTEMPT_PCT !== 'undefined') ? window.MIN_ATTEMPT_PCT : 5;
+  if (attemPct < minPct) { alert('⚠️ Cần làm tối thiểu ' + minPct + '% số câu mới được nộp! Đã làm: ' + attemPct + '%'); return; }
+  var workerUrl = (typeof window.WORKER_URL !== 'undefined') ? window.WORKER_URL : 'https://dqt-chdnm.phamvietanh158.workers.dev';
+  fetch(workerUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name: sv.name, mssv: sv.mssv, stt: Number(sv.stt) || 0, classId: sv.classId,
+      chapterId: 'C0-03-TongKet', score: scorePct, correct: correct, total: total, duration: 0 })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(d) {
+    if (d.ok) {
+      _submitted = true;
+      var btn = document.getElementById('btn-nop');
+      if (btn) { btn.innerHTML = '✓ Đã nộp (' + scorePct + '%)'; btn.disabled = true; btn.style.background = 'rgba(46,125,50,.5)'; }
+      alert('✅ Nộp thành công! Đúng: ' + scorePct + '% (' + correct + '/' + total + ')');
+    } else { alert('❌ Lỗi: ' + (d.error || 'Không rõ')); }
+  })
+  .catch(function(err) { alert('❌ Không kết nối được Worker: ' + err.message); });
+}
+
+window.onload = function() {
+  var sv = getSV();
+  if (sv) {
+    var el = document.getElementById('sv-display');
+    var chip = document.getElementById('sv-chip');
+    if (el) el.textContent = (sv.name || '–') + (sv.classId ? ' · ' + sv.classId : '');
+    if (chip) chip.textContent = 'STT ' + (sv.stt || '–');
+  }
+  updateProg();
+};
 </script>
 </body>
 </html>
