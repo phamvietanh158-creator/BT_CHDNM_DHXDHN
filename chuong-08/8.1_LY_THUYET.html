@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>8.1 — Lý Thuyết Móng Nông</title>
+<title>8.2 — Lý Thuyết Tính Toán Móng Nông</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
-<script src="../config.js" onerror="console.log('[NCM] config.js not found')"></script>
+<script src="../config.js" onerror="console.log('no config')"></script>
 <style>
 :root{--P:#1565C0;--Pdk:#0D47A1;--Plt:#E3F2FD;--G:#2E7D32;--Glt:#E8F5E9;--Gdk:#1B5E20;--R:#C62828;--Rlt:#FFEBEE;--A:#FF8F00;--Alt:#FFF8E1;--bg:#E8F4FD;--sur:#fff;--brd:#90CAF9;--muted:#546E7A;--text:#0D1B2A;--sans:'Plus Jakarta Sans',sans-serif;--mono:'JetBrains Mono',monospace;--r:12px;--sh:0 2px 16px rgba(21,101,192,.10)}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -16,72 +16,57 @@ body{background:var(--bg);font-family:var(--sans);color:var(--text);font-size:14
 .hdr-in{max-width:960px;margin:0 auto;padding:0 20px;height:60px;display:flex;align-items:center;gap:14px}
 .back-btn{color:rgba(255,255,255,.75);text-decoration:none;font-size:13px;display:flex;align-items:center;gap:5px;padding:6px 10px;border-radius:8px;border:1px solid rgba(255,255,255,.2)}
 .hdr-title{flex:1}.hdr-title h1{font-size:15px;font-weight:700}.hdr-title p{font-size:11px;color:rgba(255,255,255,.6)}
-.hdr-right{display:flex;flex-direction:column;align-items:flex-end;gap:3px}
-.hdr-prog{font-family:var(--mono);font-size:12px;background:rgba(255,255,255,.15);padding:5px 12px;border-radius:20px}
-.sv-badge-hdr{font-size:11px;color:rgba(255,255,255,.55);font-family:var(--mono)}
-main{max-width:960px;margin:0 auto;padding:20px 20px 80px}
-.prog-wrap{margin-bottom:18px;background:var(--sur);border-radius:var(--r);border:1px solid var(--brd);padding:12px 18px;box-shadow:var(--sh)}
-.prog-top{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:7px;font-weight:500}
-.prog-track{height:8px;background:var(--Plt);border-radius:4px;overflow:hidden}
-.prog-fill{height:100%;background:var(--P);border-radius:4px;transition:width .4s}
-.sv-infobar{background:linear-gradient(135deg,var(--Pdk),var(--P));color:#fff;border-radius:var(--r);padding:12px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+main{max-width:960px;margin:0 auto;padding:20px 16px 80px}
+/* cards */
 .card{background:var(--sur);border:1px solid var(--brd);border-radius:var(--r);box-shadow:var(--sh);margin-bottom:18px;overflow:hidden}
-.card-hd{padding:13px 20px;display:flex;align-items:center;gap:11px;border-bottom:1.5px solid var(--brd);background:var(--Plt)}
-.card-hd i{font-size:20px;color:var(--P)}
+.card-hd{padding:12px 18px;display:flex;align-items:center;gap:10px;border-bottom:2px solid var(--brd);background:var(--Plt)}
+.card-hd i{font-size:18px;color:var(--P)}
 .card-hd h2{font-size:14px;font-weight:700;color:var(--Pdk);flex:1}
-.cbadge{font-size:10px;font-weight:700;padding:3px 9px;border-radius:6px;background:var(--P);color:#fff;letter-spacing:.6px;white-space:nowrap}
-.card-body{padding:16px 20px;display:flex;flex-direction:column;gap:13px}
-.theory{background:var(--Plt);border-left:4px solid var(--P);border-radius:0 8px 8px 0;padding:11px 15px;font-size:13px;line-height:1.7}
-.theory-lbl{font-weight:700;color:var(--P);font-size:11px;margin-bottom:5px;display:flex;align-items:center;gap:5px;text-transform:uppercase;letter-spacing:.5px}
-.earth-box{background:var(--Alt);border-left:4px solid var(--A);border-radius:0 8px 8px 0;padding:11px 15px;font-size:13px;line-height:1.7;color:#4E342E}
-.warn-box{background:var(--Rlt);border-left:4px solid var(--R);border-radius:0 8px 8px 0;padding:11px 15px;font-size:13px;line-height:1.7;color:var(--R)}
-.succ-box{background:var(--Glt);border-left:4px solid var(--G);border-radius:0 8px 8px 0;padding:11px 15px;font-size:13px;line-height:1.7;color:var(--Gdk)}
-.sec-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--P);display:flex;align-items:center;gap:7px;margin:4px 0}
-.sec-lbl::after{content:'';flex:1;height:1px;background:var(--brd)}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
-/* SVG diagrams */
-.diag-box{background:#F8FBFF;border:1px solid var(--brd);border-radius:var(--r);padding:14px;overflow:hidden}
-.diag-title{font-size:11px;font-weight:700;color:var(--P);margin-bottom:10px;display:flex;align-items:center;gap:5px}
-svg text{font-family:'Plus Jakarta Sans',sans-serif}
-/* Step list */
-.step-list{display:flex;flex-direction:column;gap:8px}
-.step{display:flex;gap:11px;align-items:flex-start}
-.step-num{background:var(--P);color:#fff;font-size:11px;font-weight:800;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;font-family:var(--mono)}
-.step-text{font-size:13px;line-height:1.5}
-.step-text strong{color:var(--P)}
-/* Kích thước bảng */
-.dim-table{width:100%;border-collapse:collapse;font-size:12px}
-.dim-table th{background:var(--Plt);color:var(--Pdk);font-weight:700;padding:7px 10px;text-align:left;border-bottom:1.5px solid var(--brd)}
-.dim-table td{padding:7px 10px;border-bottom:1px solid #EBF5FB;color:var(--text);font-family:var(--mono)}
-.dim-table td:first-child{font-weight:700;color:var(--P);font-family:var(--sans)}
-/* MCQ */
-.mcq-wrap{border:1px solid var(--brd);border-radius:var(--r);overflow:hidden;margin-bottom:10px}
-.mcq-q{padding:12px 15px 9px;font-size:14px;font-weight:600;border-bottom:1px solid var(--Plt);background:#FAFCFF;line-height:1.5}
-.mcq-num{font-family:var(--mono);font-size:10px;font-weight:700;color:var(--P);background:var(--Plt);padding:2px 7px;border-radius:4px;margin-right:6px}
-.mcq-opts{display:grid;gap:0}
-.mcq-opt{padding:9px 13px;cursor:pointer;display:flex;align-items:flex-start;gap:9px;font-size:13px;border-top:1px solid var(--Plt);transition:background .12s;line-height:1.45}
-.mcq-opt:hover{background:var(--Plt)}
-.mkey{font-family:var(--mono);font-size:11px;font-weight:700;min-width:22px;height:22px;background:var(--Plt);color:var(--P);border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
-.mcq-opt.ok{background:var(--Glt)!important}.mcq-opt.ok .mkey{background:var(--G);color:#fff}
-.mcq-opt.no{background:var(--Rlt)!important}.mcq-opt.no .mkey{background:var(--R);color:#fff}
-.mcq-opt.reveal-ok{background:var(--Glt)!important;opacity:.6}.mcq-opt.reveal-ok .mkey{background:var(--G);color:#fff}
-.mcq-exp{padding:9px 14px;font-size:12px;line-height:1.6;border-top:1px solid var(--brd);display:none}
-.mcq-exp.show{display:block}
-.mcq-exp.ok-exp{background:var(--Glt);color:var(--Gdk)}
-.mcq-exp.no-exp{background:var(--Rlt);color:#b71c1c}
-/* type chips */
-.type-chip{display:inline-flex;align-items:center;gap:5px;font-size:11px;padding:3px 10px;border-radius:20px;border:1px solid;font-weight:600;margin-bottom:3px}
-.chip-b{background:var(--Plt);color:var(--Pdk);border-color:var(--brd)}
-.chip-g{background:var(--Glt);color:var(--Gdk);border-color:#A5D6A7}
-.chip-a{background:var(--Alt);color:#5D4037;border-color:#FFE082}
+.card-hd p{font-size:11px;color:var(--muted);margin-top:1px}
+.cbadge{font-size:10px;font-weight:700;padding:3px 10px;border-radius:6px;background:var(--P);color:#fff;white-space:nowrap}
+.cbg{background:var(--G)}.cba{background:var(--A)}.cbr{background:var(--R)}
+.cbd{padding:16px 18px;display:flex;flex-direction:column;gap:14px}
+.sl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--P);display:flex;align-items:center;gap:6px;margin:2px 0}
+.sl::after{content:'';flex:1;height:1px;background:var(--brd)}
+.tc{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+/* formula block */
+.fb{background:#F8FBFF;border:1.5px solid #BBDEFB;border-left:5px solid var(--P);border-radius:0 10px 10px 0;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.fb-lbl{font-size:10px;font-weight:700;color:var(--P);text-transform:uppercase;letter-spacing:.7px;display:flex;align-items:center;gap:6px;margin-bottom:2px}
+/* single formula line */
+.fml{font-family:var(--mono);font-size:14px;color:var(--Pdk);line-height:1.8;display:block}
+.fml sub,.fml sup{font-family:var(--mono)}
+/* formula explanation row */
+.fexp{font-size:12px;color:var(--muted);padding-left:6px;border-left:2px solid var(--brd);line-height:1.7}
+/* green box */
+.gb{background:var(--Glt);border-left:4px solid var(--G);border-radius:0 8px 8px 0;padding:10px 14px;font-size:13px;color:var(--Gdk)}
+/* amber box */
+.ab{background:var(--Alt);border-left:4px solid var(--A);border-radius:0 8px 8px 0;padding:10px 14px;font-size:13px;color:#4E342E}
+/* condition rows */
+.cnd{display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:1px solid var(--Plt);font-size:13px;line-height:1.5}
+.cnd:last-child{border-bottom:none}
+.cnd-ico{font-size:16px;flex-shrink:0;margin-top:1px}
+/* tables */
+.tbl{width:100%;border-collapse:collapse;font-size:12px}
+.tbl th{background:var(--Plt);color:var(--Pdk);font-weight:700;padding:6px 10px;border:1px solid var(--brd);text-align:center}
+.tbl td{padding:6px 10px;border:1px solid #EBF5FB;text-align:center;font-family:var(--mono);font-size:11.5px}
+.tbl td:first-child{font-weight:700;color:var(--Pdk);text-align:left;font-family:var(--sans)}
+.gtbl th{background:#E8F5E9;color:var(--Gdk);border-color:#A5D6A7}
+.gtbl td{border-color:#F1F8E9}
+.atbl th{background:#FFF3E0;color:#E65100;border-color:#FFE082}
+.atbl td{border-color:#FFF8E1}
+/* steps */
+.steps{display:flex;flex-direction:column;gap:10px}
+.step{display:flex;gap:10px;align-items:flex-start}
+.snum{background:var(--P);color:#fff;font-size:11px;font-weight:800;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.stxt{font-size:13px;line-height:1.6;flex:1}
+.stxt b{color:var(--P)}
 /* sticky nav */
-.sticky-nav{position:fixed;bottom:0;left:0;right:0;background:var(--Pdk);color:#fff;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;z-index:200;font-size:13px;box-shadow:0 -2px 12px rgba(0,0,0,.2)}
-.btn{padding:8px 16px;border-radius:8px;border:none;cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;transition:opacity .15s}
-.btn-sm{padding:6px 13px;font-size:12px}
-.btn-ghost{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25)}
+.snav{position:fixed;bottom:0;left:0;right:0;background:var(--Pdk);color:#fff;padding:11px 20px;display:flex;align-items:center;justify-content:space-between;z-index:200;font-size:13px;box-shadow:0 -2px 12px rgba(0,0,0,.2)}
+.btn{padding:7px 16px;border-radius:8px;border:none;cursor:pointer;font-family:var(--sans);font-size:12px;font-weight:600;transition:opacity .15s}
+.bg{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25)}
 .btn:hover{opacity:.85}
-@media(max-width:620px){.two-col,.three-col{grid-template-columns:1fr}}
+svg text{font-family:'Plus Jakarta Sans',sans-serif}
+@media(max-width:640px){.tc{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -89,746 +74,340 @@ svg text{font-family:'Plus Jakarta Sans',sans-serif}
   <div class="hdr-in">
     <a href="index_C8.html" class="back-btn"><i class="ti ti-arrow-left"></i> Chương 8</a>
     <div class="hdr-title">
-      <h1>8.1 — Lý Thuyết Móng Nông</h1>
-      <p>Khái niệm · Phân loại · Cấu tạo · Thi công · 20 câu MCQ</p>
-    </div>
-    <div class="hdr-right">
-      <div class="hdr-prog" id="hdr-prog">0 / 0</div>
-      <div class="sv-badge-hdr" id="sv-badge">SV #–</div>
+      <h1>8.2 — Lý Thuyết Tính Toán Móng Nông</h1>
+      <p>Áp lực đáy móng · Sức chịu tải Terzaghi · Tính lún · Quy trình 5 bước</p>
     </div>
   </div>
 </header>
-
 <main>
-<div class="prog-wrap">
-  <div class="prog-top"><span><i class="ti ti-target" style="vertical-align:-2px;margin-right:4px"></i>Tiến độ 8.1 — Lý Thuyết</span><span id="prog-text">0 / 0 (0%)</span></div>
-  <div class="prog-track"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
-</div>
-<div class="sv-infobar">
-  <i class="ti ti-id-badge" style="font-size:20px;opacity:.8"></i>
-  <div style="flex:1"><div style="font-size:14px;font-weight:700">Lý thuyết móng nông — <span id="sv-display">đang tải...</span></div>
-  <div style="font-size:12px;color:rgba(255,255,255,.65)">Phần này không sinh số liệu ngẫu nhiên — đáp án MCQ cố định</div></div>
-  <div id="sv-chip" style="font-family:var(--mono);font-size:22px;font-weight:700;background:rgba(255,255,255,.15);padding:6px 16px;border-radius:8px">–</div>
-</div>
 
-<!-- ══════ 1. KHÁI NIỆM ══════ -->
+<!-- ══════ 1. ÁP LỰC ĐÁY MÓNG ══════ -->
 <div class="card">
-  <div class="card-hd"><i class="ti ti-info-circle"></i>
-    <div><h2>1. Khái niệm và phân loại móng nông</h2></div>
-    <span class="cbadge">KHÁI NIỆM</span>
+  <div class="card-hd"><i class="ti ti-arrows-down-up"></i>
+    <div><h2>1 — Áp lực tại đáy móng</h2><p>Đúng tâm và lệch tâm · Điều kiện tiếp nhận của nền</p></div>
+    <span class="cbadge">TẢI TRỌNG</span>
   </div>
-  <div class="card-body">
-
-    <div class="sec-lbl"><i class="ti ti-book"></i> Định nghĩa</div>
-    <div class="theory">
-      <div class="theory-lbl"><i class="ti ti-bulb"></i> Móng nông là gì?</div>
-      Móng nông là loại móng được xây dựng trong <b>hố đào trần</b>, sau đó lấp đất lại. Tải trọng truyền xuống nền <b>chủ yếu qua diện tích đáy móng</b>.<br><br>
-      Theo <b>Terzaghi (1943)</b>: móng nông khi tỷ lệ <b>h<sub>m</sub>/B ≤ 1</b> (chiều sâu chôn móng / bề rộng đáy). Thực tế có thể đến 2–3 tùy điều kiện địa chất.
-    </div>
-
-    <div class="sec-lbl"><i class="ti ti-ruler-2"></i> Chiều sâu chôn móng h<sub>m</sub></div>
-    <div class="two-col">
-      <div class="theory">
-        <div class="theory-lbl"><i class="ti ti-info-circle"></i> Định nghĩa h<sub>m</sub></div>
-        Khoảng cách từ <b>mặt đất tự nhiên</b> đến cao độ đáy móng. Tối thiểu h<sub>m</sub> ≥ 0.5m để tránh rễ cây, xói mòn và thay đổi nhiệt độ bề mặt.
+  <div class="cbd">
+    <div class="tc">
+      <!-- công thức -->
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div class="fb">
+          <div class="fb-lbl"><i class="ti ti-math-function"></i> Tải trọng tính toán</div>
+          <span class="fml">N<sub>tt</sub> = n · N<sub>tc</sub></span>
+          <div class="fexp">n = hệ số vượt tải (thường 1.15–1.25) · N<sub>tc</sub> = tải tiêu chuẩn (kN)</div>
+        </div>
+        <div class="fb">
+          <div class="fb-lbl"><i class="ti ti-math-function"></i> Áp lực tiêu chuẩn đáy móng — ĐÚNG TÂM</div>
+          <span class="fml">p<sub>tc</sub> = N<sub>tc</sub> / (B · L) + γ<sub>tb</sub> · h<sub>m</sub></span>
+          <div class="fexp">B, L = chiều rộng, dài móng (m) · h<sub>m</sub> = chiều sâu đặt móng · γ<sub>tb</sub> ≈ 20 kN/m³ (trọng lượng TB móng + đất trên)</div>
+        </div>
+        <div class="fb">
+          <div class="fb-lbl"><i class="ti ti-math-function"></i> Áp lực đáy móng — LỆCH TÂM</div>
+          <span class="fml">p<sub>max</sub> = p<sub>tc</sub> + 6 · M<sub>tc</sub> / (B · L²)</span>
+          <span class="fml">p<sub>min</sub> = p<sub>tc</sub> − 6 · M<sub>tc</sub> / (B · L²)</span>
+          <div class="fexp">M<sub>tc</sub> = moment lệch tâm (kN·m) · Yêu cầu p<sub>min</sub> ≥ 0 (không nhấc móng)</div>
+        </div>
+        <div class="fb">
+          <div class="fb-lbl"><i class="ti ti-check"></i> Điều kiện kiểm tra SCT</div>
+          <div class="cnd"><span class="cnd-ico">①</span><span><b>p<sub>tc</sub> ≤ R<sub>n</sub></b> — áp lực TB ≤ SCT tính toán</span></div>
+          <div class="cnd"><span class="cnd-ico">②</span><span><b>p<sub>max</sub> ≤ 1.2 · R<sub>n</sub></b> — áp lực cực đại ≤ 120% SCT</span></div>
+          <div class="cnd"><span class="cnd-ico">③</span><span><b>p<sub>min</sub> ≥ 0</b> — không nhấc móng (lệch tâm)</span></div>
+        </div>
       </div>
-      <div class="theory">
-        <div class="theory-lbl"><i class="ti ti-list"></i> Các yếu tố ảnh hưởng đến h<sub>m</sub></div>
-        • Địa chất, mực nước ngầm<br>
-        • Tải trọng và đặc điểm kết cấu<br>
-        • Công trình lân cận<br>
-        • Điều kiện thi công
-      </div>
-    </div>
+      <!-- SVG phân bố áp lực -->
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:10px;font-weight:700;color:var(--P);text-transform:uppercase;letter-spacing:.5px;text-align:center">Sơ đồ phân bố áp lực</div>
+        <svg viewBox="0 0 340 310" xmlns="http://www.w3.org/2000/svg" width="100%">
+          <rect x="0" y="0" width="340" height="310" fill="#F8FBFF" rx="8"/>
+          <!-- ĐÚNG TÂM bên trái -->
+          <text x="85" y="18" fill="#1565C0" font-size="10" text-anchor="middle" font-weight="700">ĐÚNG TÂM</text>
+          <!-- móng -->
+          <rect x="35" y="24" width="100" height="22" fill="#90CAF9" stroke="#1565C0" stroke-width="1.5" rx="2"/>
+          <text x="85" y="39" fill="#0D47A1" font-size="9.5" text-anchor="middle" font-weight="700">Móng</text>
+          <!-- đất -->
+          <rect x="35" y="46" width="100" height="14" fill="#FFF9C4" stroke="#F9A825" stroke-width="1"/>
+          <text x="85" y="56" fill="#E65100" font-size="8.5" text-anchor="middle">γ<tspan baseline-shift="sub" font-size="7">tb</tspan>·h<tspan baseline-shift="sub" font-size="7">m</tspan></text>
+          <!-- đáy móng line -->
+          <line x1="30" y1="60" x2="145" y2="60" stroke="#0D47A1" stroke-width="1.5"/>
+          <!-- áp lực đều -->
+          <rect x="35" y="60" width="100" height="50" fill="#BBDEFB" opacity="0.6"/>
+          <line x1="35" y1="110" x2="135" y2="110" stroke="#1565C0" stroke-width="1.5"/>
+          <!-- arrows down -->
+          <line x1="55" y1="60" x2="55" y2="106" stroke="#1565C0" stroke-width="1.2" marker-end="url(#ar1)"/>
+          <line x1="75" y1="60" x2="75" y2="106" stroke="#1565C0" stroke-width="1.2" marker-end="url(#ar1)"/>
+          <line x1="95" y1="60" x2="95" y2="106" stroke="#1565C0" stroke-width="1.2" marker-end="url(#ar1)"/>
+          <line x1="115" y1="60" x2="115" y2="106" stroke="#1565C0" stroke-width="1.2" marker-end="url(#ar1)"/>
+          <text x="85" y="85" fill="#0D47A1" font-size="10" text-anchor="middle" font-weight="700">p<tspan baseline-shift="sub" font-size="8">tc</tspan></text>
+          <text x="85" y="97" fill="#0D47A1" font-size="8.5" text-anchor="middle">đều khắp</text>
+          <text x="85" y="122" fill="#546E7A" font-size="8.5" text-anchor="middle">Nền đất</text>
 
-    <!-- SVG: 3 loại móng nông -->
-    <div class="sec-lbl"><i class="ti ti-layout-grid"></i> Phân loại móng nông</div>
-    <div class="three-col">
-      <div class="diag-box">
-        <div class="diag-title"><i class="ti ti-square"></i> Móng đơn</div>
-        <svg viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg" width="100%">
-          <rect x="0" y="0" width="200" height="180" fill="#F8FBFF"/>
-          <!-- ground -->
-          <line x1="0" y1="40" x2="200" y2="40" stroke="#90CAF9" stroke-width="1" stroke-dasharray="4,3"/>
-          <text x="4" y="36" fill="#1565C0" font-size="8" font-weight="700">Mặt đất</text>
-          <!-- soil hatch -->
-          <rect x="0" y="40" width="200" height="140" fill="#E8F5E9" opacity="0.5"/>
-          <line x1="0" y1="55" x2="20" y2="40" stroke="#90CAF9" stroke-width="0.7" opacity="0.5"/>
-          <line x1="20" y1="55" x2="40" y2="40" stroke="#90CAF9" stroke-width="0.7" opacity="0.5"/>
-          <line x1="40" y1="55" x2="60" y2="40" stroke="#90CAF9" stroke-width="0.7" opacity="0.5"/>
-          <line x1="60" y1="55" x2="80" y2="40" stroke="#90CAF9" stroke-width="0.7" opacity="0.5"/>
-          <line x1="80" y1="55" x2="100" y2="40" stroke="#90CAF9" stroke-width="0.7" opacity="0.5"/>
-          <line x1="100" y1="55" x2="120" y2="40" stroke="#90CAF9" stroke-width="0.7" opacity="0.5"/>
-          <line x1="120" y1="55" x2="140" y2="40" stroke="#90CAF9" stroke-width="0.7" opacity="0.5"/>
-          <line x1="140" y1="55" x2="160" y2="40" stroke="#90CAF9" stroke-width="0.7" opacity="0.5"/>
-          <line x1="160" y1="55" x2="180" y2="40" stroke="#90CAF9" stroke-width="0.7" opacity="0.5"/>
-          <line x1="180" y1="55" x2="200" y2="40" stroke="#90CAF9" stroke-width="0.7" opacity="0.5"/>
-          <!-- column -->
-          <rect x="82" y="8" width="36" height="40" fill="#1565C0" rx="2"/>
-          <text x="100" y="4" fill="#1565C0" font-size="8" text-anchor="middle">Cột</text>
-          <!-- footing trapezoidal -->
-          <polygon points="60,100 140,100 130,80 70,80" fill="#1565C0" opacity="0.85"/>
-          <!-- base plate -->
-          <rect x="48" y="100" width="104" height="16" fill="#0D47A1" rx="1"/>
-          <!-- dimensions -->
-          <line x1="48" y1="126" x2="152" y2="126" stroke="#E65100" stroke-width="1" marker-end="url(#arr1)" marker-start="url(#arr1r)"/>
-          <text x="100" y="136" fill="#E65100" font-size="9" text-anchor="middle" font-weight="700">B × L</text>
-          <!-- hm arrow -->
-          <line x1="20" y1="40" x2="20" y2="100" stroke="#2E7D32" stroke-width="1" marker-end="url(#arr2)"/>
-          <text x="10" y="73" fill="#2E7D32" font-size="8" text-anchor="middle" font-weight="700">hm</text>
-          <!-- hf arrow -->
-          <line x1="175" y1="80" x2="175" y2="116" stroke="#C62828" stroke-width="1" marker-end="url(#arr3)" marker-start="url(#arr3r)"/>
-          <text x="188" y="102" fill="#C62828" font-size="8" text-anchor="middle" font-weight="700">hf</text>
-          <!-- btlot -->
-          <rect x="48" y="116" width="104" height="8" fill="#FFF8E1" stroke="#FF8F00" stroke-width="0.8"/>
-          <text x="100" y="170" fill="#546E7A" font-size="8" text-anchor="middle">Hình vuông / chữ nhật</text>
+          <!-- LỆCH TÂM bên phải -->
+          <text x="255" y="18" fill="#C62828" font-size="10" text-anchor="middle" font-weight="700">LỆCH TÂM</text>
+          <rect x="205" y="24" width="100" height="22" fill="#FFCDD2" stroke="#C62828" stroke-width="1.5" rx="2"/>
+          <text x="255" y="39" fill="#C62828" font-size="9.5" text-anchor="middle" font-weight="700">Móng + moment M</text>
+          <rect x="205" y="46" width="100" height="14" fill="#FFF9C4" stroke="#F9A825" stroke-width="1"/>
+          <line x1="200" y1="60" x2="315" y2="60" stroke="#C62828" stroke-width="1.5"/>
+          <!-- trapezoid pressure -->
+          <polygon points="205,60 305,60 305,110 205,75" fill="#FFCDD2" opacity="0.7"/>
+          <line x1="205" y1="110" x2="305" y2="110" stroke="none"/>
+          <!-- arrows varying -->
+          <line x1="215" y1="60" x2="215" y2="106" stroke="#C62828" stroke-width="1.2" marker-end="url(#ar2)"/>
+          <line x1="235" y1="60" x2="235" y2="99" stroke="#C62828" stroke-width="1.2" marker-end="url(#ar2)"/>
+          <line x1="255" y1="60" x2="255" y2="90" stroke="#C62828" stroke-width="1.2" marker-end="url(#ar2)"/>
+          <line x1="275" y1="60" x2="275" y2="81" stroke="#C62828" stroke-width="1.2" marker-end="url(#ar2)"/>
+          <line x1="295" y1="60" x2="295" y2="72" stroke="#C62828" stroke-width="1.2" marker-end="url(#ar2)"/>
+          <!-- labels pmax pmin -->
+          <text x="207" y="120" fill="#C62828" font-size="9" font-weight="700">p<tspan baseline-shift="sub" font-size="7">max</tspan></text>
+          <text x="285" y="68" fill="#C62828" font-size="9" font-weight="700">p<tspan baseline-shift="sub" font-size="7">min</tspan></text>
+          <line x1="205" y1="108" x2="205" y2="115" stroke="#C62828" stroke-width="1"/>
+          <line x1="305" y1="70" x2="305" y2="115" stroke="#C62828" stroke-width="1" stroke-dasharray="3,2"/>
+          <text x="255" y="125" fill="#546E7A" font-size="8.5" text-anchor="middle">Nền đất</text>
+          <!-- defs -->
           <defs>
-            <marker id="arr1" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#E65100"/></marker>
-            <marker id="arr1r" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L6,3 L0,6 Z" fill="#E65100"/></marker>
-            <marker id="arr2" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#2E7D32"/></marker>
-            <marker id="arr3" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#C62828"/></marker>
-            <marker id="arr3r" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L6,3 L0,6 Z" fill="#C62828"/></marker>
+            <marker id="ar1" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="4" markerHeight="4" orient="auto"><path d="M0,0L6,3L0,6Z" fill="#1565C0"/></marker>
+            <marker id="ar2" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="4" markerHeight="4" orient="auto"><path d="M0,0L6,3L0,6Z" fill="#C62828"/></marker>
           </defs>
-        </svg>
-        <div style="font-size:11px;color:var(--muted);margin-top:6px">Dưới <b>một cột</b> hoặc cụm cột. Dùng cho nhà ít tầng, nền tốt.</div>
-      </div>
+          <!-- Chú thích thành phần p_tc -->
+          <line x1="20" y1="140" x2="320" y2="140" stroke="#BBDEFB" stroke-width="1" stroke-dasharray="4,3"/>
+          <text x="170" y="154" fill="#1565C0" font-size="9.5" text-anchor="middle" font-weight="700">Thành phần áp lực p<tspan baseline-shift="sub" font-size="7.5">tc</tspan></text>
+          <!-- bar chart thành phần -->
+          <rect x="30" y="162" width="130" height="26" fill="#BBDEFB" stroke="#90CAF9" stroke-width="1" rx="3"/>
+          <text x="95" y="179" fill="#0D47A1" font-size="9" text-anchor="middle" font-weight="600">N<tspan baseline-shift="sub" font-size="7">tc</tspan> / (B·L)  — áp lực do tải trọng công trình</text>
+          <rect x="30" y="192" width="80" height="26" fill="#FFF9C4" stroke="#F9A825" stroke-width="1" rx="3"/>
+          <text x="70" y="209" fill="#E65100" font-size="9" text-anchor="middle" font-weight="600">γ<tspan baseline-shift="sub" font-size="7">tb</tspan> · h<tspan baseline-shift="sub" font-size="7">m</tspan> — áp lực do trọng lượng bản thân</text>
+          <text x="170" y="235" fill="#0D47A1" font-size="9.5" text-anchor="middle" font-weight="700">p<tspan baseline-shift="sub" font-size="7.5">tc</tspan> = N<tspan baseline-shift="sub" font-size="7.5">tc</tspan>/(B·L) + γ<tspan baseline-shift="sub" font-size="7.5">tb</tspan>·h<tspan baseline-shift="sub" font-size="7.5">m</tspan></text>
 
-      <div class="diag-box">
-        <div class="diag-title"><i class="ti ti-layout-columns"></i> Móng băng</div>
-        <svg viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg" width="100%">
-          <rect x="0" y="0" width="200" height="180" fill="#F8FBFF"/>
-          <line x1="0" y1="40" x2="200" y2="40" stroke="#90CAF9" stroke-width="1" stroke-dasharray="4,3"/>
-          <rect x="0" y="40" width="200" height="140" fill="#E8F5E9" opacity="0.5"/>
-          <!-- 3 columns -->
-          <rect x="10" y="8" width="24" height="35" fill="#1565C0" rx="2"/>
-          <rect x="88" y="8" width="24" height="35" fill="#1565C0" rx="2"/>
-          <rect x="166" y="8" width="24" height="35" fill="#1565C0" rx="2"/>
-          <!-- band footing - perspective feel -->
-          <rect x="4" y="78" width="192" height="36" fill="#1565C0" opacity="0.85" rx="1"/>
-          <!-- trapezoidal above each col -->
-          <polygon points="10,78 34,78 28,60 16,60" fill="#0D47A1" opacity="0.7"/>
-          <polygon points="88,78 112,78 106,60 94,60" fill="#0D47A1" opacity="0.7"/>
-          <polygon points="166,78 190,78 184,60 172,60" fill="#0D47A1" opacity="0.7"/>
-          <!-- btlot -->
-          <rect x="4" y="114" width="192" height="8" fill="#FFF8E1" stroke="#FF8F00" stroke-width="0.8"/>
-          <!-- B dim -->
-          <line x1="4" y1="134" x2="196" y2="134" stroke="#E65100" stroke-width="1"/>
-          <text x="100" y="144" fill="#E65100" font-size="8.5" text-anchor="middle" font-weight="700">L (chiều dài theo tường)</text>
-          <!-- hm -->
-          <line x1="200" y1="40" x2="200" y2="78" stroke="#2E7D32" stroke-width="1" marker-end="url(#arrG)"/>
-          <text x="192" y="62" fill="#2E7D32" font-size="8" text-anchor="middle" font-weight="700">hm</text>
-          <text x="100" y="170" fill="#546E7A" font-size="8" text-anchor="middle">Dải dài theo hàng cột / tường</text>
-          <defs>
-            <marker id="arrG" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#2E7D32"/></marker>
-          </defs>
+          <!-- vùng gây lún -->
+          <text x="170" y="255" fill="#2E7D32" font-size="9.5" text-anchor="middle" font-weight="700">Áp lực gây lún (net pressure):</text>
+          <text x="170" y="270" fill="#2E7D32" font-size="9.5" text-anchor="middle">p<tspan baseline-shift="sub" font-size="7.5">gl</tspan> = p<tspan baseline-shift="sub" font-size="7.5">tc</tspan> − γ · h<tspan baseline-shift="sub" font-size="7.5">m</tspan>  =  N<tspan baseline-shift="sub" font-size="7.5">tc</tspan> / (B·L)</text>
+          <text x="170" y="285" fill="#546E7A" font-size="8.5" text-anchor="middle">(phần áp lực tăng thêm so với trạng thái tự nhiên)</text>
+          <rect x="20" y="244" width="300" height="50" fill="none" stroke="#A5D6A7" stroke-width="1.2" rx="5" stroke-dasharray="4,3"/>
         </svg>
-        <div style="font-size:11px;color:var(--muted);margin-top:6px">Dưới <b>hàng cột hoặc tường</b>. Dùng khi móng đơn không đủ diện tích.</div>
       </div>
-
-      <div class="diag-box">
-        <div class="diag-title"><i class="ti ti-grid-pattern"></i> Móng bè</div>
-        <svg viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg" width="100%">
-          <rect x="0" y="0" width="200" height="180" fill="#F8FBFF"/>
-          <line x1="0" y1="40" x2="200" y2="40" stroke="#90CAF9" stroke-width="1" stroke-dasharray="4,3"/>
-          <rect x="0" y="40" width="200" height="140" fill="#E8F5E9" opacity="0.5"/>
-          <!-- 4 columns (2x2 grid perspective) -->
-          <rect x="28" y="10" width="18" height="30" fill="#1565C0" rx="2"/>
-          <rect x="80" y="10" width="18" height="30" fill="#1565C0" rx="2"/>
-          <rect x="132" y="10" width="18" height="30" fill="#1565C0" rx="2"/>
-          <!-- raft slab -->
-          <rect x="8" y="70" width="184" height="28" fill="#1565C0" opacity="0.75" rx="2"/>
-          <!-- sướn dọc ngang gợi ý -->
-          <line x1="46" y1="70" x2="46" y2="98" stroke="#fff" stroke-width="1.5" opacity="0.4"/>
-          <line x1="98" y1="70" x2="98" y2="98" stroke="#fff" stroke-width="1.5" opacity="0.4"/>
-          <line x1="150" y1="70" x2="150" y2="98" stroke="#fff" stroke-width="1.5" opacity="0.4"/>
-          <!-- btlot -->
-          <rect x="8" y="98" width="184" height="8" fill="#FFF8E1" stroke="#FF8F00" stroke-width="0.8"/>
-          <!-- dim -->
-          <line x1="8" y1="120" x2="192" y2="120" stroke="#E65100" stroke-width="1"/>
-          <text x="100" y="131" fill="#E65100" font-size="8.5" text-anchor="middle" font-weight="700">Toàn bộ diện tích CT</text>
-          <text x="100" y="170" fill="#546E7A" font-size="8" text-anchor="middle">Bản BTCT toàn mặt bằng</text>
-        </svg>
-        <div style="font-size:11px;color:var(--muted);margin-top:6px">Chiếm <b>toàn bộ diện tích</b> công trình. Dùng khi tải lớn, đất yếu dày.</div>
-      </div>
-    </div>
-
-    <div class="earth-box">
-      <b>Khi nào dùng móng nông?</b> Khi lớp đất sát mặt có đủ SCT, tải trọng không quá lớn. Ưu tiên móng nông vì chi phí thấp hơn móng cọc 3–5 lần.
     </div>
   </div>
 </div>
 
-<!-- ══════ 2. CẤU TẠO MÓNG ══════ -->
+<!-- ══════ 2. SỨC CHỊU TẢI TERZAGHI ══════ -->
 <div class="card">
-  <div class="card-hd"><i class="ti ti-layers"></i>
-    <div><h2>2. Cấu tạo móng nông BTCT</h2></div>
-    <span class="cbadge">CẤU TẠO</span>
+  <div class="card-hd"><i class="ti ti-shield-check"></i>
+    <div><h2>2 — Sức chịu tải nền theo Terzaghi</h2><p>Công thức R<sub>n</sub> · Hệ số N<sub>c</sub>, N<sub>q</sub>, N<sub>γ</sub> · Hệ số hình dạng α</p></div>
+    <span class="cbadge cbg">SCT</span>
   </div>
-  <div class="card-body">
+  <div class="cbd">
+    <div class="fb">
+      <div class="fb-lbl"><i class="ti ti-sigma"></i> SCT tính toán nền theo Terzaghi</div>
+      <span class="fml">R<sub>n</sub> = <sup>1</sup>/<sub>F<sub>s</sub></sub> · [ α<sub>1</sub> · N<sub>γ</sub> · B · γ  +  α<sub>2</sub> · N<sub>q</sub> · q  +  α<sub>3</sub> · N<sub>c</sub> · c ]</span>
+      <div class="fexp" style="margin-top:6px">
+        <b>F<sub>s</sub></b> = hệ số an toàn (thường 2.5–3.0) &nbsp;·&nbsp;
+        <b>B</b> = bề rộng móng (m) &nbsp;·&nbsp;
+        <b>γ</b> = dung trọng đất tại đáy móng (kN/m³)<br>
+        <b>q = γ · h<sub>m</sub></b> = áp lực tầng phủ tại đáy móng &nbsp;·&nbsp;
+        <b>c</b> = lực dính của đất dưới đáy móng (kPa)<br>
+        <b>N<sub>γ</sub>, N<sub>q</sub>, N<sub>c</sub></b> = hệ số sức chịu tải → tra theo góc ma sát trong φ &nbsp;·&nbsp;
+        <b>α<sub>1</sub>, α<sub>2</sub>, α<sub>3</sub></b> = hệ số hình dạng móng
+      </div>
+    </div>
+    <div class="tc">
+      <!-- bảng Nc Nq Ngamma -->
+      <div>
+        <div class="sl"><i class="ti ti-table"></i> Hệ số N<sub>c</sub>, N<sub>q</sub>, N<sub>γ</sub> theo φ</div>
+        <table class="tbl gtbl">
+          <tr><th>φ (°)</th><th>N<sub>c</sub></th><th>N<sub>q</sub></th><th>N<sub>γ</sub></th></tr>
+          <tr><td>0°</td><td>5.1</td><td>1.0</td><td>0.0</td></tr>
+          <tr><td>5°</td><td>6.5</td><td>1.6</td><td>0.5</td></tr>
+          <tr><td>10°</td><td>8.4</td><td>2.5</td><td>1.2</td></tr>
+          <tr><td>12°</td><td>9.6</td><td>3.0</td><td>1.7</td></tr>
+          <tr><td>15°</td><td>11.0</td><td>3.9</td><td>2.5</td></tr>
+          <tr><td>18°</td><td>13.1</td><td>5.3</td><td>4.1</td></tr>
+          <tr><td>20°</td><td>14.8</td><td>6.4</td><td>5.4</td></tr>
+          <tr><td>22°</td><td>16.9</td><td>7.8</td><td>7.1</td></tr>
+          <tr><td>25°</td><td>20.7</td><td>10.7</td><td>10.9</td></tr>
+          <tr><td>28°</td><td>25.8</td><td>14.7</td><td>17.0</td></tr>
+          <tr><td>30°</td><td>30.1</td><td>18.4</td><td>22.4</td></tr>
+          <tr><td>32°</td><td>35.5</td><td>23.2</td><td>30.2</td></tr>
+          <tr><td>35°</td><td>46.1</td><td>33.3</td><td>48.0</td></tr>
+        </table>
+      </div>
+      <!-- bảng alpha hình dạng -->
+      <div>
+        <div class="sl"><i class="ti ti-table"></i> Hệ số hình dạng α<sub>1</sub>, α<sub>2</sub>, α<sub>3</sub></div>
+        <table class="tbl atbl">
+          <tr><th>Loại móng</th><th>α<sub>1</sub></th><th>α<sub>2</sub></th><th>α<sub>3</sub></th></tr>
+          <tr><td>Băng (L/B → ∞)</td><td>1.00</td><td>1.00</td><td>1.00</td></tr>
+          <tr><td>Vuông (B = L)</td><td>0.40</td><td>1.00</td><td>1.30</td></tr>
+          <tr><td>Tròn (D = B)</td><td>0.30</td><td>1.00</td><td>1.30</td></tr>
+          <tr><td>Chữ nhật</td><td>0.5–1.0</td><td>1.00</td><td>1.0–1.3</td></tr>
+        </table>
+        <div class="ab" style="margin-top:10px;font-size:12px">
+          <b>Ví dụ tra bảng:</b> φ=20°, móng vuông → N<sub>c</sub>=14.8, N<sub>q</sub>=6.4, N<sub>γ</sub>=5.4<br>
+          α<sub>1</sub>=0.4, α<sub>2</sub>=1.0, α<sub>3</sub>=1.3<br>
+          Với c=20 kPa, B=1.5m, γ=18 kN/m³, h<sub>m</sub>=1.5m, F<sub>s</sub>=2.5:<br>
+          q = 18×1.5 = 27 kPa<br>
+          R<sub>n</sub> = <sup>1</sup>/<sub>2.5</sub>·[0.4×5.4×1.5×18 + 1.0×6.4×27 + 1.3×14.8×20]<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= 0.4·[23.3 + 172.8 + 384.8] = <b>≈ 232 kPa</b>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-    <div class="sec-lbl"><i class="ti ti-eye"></i> Mặt cắt chi tiết và ký hiệu</div>
-    <!-- SVG: chi tiết cấu tạo móng đơn có chú thích -->
-    <div class="diag-box">
-      <div class="diag-title"><i class="ti ti-ruler"></i> Hình 4 — Mặt cắt cấu tạo móng đơn BTCT (có chú thích đầy đủ)</div>
-      <svg viewBox="0 0 720 320" xmlns="http://www.w3.org/2000/svg" width="100%">
-        <rect x="0" y="0" width="720" height="320" fill="#F8FBFF"/>
-
-        <!-- Ground level line -->
-        <line x1="0" y1="70" x2="720" y2="70" stroke="#90CAF9" stroke-width="1.2" stroke-dasharray="6,4"/>
-        <text x="6" y="64" fill="#1565C0" font-size="10" font-weight="700">Mặt đất ±0.00</text>
-
-        <!-- Soil fill (hatching) -->
-        <rect x="0" y="70" width="195" height="230" fill="#E8F5E9" opacity="0.6"/>
-        <rect x="525" y="70" width="195" height="230" fill="#E8F5E9" opacity="0.6"/>
-        <!-- hatch lines left -->
-        <line x1="0" y1="85" x2="20" y2="70" stroke="#90CAF9" stroke-width="0.6" opacity="0.7"/>
-        <line x1="20" y1="85" x2="40" y2="70" stroke="#90CAF9" stroke-width="0.6" opacity="0.7"/>
-        <line x1="40" y1="85" x2="60" y2="70" stroke="#90CAF9" stroke-width="0.6" opacity="0.7"/>
-        <line x1="60" y1="85" x2="80" y2="70" stroke="#90CAF9" stroke-width="0.6" opacity="0.7"/>
-        <line x1="80" y1="85" x2="100" y2="70" stroke="#90CAF9" stroke-width="0.6" opacity="0.7"/>
-        <line x1="100" y1="85" x2="120" y2="70" stroke="#90CAF9" stroke-width="0.6" opacity="0.7"/>
-        <line x1="120" y1="85" x2="140" y2="70" stroke="#90CAF9" stroke-width="0.6" opacity="0.7"/>
-        <line x1="140" y1="85" x2="160" y2="70" stroke="#90CAF9" stroke-width="0.6" opacity="0.7"/>
-        <line x1="160" y1="85" x2="180" y2="70" stroke="#90CAF9" stroke-width="0.6" opacity="0.7"/>
-        <line x1="180" y1="85" x2="195" y2="74" stroke="#90CAF9" stroke-width="0.6" opacity="0.7"/>
-        <!-- hatch lines right -->
-        <line x1="525" y1="85" x2="545" y2="70" stroke="#90CAF9" stroke-width="0.6" opacity="0.7"/>
-        <line x1="545" y1="85" x2="565" y2="70" stroke="#90CAF9" stroke-width="0.6" opacity="0.7"/>
-        <line x1="565" y1="85" x2="585" y2="70" stroke="#90CAF9" stroke-width="0.6" opacity="0.7"/>
-        <line x1="585" y1="85" x2="605" y2="70" stroke="#90CAF9" stroke-width="0.6" opacity="0.7"/>
-        <line x1="605" y1="85" x2="625" y2="70" stroke="#90CAF9" stroke-width="0.6" opacity="0.7"/>
-        <line x1="625" y1="85" x2="645" y2="70" stroke="#90CAF9" stroke-width="0.6" opacity="0.7"/>
-        <line x1="645" y1="85" x2="665" y2="70" stroke="#90CAF9" stroke-width="0.6" opacity="0.7"/>
-        <line x1="665" y1="85" x2="685" y2="70" stroke="#90CAF9" stroke-width="0.6" opacity="0.7"/>
-        <line x1="685" y1="85" x2="705" y2="70" stroke="#90CAF9" stroke-width="0.6" opacity="0.7"/>
-        <line x1="705" y1="85" x2="720" y2="76" stroke="#90CAF9" stroke-width="0.6" opacity="0.7"/>
-
-        <!-- Column -->
-        <rect x="305" y="10" width="110" height="65" fill="#1565C0" rx="3"/>
-        <text x="360" y="30" fill="#fff" font-size="11" text-anchor="middle" font-weight="700">CỘT</text>
-        <text x="360" y="46" fill="rgba(255,255,255,0.8)" font-size="9" text-anchor="middle">b×h = 300×300</text>
-
-        <!-- Cốt thép chờ cột -->
-        <line x1="332" y1="70" x2="332" y2="210" stroke="#C62828" stroke-width="2.5"/>
-        <line x1="352" y1="70" x2="352" y2="210" stroke="#C62828" stroke-width="2.5"/>
-        <line x1="368" y1="70" x2="368" y2="210" stroke="#C62828" stroke-width="2.5"/>
-        <line x1="388" y1="70" x2="388" y2="210" stroke="#C62828" stroke-width="2.5"/>
-
-        <!-- Footing body (trapezoidal) -->
-        <polygon points="195,210 525,210 485,140 235,140" fill="#BBDEFB" stroke="#1565C0" stroke-width="2"/>
-
-        <!-- Footing flat base -->
-        <rect x="195" y="210" width="330" height="30" fill="#1565C0" opacity="0.8" rx="1"/>
-
-        <!-- Steel bars (thép đáy) -->
-        <line x1="210" y1="228" x2="510" y2="228" stroke="#C62828" stroke-width="2.5"/>
-        <circle cx="220" cy="228" r="3" fill="#C62828"/>
-        <circle cx="250" cy="228" r="3" fill="#C62828"/>
-        <circle cx="280" cy="228" r="3" fill="#C62828"/>
-        <circle cx="310" cy="228" r="3" fill="#C62828"/>
-        <circle cx="340" cy="228" r="3" fill="#C62828"/>
-        <circle cx="370" cy="228" r="3" fill="#C62828"/>
-        <circle cx="400" cy="228" r="3" fill="#C62828"/>
-        <circle cx="430" cy="228" r="3" fill="#C62828"/>
-        <circle cx="460" cy="228" r="3" fill="#C62828"/>
-        <circle cx="490" cy="228" r="3" fill="#C62828"/>
-
-        <!-- Concrete cover indicator -->
-        <line x1="195" y1="218" x2="210" y2="218" stroke="#FF8F00" stroke-width="1.5"/>
-        <line x1="510" y1="218" x2="525" y2="218" stroke="#FF8F00" stroke-width="1.5"/>
-
-        <!-- BT lot -->
-        <rect x="195" y="240" width="330" height="12" fill="#FFF8E1" stroke="#FF8F00" stroke-width="1.2"/>
-        <text x="360" y="249" fill="#E65100" font-size="8.5" text-anchor="middle" font-weight="700">Bê tông lót B7.5 — dày 100mm</text>
-
-        <!-- Soil below footing -->
-        <rect x="0" y="252" width="720" height="68" fill="#E8F5E9" opacity="0.7"/>
-        <text x="360" y="290" fill="#2E7D32" font-size="10" text-anchor="middle" font-weight="600">Đất nền</text>
-
-        <!-- DIMENSION LINES -->
-        <!-- hm (depth) -->
-        <line x1="150" y1="70" x2="150" y2="240" stroke="#2E7D32" stroke-width="1.2" marker-end="url(#dG)" marker-start="url(#dGr)"/>
-        <text x="132" y="158" fill="#2E7D32" font-size="10" text-anchor="middle" font-weight="700">hm</text>
-
-        <!-- hf (footing height) -->
-        <line x1="560" y1="140" x2="560" y2="240" stroke="#C62828" stroke-width="1.2" marker-end="url(#dR)" marker-start="url(#dRr)"/>
-        <text x="578" y="194" fill="#C62828" font-size="10" text-anchor="middle" font-weight="700">hf</text>
-
-        <!-- B (width) -->
-        <line x1="195" y1="270" x2="525" y2="270" stroke="#E65100" stroke-width="1.2" marker-end="url(#dA)" marker-start="url(#dAr)"/>
-        <text x="360" y="284" fill="#E65100" font-size="10" text-anchor="middle" font-weight="700">B</text>
-
-        <!-- b_cot (column width) -->
-        <line x1="305" y1="55" x2="415" y2="55" stroke="#546E7A" stroke-width="1" marker-end="url(#dM)" marker-start="url(#dMr)"/>
-        <text x="360" y="62" fill="#546E7A" font-size="8.5" text-anchor="middle">b</text>
-
-        <!-- a (overhang) -->
-        <line x1="195" y1="130" x2="235" y2="130" stroke="#6A1B9A" stroke-width="1" marker-end="url(#dV)" marker-start="url(#dVr)"/>
-        <text x="215" y="122" fill="#6A1B9A" font-size="9" text-anchor="middle" font-weight="700">a</text>
-
-        <!-- LABELS with leader lines -->
-        <!-- Cốt thép chờ -->
-        <line x1="388" y1="120" x2="440" y2="90" stroke="#C62828" stroke-width="1" stroke-dasharray="3,2"/>
-        <text x="445" y="87" fill="#C62828" font-size="9" font-weight="700">Cốt thép chờ (d≥16)</text>
-
-        <!-- Thép đáy móng -->
-        <line x1="490" y1="228" x2="560" y2="215" stroke="#C62828" stroke-width="1" stroke-dasharray="3,2"/>
-        <text x="565" y="212" fill="#C62828" font-size="9" font-weight="700">Thép đáy (d≥10, a=150)</text>
-
-        <!-- Bê tông móng -->
-        <line x1="480" y1="175" x2="580" y2="160" stroke="#1565C0" stroke-width="1" stroke-dasharray="3,2"/>
-        <text x="585" y="157" fill="#1565C0" font-size="9" font-weight="700">BT móng B20+ (≥250)</text>
-
-        <!-- Lớp bảo vệ -->
-        <line x1="197" y1="221" x2="155" y2="235" stroke="#FF8F00" stroke-width="1" stroke-dasharray="3,2"/>
-        <text x="50" y="238" fill="#E65100" font-size="9" font-weight="700">Lớp BV ≥30mm</text>
-
-        <defs>
-          <marker id="dG" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#2E7D32"/></marker>
-          <marker id="dGr" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L6,3 L0,6 Z" fill="#2E7D32"/></marker>
-          <marker id="dR" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#C62828"/></marker>
-          <marker id="dRr" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L6,3 L0,6 Z" fill="#C62828"/></marker>
-          <marker id="dA" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#E65100"/></marker>
-          <marker id="dAr" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L6,3 L0,6 Z" fill="#E65100"/></marker>
-          <marker id="dM" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#546E7A"/></marker>
-          <marker id="dMr" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L6,3 L0,6 Z" fill="#546E7A"/></marker>
-          <marker id="dV" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#6A1B9A"/></marker>
-          <marker id="dVr" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L6,3 L0,6 Z" fill="#6A1B9A"/></marker>
-        </defs>
-      </svg>
+<!-- ══════ 3. TÍNH LÚN ══════ -->
+<div class="card">
+  <div class="card-hd"><i class="ti ti-trending-down"></i>
+    <div><h2>3 — Tính lún đàn hồi theo mô đun biến dạng E₀</h2><p>Phương pháp đơn giản dùng cho thiết kế sơ bộ</p></div>
+    <span class="cbadge cba">LÚN</span>
+  </div>
+  <div class="cbd">
+    <div class="tc">
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div class="fb">
+          <div class="fb-lbl"><i class="ti ti-sigma"></i> Độ lún đàn hồi (phương pháp E₀)</div>
+          <span class="fml">S = β · (p<sub>gl</sub> / E₀) · B · ω</span>
+          <div class="fexp" style="margin-top:6px">
+            <b>β</b> = hệ số phụ thuộc hệ số Poisson ν (β = 0.8 khi ν = 0.3)<br>
+            <b>p<sub>gl</sub> = p<sub>tc</sub> − γ · h<sub>m</sub></b> = áp lực gây lún (net pressure) (kPa)<br>
+            <b>E₀</b> = mô đun biến dạng đất dưới đáy móng (kPa)<br>
+            <b>B</b> = bề rộng móng (m)<br>
+            <b>ω</b> = hệ số hình dạng móng (tra bảng theo L/B)
+          </div>
+        </div>
+        <div class="fb">
+          <div class="fb-lbl"><i class="ti ti-check"></i> Điều kiện kiểm tra lún</div>
+          <span class="fml">S<sub>tính</sub> ≤ [S]</span>
+          <div class="fexp" style="margin-top:4px">
+            [S] = độ lún giới hạn cho phép (cm)<br>
+            Nhà dân, VP: [S] = 8–10 cm &nbsp;·&nbsp; Nhà công nghiệp: [S] = 10–15 cm<br>
+            Kết cấu cứng (khung bê tông): [S] = 3–5 cm
+          </div>
+        </div>
+      </div>
+      <!-- bảng omega + SVG vùng nén lún -->
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div class="sl"><i class="ti ti-table"></i> Hệ số hình dạng ω theo L/B</div>
+        <table class="tbl gtbl">
+          <tr><th>Hình dạng</th><th>L/B</th><th>ω</th></tr>
+          <tr><td>Tròn</td><td>1.0</td><td>0.79</td></tr>
+          <tr><td>Vuông</td><td>1.0</td><td>0.82</td></tr>
+          <tr><td>Chữ nhật</td><td>1.5</td><td>0.88</td></tr>
+          <tr><td>Chữ nhật</td><td>2.0</td><td>0.96</td></tr>
+          <tr><td>Chữ nhật</td><td>3.0</td><td>1.07</td></tr>
+          <tr><td>Chữ nhật</td><td>5.0</td><td>1.22</td></tr>
+          <tr><td>Băng dài</td><td>10.0</td><td>1.41</td></tr>
+          <tr><td>Băng dài</td><td>→ ∞</td><td>1.56</td></tr>
+        </table>
+        <div class="ab" style="font-size:12px">
+          <b>Vùng nén lún:</b> Từ đáy móng xuống đến độ sâu z<sub>c</sub> ≈ (2–3)B<br>
+          Dưới z<sub>c</sub>: ứng suất phụ thêm do tải móng &lt; 20% ứng suất do trọng lượng đất → bỏ qua
+        </div>
+      </div>
     </div>
 
-    <div class="sec-lbl"><i class="ti ti-table"></i> Bảng ký hiệu kích thước chính</div>
-    <table class="dim-table">
-      <tr><th>Ký hiệu</th><th>Tên gọi</th><th>Giá trị thông thường</th><th>Ghi chú</th></tr>
-      <tr><td>B</td><td>Bề rộng đáy móng</td><td>1.0 – 3.0 m</td><td>Xác định từ điều kiện SCT và lún</td></tr>
-      <tr><td>L</td><td>Chiều dài đáy móng</td><td>B – 2B (móng đơn)</td><td>L = ∞ cho móng băng (tính 1m dài)</td></tr>
-      <tr><td>h<sub>m</sub></td><td>Chiều sâu chôn móng</td><td>0.5 – 3.0 m</td><td>Từ mặt đất tự nhiên đến đáy móng</td></tr>
-      <tr><td>h<sub>f</sub></td><td>Chiều cao móng</td><td>0.3 – 1.0 m</td><td>Xác định từ điều kiện chọc thủng</td></tr>
-      <tr><td>a</td><td>Khoảng vươn đáy</td><td>0.3 – 1.0 m</td><td>a = (B − b)/2 với b là bề rộng cột</td></tr>
+    <!-- SVG vùng nén lún -->
+    <div class="sl" style="margin-top:4px"><i class="ti ti-chart-area"></i> Phân bố ứng suất và vùng nén lún</div>
+    <svg viewBox="0 0 640 240" xmlns="http://www.w3.org/2000/svg" width="100%">
+      <rect x="0" y="0" width="640" height="240" fill="#F8FBFF" rx="8"/>
+      <!-- Ground surface -->
+      <line x1="10" y1="30" x2="630" y2="30" stroke="#546E7A" stroke-width="2"/>
+      <text x="320" y="22" fill="#546E7A" font-size="9" text-anchor="middle" font-weight="700">Mặt đất ±0.00</text>
+      <!-- móng -->
+      <rect x="230" y="30" width="180" height="28" fill="#90CAF9" stroke="#1565C0" stroke-width="1.5" rx="2"/>
+      <text x="320" y="48" fill="#0D47A1" font-size="10" text-anchor="middle" font-weight="700">Móng B×L</text>
+      <!-- hm arrow -->
+      <line x1="18" y1="30" x2="18" y2="58" stroke="#E65100" stroke-width="1.5" marker-end="url(#ar3)" marker-start="url(#ar3r)"/>
+      <text x="30" y="47" fill="#E65100" font-size="9" font-weight="700">h<tspan baseline-shift="sub" font-size="7">m</tspan></text>
+      <!-- đáy móng -->
+      <line x1="10" y1="58" x2="630" y2="58" stroke="#0D47A1" stroke-width="1.5" stroke-dasharray="6,3"/>
+      <text x="625" y="55" fill="#0D47A1" font-size="8.5" text-anchor="end">Đáy móng</text>
+      <!-- đất nén lún zone -->
+      <path d="M230,58 L230,188 L410,188 L410,58" fill="#FFF9C4" opacity="0.5"/>
+      <!-- ứng suất phụ thêm Δσ (hình tam giác loe) -->
+      <path d="M275,58 L230,158 L410,158 L365,58" fill="#BBDEFB" opacity="0.7"/>
+      <text x="320" y="120" fill="#0D47A1" font-size="9" text-anchor="middle" font-weight="700">Vùng chịu ứng suất phụ thêm</text>
+      <text x="320" y="132" fill="#0D47A1" font-size="8.5" text-anchor="middle">Δσ<tspan baseline-shift="sub" font-size="7">z</tspan> = k<tspan baseline-shift="sub" font-size="7">σ</tspan> · p<tspan baseline-shift="sub" font-size="7">gl</tspan></text>
+      <!-- zc depth -->
+      <line x1="10" y1="188" x2="630" y2="188" stroke="#2E7D32" stroke-width="1.5" stroke-dasharray="6,3"/>
+      <text x="625" y="184" fill="#2E7D32" font-size="8.5" text-anchor="end">z<tspan baseline-shift="sub" font-size="7">c</tspan> ≈ 2–3B</text>
+      <line x1="18" y1="58" x2="18" y2="188" stroke="#2E7D32" stroke-width="1.5" marker-end="url(#ar4)" marker-start="url(#ar4r)"/>
+      <text x="30" y="128" fill="#2E7D32" font-size="9" font-weight="700">z<tspan baseline-shift="sub" font-size="7">c</tspan></text>
+      <!-- biểu đồ Δσ bên phải -->
+      <text x="510" y="50" fill="#C62828" font-size="9" font-weight="700" text-anchor="middle">Biểu đồ Δσ<tspan baseline-shift="sub" font-size="7">z</tspan></text>
+      <line x1="460" y1="58" x2="460" y2="200" stroke="#546E7A" stroke-width="1.2"/>
+      <line x1="460" y1="58" x2="570" y2="58" stroke="#C62828" stroke-width="2"/>
+      <text x="572" y="61" fill="#C62828" font-size="8.5">p<tspan baseline-shift="sub" font-size="7">gl</tspan></text>
+      <path d="M460,58 L570,58 L465,188 L460,188" fill="#FFCDD2" opacity="0.6"/>
+      <line x1="460" y1="188" x2="465" y2="188" stroke="#C62828" stroke-width="1.5"/>
+      <text x="468" y="192" fill="#C62828" font-size="8">0.2·p<tspan baseline-shift="sub" font-size="6">gl</tspan></text>
+      <!-- annotation formula -->
+      <text x="320" y="208" fill="#2E7D32" font-size="9.5" text-anchor="middle" font-weight="700">S = β · (p<tspan baseline-shift="sub" font-size="7.5">gl</tspan>/E₀) · B · ω</text>
+      <text x="320" y="222" fill="#546E7A" font-size="8.5" text-anchor="middle">Tích phân ứng suất trong vùng nén lún z<tspan baseline-shift="sub" font-size="7">c</tspan></text>
+      <defs>
+        <marker id="ar3" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="4" markerHeight="4" orient="auto"><path d="M0,0L6,3L0,6Z" fill="#E65100"/></marker>
+        <marker id="ar3r" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="4" markerHeight="4" orient="auto-start-reverse"><path d="M0,0L6,3L0,6Z" fill="#E65100"/></marker>
+        <marker id="ar4" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="4" markerHeight="4" orient="auto"><path d="M0,0L6,3L0,6Z" fill="#2E7D32"/></marker>
+        <marker id="ar4r" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="4" markerHeight="4" orient="auto-start-reverse"><path d="M0,0L6,3L0,6Z" fill="#2E7D32"/></marker>
+      </defs>
+    </svg>
+  </div>
+</div>
+
+<!-- ══════ 4. QUY TRÌNH 5 BƯỚC ══════ -->
+<div class="card">
+  <div class="card-hd"><i class="ti ti-list-numbers"></i>
+    <div><h2>4 — Quy trình thiết kế móng nông 5 bước</h2></div>
+    <span class="cbadge">QUY TRÌNH</span>
+  </div>
+  <div class="cbd">
+    <div class="steps">
+      <div class="step"><span class="snum">1</span><div class="stxt"><b>Đọc hồ sơ địa chất.</b> Xác định lớp đất tốt để đặt móng, chọn h<sub>m</sub>. Tra thông số: c, φ, E₀, γ của lớp đất tại đáy móng.</div></div>
+      <div class="step"><span class="snum">2</span><div class="stxt"><b>Tính SCT tính toán R<sub>n</sub>.</b> Tra hệ số N<sub>c</sub>, N<sub>q</sub>, N<sub>γ</sub> theo φ. Tra hệ số α<sub>1</sub>, α<sub>2</sub>, α<sub>3</sub> theo hình dạng móng. Tính q = γ · h<sub>m</sub>. Chọn F<sub>s</sub> = 2.5–3.0. Áp dụng công thức Terzaghi.</div></div>
+      <div class="step"><span class="snum">3</span><div class="stxt"><b>Xác định kích thước B sơ bộ từ điều kiện SCT.</b> Từ p<sub>tc</sub> ≤ R<sub>n</sub> → N<sub>tc</sub>/(B²) + γ<sub>tb</sub>·h<sub>m</sub> = R<sub>n</sub> → Giải tìm B (móng vuông: B = L). Làm tròn lên theo module 0.1m.</div></div>
+      <div class="step"><span class="snum">4</span><div class="stxt"><b>Kiểm tra lún.</b> Tính p<sub>gl</sub> = N<sub>tc</sub>/(B·L). Tra ω theo L/B. Tính S = β·(p<sub>gl</sub>/E₀)·B·ω. Kiểm tra S ≤ [S]<sub>cp</sub>.</div></div>
+      <div class="step"><span class="snum">5</span><div class="stxt"><b>Điều chỉnh nếu cần.</b> Nếu lún quá giới hạn → tăng B hoặc đặt móng sâu hơn vào lớp đất tốt hơn. Kiểm tra lại cả hai điều kiện SCT và lún.</div></div>
+    </div>
+    <div class="gb">✅ <b>Ghi nhớ:</b> Kiểm tra SCT dùng N<sub>tc</sub> và R<sub>n</sub> (Terzaghi). Kiểm tra lún dùng p<sub>gl</sub> và E₀. Hai điều kiện độc lập — <b>phải thỏa cả hai mới được</b>. SCT thỏa chưa chắc lún thỏa (đặc biệt đất dính E₀ nhỏ).</div>
+  </div>
+</div>
+
+<!-- ══════ 5. BẢNG TÓM TẮT ══════ -->
+<div class="card">
+  <div class="card-hd"><i class="ti ti-file-text"></i>
+    <div><h2>5 — Tóm tắt ký hiệu và đơn vị</h2></div>
+    <span class="cbadge cbr">KÝ HIỆU</span>
+  </div>
+  <div class="cbd">
+    <table class="tbl">
+      <tr><th>Ký hiệu</th><th>Tên gọi</th><th>Đơn vị</th><th>Ghi chú</th></tr>
+      <tr><td>N<sub>tc</sub></td><td>Tải trọng tiêu chuẩn</td><td>kN</td><td>Tải thực tế từ kết cấu phía trên</td></tr>
+      <tr><td>N<sub>tt</sub></td><td>Tải trọng tính toán</td><td>kN</td><td>N<sub>tt</sub> = n · N<sub>tc</sub>, dùng cho tính cốt thép</td></tr>
+      <tr><td>p<sub>tc</sub></td><td>Áp lực tiêu chuẩn đáy móng</td><td>kPa</td><td>Dùng để kiểm tra SCT</td></tr>
+      <tr><td>p<sub>gl</sub></td><td>Áp lực gây lún</td><td>kPa</td><td>p<sub>gl</sub> = p<sub>tc</sub> − γ·h<sub>m</sub></td></tr>
+      <tr><td>R<sub>n</sub></td><td>SCT tính toán nền</td><td>kPa</td><td>Theo Terzaghi với F<sub>s</sub> = 2.5–3.0</td></tr>
+      <tr><td>h<sub>m</sub></td><td>Chiều sâu đặt móng</td><td>m</td><td>Tính từ mặt đất tự nhiên đến đáy móng</td></tr>
+      <tr><td>γ<sub>tb</sub></td><td>Dung trọng trung bình</td><td>kN/m³</td><td>Móng + đất trên, γ<sub>tb</sub> ≈ 20 kN/m³</td></tr>
+      <tr><td>N<sub>c</sub>, N<sub>q</sub>, N<sub>γ</sub></td><td>Hệ số sức chịu tải</td><td>—</td><td>Tra theo φ trong bảng Terzaghi</td></tr>
+      <tr><td>α<sub>1</sub>, α<sub>2</sub>, α<sub>3</sub></td><td>Hệ số hình dạng móng</td><td>—</td><td>Băng/vuông/tròn/chữ nhật</td></tr>
+      <tr><td>F<sub>s</sub></td><td>Hệ số an toàn</td><td>—</td><td>Thường F<sub>s</sub> = 2.5 (TT) hoặc 3.0 (TC)</td></tr>
+      <tr><td>E₀</td><td>Mô đun biến dạng</td><td>MPa</td><td>Tra từ thí nghiệm hoặc bảng kinh nghiệm</td></tr>
+      <tr><td>β</td><td>Hệ số Poisson (biến đổi)</td><td>—</td><td>β = 0.8 khi ν = 0.3; β = 0.74 khi ν = 0.35</td></tr>
+      <tr><td>ω</td><td>Hệ số hình dạng (lún)</td><td>—</td><td>Tra theo L/B, ω ∈ [0.79; 1.56]</td></tr>
+      <tr><td>S</td><td>Độ lún tính toán</td><td>cm</td><td>Phải ≤ [S] = độ lún giới hạn cho phép</td></tr>
     </table>
-
-    <div class="sec-lbl"><i class="ti ti-settings"></i> Vật liệu cấu tạo</div>
-    <div class="three-col">
-      <div class="theory">
-        <div class="theory-lbl"><i class="ti ti-cube"></i> Bê tông móng</div>
-        Cấp độ bền <b>B20 trở lên</b> (Mác 250+). Đảm bảo khả năng chịu lực và chống ăn mòn trong môi trường đất.
-      </div>
-      <div class="theory">
-        <div class="theory-lbl"><i class="ti ti-git-fork"></i> Cốt thép</div>
-        Thép đáy <b>d ≥ 10mm</b>, khoảng cách 100–200mm. Thép chờ cột d ≥ 16mm. Lớp bảo vệ ≥ 30mm khi có bê tông lót.
-      </div>
-      <div class="theory">
-        <div class="theory-lbl"><i class="ti ti-stack-2"></i> Bê tông lót</div>
-        <b>B7.5 (Mác 100)</b>, dày 100mm. Tạo mặt phẳng thi công và ngăn mất nước từ bê tông móng xuống đất.
-      </div>
-    </div>
-
-    <div class="warn-box"><i class="ti ti-alert-triangle"></i> <b>Góc vát bê tông:</b> Khi móng có hình thang, góc vát so với phương ngang phải ≤ 45° để đảm bảo đầm nén bê tông dưới mép vát được chặt chẽ.</div>
-  </div>
-</div>
-
-<!-- ══════ 3. THI CÔNG ══════ -->
-<div class="card">
-  <div class="card-hd"><i class="ti ti-tool"></i>
-    <div><h2>3. Trình tự thi công móng nông</h2></div>
-    <span class="cbadge">THI CÔNG</span>
-  </div>
-  <div class="card-body">
-
-    <!-- SVG trình tự thi công -->
-    <div class="diag-box">
-      <div class="diag-title"><i class="ti ti-timeline"></i> Hình 5 — Sơ đồ trình tự thi công 6 bước</div>
-      <svg viewBox="0 0 700 110" xmlns="http://www.w3.org/2000/svg" width="100%">
-        <rect x="0" y="0" width="700" height="110" fill="#F8FBFF"/>
-        <!-- Steps boxes -->
-        <rect x="4" y="30" width="100" height="50" rx="8" fill="#E3F2FD" stroke="#1565C0" stroke-width="1.5"/>
-        <text x="54" y="50" fill="#1565C0" font-size="10" text-anchor="middle" font-weight="700">① Đào đất</text>
-        <text x="54" y="63" fill="#546E7A" font-size="8.5" text-anchor="middle">đến cao độ</text>
-        <text x="54" y="74" fill="#546E7A" font-size="8.5" text-anchor="middle">thiết kế</text>
-
-        <line x1="104" y1="55" x2="116" y2="55" stroke="#1565C0" stroke-width="1.5" marker-end="url(#st)"/>
-
-        <rect x="116" y="30" width="100" height="50" rx="8" fill="#FFF8E1" stroke="#FF8F00" stroke-width="1.5"/>
-        <text x="166" y="50" fill="#E65100" font-size="10" text-anchor="middle" font-weight="700">② BT lót</text>
-        <text x="166" y="63" fill="#546E7A" font-size="8.5" text-anchor="middle">B7.5, dày</text>
-        <text x="166" y="74" fill="#546E7A" font-size="8.5" text-anchor="middle">100mm</text>
-
-        <line x1="216" y1="55" x2="228" y2="55" stroke="#1565C0" stroke-width="1.5" marker-end="url(#st)"/>
-
-        <rect x="228" y="30" width="100" height="50" rx="8" fill="#E8F5E9" stroke="#2E7D32" stroke-width="1.5"/>
-        <text x="278" y="50" fill="#2E7D32" font-size="10" text-anchor="middle" font-weight="700">③ Cốt thép</text>
-        <text x="278" y="63" fill="#546E7A" font-size="8.5" text-anchor="middle">+ cốt pha</text>
-        <text x="278" y="74" fill="#546E7A" font-size="8.5" text-anchor="middle">móng</text>
-
-        <line x1="328" y1="55" x2="340" y2="55" stroke="#1565C0" stroke-width="1.5" marker-end="url(#st)"/>
-
-        <rect x="340" y="30" width="100" height="50" rx="8" fill="#E3F2FD" stroke="#1565C0" stroke-width="1.5"/>
-        <text x="390" y="50" fill="#1565C0" font-size="10" text-anchor="middle" font-weight="700">④ Đổ BT</text>
-        <text x="390" y="63" fill="#546E7A" font-size="8.5" text-anchor="middle">B20+ đầm</text>
-        <text x="390" y="74" fill="#546E7A" font-size="8.5" text-anchor="middle">dùi kỹ</text>
-
-        <line x1="440" y1="55" x2="452" y2="55" stroke="#1565C0" stroke-width="1.5" marker-end="url(#st)"/>
-
-        <rect x="452" y="30" width="100" height="50" rx="8" fill="#FFF3E0" stroke="#E65100" stroke-width="1.5"/>
-        <text x="502" y="50" fill="#E65100" font-size="10" text-anchor="middle" font-weight="700">⑤ Bảo dưỡng</text>
-        <text x="502" y="63" fill="#546E7A" font-size="8.5" text-anchor="middle">≥ 7 ngày,</text>
-        <text x="502" y="74" fill="#546E7A" font-size="8.5" text-anchor="middle">tưới nước</text>
-
-        <line x1="552" y1="55" x2="564" y2="55" stroke="#1565C0" stroke-width="1.5" marker-end="url(#st)"/>
-
-        <rect x="564" y="30" width="130" height="50" rx="8" fill="#E8F5E9" stroke="#2E7D32" stroke-width="1.5"/>
-        <text x="629" y="50" fill="#2E7D32" font-size="10" text-anchor="middle" font-weight="700">⑥ Tháo ván</text>
-        <text x="629" y="63" fill="#546E7A" font-size="8.5" text-anchor="middle">khuôn + lấp</text>
-        <text x="629" y="74" fill="#546E7A" font-size="8.5" text-anchor="middle">đất móng</text>
-
-        <defs>
-          <marker id="st" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#1565C0"/></marker>
-        </defs>
-      </svg>
-    </div>
-
-    <div class="step-list">
-      <div class="step"><span class="step-num">1</span><div class="step-text"><strong>Đào đất hố móng</strong> đến cao độ thiết kế. Kiểm tra địa chất đáy hố sau khi đào. Đảm bảo góc taluy an toàn hoặc có biện pháp chắn giữ thành hố.</div></div>
-      <div class="step"><span class="step-num">2</span><div class="step-text"><strong>Vệ sinh đáy hố và đổ bê tông lót B7.5</strong>, dày 100mm ngay sau khi đào để bảo vệ đáy hố. Tránh để hố phơi nắng mưa lâu.</div></div>
-      <div class="step"><span class="step-num">3</span><div class="step-text"><strong>Lắp dựng cốt pha và cốt thép móng.</strong> Đặt con kê đảm bảo lớp bảo vệ ≥ 30mm. Lắp cốt thép chờ cột đúng vị trí.</div></div>
-      <div class="step"><span class="step-num">4</span><div class="step-text"><strong>Đổ bê tông móng B20+</strong>, đầm dùi kỹ, đặc biệt ở vùng mép móng và xung quanh thép chờ cột.</div></div>
-      <div class="step"><span class="step-num">5</span><div class="step-text"><strong>Bảo dưỡng bê tông</strong> tối thiểu 7 ngày bằng cách phủ bạt và tưới nước, tránh để bê tông mất nước quá nhanh gây nứt.</div></div>
-      <div class="step"><span class="step-num">6</span><div class="step-text"><strong>Tháo cốt pha và lấp đất</strong> hai bên móng theo từng lớp, đầm chặt. Đạt độ chặt thiết kế trước khi thi công kết cấu bên trên.</div></div>
-    </div>
-
-    <div class="warn-box"><i class="ti ti-droplet"></i> <b>Ảnh hưởng nước ngầm:</b> Nếu mực nước ngầm cao hơn đáy móng, phải hạ mực nước ngầm (bơm hút hoặc giếng kim) để thi công khô ráo. Chi phí hạ MNN có thể tăng đáng kể khi MNN quá cao — đây là lý do nên xem xét thay bằng móng cọc khi MNN sát mặt đất.</div>
-  </div>
-</div>
-
-<!-- ══════ MCQ ══════ -->
-<div class="card">
-  <div class="card-hd"><i class="ti ti-list-check"></i>
-    <div><h2>Trắc nghiệm lý thuyết — 20 câu</h2><p>Phủ kín kiến thức khái niệm, cấu tạo, thi công và tính toán cơ bản</p></div>
-    <span class="cbadge">MCQ</span>
-  </div>
-  <div class="card-body">
-    <div class="earth-box" style="margin-bottom:4px"><i class="ti ti-info-circle"></i> Chọn đáp án — hệ thống chấm và giải thích ngay. Bài tập tính toán chi tiết ở các bài 8.3, 8.4, 8.5.</div>
-
-    <div class="mcq-wrap">
-      <div class="mcq-q"><span class="mcq-num">C1</span>Theo Terzaghi (1943), móng được gọi là móng nông khi thỏa mãn điều kiện nào?</div>
-      <div class="mcq-opts">
-        <div class="mcq-opt" id="mco-q1-0" onclick="pickMCQ('q1',0,0)"><span class="mkey">A</span><span>h<sub>m</sub>/B ≤ 1 (chiều sâu chôn móng không lớn hơn bề rộng đáy)</span></div>
-        <div class="mcq-opt" id="mco-q1-1" onclick="pickMCQ('q1',1,0)"><span class="mkey">B</span><span>h<sub>m</sub>/B &gt; 15 (móng sâu hơn bề rộng nhiều lần)</span></div>
-        <div class="mcq-opt" id="mco-q1-2" onclick="pickMCQ('q1',2,0)"><span class="mkey">C</span><span>L/B &gt; 10 (móng rất dài so với bề rộng)</span></div>
-        <div class="mcq-opt" id="mco-q1-3" onclick="pickMCQ('q1',3,0)"><span class="mkey">D</span><span>B/h<sub>m</sub> ≤ 1 (bề rộng nhỏ hơn chiều sâu)</span></div>
-      </div>
-      <div class="mcq-exp" id="exp-q1">✓ Terzaghi: h<sub>m</sub>/B ≤ 1. Thực tế có thể lên đến 2–3 nhưng định nghĩa kinh điển là ≤1. Đây là điều kiện phân biệt móng nông và móng sâu (cọc).</div>
-    </div>
-
-    <div class="mcq-wrap">
-      <div class="mcq-q"><span class="mcq-num">C2</span>Tải trọng từ công trình truyền xuống nền đất qua móng nông chủ yếu thông qua bộ phận nào?</div>
-      <div class="mcq-opts">
-        <div class="mcq-opt" id="mco-q2-0" onclick="pickMCQ('q2',0,1)"><span class="mkey">A</span><span>Thành bên của móng (ma sát bên)</span></div>
-        <div class="mcq-opt" id="mco-q2-1" onclick="pickMCQ('q2',1,1)"><span class="mkey">B</span><span>Diện tích đáy móng (áp lực mặt nền)</span></div>
-        <div class="mcq-opt" id="mco-q2-2" onclick="pickMCQ('q2',2,1)"><span class="mkey">C</span><span>Cốt thép chờ cột nhúng vào đất</span></div>
-        <div class="mcq-opt" id="mco-q2-3" onclick="pickMCQ('q2',3,1)"><span class="mkey">D</span><span>Bê tông lót phía dưới đáy móng</span></div>
-      </div>
-      <div class="mcq-exp" id="exp-q2">✓ Đặc trưng của móng nông: truyền tải <b>chủ yếu qua đáy</b>. Khác với cọc: truyền qua ma sát thân + mũi cọc.</div>
-    </div>
-
-    <div class="mcq-wrap">
-      <div class="mcq-q"><span class="mcq-num">C3</span>Khi tải trọng rất lớn, nền đất yếu dày, diện tích móng đơn không đủ — giải pháp móng nông nào được ưu tiên?</div>
-      <div class="mcq-opts">
-        <div class="mcq-opt" id="mco-q3-0" onclick="pickMCQ('q3',0,2)"><span class="mkey">A</span><span>Móng cọc đài cao</span></div>
-        <div class="mcq-opt" id="mco-q3-1" onclick="pickMCQ('q3',1,2)"><span class="mkey">B</span><span>Móng đơn hình tròn thay hình vuông</span></div>
-        <div class="mcq-opt" id="mco-q3-2" onclick="pickMCQ('q3',2,2)"><span class="mkey">C</span><span>Móng bè (raft) chiếm toàn bộ diện tích công trình</span></div>
-        <div class="mcq-opt" id="mco-q3-3" onclick="pickMCQ('q3',3,2)"><span class="mkey">D</span><span>Móng băng một phương</span></div>
-      </div>
-      <div class="mcq-exp" id="exp-q3">✓ Móng bè tối đa hóa diện tích đáy → giảm áp lực đơn vị xuống thấp nhất có thể. Đây là lựa chọn cuối cùng trong các giải pháp móng nông.</div>
-    </div>
-
-    <div class="mcq-wrap">
-      <div class="mcq-q"><span class="mcq-num">C4</span>Móng nằm kéo dài dưới hàng cột hoặc tường xây được gọi là loại móng gì?</div>
-      <div class="mcq-opts">
-        <div class="mcq-opt" id="mco-q4-0" onclick="pickMCQ('q4',0,2)"><span class="mkey">A</span><span>Móng bè</span></div>
-        <div class="mcq-opt" id="mco-q4-1" onclick="pickMCQ('q4',1,2)"><span class="mkey">B</span><span>Móng đơn</span></div>
-        <div class="mcq-opt" id="mco-q4-2" onclick="pickMCQ('q4',2,2)"><span class="mkey">C</span><span>Móng băng</span></div>
-        <div class="mcq-opt" id="mco-q4-3" onclick="pickMCQ('q4',3,2)"><span class="mkey">D</span><span>Móng khối</span></div>
-      </div>
-      <div class="mcq-exp" id="exp-q4">✓ Móng băng đặc trưng bởi chiều dài lớn hơn nhiều lần bề rộng (L &gt;&gt; B), chạy dọc theo tường hoặc hàng cột.</div>
-    </div>
-
-    <div class="mcq-wrap">
-      <div class="mcq-q"><span class="mcq-num">C5</span>Cấp độ bền bê tông tối thiểu được khuyến cáo cho móng nông BTCT là bao nhiêu?</div>
-      <div class="mcq-opts">
-        <div class="mcq-opt" id="mco-q5-0" onclick="pickMCQ('q5',0,2)"><span class="mkey">A</span><span>B7.5 (dùng cho lớp bê tông lót)</span></div>
-        <div class="mcq-opt" id="mco-q5-1" onclick="pickMCQ('q5',1,2)"><span class="mkey">B</span><span>B15 (nhà kho đơn giản)</span></div>
-        <div class="mcq-opt" id="mco-q5-2" onclick="pickMCQ('q5',2,2)"><span class="mkey">C</span><span>B20 trở lên (Mác 250+)</span></div>
-        <div class="mcq-opt" id="mco-q5-3" onclick="pickMCQ('q5',3,2)"><span class="mkey">D</span><span>B30 cho mọi loại móng</span></div>
-      </div>
-      <div class="mcq-exp" id="exp-q5">✓ B20 (≈Mác 250) là mức tối thiểu để đảm bảo cường độ và độ bền lâu dài cho móng. B7.5 chỉ dùng cho lớp bê tông lót không chịu lực.</div>
-    </div>
-
-    <div class="mcq-wrap">
-      <div class="mcq-q"><span class="mcq-num">C6</span>Lớp bảo vệ cốt thép (từ mép ngoài bê tông đến mép thép) của móng tối thiểu là bao nhiêu khi có lớp bê tông lót?</div>
-      <div class="mcq-opts">
-        <div class="mcq-opt" id="mco-q6-0" onclick="pickMCQ('q6',0,2)"><span class="mkey">A</span><span>10 mm</span></div>
-        <div class="mcq-opt" id="mco-q6-1" onclick="pickMCQ('q6',1,2)"><span class="mkey">B</span><span>20 mm</span></div>
-        <div class="mcq-opt" id="mco-q6-2" onclick="pickMCQ('q6',2,2)"><span class="mkey">C</span><span>30 mm</span></div>
-        <div class="mcq-opt" id="mco-q6-3" onclick="pickMCQ('q6',3,2)"><span class="mkey">D</span><span>70 mm</span></div>
-      </div>
-      <div class="mcq-exp" id="exp-q6">✓ TCVN quy định lớp bảo vệ móng ≥ 30–35mm khi có bê tông lót. Không có bê tông lót thì ≥ 70mm để chống ăn mòn từ đất.</div>
-    </div>
-
-    <div class="mcq-wrap">
-      <div class="mcq-q"><span class="mcq-num">C7</span>Mục đích CHÍNH của lớp bê tông lót (B7.5 dày 100mm) dưới đáy móng là gì?</div>
-      <div class="mcq-opts">
-        <div class="mcq-opt" id="mco-q7-0" onclick="pickMCQ('q7',0,1)"><span class="mkey">A</span><span>Thay thế lớp đất nền yếu bên dưới</span></div>
-        <div class="mcq-opt" id="mco-q7-1" onclick="pickMCQ('q7',1,1)"><span class="mkey">B</span><span>Tạo mặt phẳng và ngăn đất hút nước từ bê tông móng</span></div>
-        <div class="mcq-opt" id="mco-q7-2" onclick="pickMCQ('q7',2,1)"><span class="mkey">C</span><span>Chịu tải trọng thay cho đất nền</span></div>
-        <div class="mcq-opt" id="mco-q7-3" onclick="pickMCQ('q7',3,1)"><span class="mkey">D</span><span>Chống chọc thủng đáy móng do áp lực đất</span></div>
-      </div>
-      <div class="mcq-exp" id="exp-q7">✓ Bê tông lót không chịu lực. Chức năng: tạo mặt phẳng để lắp thép, và ngăn đất ẩm hút nước xi măng từ bê tông tươi → đảm bảo mác bê tông móng đúng thiết kế.</div>
-    </div>
-
-    <div class="mcq-wrap">
-      <div class="mcq-q"><span class="mcq-num">C8</span>Chiều sâu chôn móng tối thiểu (h<sub>m</sub>) được khuyến cáo để tránh các tác động bề mặt là?</div>
-      <div class="mcq-opts">
-        <div class="mcq-opt" id="mco-q8-0" onclick="pickMCQ('q8',0,2)"><span class="mkey">A</span><span>0.1 m</span></div>
-        <div class="mcq-opt" id="mco-q8-1" onclick="pickMCQ('q8',1,2)"><span class="mkey">B</span><span>0.3 m</span></div>
-        <div class="mcq-opt" id="mco-q8-2" onclick="pickMCQ('q8',2,2)"><span class="mkey">C</span><span>0.5 m</span></div>
-        <div class="mcq-opt" id="mco-q8-3" onclick="pickMCQ('q8',3,2)"><span class="mkey">D</span><span>2.0 m</span></div>
-      </div>
-      <div class="mcq-exp" id="exp-q8">✓ h<sub>m</sub> ≥ 0.5m để tránh rễ cây, sinh vật, xói mòn bề mặt và biến động nhiệt độ mùa vụ ảnh hưởng đến đất nền dưới móng.</div>
-    </div>
-
-    <div class="mcq-wrap">
-      <div class="mcq-q"><span class="mcq-num">C9</span>Trình tự thi công móng nông nào sau đây là đúng kỹ thuật?</div>
-      <div class="mcq-opts">
-        <div class="mcq-opt" id="mco-q9-0" onclick="pickMCQ('q9',0,0)"><span class="mkey">A</span><span>Đào đất → Đổ BT lót → Lắp thép/cốt pha → Đổ BT móng → Bảo dưỡng → Lấp đất</span></div>
-        <div class="mcq-opt" id="mco-q9-1" onclick="pickMCQ('q9',1,0)"><span class="mkey">B</span><span>Đào đất → Đổ BT móng → Lắp thép → Lấp đất</span></div>
-        <div class="mcq-opt" id="mco-q9-2" onclick="pickMCQ('q9',2,0)"><span class="mkey">C</span><span>Đổ BT lót → Đào đất → Lắp thép → Đổ BT</span></div>
-        <div class="mcq-opt" id="mco-q9-3" onclick="pickMCQ('q9',3,0)"><span class="mkey">D</span><span>Đào đất → Đổ BT móng → Đổ BT lót → Lấp đất</span></div>
-      </div>
-      <div class="mcq-exp" id="exp-q9">✓ Đúng thứ tự: đào → lót (bảo vệ đáy) → thép+ván khuôn → đổ bê tông B20 → bảo dưỡng → tháo ván+lấp đất. Không thể đổ bê tông trước khi có cốt thép.</div>
-    </div>
-
-    <div class="mcq-wrap">
-      <div class="mcq-q"><span class="mcq-num">C10</span>Khi đào hố móng gặp đất sét mềm, điều nào sau đây KHÔNG nên làm?</div>
-      <div class="mcq-opts">
-        <div class="mcq-opt" id="mco-q10-0" onclick="pickMCQ('q10',0,1)"><span class="mkey">A</span><span>Vét sạch bùn lỏng đáy hố và đổ bê tông lót ngay</span></div>
-        <div class="mcq-opt" id="mco-q10-1" onclick="pickMCQ('q10',1,1)"><span class="mkey">B</span><span>Để hố móng phơi mưa nhiều ngày rồi mới đổ</span></div>
-        <div class="mcq-opt" id="mco-q10-2" onclick="pickMCQ('q10',2,1)"><span class="mkey">C</span><span>Bơm hút nước đọng trong hố đào</span></div>
-        <div class="mcq-opt" id="mco-q10-3" onclick="pickMCQ('q10',3,1)"><span class="mkey">D</span><span>Kiểm tra lại địa chất đáy móng sau đào</span></div>
-      </div>
-      <div class="mcq-exp" id="exp-q10">✓ Phơi mưa làm đất sét hút nước, trương nở và nhão → giảm sức chịu tải bề mặt đáy hố. Phải đổ bê tông lót ngay sau khi vét sạch đáy.</div>
-    </div>
-
-    <div class="mcq-wrap">
-      <div class="mcq-q"><span class="mcq-num">C11</span>Chiều dày lớp bê tông lót thông thường là bao nhiêu?</div>
-      <div class="mcq-opts">
-        <div class="mcq-opt" id="mco-q11-0" onclick="pickMCQ('q11',0,2)"><span class="mkey">A</span><span>20 mm</span></div>
-        <div class="mcq-opt" id="mco-q11-1" onclick="pickMCQ('q11',1,2)"><span class="mkey">B</span><span>50 mm</span></div>
-        <div class="mcq-opt" id="mco-q11-2" onclick="pickMCQ('q11',2,2)"><span class="mkey">C</span><span>100 mm</span></div>
-        <div class="mcq-opt" id="mco-q11-3" onclick="pickMCQ('q11',3,2)"><span class="mkey">D</span><span>250 mm</span></div>
-      </div>
-      <div class="mcq-exp" id="exp-q11">✓ Theo cấu tạo phổ biến và quy định kỹ thuật, bê tông lót dày 100mm (10cm). Đây là giá trị cần ghi nhớ.</div>
-    </div>
-
-    <div class="mcq-wrap">
-      <div class="mcq-q"><span class="mcq-num">C12</span>Thành phần γ<sub>tb</sub>·h<sub>m</sub> trong công thức áp lực đáy móng đại diện cho điều gì?</div>
-      <div class="mcq-opts">
-        <div class="mcq-opt" id="mco-q12-0" onclick="pickMCQ('q12',0,1)"><span class="mkey">A</span><span>Tải trọng cột truyền trực tiếp xuống đáy móng</span></div>
-        <div class="mcq-opt" id="mco-q12-1" onclick="pickMCQ('q12',1,1)"><span class="mkey">B</span><span>Áp lực do trọng lượng bản thân móng và đất lấp trên móng</span></div>
-        <div class="mcq-opt" id="mco-q12-2" onclick="pickMCQ('q12',2,1)"><span class="mkey">C</span><span>Sức chịu tải giới hạn của nền đất R<sub>n</sub></span></div>
-        <div class="mcq-opt" id="mco-q12-3" onclick="pickMCQ('q12',3,1)"><span class="mkey">D</span><span>Áp lực nước lỗ hổng tại đáy móng</span></div>
-      </div>
-      <div class="mcq-exp" id="exp-q12">✓ p_tc = N_tc/(B·L) + γ<sub>tb</sub>·h<sub>m</sub>. Số hạng đầu là do tải cột; số hạng sau là do trọng lượng móng + đất trên móng. γ<sub>tb</sub> ≈ 20 kN/m³ thường lấy trung bình.</div>
-    </div>
-
-    <div class="mcq-wrap">
-      <div class="mcq-q"><span class="mcq-num">C13</span>Điều kiện kiểm tra SCT nền khi móng chịu tải lệch tâm theo TCVN là gì?</div>
-      <div class="mcq-opts">
-        <div class="mcq-opt" id="mco-q13-0" onclick="pickMCQ('q13',0,1)"><span class="mkey">A</span><span>p_max ≤ R_n (áp lực cực đại nhỏ hơn SCT)</span></div>
-        <div class="mcq-opt" id="mco-q13-1" onclick="pickMCQ('q13',1,1)"><span class="mkey">B</span><span>p_tc ≤ R_n <b>VÀ</b> p_max ≤ 1.2·R_n (hai điều kiện đồng thời)</span></div>
-        <div class="mcq-opt" id="mco-q13-2" onclick="pickMCQ('q13',2,1)"><span class="mkey">C</span><span>p_min &gt; R_n</span></div>
-        <div class="mcq-opt" id="mco-q13-3" onclick="pickMCQ('q13',3,1)"><span class="mkey">D</span><span>p_tb ≤ 1.5·R_n</span></div>
-      </div>
-      <div class="mcq-exp" id="exp-q13">✓ TCVN yêu cầu <b>đồng thời</b>: p_tb ≤ R_n (áp lực trung bình) và p_max ≤ 1.2·R_n (áp lực mép móng không vượt quá 20%). Thiếu một điều kiện là không đạt.</div>
-    </div>
-
-    <div class="mcq-wrap">
-      <div class="mcq-q"><span class="mcq-num">C14</span>Hệ số vượt tải n khi tính tải trọng tính toán từ tải trọng tiêu chuẩn thường lấy trong khoảng nào?</div>
-      <div class="mcq-opts">
-        <div class="mcq-opt" id="mco-q14-0" onclick="pickMCQ('q14',0,2)"><span class="mkey">A</span><span>0.8 – 0.9 (giảm tải)</span></div>
-        <div class="mcq-opt" id="mco-q14-1" onclick="pickMCQ('q14',1,2)"><span class="mkey">B</span><span>1.0 – 1.05 (gần như không vượt)</span></div>
-        <div class="mcq-opt" id="mco-q14-2" onclick="pickMCQ('q14',2,2)"><span class="mkey">C</span><span>1.15 – 1.2 (vượt tải an toàn)</span></div>
-        <div class="mcq-opt" id="mco-q14-3" onclick="pickMCQ('q14',3,2)"><span class="mkey">D</span><span>2.0 – 2.5 (vượt tải lớn)</span></div>
-      </div>
-      <div class="mcq-exp" id="exp-q14">✓ n = 1.15–1.2 theo TCVN 2737:1995. Tĩnh tải thường n=1.1, hoạt tải n=1.2. Kiểm tra SCT dùng N_tt; kiểm tra lún dùng N_tc (n=1).</div>
-    </div>
-
-    <div class="mcq-wrap">
-      <div class="mcq-q"><span class="mcq-num">C15</span>Để đảm bảo móng không bị nhấc khỏi nền khi có mô men lớn, điều kiện nào phải thỏa mãn?</div>
-      <div class="mcq-opts">
-        <div class="mcq-opt" id="mco-q15-0" onclick="pickMCQ('q15',0,0)"><span class="mkey">A</span><span>p_min ≥ 0 (không có vùng kéo trên đất)</span></div>
-        <div class="mcq-opt" id="mco-q15-1" onclick="pickMCQ('q15',1,0)"><span class="mkey">B</span><span>p_min &lt; 0 (cho phép kéo một phần)</span></div>
-        <div class="mcq-opt" id="mco-q15-2" onclick="pickMCQ('q15',2,0)"><span class="mkey">C</span><span>p_min = p_max</span></div>
-        <div class="mcq-opt" id="mco-q15-3" onclick="pickMCQ('q15',3,0)"><span class="mkey">D</span><span>p_min = p_tb</span></div>
-      </div>
-      <div class="mcq-exp" id="exp-q15">✓ Đất không chịu kéo! Khi p_min &lt; 0 nghĩa là móng bị nhấc, tiếp xúc không còn liên tục với đất → phải tăng B hoặc giảm lệch tâm.</div>
-    </div>
-
-    <div class="mcq-wrap">
-      <div class="mcq-q"><span class="mcq-num">C16</span>Sức chịu tải tính toán R_n của nền đất theo Terzaghi phụ thuộc vào những yếu tố nào?</div>
-      <div class="mcq-opts">
-        <div class="mcq-opt" id="mco-q16-0" onclick="pickMCQ('q16',0,1)"><span class="mkey">A</span><span>Chỉ phụ thuộc vào mác bê tông móng</span></div>
-        <div class="mcq-opt" id="mco-q16-1" onclick="pickMCQ('q16',1,1)"><span class="mkey">B</span><span>Đặc trưng đất (φ, c, γ), chiều sâu h<sub>m</sub> và bề rộng B</span></div>
-        <div class="mcq-opt" id="mco-q16-2" onclick="pickMCQ('q16',2,1)"><span class="mkey">C</span><span>Chỉ phụ thuộc vào lượng cốt thép trong móng</span></div>
-        <div class="mcq-opt" id="mco-q16-3" onclick="pickMCQ('q16',3,1)"><span class="mkey">D</span><span>Độ ẩm của đất đắp trên mặt đất</span></div>
-      </div>
-      <div class="mcq-exp" id="exp-q16">✓ R_n = (1/Fs)·[α₁Nγ·B·γ + α₂Nq·q + α₃Nc·c]. Các hệ số Nγ, Nq, Nc phụ thuộc φ; q = γ·h<sub>m</sub> phụ thuộc chiều sâu. R_n không phụ thuộc vào bê tông hay thép.</div>
-    </div>
-
-    <div class="mcq-wrap">
-      <div class="mcq-q"><span class="mcq-num">C17</span>Độ lún của móng nông được tính theo loại tải trọng nào?</div>
-      <div class="mcq-opts">
-        <div class="mcq-opt" id="mco-q17-0" onclick="pickMCQ('q17',0,1)"><span class="mkey">A</span><span>Tải trọng tính toán N_tt = n·N_tc</span></div>
-        <div class="mcq-opt" id="mco-q17-1" onclick="pickMCQ('q17',1,1)"><span class="mkey">B</span><span>Tải trọng tiêu chuẩn N_tc (không nhân hệ số n)</span></div>
-        <div class="mcq-opt" id="mco-q17-2" onclick="pickMCQ('q17',2,1)"><span class="mkey">C</span><span>Chỉ trọng lượng bản thân móng</span></div>
-        <div class="mcq-opt" id="mco-q17-3" onclick="pickMCQ('q17',3,1)"><span class="mkey">D</span><span>Tải trọng cực hạn gây sụp đổ nền</span></div>
-      </div>
-      <div class="mcq-exp" id="exp-q17">✓ Kiểm tra biến dạng (TTGH-2) luôn dùng tải trọng tiêu chuẩn (n=1). Kiểm tra cường độ (TTGH-1 — SCT nền) mới dùng N_tt. Đây là điều kiện quan trọng cần phân biệt.</div>
-    </div>
-
-    <div class="mcq-wrap">
-      <div class="mcq-q"><span class="mcq-num">C18</span>Áp lực gây lún (p_gl) được xác định bằng cách nào?</div>
-      <div class="mcq-opts">
-        <div class="mcq-opt" id="mco-q18-0" onclick="pickMCQ('q18',0,1)"><span class="mkey">A</span><span>p_gl = p_tc (áp lực thực tế dưới đáy móng)</span></div>
-        <div class="mcq-opt" id="mco-q18-1" onclick="pickMCQ('q18',1,1)"><span class="mkey">B</span><span>p_gl = p_tc − γ·h<sub>m</sub> (trừ đi áp lực đất tự nhiên)</span></div>
-        <div class="mcq-opt" id="mco-q18-2" onclick="pickMCQ('q18',2,1)"><span class="mkey">C</span><span>p_gl = p_tc + γ·h<sub>m</sub></span></div>
-        <div class="mcq-opt" id="mco-q18-3" onclick="pickMCQ('q18',3,1)"><span class="mkey">D</span><span>p_gl = R_n</span></div>
-      </div>
-      <div class="mcq-exp" id="exp-q18">✓ Trước khi xây dựng, đất đã chịu áp lực tự nhiên γ·h<sub>m</sub>. Chỉ phần vượt thêm (p_tc − γ·h<sub>m</sub>) mới gây lún thêm. Đây là lý do trừ đi trọng lượng đất tự nhiên.</div>
-    </div>
-
-    <div class="mcq-wrap">
-      <div class="mcq-q"><span class="mcq-num">C19</span>Khi chia đất nền thành các lớp phân tố để tính lún theo phương pháp cộng lún, chiều dày mỗi lớp h<sub>i</sub> nên thỏa điều kiện gì?</div>
-      <div class="mcq-opts">
-        <div class="mcq-opt" id="mco-q19-0" onclick="pickMCQ('q19',0,0)"><span class="mkey">A</span><span>h<sub>i</sub> ≤ B/4 (không quá một phần tư bề rộng móng)</span></div>
-        <div class="mcq-opt" id="mco-q19-1" onclick="pickMCQ('q19',1,0)"><span class="mkey">B</span><span>h<sub>i</sub> = B (bằng đúng bề rộng móng)</span></div>
-        <div class="mcq-opt" id="mco-q19-2" onclick="pickMCQ('q19',2,0)"><span class="mkey">C</span><span>h<sub>i</sub> = 1.0 m cố định cho mọi trường hợp</span></div>
-        <div class="mcq-opt" id="mco-q19-3" onclick="pickMCQ('q19',3,0)"><span class="mkey">D</span><span>h<sub>i</sub> ≥ h<sub>m</sub></span></div>
-      </div>
-      <div class="mcq-exp" id="exp-q19">✓ h<sub>i</sub> ≤ B/4 để đảm bảo ứng suất biến đổi không quá nhiều trong một lớp, giúp tích phân xấp xỉ chính xác. Với B=2m thì h<sub>i</sub> ≤ 0.5m.</div>
-    </div>
-
-    <div class="mcq-wrap">
-      <div class="mcq-q"><span class="mcq-num">C20</span>Giới hạn độ lún cho phép [S] cho nhà khung bê tông cốt thép nhiều tầng theo TCVN 9362:2012 là bao nhiêu?</div>
-      <div class="mcq-opts">
-        <div class="mcq-opt" id="mco-q20-0" onclick="pickMCQ('q20',0,2)"><span class="mkey">A</span><span>2 cm</span></div>
-        <div class="mcq-opt" id="mco-q20-1" onclick="pickMCQ('q20',1,2)"><span class="mkey">B</span><span>5 cm</span></div>
-        <div class="mcq-opt" id="mco-q20-2" onclick="pickMCQ('q20',2,2)"><span class="mkey">C</span><span>8 cm</span></div>
-        <div class="mcq-opt" id="mco-q20-3" onclick="pickMCQ('q20',3,2)"><span class="mkey">D</span><span>20 cm</span></div>
-      </div>
-      <div class="mcq-exp" id="exp-q20">✓ TCVN 9362:2012 quy định [S] = 8 cm cho nhà khung BTCT nhiều tầng. Nhà công nghiệp khung thép [S] = 12 cm. Đây là giá trị cần ghi nhớ cho bài tập.</div>
-    </div>
-
   </div>
 </div>
 
 </main>
 <div style="height:64px"></div>
-<div class="sticky-nav">
-  <span>8.1 · Lý Thuyết Móng Nông</span>
+<div class="snav">
+  <span>8.2 · Lý thuyết tính toán</span>
   <div style="display:flex;align-items:center;gap:10px">
-    <span id="nav-prog">0/20</span>
-    <button class="btn btn-sm btn-ghost" id="btn-nop" onclick="submitResult()" style="background:rgba(150,150,150,.35);border-color:rgba(200,200,200,.4)">🔒 Nộp bài <span style="font-size:10px;opacity:.8">(0%/?%)</span></button>
-    <a href="8.2_TINH_TOAN.html" class="btn btn-sm btn-ghost">Bài tiếp ›</a>
+    <a href="8.1_LY_THUYET.html" class="btn bg">‹ Bài 8.1</a>
+    <a href="8.3_DANG_1.html" class="btn bg">Bài 8.3 ›</a>
   </div>
 </div>
-
 <script>
-var ANS={};
-var _submitted=false;
-var TOTAL_QUESTIONS=20;
-['q1','q2','q3','q4','q5','q6','q7','q8','q9','q10','q11','q12','q13','q14','q15','q16','q17','q18','q19','q20'].forEach(function(k){ANS['mcq-'+k]=null;});
-
-function getSV(){try{return JSON.parse(sessionStorage.getItem('ncm_sv'));}catch(e){return null;}}
-
-function pickMCQ(id,picked,correct){
-  if(ANS['mcq-'+id]!==undefined&&ANS['mcq-'+id]!==null)return;
-  document.querySelectorAll('[id^="mco-'+id+'-"]').forEach(function(el,i){
-    el.onclick=null;
-    if(i===picked&&picked===correct)el.classList.add('ok');
-    else if(i===picked)el.classList.add('no');
-    else if(i===correct)el.classList.add('reveal-ok');
-  });
-  var exp=document.getElementById('exp-'+id);
-  if(exp){exp.classList.add('show');exp.classList.add(picked===correct?'ok-exp':'no-exp');}
-  ANS['mcq-'+id]=(picked===correct);updateProg();
-}
-
-function updateProg(){
-  var attempted=0,done=0,total=TOTAL_QUESTIONS;
-  Object.keys(ANS).forEach(function(k){if(ANS[k]!==null&&ANS[k]!==undefined){attempted++;if(ANS[k]===true)done++;}});
-  var attemPct=total?Math.round(attempted/total*100):0;
-  var donePct=total?Math.round(done/total*100):0;
-  document.getElementById('prog-fill').style.width=attemPct+'%';
-  document.getElementById('prog-text').textContent='Đã làm: '+attempted+'/'+total+' ('+attemPct+'%) · Đúng: '+done+' ('+donePct+'%)';
-  document.getElementById('nav-prog').textContent=attempted+'/'+total;
-  document.getElementById('hdr-prog').textContent=attempted+' / '+total;
-  try{localStorage.setItem('prog_c8_81',JSON.stringify({done:done,total:total,attempted:attempted}));}catch(e){}
-  if(!_submitted){
-    var minPct=(typeof window.MIN_ATTEMPT_PCT!=='undefined')?window.MIN_ATTEMPT_PCT:5;
-    var btn=document.getElementById('btn-nop');
-    if(btn){
-      var ready=(attemPct>=minPct&&attempted>0);
-      btn.style.background=ready?'rgba(46,125,50,.7)':'rgba(150,150,150,.35)';
-      btn.style.borderColor=ready?'rgba(165,214,167,.6)':'rgba(200,200,200,.4)';
-      btn.innerHTML=(ready?'✅':'🔒')+' Nộp bài <span style="font-size:10px;opacity:.8">('+attemPct+'%/'+minPct+'%)</span>';
-    }
-  }
-}
-
-function submitResult(){
-  var sv=getSV();
-  if(!sv||!sv.name){alert('⚠️ Chưa đăng nhập. Về trang chủ nhập thông tin trước!');return;}
-  if(_submitted){return;}
-  var total=TOTAL_QUESTIONS;
-  var attempted=0,done=0;
-  Object.keys(ANS).forEach(function(k){if(ANS[k]!==null&&ANS[k]!==undefined){attempted++;if(ANS[k]===true)done++;}});
-  var attemPct=total?Math.round(attempted/total*100):0;
-  var scorePct=total?Math.round(done/total*100):0;
-  if(attempted===0){alert('⚠️ Chưa làm câu nào!');return;}
-  var minPct=(typeof window.MIN_ATTEMPT_PCT!=='undefined')?window.MIN_ATTEMPT_PCT:5;
-  if(attemPct<minPct){alert('⚠️ Cần làm tối thiểu '+minPct+'% số câu!');return;}
-  var workerUrl=(typeof window.WORKER_URL!=='undefined')?window.WORKER_URL:'https://dqt-chdnm.phamvietanh158.workers.dev';
-  fetch(workerUrl,{method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({name:sv.name,mssv:sv.mssv,stt:Number(sv.stt)||0,classId:sv.classId,
-      chapterId:'C8-81-LyThuyet',score:scorePct,correct:done,total:total,duration:0})
-  })
-  .then(function(r){return r.json();})
-  .then(function(d){
-    if(d.ok){_submitted=true;var btn=document.getElementById('btn-nop');
-      if(btn){btn.innerHTML='✓ Đã nộp ('+scorePct+'%)';btn.disabled=true;btn.style.background='rgba(46,125,50,.5)';}
-      alert('✅ Nộp thành công! Đúng: '+scorePct+'% ('+done+'/'+total+')');}
-    else{alert('❌ Lỗi: '+(d.error||'Không rõ'));}
-  })
-  .catch(function(err){alert('❌ Không kết nối được Worker: '+err.message);});
-}
-
 window.onload=function(){
-  var sv=getSV();
-  if(sv&&sv.name){
-    document.getElementById('sv-display').textContent=sv.name+' — STT: '+sv.stt;
-    document.getElementById('sv-chip').textContent='#'+sv.stt;
-    document.getElementById('sv-badge').textContent='SV #'+sv.stt;
-  } else {
-    document.getElementById('sv-display').textContent='Chưa đăng nhập — về Trang chủ';
-    document.getElementById('sv-chip').textContent='–';
-  }
-  TOTAL_QUESTIONS=Object.keys(ANS).length;
-  var minPct=(typeof window.MIN_ATTEMPT_PCT!=='undefined')?window.MIN_ATTEMPT_PCT:5;
-  var btn=document.getElementById('btn-nop');
-  if(btn)btn.innerHTML='🔒 Nộp bài <span style="font-size:10px;opacity:.8">(0%/'+minPct+'%)</span>';
-  updateProg();
+  try{var p=JSON.parse(localStorage.getItem('prog_c8_82'));if(!p)localStorage.setItem('prog_c8_82',JSON.stringify({done:1,total:1,attempted:1}));}catch(e){}
 };
 </script>
 </body>
