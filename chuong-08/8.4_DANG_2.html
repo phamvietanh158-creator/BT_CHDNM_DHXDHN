@@ -1,0 +1,1650 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>8.4 — Kiểm Tra Sức Chịu Tải Nền</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<script src="../config.js" onerror="console.log('no config')"></script>
+<style>
+:root{--P:#1565C0;--Pdk:#0D47A1;--Plt:#E3F2FD;--G:#2E7D32;--Glt:#E8F5E9;--Gdk:#1B5E20;--R:#C62828;--Rlt:#FFEBEE;--A:#FF8F00;--Alt:#FFF8E1;--bg:#E8F4FD;--sur:#fff;--brd:#90CAF9;--muted:#546E7A;--text:#0D1B2A;--sans:'Plus Jakarta Sans',sans-serif;--mono:'JetBrains Mono',monospace;--r:12px;--sh:0 2px 16px rgba(21,101,192,.10)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);font-family:var(--sans);color:var(--text);font-size:14px;line-height:1.6}
+.hdr{background:var(--Pdk);color:#fff;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.2)}
+.hdr-in{max-width:1000px;margin:0 auto;padding:0 20px;height:60px;display:flex;align-items:center;gap:14px}
+.back-btn{color:rgba(255,255,255,.75);text-decoration:none;font-size:13px;display:flex;align-items:center;gap:5px;padding:6px 10px;border-radius:8px;border:1px solid rgba(255,255,255,.2)}
+.hdr-title{flex:1}.hdr-title h1{font-size:15px;font-weight:700}.hdr-title p{font-size:11px;color:rgba(255,255,255,.6)}
+.hdr-right{display:flex;flex-direction:column;align-items:flex-end;gap:3px}
+.hdr-prog{font-family:var(--mono);font-size:12px;background:rgba(255,255,255,.15);padding:5px 12px;border-radius:20px}
+.sv-bh{font-size:11px;color:rgba(255,255,255,.55);font-family:var(--mono)}
+main{max-width:1000px;margin:0 auto;padding:20px 16px 80px}
+.pw{margin-bottom:16px;background:var(--sur);border-radius:var(--r);border:1px solid var(--brd);padding:12px 18px;box-shadow:var(--sh)}
+.pt{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:7px;font-weight:500}
+.pbar{height:8px;background:var(--Plt);border-radius:4px;overflow:hidden}
+.pfill{height:100%;background:var(--P);border-radius:4px;transition:width .4s}
+.svi{background:linear-gradient(135deg,var(--Pdk),var(--P));color:#fff;border-radius:var(--r);padding:12px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:16px}
+.card{background:var(--sur);border:1px solid var(--brd);border-radius:var(--r);box-shadow:var(--sh);margin-bottom:14px;overflow:hidden}
+.chd{padding:11px 16px;display:flex;align-items:center;gap:9px;border-bottom:1.5px solid var(--brd);background:var(--Plt)}
+.chd i{font-size:18px;color:var(--P)}.chd h2{font-size:13px;font-weight:700;color:var(--Pdk);flex:1}
+.cbadge{font-size:10px;font-weight:700;padding:3px 9px;border-radius:6px;background:var(--P);color:#fff;white-space:nowrap}
+.cbd{padding:13px 16px;display:flex;flex-direction:column;gap:10px}
+.ex{background:var(--sur);border:1px solid var(--brd);border-radius:var(--r);box-shadow:var(--sh);margin-bottom:12px;overflow:hidden}
+.exhd{padding:11px 15px;display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none;background:var(--Plt)}
+.exhd:hover{background:#D6EAF8}.exhd.open{border-bottom:1.5px solid var(--brd)}
+.ebg{font-size:10px;font-weight:700;padding:3px 8px;border-radius:5px;white-space:nowrap}
+.ebA{background:#E3F2FD;color:#0D47A1;border:1px solid #90CAF9}
+.ebB{background:#FFF8E1;color:#E65100;border:1px solid #FFE082}
+.ebC{background:#FCE4EC;color:#C62828;border:1px solid #F48FB1}
+.ebe{background:var(--Glt);color:var(--Gdk)}.ebm{background:#FFF3E0;color:#BF360C}.ebh{background:var(--Rlt);color:var(--R)}
+.etl{flex:1;font-size:13px;font-weight:700;color:var(--Pdk)}
+.emt{font-size:11px;color:var(--muted);margin-top:1px}
+.echv{font-size:16px;color:var(--muted);transition:transform .2s}.echv.open{transform:rotate(90deg)}
+.exbd{display:none;padding:14px}.exbd.open{display:block}
+.dt{width:100%;border-collapse:collapse;font-size:11.5px;margin-bottom:8px}
+.dt th{background:var(--Plt);color:var(--Pdk);font-weight:700;padding:5px 8px;border:1px solid var(--brd);text-align:center;font-size:11px}
+.dt td{padding:5px 8px;border:1px solid #EBF5FB;font-family:var(--mono);font-size:11px;text-align:center}
+.dt td.ln{text-align:left;font-family:var(--sans);font-size:11px}
+.cmp-tbl{width:100%;border-collapse:collapse;font-size:12.5px;margin:8px 0}
+.cmp-tbl th{background:var(--Pdk);color:#fff;font-weight:700;padding:6px 10px;border:1px solid var(--P);text-align:center;font-size:11.5px}
+.cmp-tbl td{padding:6px 10px;border:1px solid var(--brd);text-align:center;font-size:12px}
+.cmp-tbl td.lbl{text-align:left;font-family:var(--sans);font-weight:600;color:var(--Pdk);font-size:11.5px}
+.cmp-tbl tr:nth-child(even){background:#F8FBFF}
+.rqb{background:var(--Alt);border-left:3px solid var(--A);border-radius:0 6px 6px 0;padding:8px 12px;font-size:12.5px;line-height:1.6;margin-top:6px}
+.fm{font-family:var(--mono);background:#F8FBFF;border:1px solid #BBDEFB;border-radius:5px;padding:2px 8px;font-size:12px;display:inline-block;margin:1px 0}
+.fm-blk{font-family:var(--mono);background:#F8FBFF;border:1.5px solid #BBDEFB;border-left:4px solid var(--P);border-radius:0 8px 8px 0;padding:10px 14px;font-size:13px;line-height:2.0;margin:6px 0}
+.thb{background:var(--Plt);border-left:4px solid var(--P);border-radius:0 8px 8px 0;padding:10px 14px;font-size:13px;line-height:1.7}
+.thb .lb{font-size:10px;font-weight:700;color:var(--P);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;display:flex;align-items:center;gap:5px}
+.scb{background:var(--Glt);border-left:4px solid var(--G);border-radius:0 8px 8px 0;padding:9px 14px;font-size:13px;color:var(--Gdk);font-weight:500;line-height:1.6}
+.eab{background:var(--Alt);border-left:4px solid var(--A);border-radius:0 8px 8px 0;padding:9px 14px;font-size:12.5px;color:#4E342E;line-height:1.6}
+.tc{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.tc3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.step-hd{display:flex;align-items:center;gap:8px;margin:10px 0 5px}
+.snum{background:var(--P);color:#fff;font-size:11px;font-weight:800;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:var(--mono)}
+.sname{font-size:12.5px;font-weight:700;color:var(--P);text-transform:uppercase;letter-spacing:.4px}
+.stxt{font-size:13px;line-height:1.65;padding-left:32px}
+.fr{display:flex;align-items:center;gap:7px;margin:4px 0;flex-wrap:wrap}
+.fl{font-size:12.5px;flex-shrink:0;line-height:1.5}
+.fi{font-family:var(--mono);font-size:13px;width:88px;padding:5px 7px;border:1.5px solid var(--brd);border-radius:6px;background:#F8FBFF;color:var(--text);text-align:center}
+.fi.ok{border-color:var(--G);background:var(--Glt);color:var(--Gdk)}.fi.no{border-color:var(--R);background:var(--Rlt);color:var(--R)}
+.fu{font-size:11px;color:var(--muted)}
+.fbt{background:var(--P);color:#fff;border:none;border-radius:6px;padding:5px 10px;font-size:12px;font-family:var(--sans);font-weight:600;cursor:pointer}
+.fbt:hover{opacity:.85}.ffb{font-size:12px;margin-left:3px}
+.mw{border:1px solid var(--brd);border-radius:var(--r);overflow:hidden;margin-top:8px}
+.mq{padding:10px 13px 8px;font-size:13px;font-weight:600;border-bottom:1px solid var(--Plt);background:#FAFCFF;line-height:1.5}
+.mn{font-family:var(--mono);font-size:10px;font-weight:700;color:var(--P);background:var(--Plt);padding:2px 6px;border-radius:4px;margin-right:5px}
+.mo-list{display:grid;gap:0}
+.mo{padding:9px 12px;cursor:pointer;display:flex;align-items:flex-start;gap:8px;font-size:12.5px;border-top:1px solid var(--Plt);line-height:1.4}
+.mo:hover{background:var(--Plt)}
+.mk{font-family:var(--mono);font-size:11px;font-weight:700;min-width:20px;height:20px;background:var(--Plt);color:var(--P);border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.mo.ok{background:var(--Glt)!important}.mo.ok .mk{background:var(--G);color:#fff}
+.mo.no{background:var(--Rlt)!important}.mo.no .mk{background:var(--R);color:#fff}
+.mo.rok{background:var(--Glt)!important;opacity:.65}.mo.rok .mk{background:var(--G);color:#fff}
+.me{padding:8px 13px;font-size:12px;line-height:1.6;border-top:1px solid var(--brd);display:none}
+.me.show{display:block}.me.ok-e{background:var(--Glt);color:var(--Gdk)}.me.no-e{background:var(--Rlt);color:#b71c1c}
+.gs{background:var(--Pdk);color:#fff;padding:8px 16px;font-size:12px;font-weight:700;border-radius:8px;margin:20px 0 10px;display:flex;align-items:center;gap:8px}
+.snav{position:fixed;bottom:0;left:0;right:0;background:var(--Pdk);color:#fff;padding:11px 20px;display:flex;align-items:center;justify-content:space-between;z-index:200;font-size:13px;box-shadow:0 -2px 12px rgba(0,0,0,.2)}
+.btn{padding:7px 15px;border-radius:8px;border:none;cursor:pointer;font-family:var(--sans);font-size:12px;font-weight:600;transition:opacity .15s}
+.bg{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25)}
+.btn:hover{opacity:.85}
+svg text{font-family:'Plus Jakarta Sans',sans-serif}
+@media(max-width:640px){.tc,.tc3,.mo-list.g2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- SVG Arrow Markers dùng trong A1-A4 -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <marker id="aR" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="4" markerHeight="4" orient="auto"><path d="M0,0L6,3L0,6Z" fill="#C62828"/></marker>
+    <marker id="aA" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="4" markerHeight="4" orient="auto"><path d="M0,0L6,3L0,6Z" fill="#E65100"/></marker>
+    <marker id="aG" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="4" markerHeight="4" orient="auto"><path d="M0,0L6,3L0,6Z" fill="#2E7D32"/></marker>
+    <marker id="aGr" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="4" markerHeight="4" orient="auto-start-reverse"><path d="M0,0L6,3L0,6Z" fill="#2E7D32"/></marker>
+    <marker id="aP" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="4" markerHeight="4" orient="auto"><path d="M0,0L6,3L0,6Z" fill="#1565C0"/></marker>
+    <marker id="aS" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="4" markerHeight="4" orient="auto"><path d="M0,0L6,3L0,6Z" fill="#546E7A"/></marker>
+    <marker id="aSr" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="4" markerHeight="4" orient="auto-start-reverse"><path d="M0,0L6,3L0,6Z" fill="#546E7A"/></marker>
+  </defs>
+</svg>
+<header class="hdr">
+  <div class="hdr-in">
+    <a href="index_C8.html" class="back-btn"><i class="ti ti-arrow-left"></i> Chương 8</a>
+    <div class="hdr-title">
+      <h1>8.4 — Kiểm Tra Sức Chịu Tải Nền</h1>
+      <p>Móng đơn · Móng băng · 1 lớp · 2 lớp · Điều kiện kỹ thuật &amp; kinh tế</p>
+    </div>
+    <div class="hdr-right">
+      <div class="hdr-prog" id="hprog">0 / 0</div>
+      <div class="sv-bh" id="svbh">SV #–</div>
+    </div>
+  </div>
+</header>
+<main>
+<div class="pw"><div class="pt"><span><i class="ti ti-target" style="vertical-align:-2px;margin-right:4px"></i>Tiến độ 8.4</span><span id="ptxt">0/0 (0%)</span></div><div class="pbar"><div class="pfill" id="pfill" style="width:0%"></div></div></div>
+<div class="svi">
+  <i class="ti ti-id-badge" style="font-size:20px;opacity:.8"></i>
+  <div style="flex:1"><div style="font-size:14px;font-weight:700">Kiểm tra SCT nền — <span id="svd">đang tải...</span></div>
+  <div style="font-size:12px;color:rgba(255,255,255,.65)">A1–A4: bài mẫu · B: công thức có sẵn, điền số · C: tự tính hoàn toàn</div></div>
+  <div id="svch" style="font-family:var(--mono);font-size:22px;font-weight:700;background:rgba(255,255,255,.15);padding:6px 16px;border-radius:8px">–</div>
+</div>
+
+<!-- ══════════════ NHÓM A ══════════════ -->
+<div class="gs"><i class="ti ti-book-2"></i>NHÓM A — Bài mẫu có lời giải đầy đủ từng bước (A1–A4)</div>
+
+<!-- ═══ A1: Móng đơn, 1 lớp đất, đúng tâm ═══ -->
+<div class="ex">
+  <div class="exhd open" onclick="tog('a1')">
+    <span class="ebg ebA">A1</span><span class="ebg ebe">Mẫu</span>
+    <div><div class="etl">Móng đơn · 1 lớp đất · Tải đúng tâm · So sánh 2 kích thước</div>
+    <div class="emt">Dạng 1 · Bài mẫu đầy đủ · Không chấm điểm</div></div>
+    <i class="ti ti-chevron-right echv open" id="cv-a1"></i>
+  </div>
+  <div class="exbd open" id="bd-a1">
+    <!-- ĐỀ BÀI -->
+    <div style="background:#F8FBFF;border:1px solid var(--brd);border-radius:8px;padding:12px;margin-bottom:12px">
+      <div style="font-size:11px;font-weight:700;color:var(--P);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px"><i class="ti ti-file-description" style="margin-right:4px"></i>Đề bài</div>
+      <p style="font-size:13px;margin-bottom:8px">Cột nhà chịu tải trọng <b>N₀ = 800 kN, M₀ = 0</b> (đúng tâm). Nền đất đồng nhất 1 lớp: <b>γ = 18.5 kN/m³, c = 18 kPa, φ = 20°</b>. Chiều sâu đặt móng <b>h<sub>m</sub> = 1.5m</b>, γ<sub>tb</sub> = 20 kN/m³, F<sub>s</sub> = 2.5.</p>
+      <p style="font-size:13px;margin-bottom:6px">Kiểm tra với 2 kích thước:</p>
+      <div class="tc">
+        <div style="background:#E3F2FD;border-radius:7px;padding:10px 12px;font-size:13px"><b>Phương án 1:</b> B₁ = L₁ = 1.8m (vuông)</div>
+        <div style="background:#FCE4EC;border-radius:7px;padding:10px 12px;font-size:13px"><b>Phương án 2:</b> B₂ = L₂ = 2.5m (vuông)</div>
+      </div>
+      <div class="rqb" style="margin-top:8px">(a) Kiểm tra SCT với từng kích thước &nbsp;·&nbsp; (b) Nhận xét khi B tăng &nbsp;·&nbsp; (c) Chọn kích thước đảm bảo cả kỹ thuật và kinh tế</div>
+    </div>
+
+    <!-- SVG mặt cắt móng -->
+    <div style="display:flex;justify-content:center;margin-bottom:12px">
+    <svg viewBox="0 0 500 210" xmlns="http://www.w3.org/2000/svg" width="500">
+      <rect x="0" y="0" width="500" height="210" fill="#F8FBFF" rx="8"/>
+      <!-- PA1 B=1.8m -->
+      <text x="110" y="16" fill="#0D47A1" font-size="10" text-anchor="middle" font-weight="700">PA1: B=1.8m</text>
+      <!-- mặt đất -->
+      <line x1="20" y1="28" x2="200" y2="28" stroke="#546E7A" stroke-width="1.5"/>
+      <text x="10" y="26" fill="#546E7A" font-size="8">±0.00</text>
+      <!-- cột -->
+      <rect x="92" y="28" width="36" height="22" fill="#B0BEC5" stroke="#546E7A" stroke-width="1"/>
+      <!-- hm arrow -->
+      <line x1="24" y1="28" x2="24" y2="78" stroke="#2E7D32" stroke-width="1.5" marker-end="url(#aG)" marker-start="url(#aGr)"/>
+      <text x="14" y="56" fill="#2E7D32" font-size="8.5" text-anchor="middle" font-weight="700">1.5m</text>
+      <!-- đất trên móng -->
+      <rect x="55" y="50" width="110" height="28" fill="#FFF9C4" opacity="0.7"/>
+      <!-- móng -->
+      <rect x="55" y="50" width="110" height="28" fill="none"/>
+      <rect x="55" y="50" width="110" height="28" fill="#90CAF9" stroke="#1565C0" stroke-width="1.5" rx="2"/>
+      <text x="110" y="67" fill="#0D47A1" font-size="9" text-anchor="middle" font-weight="700">Móng 1.8×1.8m</text>
+      <!-- đáy móng -->
+      <line x1="48" y1="78" x2="175" y2="78" stroke="#0D47A1" stroke-width="1" stroke-dasharray="4,3"/>
+      <!-- áp lực đều -->
+      <rect x="55" y="78" width="110" height="35" fill="#BBDEFB" opacity="0.6"/>
+      <line x1="75" y1="78" x2="75" y2="110" stroke="#1565C0" stroke-width="1" marker-end="url(#aP)"/>
+      <line x1="97" y1="78" x2="97" y2="110" stroke="#1565C0" stroke-width="1" marker-end="url(#aP)"/>
+      <line x1="110" y1="78" x2="110" y2="110" stroke="#1565C0" stroke-width="1" marker-end="url(#aP)"/>
+      <line x1="123" y1="78" x2="123" y2="110" stroke="#1565C0" stroke-width="1" marker-end="url(#aP)"/>
+      <line x1="145" y1="78" x2="145" y2="110" stroke="#1565C0" stroke-width="1" marker-end="url(#aP)"/>
+      <text x="110" y="108" fill="#0D47A1" font-size="9.5" text-anchor="middle" font-weight="700">p<tspan baseline-shift="sub" font-size="7">tc</tspan>=277 kPa</text>
+      <!-- B arrow -->
+      <line x1="55" y1="125" x2="165" y2="125" stroke="#546E7A" stroke-width="1.5" marker-end="url(#aS)" marker-start="url(#aSr)"/>
+      <text x="110" y="136" fill="#546E7A" font-size="10" text-anchor="middle" font-weight="700">B = 1.8m</text>
+      <!-- nền đất -->
+      <rect x="48" y="113" width="125" height="22" fill="#E8F5E9" stroke="#2E7D32" stroke-width="0.8" opacity="0.7"/>
+      <text x="110" y="128" fill="#1B5E20" font-size="8.5" text-anchor="middle">φ=20°, c=18 kPa</text>
+      <!-- Rn label -->
+      <text x="110" y="158" fill="#2E7D32" font-size="9.5" text-anchor="middle">R<tspan baseline-shift="sub" font-size="7">n</tspan> = 218 kPa</text>
+      <text x="110" y="172" fill="#C62828" font-size="10" text-anchor="middle" font-weight="700">❌ p>Rn (không đảm bảo)</text>
+
+      <!-- PA2 B=2.5m -->
+      <text x="380" y="16" fill="#C62828" font-size="10" text-anchor="middle" font-weight="700">PA2: B=2.5m</text>
+      <line x1="280" y1="28" x2="480" y2="28" stroke="#546E7A" stroke-width="1.5"/>
+      <line x1="284" y1="28" x2="284" y2="78" stroke="#2E7D32" stroke-width="1.5" marker-end="url(#aG)" marker-start="url(#aGr)"/>
+      <text x="273" y="56" fill="#2E7D32" font-size="8.5" text-anchor="middle" font-weight="700">1.5m</text>
+      <rect x="356" y="28" width="48" height="22" fill="#B0BEC5" stroke="#546E7A" stroke-width="1"/>
+      <!-- móng to hơn -->
+      <rect x="305" y="50" width="150" height="28" fill="#FFCDD2" stroke="#C62828" stroke-width="1.5" rx="2"/>
+      <text x="380" y="67" fill="#C62828" font-size="9" text-anchor="middle" font-weight="700">Móng 2.5×2.5m</text>
+      <line x1="296" y1="78" x2="464" y2="78" stroke="#C62828" stroke-width="1" stroke-dasharray="4,3"/>
+      <!-- áp lực nhỏ hơn -->
+      <rect x="305" y="78" width="150" height="22" fill="#FFCDD2" opacity="0.4"/>
+      <line x1="322" y1="78" x2="322" y2="98" stroke="#C62828" stroke-width="1" marker-end="url(#aR)"/>
+      <line x1="345" y1="78" x2="345" y2="98" stroke="#C62828" stroke-width="1" marker-end="url(#aR)"/>
+      <line x1="368" y1="78" x2="368" y2="98" stroke="#C62828" stroke-width="1" marker-end="url(#aR)"/>
+      <line x1="391" y1="78" x2="391" y2="98" stroke="#C62828" stroke-width="1" marker-end="url(#aR)"/>
+      <line x1="414" y1="78" x2="414" y2="98" stroke="#C62828" stroke-width="1" marker-end="url(#aR)"/>
+      <line x1="437" y1="78" x2="437" y2="98" stroke="#C62828" stroke-width="1" marker-end="url(#aR)"/>
+      <text x="380" y="108" fill="#C62828" font-size="9.5" text-anchor="middle" font-weight="700">p<tspan baseline-shift="sub" font-size="7">tc</tspan>=158 kPa</text>
+      <line x1="305" y1="125" x2="455" y2="125" stroke="#546E7A" stroke-width="1.5" marker-end="url(#aS)" marker-start="url(#aSr)"/>
+      <text x="380" y="136" fill="#546E7A" font-size="10" text-anchor="middle" font-weight="700">B = 2.5m</text>
+      <rect x="296" y="113" width="168" height="22" fill="#E8F5E9" stroke="#2E7D32" stroke-width="0.8" opacity="0.7"/>
+      <text x="380" y="128" fill="#1B5E20" font-size="8.5" text-anchor="middle">φ=20°, c=18 kPa</text>
+      <text x="380" y="158" fill="#2E7D32" font-size="9.5" text-anchor="middle">R<tspan baseline-shift="sub" font-size="7">n</tspan> = 243 kPa</text>
+      <text x="380" y="172" fill="#E65100" font-size="10" text-anchor="middle" font-weight="700">⚠ p≪Rn (lãng phí — không KT)</text>
+
+      <!-- mũi tên so sánh ở giữa -->
+      <text x="238" y="90" fill="#546E7A" font-size="9" text-anchor="middle">B↑</text>
+      <line x1="225" y1="95" x2="260" y2="95" stroke="#546E7A" stroke-width="1.5" marker-end="url(#aS)"/>
+      <text x="238" y="108" fill="#1565C0" font-size="8">p↓ · Rn↑</text>
+    </svg>
+    </div>
+
+    <!-- LỜI GIẢI -->
+    <div class="step-hd"><span class="snum">1</span><span class="sname">Tính SCT nền R<sub>n</sub></span></div>
+    <div class="stxt">
+      Tra bảng Terzaghi với φ=20°: <b>N<sub>c</sub>=14.8, N<sub>q</sub>=6.4, N<sub>γ</sub>=5.4</b><br>
+      Móng vuông: α<sub>1</sub>=0.40, α<sub>2</sub>=1.00, α<sub>3</sub>=1.30<br>
+      Áp lực tầng phủ: <span class="fm">q = γ·h<sub>m</sub> = 18.5×1.5 = 27.75 kPa</span><br><br>
+      <b>PA1 (B=1.8m):</b><br>
+      <span class="fm">R<sub>n</sub> = (1/2.5)·[0.40×5.4×1.8×18.5 + 1.0×6.4×27.75 + 1.3×14.8×18]</span><br>
+      <span class="fm">= 0.4×[23.9 + 177.6 + 345.8] = 0.4×547.3 = <b>218.9 kPa</b></span><br><br>
+      <b>PA2 (B=2.5m):</b><br>
+      <span class="fm">R<sub>n</sub> = 0.4×[0.40×5.4×2.5×18.5 + 177.6 + 345.8]</span><br>
+      <span class="fm">= 0.4×[33.2 + 177.6 + 345.8] = 0.4×556.6 = <b>222.6 kPa</b></span><br>
+      <span style="font-size:12px;color:var(--muted)">(R<sub>n</sub> tăng nhẹ khi B tăng do thành phần N<sub>γ</sub>·B)</span>
+    </div>
+
+    <div class="step-hd"><span class="snum">2</span><span class="sname">Tính áp lực đáy móng p<sub>tc</sub></span></div>
+    <div class="stxt">
+      Tải đúng tâm M₀=0 → chỉ có p<sub>tc</sub> đều:<br>
+      <span class="fm">p<sub>tc</sub> = N₀/(B²) + γ<sub>tb</sub>·h<sub>m</sub></span><br><br>
+      <b>PA1:</b> <span class="fm">p<sub>tc</sub> = 800/1.8² + 20×1.5 = 246.9 + 30 = <b>276.9 kPa</b></span><br>
+      <b>PA2:</b> <span class="fm">p<sub>tc</sub> = 800/2.5² + 20×1.5 = 128.0 + 30 = <b>158.0 kPa</b></span>
+    </div>
+
+    <div class="step-hd"><span class="snum">3</span><span class="sname">Kiểm tra điều kiện SCT</span></div>
+    <table class="cmp-tbl">
+      <tr><th>Phương án</th><th>B (m)</th><th>p<sub>tc</sub> (kPa)</th><th>R<sub>n</sub> (kPa)</th><th>p<sub>tc</sub> ≤ R<sub>n</sub>?</th><th>p<sub>tc</sub>/R<sub>n</sub></th><th>Kinh tế?</th><th>Kết luận</th></tr>
+      <tr>
+        <td class="lbl">PA1 (B=1.8m)</td><td>1.8</td><td>276.9</td><td>218.9</td>
+        <td><span class="ck-no">❌ KÔ ĐẠT</span></td><td style="color:var(--R);font-weight:700">1.26 &gt; 1</td>
+        <td><span class="ck-tb">—</span></td><td><b style="color:var(--R)">Không đảm bảo kỹ thuật</b></td>
+      </tr>
+      <tr>
+        <td class="lbl">PA2 (B=2.5m)</td><td>2.5</td><td>158.0</td><td>222.6</td>
+        <td><span class="ck-ok">✅ ĐẠT</span></td><td style="color:var(--G);font-weight:700">0.71</td>
+        <td><span class="ck-tb">⚠ Xem xét</span></td><td><b style="color:var(--A)">Đạt KT nhưng lãng phí 30%</b></td>
+      </tr>
+    </table>
+
+    <div class="step-hd"><span class="snum">4</span><span class="sname">Nhận xét và kết luận</span></div>
+    <div class="eab">
+      <b>Khi B tăng từ 1.8m → 2.5m:</b><br>
+      • p<sub>tc</sub> giảm từ 277 kPa → 158 kPa (giảm 43%) — do diện tích B² tăng<br>
+      • R<sub>n</sub> tăng nhẹ từ 219 kPa → 223 kPa — do thành phần N<sub>γ</sub>·B tăng<br>
+      → PA1 quá nhỏ (p > R<sub>n</sub>); PA2 quá lớn (p chỉ bằng 71% R<sub>n</sub>, lãng phí vật liệu)
+    </div>
+    <div class="scb" style="margin-top:6px">
+      ✅ <b>Kết luận:</b> Chọn <b>B tối ưu ≈ 2.0–2.1m</b> để thỏa p<sub>tc</sub> ≤ R<sub>n</sub> (kỹ thuật) và p<sub>tc</sub> ≥ 0.7·R<sub>n</sub> (kinh tế).<br>
+      <i>Trong thực tế làm tròn lên B=2.0m, kiểm tra lại: p<sub>tc</sub>=800/4+30=230 kPa ≤ R<sub>n</sub>≈221 kPa — sát giới hạn, chọn B=2.1m là hợp lý.</i>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ A2: Móng BĂNG, 1 lớp, lệch tâm ═══ -->
+<div class="ex">
+  <div class="exhd" onclick="tog('a2')">
+    <span class="ebg ebA">A2</span><span class="ebg ebe">Mẫu</span>
+    <div><div class="etl">Móng băng · 1 lớp đất · Tải lệch tâm · 2 kích thước</div>
+    <div class="emt">Dạng 2 · Bài mẫu · Kiểm tra p<sub>max</sub>, p<sub>min</sub></div></div>
+    <i class="ti ti-chevron-right echv" id="cv-a2"></i>
+  </div>
+  <div class="exbd" id="bd-a2">
+    <div style="background:#F8FBFF;border:1px solid var(--brd);border-radius:8px;padding:12px;margin-bottom:12px">
+      <div style="font-size:11px;font-weight:700;color:var(--P);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px"><i class="ti ti-file-description" style="margin-right:4px"></i>Đề bài</div>
+      <p style="font-size:13px;margin-bottom:8px">Móng băng dưới tường chịu tải <b>N₀=180 kN/m, M₀=30 kN·m/m</b>. Nền đất: <b>γ=18.0 kN/m³, c=12 kPa, φ=15°</b>. h<sub>m</sub>=1.5m, γ<sub>tb</sub>=20 kN/m³, F<sub>s</sub>=2.5.</p>
+      <div class="tc">
+        <div style="background:#E3F2FD;border-radius:7px;padding:10px 12px;font-size:13px"><b>PA1:</b> B₁ = 1.2m</div>
+        <div style="background:#FCE4EC;border-radius:7px;padding:10px 12px;font-size:13px"><b>PA2:</b> B₂ = 2.0m</div>
+      </div>
+      <div class="rqb" style="margin-top:8px">(a) Kiểm tra p<sub>max</sub>, p<sub>min</sub> từng PA &nbsp;·&nbsp; (b) Nhận xét &nbsp;·&nbsp; (c) Chọn B hợp lý</div>
+    </div>
+
+    <!-- SVG lệch tâm -->
+    <div style="display:flex;justify-content:center;margin-bottom:12px">
+    <svg viewBox="0 0 460 185" xmlns="http://www.w3.org/2000/svg" width="440">
+      <rect x="0" y="0" width="460" height="185" fill="#F8FBFF" rx="8"/>
+      <text x="100" y="14" fill="#0D47A1" font-size="9.5" text-anchor="middle" font-weight="700">PA1 B=1.2m — Lệch tâm</text>
+      <text x="340" y="14" fill="#C62828" font-size="9.5" text-anchor="middle" font-weight="700">PA2 B=2.0m — Lệch tâm</text>
+      <line x1="225" y1="5" x2="225" y2="180" stroke="#bbb" stroke-width="1" stroke-dasharray="3,2"/>
+      <!-- PA1 -->
+      <line x1="20" y1="28" x2="200" y2="28" stroke="#546E7A" stroke-width="1.5"/>
+      <rect x="80" y="28" width="40" height="18" fill="#B0BEC5" stroke="#546E7A" stroke-width="1"/>
+      <line x1="100" y1="16" x2="100" y2="28" stroke="#C62828" stroke-width="2" marker-end="url(#aR)"/>
+      <text x="110" y="24" fill="#C62828" font-size="9" font-weight="700">N₀</text>
+      <path d="M84,20 Q74,28 84,36" fill="none" stroke="#E65100" stroke-width="1.5" marker-end="url(#aA)"/>
+      <text x="65" y="30" fill="#E65100" font-size="9" font-weight="700">M₀</text>
+      <rect x="40" y="46" width="120" height="18" fill="#90CAF9" stroke="#1565C0" stroke-width="1.5" rx="2"/>
+      <text x="100" y="59" fill="#0D47A1" font-size="8.5" text-anchor="middle" font-weight="700">B=1.2m</text>
+      <!-- phân bố hình thang lệch tâm -->
+      <polygon points="40,64 40,98 160,86 160,64" fill="#BBDEFB" opacity="0.7"/>
+      <line x1="40" y1="64" x2="40" y2="100" stroke="#1565C0" stroke-width="1.5"/>
+      <line x1="160" y1="64" x2="160" y2="88" stroke="#1565C0" stroke-width="1.5"/>
+      <text x="28" y="80" fill="#1565C0" font-size="9" text-anchor="middle" font-weight="700">p<tspan baseline-shift="sub" font-size="7">max</tspan></text>
+      <text x="175" y="76" fill="#1565C0" font-size="9" font-weight="700">p<tspan baseline-shift="sub" font-size="7">min</tspan></text>
+      <text x="100" y="116" fill="#1565C0" font-size="9" text-anchor="middle">p<tspan baseline-shift="sub" font-size="7">max</tspan>=275 kPa · p<tspan baseline-shift="sub" font-size="7">min</tspan>=25 kPa</text>
+      <text x="100" y="130" fill="#2E7D32" font-size="9" text-anchor="middle">R<tspan baseline-shift="sub" font-size="7">n</tspan>=190 kPa (băng,φ=15°)</text>
+      <text x="100" y="145" fill="#C62828" font-size="9" text-anchor="middle" font-weight="700">❌ p<tspan baseline-shift="sub" font-size="7">max</tspan>=275 &gt; 1.2×190=228</text>
+      <text x="100" y="158" fill="#C62828" font-size="9" text-anchor="middle">Không đảm bảo kỹ thuật</text>
+      <!-- PA2 -->
+      <line x1="240" y1="28" x2="450" y2="28" stroke="#546E7A" stroke-width="1.5"/>
+      <rect x="325" y="28" width="40" height="18" fill="#B0BEC5" stroke="#546E7A" stroke-width="1"/>
+      <line x1="345" y1="16" x2="345" y2="28" stroke="#C62828" stroke-width="2" marker-end="url(#aR)"/>
+      <text x="355" y="24" fill="#C62828" font-size="9" font-weight="700">N₀</text>
+      <path d="M329,20 Q319,28 329,36" fill="none" stroke="#E65100" stroke-width="1.5" marker-end="url(#aA)"/>
+      <text x="308" y="30" fill="#E65100" font-size="9" font-weight="700">M₀</text>
+      <rect x="245" y="46" width="200" height="18" fill="#FFCDD2" stroke="#C62828" stroke-width="1.5" rx="2"/>
+      <text x="345" y="59" fill="#C62828" font-size="8.5" text-anchor="middle" font-weight="700">B=2.0m</text>
+      <!-- hình thang nhẹ hơn -->
+      <polygon points="245,64 245,84 445,76 445,64" fill="#FFCDD2" opacity="0.5"/>
+      <line x1="245" y1="64" x2="245" y2="86" stroke="#C62828" stroke-width="1.5"/>
+      <line x1="445" y1="64" x2="445" y2="78" stroke="#C62828" stroke-width="1.5"/>
+      <text x="233" y="77" fill="#C62828" font-size="9" text-anchor="middle" font-weight="700">p<tspan baseline-shift="sub" font-size="7">max</tspan></text>
+      <text x="450" y="72" fill="#C62828" font-size="9" font-weight="700">p<tspan baseline-shift="sub" font-size="7">min</tspan></text>
+      <text x="345" y="116" fill="#C62828" font-size="9" text-anchor="middle">p<tspan baseline-shift="sub" font-size="7">max</tspan>=135 kPa · p<tspan baseline-shift="sub" font-size="7">min</tspan>=75 kPa</text>
+      <text x="345" y="130" fill="#2E7D32" font-size="9" text-anchor="middle">R<tspan baseline-shift="sub" font-size="7">n</tspan>=198 kPa (B=2.0m,φ=15°)</text>
+      <text x="345" y="145" fill="#2E7D32" font-size="9" text-anchor="middle" font-weight="700">✅ p<tspan baseline-shift="sub" font-size="7">max</tspan>=135 ≤ 1.2×198=238</text>
+      <text x="345" y="160" fill="#E65100" font-size="9" text-anchor="middle">⚠ p<tspan baseline-shift="sub" font-size="7">tc</tspan>=105 kPa ≈ 0.53R<tspan baseline-shift="sub" font-size="7">n</tspan> — hơi lãng phí</text>
+    </svg>
+    </div>
+
+    <div class="step-hd"><span class="snum">1</span><span class="sname">Tính R<sub>n</sub> — Móng băng (α₁=α₂=α₃=1.0)</span></div>
+    <div class="stxt">
+      φ=15°: N<sub>c</sub>=11.0, N<sub>q</sub>=3.9, N<sub>γ</sub>=2.5. Băng: α₁=α₂=α₃=1.0. q=18.0×1.5=27.0 kPa<br>
+      <b>PA1 (B=1.2m):</b> <span class="fm">R<sub>n</sub>=0.4·[1.0×2.5×1.2×18+1.0×3.9×27+1.0×11.0×12]=0.4×[54+105.3+132]=<b>116.5 kPa</b></span><br>
+      <i style="font-size:11.5px;color:var(--muted)">Chú ý: móng băng F<sub>s</sub>=2.5 → R<sub>n</sub>=(1/2.5)×… Tính lại:</i><br>
+      <span class="fm">R<sub>n</sub>=(1/2.5)×[54+105.3+132]=<b>116.5 kPa</b></span> (thực ra ≈190 kPa với q lớn hơn — <i>xem tính đúng dưới</i>)<br>
+      <b>Tính đầy đủ PA1:</b><br>
+      <span class="fm">R<sub>n</sub>=(1/2.5)×[1.0×2.5×1.2×18+1.0×3.9×27+1.0×11.0×12] = (1/2.5)×[54+105.3+132] = <b>116.5 kPa</b></span><br>
+      <b>PA2 (B=2.0m):</b>
+      <span class="fm">R<sub>n</sub>=(1/2.5)×[2.5×2.0×18+3.9×27+11.0×12]=(1/2.5)×[90+105.3+132]=<b>130.9 kPa</b></span>
+    </div>
+
+    <div class="step-hd"><span class="snum">2</span><span class="sname">Tính p<sub>max</sub>, p<sub>min</sub></span></div>
+    <div class="stxt">
+      Móng băng: <span class="fm">p<sub>max,min</sub> = N₀/B + γ<sub>tb</sub>·h<sub>m</sub> ± 6·M₀/B²</span><br><br>
+      <b>PA1 (B=1.2m):</b><br>
+      <span class="fm">p<sub>tc</sub> = 180/1.2 + 20×1.5 = 150 + 30 = 180 kPa</span><br>
+      <span class="fm">p<sub>max</sub> = 180 + 6×30/1.2² = 180 + 125 = <b>305 kPa</b></span><br>
+      <span class="fm">p<sub>min</sub> = 180 − 125 = <b>55 kPa</b> ≥ 0 ✅</span><br><br>
+      <b>PA2 (B=2.0m):</b><br>
+      <span class="fm">p<sub>tc</sub> = 180/2.0 + 30 = 90 + 30 = 120 kPa</span><br>
+      <span class="fm">p<sub>max</sub> = 120 + 6×30/4.0 = 120 + 45 = <b>165 kPa</b></span><br>
+      <span class="fm">p<sub>min</sub> = 120 − 45 = <b>75 kPa</b> ≥ 0 ✅</span>
+    </div>
+
+    <div class="step-hd"><span class="snum">3</span><span class="sname">Kiểm tra điều kiện</span></div>
+    <table class="cmp-tbl">
+      <tr><th>PA</th><th>B</th><th>p<sub>tc</sub></th><th>p<sub>max</sub></th><th>p<sub>min</sub></th><th>R<sub>n</sub></th><th>1.2·R<sub>n</sub></th><th>① p≤R<sub>n</sub></th><th>② p<sub>max</sub>≤1.2R<sub>n</sub></th><th>Kết luận</th></tr>
+      <tr><td class="lbl">PA1 B=1.2m</td><td>1.2</td><td>180</td><td style="color:var(--R);font-weight:700">305</td><td>55</td><td>116.5</td><td>140</td>
+        <td><span class="ck-no">❌</span></td><td><span class="ck-no">❌ 305&gt;140</span></td><td><b style="color:var(--R)">Không đạt KT</b></td></tr>
+      <tr><td class="lbl">PA2 B=2.0m</td><td>2.0</td><td>120</td><td style="color:var(--G);font-weight:700">165</td><td>75</td><td>130.9</td><td>157</td>
+        <td><span class="ck-ok">✅</span></td><td><span class="ck-ok">✅ 165&gt;157 sát</span></td><td><b style="color:var(--A)">Đạt KT, xem xét KT</b></td></tr>
+    </table>
+    <div class="scb" style="margin-top:8px">✅ <b>Kết luận:</b> PA1 không đảm bảo kỹ thuật (p<sub>max</sub> vượt quá 1.2R<sub>n</sub>). PA2 đạt nhưng p<sub>tc</sub>/R<sub>n</sub>=0.92 — khá hợp lý về kinh tế. Chọn <b>B=2.0m</b> là phù hợp. Nếu muốn tối ưu hơn có thể thử B=1.6m.</div>
+  </div>
+</div>
+
+<!-- ═══ A3: Móng đơn, 2 lớp đất ═══ -->
+<div class="ex">
+  <div class="exhd" onclick="tog('a3')">
+    <span class="ebg ebA">A3</span><span class="ebg ebe">Mẫu</span>
+    <div><div class="etl">Móng đơn · 2 lớp đất · Đặt móng vào lớp 2 · Tải lệch tâm</div>
+    <div class="emt">Dạng 3 · Bài mẫu · Lớp trên yếu mỏng</div></div>
+    <i class="ti ti-chevron-right echv" id="cv-a3"></i>
+  </div>
+  <div class="exbd" id="bd-a3">
+    <div style="background:#F8FBFF;border:1px solid var(--brd);border-radius:8px;padding:12px;margin-bottom:12px">
+      <div style="font-size:11px;font-weight:700;color:var(--P);text-transform:uppercase;margin-bottom:8px"><i class="ti ti-file-description" style="margin-right:4px"></i>Đề bài</div>
+      <p style="font-size:13px;margin-bottom:8px">Móng đơn dưới cột chịu <b>N₀=1200 kN, M₀=80 kN·m</b>. Nền đất gồm <b>2 lớp</b>:</p>
+      <table class="dt">
+        <tr><th>Lớp</th><th>Mô tả</th><th>h (m)</th><th>γ (kN/m³)</th><th>c (kPa)</th><th>φ (°)</th><th>E₀</th></tr>
+        <tr><td>1</td><td class="ln">Sét pha dẻo mềm (yếu)</td><td>2.0</td><td>17.5</td><td>10</td><td>10</td><td>7</td></tr>
+        <tr><td>2</td><td class="ln">Sét pha dẻo cứng (tốt)</td><td>>6</td><td>19.0</td><td>22</td><td>22</td><td>18</td></tr>
+      </table>
+      <p style="font-size:13px;margin-top:8px">Đặt móng vào lớp 2 tại h<sub>m</sub>=2.5m. Kiểm tra với:</p>
+      <div class="tc">
+        <div style="background:#E3F2FD;border-radius:7px;padding:10px;font-size:13px"><b>PA1:</b> B=L=2.0m (vuông)</div>
+        <div style="background:#FCE4EC;border-radius:7px;padding:10px;font-size:13px"><b>PA2:</b> B=L=2.8m (vuông)</div>
+      </div>
+    </div>
+
+    <!-- SVG 2 lớp đất -->
+    <div style="display:flex;justify-content:center;margin-bottom:12px">
+    <svg viewBox="0 0 380 210" xmlns="http://www.w3.org/2000/svg" width="360">
+      <rect x="0" y="0" width="380" height="210" fill="#F8FBFF" rx="8"/>
+      <line x1="25" y1="22" x2="355" y2="22" stroke="#546E7A" stroke-width="2"/>
+      <text x="190" y="14" fill="#546E7A" font-size="9" text-anchor="middle" font-weight="700">±0.00</text>
+      <!-- cột -->
+      <rect x="168" y="22" width="44" height="24" fill="#B0BEC5" stroke="#546E7A" stroke-width="1"/>
+      <!-- N0 M0 -->
+      <line x1="190" y1="10" x2="190" y2="22" stroke="#C62828" stroke-width="2" marker-end="url(#aR)"/>
+      <text x="205" y="18" fill="#C62828" font-size="9" font-weight="700">N₀=1200kN</text>
+      <!-- Lớp 1 yếu: 2m → 36px -->
+      <rect x="25" y="22" width="330" height="36" fill="#FFCDD2" stroke="#C62828" stroke-width="1" opacity="0.6"/>
+      <text x="190" y="38" fill="#C62828" font-size="9.5" text-anchor="middle" font-weight="700">① Sét pha dẻo mềm (LỚPP 1 YẾU) — h=2.0m</text>
+      <text x="190" y="50" fill="#C62828" font-size="8.5" text-anchor="middle">γ=17.5, c=10, φ=10° — Không đặt móng tại đây</text>
+      <!-- ranh giới lớp -->
+      <line x1="20" y1="58" x2="360" y2="58" stroke="#C62828" stroke-width="1.5" stroke-dasharray="6,3"/>
+      <text x="365" y="61" fill="#C62828" font-size="8" font-weight="700">−2m</text>
+      <!-- hm arrow -->
+      <line x1="15" y1="22" x2="15" y2="88" stroke="#2E7D32" stroke-width="1.5" marker-end="url(#aG)" marker-start="url(#aGr)"/>
+      <text x="5" y="58" fill="#2E7D32" font-size="8" text-anchor="middle" font-weight="700">h<tspan baseline-shift="sub" font-size="6">m</tspan>=2.5m</text>
+      <!-- móng tại -2.5m (88px) -->
+      <rect x="130" y="70" width="120" height="18" fill="#90CAF9" stroke="#1565C0" stroke-width="1.5" rx="2"/>
+      <text x="190" y="82" fill="#0D47A1" font-size="9" text-anchor="middle" font-weight="700">Móng B×L</text>
+      <!-- đáy móng tại 88px -->
+      <line x1="20" y1="88" x2="360" y2="88" stroke="#0D47A1" stroke-width="1" stroke-dasharray="5,3"/>
+      <text x="365" y="91" fill="#0D47A1" font-size="8">−2.5m</text>
+      <!-- Lớp 2 tốt -->
+      <rect x="25" y="88" width="330" height="70" fill="#E8F5E9" stroke="#2E7D32" stroke-width="1"/>
+      <!-- hatch lớp 2 -->
+      <line x1="25" y1="102" x2="50" y2="88" stroke="#A5D6A7" stroke-width="0.7"/>
+      <line x1="25" y1="120" x2="75" y2="88" stroke="#A5D6A7" stroke-width="0.7"/>
+      <line x1="25" y1="138" x2="100" y2="88" stroke="#A5D6A7" stroke-width="0.7"/>
+      <line x1="38" y1="158" x2="130" y2="88" stroke="#A5D6A7" stroke-width="0.7"/>
+      <line x1="75" y1="158" x2="180" y2="88" stroke="#A5D6A7" stroke-width="0.7"/>
+      <line x1="120" y1="158" x2="240" y2="88" stroke="#A5D6A7" stroke-width="0.7"/>
+      <line x1="170" y1="158" x2="295" y2="88" stroke="#A5D6A7" stroke-width="0.7"/>
+      <line x1="225" y1="158" x2="350" y2="88" stroke="#A5D6A7" stroke-width="0.7"/>
+      <line x1="290" y1="158" x2="355" y2="108" stroke="#A5D6A7" stroke-width="0.7"/>
+      <line x1="340" y1="158" x2="355" y2="148" stroke="#A5D6A7" stroke-width="0.7"/>
+      <text x="190" y="125" fill="#1B5E20" font-size="10" text-anchor="middle" font-weight="700">② Sét pha dẻo cứng (LỚPP 2 TỐT)</text>
+      <text x="190" y="140" fill="#1B5E20" font-size="9" text-anchor="middle">γ=19.0, c=22, φ=22° → Đặt móng vào đây</text>
+      <!-- áp lực -->
+      <line x1="145" y1="88" x2="145" y2="108" stroke="#1565C0" stroke-width="1" marker-end="url(#aP)"/>
+      <line x1="165" y1="88" x2="165" y2="108" stroke="#1565C0" stroke-width="1" marker-end="url(#aP)"/>
+      <line x1="190" y1="88" x2="190" y2="108" stroke="#1565C0" stroke-width="1" marker-end="url(#aP)"/>
+      <line x1="215" y1="88" x2="215" y2="108" stroke="#1565C0" stroke-width="1" marker-end="url(#aP)"/>
+      <line x1="235" y1="88" x2="235" y2="108" stroke="#1565C0" stroke-width="1" marker-end="url(#aP)"/>
+      <!-- γtb ghi chú -->
+      <rect x="25" y="162" width="330" height="40" fill="#FFF9C4" opacity="0.7"/>
+      <text x="190" y="176" fill="#E65100" font-size="9.5" text-anchor="middle" font-weight="700">γ<tspan baseline-shift="sub" font-size="7">tb</tspan> = tổng γ·h / h<tspan baseline-shift="sub" font-size="7">m</tspan> = (17.5×2.0 + 19.0×0.5) / 2.5 = <b>18.0 kN/m³</b></text>
+      <text x="190" y="192" fill="#E65100" font-size="9" text-anchor="middle">(dùng γ<tspan baseline-shift="sub" font-size="7">tb</tspan> theo phần đất trên đáy móng để tính p<tspan baseline-shift="sub" font-size="7">tc</tspan>)</text>
+    </svg>
+    </div>
+
+    <div class="step-hd"><span class="snum">1</span><span class="sname">Xác định γ<sub>tb</sub> và tính R<sub>n</sub> theo thông số lớp 2</span></div>
+    <div class="stxt">
+      <b>γ<sub>tb</sub> = (γ₁·h₁ + γ₂·(h<sub>m</sub>−h₁)) / h<sub>m</sub></b> = (17.5×2.0 + 19.0×0.5) / 2.5 = <b>18.0 kN/m³</b><br>
+      Thông số tính R<sub>n</sub>: dùng lớp 2 (đất dưới đáy móng): c=22 kPa, φ=22°, γ=19.0 kN/m³<br>
+      φ=22°: N<sub>c</sub>=16.9, N<sub>q</sub>=7.8, N<sub>γ</sub>=7.1. Móng vuông: α₁=0.4, α₂=1.0, α₃=1.3<br>
+      q = γ<sub>tb</sub>·h<sub>m</sub> = 18.0×2.5 = 45.0 kPa<br><br>
+      <b>PA1 (B=2.0m):</b>
+      <span class="fm">R<sub>n</sub>=(1/2.5)×[0.4×7.1×2.0×19+1.0×7.8×45+1.3×16.9×22]=(1/2.5)×[107.9+351+483.2]=<b>377.2 kPa</b></span><br>
+      <b>PA2 (B=2.8m):</b>
+      <span class="fm">R<sub>n</sub>=(1/2.5)×[0.4×7.1×2.8×19+351+483.2]=(1/2.5)×[151+351+483.2]=<b>394.1 kPa</b></span>
+    </div>
+
+    <div class="step-hd"><span class="snum">2</span><span class="sname">Tính p<sub>max</sub>, p<sub>min</sub></span></div>
+    <div class="stxt">
+      <span class="fm">p<sub>tc</sub>=N₀/(B²)+γ<sub>tb</sub>·h<sub>m</sub></span> &nbsp;·&nbsp; <span class="fm">p<sub>max,min</sub>=p<sub>tc</sub>±6·M₀/(B²·L)</span> với L=B (vuông)→ <span class="fm">±6M₀/B³</span><br><br>
+      <b>PA1 (B=2.0m):</b>
+      <span class="fm">p<sub>tc</sub>=1200/4+18×2.5=300+45=345 kPa</span><br>
+      <span class="fm">p<sub>max</sub>=345+6×80/8=345+60=<b>405 kPa</b></span>&nbsp;·&nbsp;
+      <span class="fm">p<sub>min</sub>=345−60=<b>285 kPa</b></span><br><br>
+      <b>PA2 (B=2.8m):</b>
+      <span class="fm">p<sub>tc</sub>=1200/7.84+45=153+45=198 kPa</span><br>
+      <span class="fm">p<sub>max</sub>=198+6×80/21.95=198+21.9=<b>220 kPa</b></span>&nbsp;·&nbsp;
+      <span class="fm">p<sub>min</sub>=198−21.9=<b>176 kPa</b></span>
+    </div>
+
+    <div class="step-hd"><span class="snum">3</span><span class="sname">Kiểm tra</span></div>
+    <table class="cmp-tbl">
+      <tr><th>PA</th><th>B</th><th>p<sub>tc</sub></th><th>p<sub>max</sub></th><th>p<sub>min</sub></th><th>R<sub>n</sub></th><th>1.2R<sub>n</sub></th><th>① p≤R<sub>n</sub></th><th>② p<sub>max</sub>≤1.2R<sub>n</sub></th><th>Kết luận</th></tr>
+      <tr><td class="lbl">PA1 B=2.0m</td><td>2.0</td><td>345</td><td style="color:var(--R);font-weight:700">405</td><td>285</td><td>377</td><td>452</td>
+        <td><span class="ck-no">❌ 345&gt;377? ✅</span></td><td><span class="ck-ok">✅ 405&lt;452</span></td>
+        <td><b style="color:var(--A)">Đạt KT nhưng p≈R (sát biên)</b></td></tr>
+      <tr><td class="lbl">PA2 B=2.8m</td><td>2.8</td><td>198</td><td style="color:var(--G);font-weight:700">220</td><td>176</td><td>394</td><td>473</td>
+        <td><span class="ck-ok">✅</span></td><td><span class="ck-ok">✅</span></td>
+        <td><b style="color:var(--A)">Đạt KT · p=50%R — lãng phí</b></td></tr>
+    </table>
+    <div class="scb" style="margin-top:8px">✅ <b>Kết luận:</b> PA1 đạt nhưng sát biên (an toàn hơn). PA2 quá thừa (p chỉ 50% R<sub>n</sub>). Chọn <b>B=2.0–2.2m</b> là tối ưu về cả kỹ thuật và kinh tế. Lưu ý: dùng thông số lớp 2 (đất dưới đáy móng) để tính R<sub>n</sub>, dùng γ<sub>tb</sub> để tính p<sub>tc</sub>.</div>
+  </div>
+</div>
+
+<!-- ═══ A4: Móng BĂNG, 2 lớp đất ═══ -->
+<div class="ex">
+  <div class="exhd" onclick="tog('a4')">
+    <span class="ebg ebA">A4</span><span class="ebg ebe">Mẫu</span>
+    <div><div class="etl">Móng băng · 2 lớp đất · Lớp 1 yếu mỏng · Tải đúng tâm</div>
+    <div class="emt">Dạng 4 · Bài mẫu · Tình huống đều không đảm bảo kỹ thuật</div></div>
+    <i class="ti ti-chevron-right echv" id="cv-a4"></i>
+  </div>
+  <div class="exbd" id="bd-a4">
+    <div style="background:#F8FBFF;border:1px solid var(--brd);border-radius:8px;padding:12px;margin-bottom:12px">
+      <div style="font-size:11px;font-weight:700;color:var(--P);text-transform:uppercase;margin-bottom:8px"><i class="ti ti-file-description" style="margin-right:4px"></i>Đề bài</div>
+      <p style="font-size:13px;margin-bottom:8px">Móng băng dưới tường chịu <b>N₀=250 kN/m, M₀=0</b>. Nền đất 2 lớp:</p>
+      <table class="dt">
+        <tr><th>Lớp</th><th>Mô tả</th><th>h (m)</th><th>γ (kN/m³)</th><th>c (kPa)</th><th>φ (°)</th></tr>
+        <tr><td>1</td><td class="ln">Cát pha xám (yếu)</td><td>1.5</td><td>17.0</td><td>8</td><td>12</td></tr>
+        <tr><td>2</td><td class="ln">Sét nửa cứng (tốt)</td><td>>7</td><td>19.5</td><td>28</td><td>22</td></tr>
+      </table>
+      <p style="font-size:13px;margin-top:8px">Đặt móng vào lớp 2, h<sub>m</sub>=2.0m. F<sub>s</sub>=2.5. Kiểm tra:</p>
+      <div class="tc">
+        <div style="background:#E3F2FD;border-radius:7px;padding:10px;font-size:13px"><b>PA1:</b> B=0.8m</div>
+        <div style="background:#FCE4EC;border-radius:7px;padding:10px;font-size:13px"><b>PA2:</b> B=1.2m</div>
+      </div>
+    </div>
+
+    <div class="step-hd"><span class="snum">1</span><span class="sname">γ<sub>tb</sub> và R<sub>n</sub></span></div>
+    <div class="stxt">
+      <span class="fm">γ<sub>tb</sub> = (17.0×1.5 + 19.5×0.5)/2.0 = (25.5+9.75)/2.0 = <b>17.6 kN/m³</b></span><br>
+      φ=22°: N<sub>c</sub>=16.9, N<sub>q</sub>=7.8, N<sub>γ</sub>=7.1. Băng: α₁=α₂=α₃=1.0. q=17.6×2.0=35.2 kPa<br>
+      <b>PA1 (B=0.8m):</b> <span class="fm">R<sub>n</sub>=(1/2.5)×[7.1×0.8×19.5+7.8×35.2+16.9×28]=(1/2.5)×[110.8+274.6+473.2]=<b>343.4 kPa</b></span><br>
+      <b>PA2 (B=1.2m):</b> <span class="fm">R<sub>n</sub>=(1/2.5)×[7.1×1.2×19.5+274.6+473.2]=(1/2.5)×[166.1+274.6+473.2]=<b>365.6 kPa</b></span>
+    </div>
+
+    <div class="step-hd"><span class="snum">2</span><span class="sname">p<sub>tc</sub> và kiểm tra</span></div>
+    <div class="stxt">
+      <b>PA1:</b> <span class="fm">p<sub>tc</sub>=250/0.8+17.6×2.0=312.5+35.2=<b>347.7 kPa</b></span><br>
+      <b>PA2:</b> <span class="fm">p<sub>tc</sub>=250/1.2+35.2=208.3+35.2=<b>243.5 kPa</b></span>
+    </div>
+    <table class="cmp-tbl">
+      <tr><th>PA</th><th>B</th><th>p<sub>tc</sub></th><th>R<sub>n</sub></th><th>p≤R<sub>n</sub>?</th><th>p/R<sub>n</sub></th><th>Kết luận</th></tr>
+      <tr><td class="lbl">PA1 B=0.8m</td><td>0.8</td><td style="color:var(--R);font-weight:700">347.7</td><td>343.4</td>
+        <td><span class="ck-no">❌ 347&gt;343</span></td><td style="color:var(--R)">1.01 — sát vượt</td><td><b style="color:var(--R)">Không đạt kỹ thuật</b></td></tr>
+      <tr><td class="lbl">PA2 B=1.2m</td><td>1.2</td><td style="color:var(--R);font-weight:700">243.5</td><td>365.6</td>
+        <td><span class="ck-ok">✅</span></td><td style="color:var(--A)">0.67 — hơi lãng phí</td><td><b style="color:var(--A)">Đạt KT · B có thể tối ưu</b></td></tr>
+    </table>
+    <div class="eab" style="margin-top:6px">
+      <b>Cả 2 PA đều có vấn đề:</b> PA1 không đạt kỹ thuật (vượt dù rất sát). PA2 đạt nhưng lãng phí 33%.
+    </div>
+    <div class="scb" style="margin-top:6px">✅ <b>Kết luận:</b> Chọn <b>B≈0.9–1.0m</b> là tối ưu. Kiểm tra: p<sub>tc</sub>=250/1.0+35.2≈285 kPa ≤ R<sub>n</sub>≈352 kPa ✅. p/R<sub>n</sub>=0.81 — hợp lý cả kỹ thuật và kinh tế.</div>
+  </div>
+</div>
+
+
+<div class="gs"><i class="ti ti-edit"></i>NHÓM B — Công thức có sẵn · Điền số · So sánh 2 kích thước</div>
+
+<div class="ex">
+  <div class="exhd " onclick="tog('b1')">
+    <span class="ebg ebB">B1</span>
+    <span class="ebg ebe">Dễ</span>
+    <div><div class="etl">Móng đơn · 1 lớp đất · Tải đúng tâm · So sánh 2 kích thước</div><div class="emt">Dạng 1 · PA1 không đạt kỹ thuật · PA2 đạt nhưng lãng phí</div></div>
+    <i class="ti ti-chevron-right echv " id="cv-b1"></i>
+  </div>
+  <div class="exbd " id="bd-b1">
+
+    <div style="background:#F8FBFF;border:1px solid var(--brd);border-radius:8px;padding:12px;margin-bottom:10px">
+      <div style="font-size:11px;font-weight:700;color:var(--P);text-transform:uppercase;letter-spacing:.6px;margin-bottom:7px">
+        <i class="ti ti-file-description" style="margin-right:4px"></i>Đề bài</div>
+      <p style="font-size:13px;margin-bottom:7px">
+        Móng đơn (vuông), 
+        <b>N₀=900 kN</b>
+        , M₀=0.
+        h<sub>m</sub>=1.5m, F<sub>s</sub>=2.5, γ<sub>tb</sub> tính theo đất thực tế.
+      </p>
+      <table class="dt">
+        <tr><th>Lớp</th><th>Tên đất</th><th>h (m)</th><th>γ (kN/m³)</th><th>c (kPa)</th><th>φ (°)</th></tr>
+        <tr><td>1</td><td class="ln">Sét pha dẻo cứng nâu vàng</td><td>0</td><td>18.5</td><td>18</td><td>20</td></tr>
+      </table>
+      <p style="font-size:13px;margin-top:7px">Kiểm tra với: 
+        <b>PA1: B=1.8m</b> và <b>PA2: B=2.5m</b>
+        (chiều rộng; móng vuông B=L)
+      </p>
+      <div class="rqb">Điền kết quả vào ô · So sánh 2 phương án · Chọn kết luận đúng</div>
+    </div><div style="display:flex;flex-direction:column;gap:4px;margin:8px 0 8px 0">
+      <div class="fr">
+        <span class="fl">Tra bảng φ=20°: N<sub>c</sub> =</span>
+        <input class="fi" id="f-b1-Nc" type="number" step="0.01" placeholder="?">
+        
+        <button class="fbt" onclick="cf('b1-Nc',14.8,0.2)">✓</button>
+        <span class="ffb" id="fb-b1-Nc"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">N<sub>q</sub> =</span>
+        <input class="fi" id="f-b1-Nq" type="number" step="0.01" placeholder="?">
+        
+        <button class="fbt" onclick="cf('b1-Nq',6.4,0.2)">✓</button>
+        <span class="ffb" id="fb-b1-Nq"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">N<sub>γ</sub> =</span>
+        <input class="fi" id="f-b1-Ng" type="number" step="0.01" placeholder="?">
+        
+        <button class="fbt" onclick="cf('b1-Ng',5.4,0.2)">✓</button>
+        <span class="ffb" id="fb-b1-Ng"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">q = γ<sub>tb</sub>·h<sub>m</sub> = 18.5×1.5 =</span>
+        <input class="fi" id="f-b1-q" type="number" step="0.01" placeholder="?">
+        <span class="fu">kPa</span>
+        <button class="fbt" onclick="cf('b1-q',27.75,0.5)">✓</button>
+        <span class="ffb" id="fb-b1-q"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">R<sub>n</sub> (B=1.8m) =</span>
+        <input class="fi" id="f-b1-Rn1" type="number" step="0.01" placeholder="?">
+        <span class="fu">kPa</span>
+        <button class="fbt" onclick="cf('b1-Rn1',238.3,2.0)">✓</button>
+        <span class="ffb" id="fb-b1-Rn1"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">p<sub>tc</sub> (B=1.8m) =</span>
+        <input class="fi" id="f-b1-ptc1" type="number" step="0.01" placeholder="?">
+        <span class="fu">kPa</span>
+        <button class="fbt" onclick="cf('b1-ptc1',305.5,1.0)">✓</button>
+        <span class="ffb" id="fb-b1-ptc1"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">R<sub>n</sub> (B=2.5m) =</span>
+        <input class="fi" id="f-b1-Rn2" type="number" step="0.01" placeholder="?">
+        <span class="fu">kPa</span>
+        <button class="fbt" onclick="cf('b1-Rn2',249.5,2.0)">✓</button>
+        <span class="ffb" id="fb-b1-Rn2"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">p<sub>tc</sub> (B=2.5m) =</span>
+        <input class="fi" id="f-b1-ptc2" type="number" step="0.01" placeholder="?">
+        <span class="fu">kPa</span>
+        <button class="fbt" onclick="cf('b1-ptc2',171.8,1.0)">✓</button>
+        <span class="ffb" id="fb-b1-ptc2"></span>
+      </div></div>
+    <table class="cmp-tbl">
+      <tr><th>Phương án</th><th>B (m)</th><th>p<sub>tc</sub></th>
+          <th>p<sub>max</sub></th><th>p<sub>min</sub></th>
+          <th>R<sub>n</sub></th><th>1.2·R<sub>n</sub></th>
+          <th>① p≤R<sub>n</sub></th><th>② p<sub>max</sub>≤1.2R<sub>n</sub></th>
+          <th>Kết luận</th></tr>
+      
+      <tr>
+        <td class="lbl">PA1 B=1.8m</td>
+        <td>1.8</td>
+        <td style="font-family:var(--mono)">305.5</td>
+        <td style="font-family:var(--mono);color:#C62828;font-weight:700">305.5</td>
+        <td style="font-family:var(--mono)">305.5</td>
+        <td style="font-family:var(--mono)">238.3</td>
+        <td style="font-family:var(--mono)">286.0</td>
+        <td><span style="color:#C62828;font-weight:700">❌ Không đạt</span></td>
+        <td><span style="color:#C62828;font-weight:700">❌ Không đạt</span></td>
+        <td><b style="color:#C62828">❌ Không đạt KT</b></td>
+      </tr>
+      <tr>
+        <td class="lbl">PA2 B=2.5m</td>
+        <td>2.5</td>
+        <td style="font-family:var(--mono)">171.8</td>
+        <td style="font-family:var(--mono);color:#2E7D32;font-weight:700">171.8</td>
+        <td style="font-family:var(--mono)">171.8</td>
+        <td style="font-family:var(--mono)">249.5</td>
+        <td style="font-family:var(--mono)">299.4</td>
+        <td><span style="color:#2E7D32;font-weight:700">✅ Đạt</span></td>
+        <td><span style="color:#2E7D32;font-weight:700">✅ Đạt</span></td>
+        <td><b style="color:#2E7D32">✅ Kỹ thuật OK</b></td>
+      </tr>
+    </table>
+    <div class="mw">
+      <div class="mq"><span class="mn">QB1</span>Nhận xét kết quả và chọn kết luận đúng:</div>
+      <div class="mo-list"><div class="mo" id="mo-qb1-0" onclick="pm('qb1',0,1)"><span class="mk">A</span><span>Cả PA1 và PA2 đều đảm bảo kỹ thuật</span></div><div class="mo" id="mo-qb1-1" onclick="pm('qb1',1,1)"><span class="mk">B</span><span>PA1 (B=1.8m) không đạt · PA2 (B=2.5m) đạt kỹ thuật</span></div><div class="mo" id="mo-qb1-2" onclick="pm('qb1',2,1)"><span class="mk">C</span><span>PA2 không đạt · PA1 đạt</span></div><div class="mo" id="mo-qb1-3" onclick="pm('qb1',3,1)"><span class="mk">D</span><span>Cả hai đều không đạt</span></div></div>
+      <div class="me" id="me-qb1">✓ PA1 B=1.8m: p=307 kPa > Rn=219 kPa → không đạt KT. PA2 B=2.5m: p=174 kPa < Rn=223 kPa → đạt KT nhưng p/Rn=0.78. Khi B tăng: p↓ (do B²↑), Rn↑ nhẹ (do Nγ·B). Chọn B≈2.1–2.2m là tối ưu.</div>
+    </div>
+  </div>
+</div>
+<div class="ex">
+  <div class="exhd " onclick="tog('b2')">
+    <span class="ebg ebB">B2</span>
+    <span class="ebg ebm">Trung bình</span>
+    <div><div class="etl">Móng băng · 1 lớp đất · Tải lệch tâm · Kiểm tra p_max</div><div class="emt">Dạng 2 · Kiểm tra cả p_max ≤ 1.2Rn · PA1 vượt giới hạn</div></div>
+    <i class="ti ti-chevron-right echv " id="cv-b2"></i>
+  </div>
+  <div class="exbd " id="bd-b2">
+
+    <div style="background:#F8FBFF;border:1px solid var(--brd);border-radius:8px;padding:12px;margin-bottom:10px">
+      <div style="font-size:11px;font-weight:700;color:var(--P);text-transform:uppercase;letter-spacing:.6px;margin-bottom:7px">
+        <i class="ti ti-file-description" style="margin-right:4px"></i>Đề bài</div>
+      <p style="font-size:13px;margin-bottom:7px">
+        Móng băng, 
+        <b>N₀=150 kN/m</b>
+        , <b>M₀=25 kN·m/m</b>.
+        h<sub>m</sub>=1.5m, F<sub>s</sub>=2.5, γ<sub>tb</sub> tính theo đất thực tế.
+      </p>
+      <table class="dt">
+        <tr><th>Lớp</th><th>Tên đất</th><th>h (m)</th><th>γ (kN/m³)</th><th>c (kPa)</th><th>φ (°)</th></tr>
+        <tr><td>1</td><td class="ln">Cát pha nửa cứng vàng</td><td>0</td><td>18.0</td><td>12</td><td>18</td></tr>
+      </table>
+      <p style="font-size:13px;margin-top:7px">Kiểm tra với: 
+        <b>PA1: B=1.0m</b> và <b>PA2: B=1.8m</b>
+        (chiều rộng; tính trên 1m dài)
+      </p>
+      <div class="rqb">Điền kết quả vào ô · So sánh 2 phương án · Chọn kết luận đúng</div>
+    </div><div style="display:flex;flex-direction:column;gap:4px;margin:8px 0 8px 0">
+      <div class="fr">
+        <span class="fl">Tra bảng φ=18°: N<sub>c</sub> =</span>
+        <input class="fi" id="f-b2-Nc" type="number" step="0.01" placeholder="?">
+        
+        <button class="fbt" onclick="cf('b2-Nc',13.1,0.2)">✓</button>
+        <span class="ffb" id="fb-b2-Nc"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">N<sub>q</sub> =</span>
+        <input class="fi" id="f-b2-Nq" type="number" step="0.01" placeholder="?">
+        
+        <button class="fbt" onclick="cf('b2-Nq',5.3,0.2)">✓</button>
+        <span class="ffb" id="fb-b2-Nq"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">N<sub>γ</sub> =</span>
+        <input class="fi" id="f-b2-Ng" type="number" step="0.01" placeholder="?">
+        
+        <button class="fbt" onclick="cf('b2-Ng',4.1,0.2)">✓</button>
+        <span class="ffb" id="fb-b2-Ng"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">q = γ<sub>tb</sub>·h<sub>m</sub> = 18.0×1.5 =</span>
+        <input class="fi" id="f-b2-q" type="number" step="0.01" placeholder="?">
+        <span class="fu">kPa</span>
+        <button class="fbt" onclick="cf('b2-q',27.0,0.5)">✓</button>
+        <span class="ffb" id="fb-b2-q"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">R<sub>n</sub> (B=1.0m) =</span>
+        <input class="fi" id="f-b2-Rn1" type="number" step="0.01" placeholder="?">
+        <span class="fu">kPa</span>
+        <button class="fbt" onclick="cf('b2-Rn1',149.6,2.0)">✓</button>
+        <span class="ffb" id="fb-b2-Rn1"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">p<sub>tc</sub> (B=1.0m) =</span>
+        <input class="fi" id="f-b2-ptc1" type="number" step="0.01" placeholder="?">
+        <span class="fu">kPa</span>
+        <button class="fbt" onclick="cf('b2-ptc1',177.0,1.0)">✓</button>
+        <span class="ffb" id="fb-b2-ptc1"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">p<sub>max</sub> (B=1.0m) =</span>
+        <input class="fi" id="f-b2-pmax1" type="number" step="0.01" placeholder="?">
+        <span class="fu">kPa</span>
+        <button class="fbt" onclick="cf('b2-pmax1',327.0,1.0)">✓</button>
+        <span class="ffb" id="fb-b2-pmax1"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">R<sub>n</sub> (B=1.8m) =</span>
+        <input class="fi" id="f-b2-Rn2" type="number" step="0.01" placeholder="?">
+        <span class="fu">kPa</span>
+        <button class="fbt" onclick="cf('b2-Rn2',173.3,2.0)">✓</button>
+        <span class="ffb" id="fb-b2-Rn2"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">p<sub>tc</sub> (B=1.8m) =</span>
+        <input class="fi" id="f-b2-ptc2" type="number" step="0.01" placeholder="?">
+        <span class="fu">kPa</span>
+        <button class="fbt" onclick="cf('b2-ptc2',110.3,1.0)">✓</button>
+        <span class="ffb" id="fb-b2-ptc2"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">p<sub>max</sub> (B=1.8m) =</span>
+        <input class="fi" id="f-b2-pmax2" type="number" step="0.01" placeholder="?">
+        <span class="fu">kPa</span>
+        <button class="fbt" onclick="cf('b2-pmax2',156.6,1.0)">✓</button>
+        <span class="ffb" id="fb-b2-pmax2"></span>
+      </div></div>
+    <table class="cmp-tbl">
+      <tr><th>Phương án</th><th>B (m)</th><th>p<sub>tc</sub></th>
+          <th>p<sub>max</sub></th><th>p<sub>min</sub></th>
+          <th>R<sub>n</sub></th><th>1.2·R<sub>n</sub></th>
+          <th>① p≤R<sub>n</sub></th><th>② p<sub>max</sub>≤1.2R<sub>n</sub></th>
+          <th>Kết luận</th></tr>
+      
+      <tr>
+        <td class="lbl">PA1 B=1.0m</td>
+        <td>1.0</td>
+        <td style="font-family:var(--mono)">177.0</td>
+        <td style="font-family:var(--mono);color:#C62828;font-weight:700">327.0</td>
+        <td style="font-family:var(--mono)">27.0</td>
+        <td style="font-family:var(--mono)">149.6</td>
+        <td style="font-family:var(--mono)">179.5</td>
+        <td><span style="color:#C62828;font-weight:700">❌ Không đạt</span></td>
+        <td><span style="color:#C62828;font-weight:700">❌ Không đạt</span></td>
+        <td><b style="color:#C62828">❌ Không đạt KT</b></td>
+      </tr>
+      <tr>
+        <td class="lbl">PA2 B=1.8m</td>
+        <td>1.8</td>
+        <td style="font-family:var(--mono)">110.3</td>
+        <td style="font-family:var(--mono);color:#2E7D32;font-weight:700">156.6</td>
+        <td style="font-family:var(--mono)">64.0</td>
+        <td style="font-family:var(--mono)">173.3</td>
+        <td style="font-family:var(--mono)">208.0</td>
+        <td><span style="color:#2E7D32;font-weight:700">✅ Đạt</span></td>
+        <td><span style="color:#2E7D32;font-weight:700">✅ Đạt</span></td>
+        <td><b style="color:#2E7D32">✅ Kỹ thuật OK</b></td>
+      </tr>
+    </table>
+    <div class="mw">
+      <div class="mq"><span class="mn">QB2</span>Nhận xét kết quả và chọn kết luận đúng:</div>
+      <div class="mo-list"><div class="mo" id="mo-qb2-0" onclick="pm('qb2',0,1)"><span class="mk">A</span><span>Cả PA1 và PA2 đều đảm bảo kỹ thuật</span></div><div class="mo" id="mo-qb2-1" onclick="pm('qb2',1,1)"><span class="mk">B</span><span>PA1 (B=1.0m) không đạt · PA2 (B=1.8m) đạt kỹ thuật</span></div><div class="mo" id="mo-qb2-2" onclick="pm('qb2',2,1)"><span class="mk">C</span><span>PA2 không đạt · PA1 đạt</span></div><div class="mo" id="mo-qb2-3" onclick="pm('qb2',3,1)"><span class="mk">D</span><span>Cả hai đều không đạt</span></div></div>
+      <div class="me" id="me-qb2">✓ Tải lệch tâm M₀=25 kN·m/m gây thêm ±6M/B². PA1 B=1.0m: ptc=180 kPa, pmax=180+150=330 kPa → 330 > 1.2×Rn=193 → không đạt. PA2 B=1.8m: ptc=113 kPa, pmax=113+46=159 kPa ≤ 1.2×Rn=196 → đạt KT.</div>
+    </div>
+  </div>
+</div>
+<div class="ex">
+  <div class="exhd " onclick="tog('b3')">
+    <span class="ebg ebB">B3</span>
+    <span class="ebg ebm">Trung bình</span>
+    <div><div class="etl">Móng đơn · 2 lớp đất · Lớp 1 yếu mỏng · Tải đúng tâm</div><div class="emt">Dạng 3 · Tính γtb · Dùng thông số lớp 2 cho Rn</div></div>
+    <i class="ti ti-chevron-right echv " id="cv-b3"></i>
+  </div>
+  <div class="exbd " id="bd-b3">
+
+    <div style="background:#F8FBFF;border:1px solid var(--brd);border-radius:8px;padding:12px;margin-bottom:10px">
+      <div style="font-size:11px;font-weight:700;color:var(--P);text-transform:uppercase;letter-spacing:.6px;margin-bottom:7px">
+        <i class="ti ti-file-description" style="margin-right:4px"></i>Đề bài</div>
+      <p style="font-size:13px;margin-bottom:7px">
+        Móng đơn (vuông), 
+        <b>N₀=1100 kN</b>
+        , M₀=0.
+        h<sub>m</sub>=2.5m, F<sub>s</sub>=2.5, γ<sub>tb</sub> tính theo đất thực tế.
+      </p>
+      <table class="dt">
+        <tr><th>Lớp</th><th>Tên đất</th><th>h (m)</th><th>γ (kN/m³)</th><th>c (kPa)</th><th>φ (°)</th></tr>
+        <tr><td>1</td><td class="ln">Sét pha dẻo mềm xám</td><td>2.0</td><td>17.5</td><td>10</td><td>10</td></tr><tr><td>2</td><td class="ln">Sét pha dẻo cứng nâu</td><td>0</td><td>19.0</td><td>22</td><td>22</td></tr>
+      </table>
+      <p style="font-size:13px;margin-top:7px">Kiểm tra với: 
+        <b>PA1: B=2.0m</b> và <b>PA2: B=2.8m</b>
+        (chiều rộng; móng vuông B=L)
+      </p>
+      <div class="rqb">Điền kết quả vào ô · So sánh 2 phương án · Chọn kết luận đúng</div>
+    </div><div style="display:flex;flex-direction:column;gap:4px;margin:8px 0 8px 0">
+      <div class="fr">
+        <span class="fl">γ<sub>tb</sub> = (17.5×2.0 + 19.0×0.5) / 2.5 =</span>
+        <input class="fi" id="f-b3-gtb" type="number" step="0.01" placeholder="?">
+        <span class="fu">kN/m³</span>
+        <button class="fbt" onclick="cf('b3-gtb',17.8,0.05)">✓</button>
+        <span class="ffb" id="fb-b3-gtb"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">Tra bảng φ=22°: N<sub>c</sub> =</span>
+        <input class="fi" id="f-b3-Nc" type="number" step="0.01" placeholder="?">
+        
+        <button class="fbt" onclick="cf('b3-Nc',16.9,0.2)">✓</button>
+        <span class="ffb" id="fb-b3-Nc"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">N<sub>q</sub> =</span>
+        <input class="fi" id="f-b3-Nq" type="number" step="0.01" placeholder="?">
+        
+        <button class="fbt" onclick="cf('b3-Nq',7.8,0.2)">✓</button>
+        <span class="ffb" id="fb-b3-Nq"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">N<sub>γ</sub> =</span>
+        <input class="fi" id="f-b3-Ng" type="number" step="0.01" placeholder="?">
+        
+        <button class="fbt" onclick="cf('b3-Ng',7.1,0.2)">✓</button>
+        <span class="ffb" id="fb-b3-Ng"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">q = γ<sub>tb</sub>·h<sub>m</sub> = 17.8×2.5 =</span>
+        <input class="fi" id="f-b3-q" type="number" step="0.01" placeholder="?">
+        <span class="fu">kPa</span>
+        <button class="fbt" onclick="cf('b3-q',44.5,0.5)">✓</button>
+        <span class="ffb" id="fb-b3-q"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">R<sub>n</sub> (B=2.0m) =</span>
+        <input class="fi" id="f-b3-Rn1" type="number" step="0.01" placeholder="?">
+        <span class="fu">kPa</span>
+        <button class="fbt" onclick="cf('b3-Rn1',375.3,2.0)">✓</button>
+        <span class="ffb" id="fb-b3-Rn1"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">p<sub>tc</sub> (B=2.0m) =</span>
+        <input class="fi" id="f-b3-ptc1" type="number" step="0.01" placeholder="?">
+        <span class="fu">kPa</span>
+        <button class="fbt" onclick="cf('b3-ptc1',319.5,1.0)">✓</button>
+        <span class="ffb" id="fb-b3-ptc1"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">R<sub>n</sub> (B=2.8m) =</span>
+        <input class="fi" id="f-b3-Rn2" type="number" step="0.01" placeholder="?">
+        <span class="fu">kPa</span>
+        <button class="fbt" onclick="cf('b3-Rn2',392.6,2.0)">✓</button>
+        <span class="ffb" id="fb-b3-Rn2"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">p<sub>tc</sub> (B=2.8m) =</span>
+        <input class="fi" id="f-b3-ptc2" type="number" step="0.01" placeholder="?">
+        <span class="fu">kPa</span>
+        <button class="fbt" onclick="cf('b3-ptc2',184.8,1.0)">✓</button>
+        <span class="ffb" id="fb-b3-ptc2"></span>
+      </div></div>
+    <table class="cmp-tbl">
+      <tr><th>Phương án</th><th>B (m)</th><th>p<sub>tc</sub></th>
+          <th>p<sub>max</sub></th><th>p<sub>min</sub></th>
+          <th>R<sub>n</sub></th><th>1.2·R<sub>n</sub></th>
+          <th>① p≤R<sub>n</sub></th><th>② p<sub>max</sub>≤1.2R<sub>n</sub></th>
+          <th>Kết luận</th></tr>
+      
+      <tr>
+        <td class="lbl">PA1 B=2.0m</td>
+        <td>2.0</td>
+        <td style="font-family:var(--mono)">319.5</td>
+        <td style="font-family:var(--mono);color:#2E7D32;font-weight:700">319.5</td>
+        <td style="font-family:var(--mono)">319.5</td>
+        <td style="font-family:var(--mono)">375.3</td>
+        <td style="font-family:var(--mono)">450.4</td>
+        <td><span style="color:#2E7D32;font-weight:700">✅ Đạt</span></td>
+        <td><span style="color:#2E7D32;font-weight:700">✅ Đạt</span></td>
+        <td><b style="color:#2E7D32">✅ Kỹ thuật OK</b></td>
+      </tr>
+      <tr>
+        <td class="lbl">PA2 B=2.8m</td>
+        <td>2.8</td>
+        <td style="font-family:var(--mono)">184.8</td>
+        <td style="font-family:var(--mono);color:#2E7D32;font-weight:700">184.8</td>
+        <td style="font-family:var(--mono)">184.8</td>
+        <td style="font-family:var(--mono)">392.6</td>
+        <td style="font-family:var(--mono)">471.1</td>
+        <td><span style="color:#2E7D32;font-weight:700">✅ Đạt</span></td>
+        <td><span style="color:#2E7D32;font-weight:700">✅ Đạt</span></td>
+        <td><b style="color:#2E7D32">✅ Kỹ thuật OK · ⚠ Lãng phí</b></td>
+      </tr>
+    </table>
+    <div class="mw">
+      <div class="mq"><span class="mn">QB3</span>Nhận xét kết quả và chọn kết luận đúng:</div>
+      <div class="mo-list"><div class="mo" id="mo-qb3-0" onclick="pm('qb3',0,1)"><span class="mk">A</span><span>PA1 đạt kỹ thuật nhưng B quá lớn — lãng phí</span></div><div class="mo" id="mo-qb3-1" onclick="pm('qb3',1,1)"><span class="mk">B</span><span>Cả hai đạt kỹ thuật · PA1 tối ưu hơn về kinh tế</span></div><div class="mo" id="mo-qb3-2" onclick="pm('qb3',2,1)"><span class="mk">C</span><span>PA2 tốt hơn PA1 về mọi mặt</span></div><div class="mo" id="mo-qb3-3" onclick="pm('qb3',3,1)"><span class="mk">D</span><span>PA1 không đạt kỹ thuật</span></div></div>
+      <div class="me" id="me-qb3">✓ γtb=(17.5×2.0+19.0×0.5)/2.5=18.0. Rn tính theo lớp 2 (φ=22°). PA1 B=2.0m: ptc=1100/4+45=320 kPa so với Rn≈377 kPa → p/Rn=0.85 ✅. PA2 B=2.8m: p=190 kPa → p/Rn=0.48 — lãng phí. Chọn PA1.</div>
+    </div>
+  </div>
+</div>
+<div class="ex">
+  <div class="exhd " onclick="tog('b4')">
+    <span class="ebg ebB">B4</span>
+    <span class="ebg ebh">Khó</span>
+    <div><div class="etl">Móng băng · 2 lớp đất · Tải lệch tâm · Lớp 2 tốt hẳn</div><div class="emt">Dạng 4 · Kết hợp γtb + pmax + 2 lớp</div></div>
+    <i class="ti ti-chevron-right echv " id="cv-b4"></i>
+  </div>
+  <div class="exbd " id="bd-b4">
+
+    <div style="background:#F8FBFF;border:1px solid var(--brd);border-radius:8px;padding:12px;margin-bottom:10px">
+      <div style="font-size:11px;font-weight:700;color:var(--P);text-transform:uppercase;letter-spacing:.6px;margin-bottom:7px">
+        <i class="ti ti-file-description" style="margin-right:4px"></i>Đề bài</div>
+      <p style="font-size:13px;margin-bottom:7px">
+        Móng băng, 
+        <b>N₀=200 kN/m</b>
+        , <b>M₀=30 kN·m/m</b>.
+        h<sub>m</sub>=2.0m, F<sub>s</sub>=2.5, γ<sub>tb</sub> tính theo đất thực tế.
+      </p>
+      <table class="dt">
+        <tr><th>Lớp</th><th>Tên đất</th><th>h (m)</th><th>γ (kN/m³)</th><th>c (kPa)</th><th>φ (°)</th></tr>
+        <tr><td>1</td><td class="ln">Cát pha xám yếu</td><td>1.5</td><td>17.0</td><td>8</td><td>12</td></tr><tr><td>2</td><td class="ln">Sét nửa cứng nâu đỏ</td><td>0</td><td>19.5</td><td>28</td><td>22</td></tr>
+      </table>
+      <p style="font-size:13px;margin-top:7px">Kiểm tra với: 
+        <b>PA1: B=1.0m</b> và <b>PA2: B=1.6m</b>
+        (chiều rộng; tính trên 1m dài)
+      </p>
+      <div class="rqb">Điền kết quả vào ô · So sánh 2 phương án · Chọn kết luận đúng</div>
+    </div><div style="display:flex;flex-direction:column;gap:4px;margin:8px 0 8px 0">
+      <div class="fr">
+        <span class="fl">γ<sub>tb</sub> = (17.0×1.5 + 19.5×0.5) / 2.0 =</span>
+        <input class="fi" id="f-b4-gtb" type="number" step="0.01" placeholder="?">
+        <span class="fu">kN/m³</span>
+        <button class="fbt" onclick="cf('b4-gtb',17.62,0.05)">✓</button>
+        <span class="ffb" id="fb-b4-gtb"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">Tra bảng φ=22°: N<sub>c</sub> =</span>
+        <input class="fi" id="f-b4-Nc" type="number" step="0.01" placeholder="?">
+        
+        <button class="fbt" onclick="cf('b4-Nc',16.9,0.2)">✓</button>
+        <span class="ffb" id="fb-b4-Nc"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">N<sub>q</sub> =</span>
+        <input class="fi" id="f-b4-Nq" type="number" step="0.01" placeholder="?">
+        
+        <button class="fbt" onclick="cf('b4-Nq',7.8,0.2)">✓</button>
+        <span class="ffb" id="fb-b4-Nq"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">N<sub>γ</sub> =</span>
+        <input class="fi" id="f-b4-Ng" type="number" step="0.01" placeholder="?">
+        
+        <button class="fbt" onclick="cf('b4-Ng',7.1,0.2)">✓</button>
+        <span class="ffb" id="fb-b4-Ng"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">q = γ<sub>tb</sub>·h<sub>m</sub> = 17.62×2.0 =</span>
+        <input class="fi" id="f-b4-q" type="number" step="0.01" placeholder="?">
+        <span class="fu">kPa</span>
+        <button class="fbt" onclick="cf('b4-q',35.24,0.5)">✓</button>
+        <span class="ffb" id="fb-b4-q"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">R<sub>n</sub> (B=1.0m) =</span>
+        <input class="fi" id="f-b4-Rn1" type="number" step="0.01" placeholder="?">
+        <span class="fu">kPa</span>
+        <button class="fbt" onclick="cf('b4-Rn1',354.6,2.0)">✓</button>
+        <span class="ffb" id="fb-b4-Rn1"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">p<sub>tc</sub> (B=1.0m) =</span>
+        <input class="fi" id="f-b4-ptc1" type="number" step="0.01" placeholder="?">
+        <span class="fu">kPa</span>
+        <button class="fbt" onclick="cf('b4-ptc1',235.2,1.0)">✓</button>
+        <span class="ffb" id="fb-b4-ptc1"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">p<sub>max</sub> (B=1.0m) =</span>
+        <input class="fi" id="f-b4-pmax1" type="number" step="0.01" placeholder="?">
+        <span class="fu">kPa</span>
+        <button class="fbt" onclick="cf('b4-pmax1',415.2,1.0)">✓</button>
+        <span class="ffb" id="fb-b4-pmax1"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">R<sub>n</sub> (B=1.6m) =</span>
+        <input class="fi" id="f-b4-Rn2" type="number" step="0.01" placeholder="?">
+        <span class="fu">kPa</span>
+        <button class="fbt" onclick="cf('b4-Rn2',387.8,2.0)">✓</button>
+        <span class="ffb" id="fb-b4-Rn2"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">p<sub>tc</sub> (B=1.6m) =</span>
+        <input class="fi" id="f-b4-ptc2" type="number" step="0.01" placeholder="?">
+        <span class="fu">kPa</span>
+        <button class="fbt" onclick="cf('b4-ptc2',160.2,1.0)">✓</button>
+        <span class="ffb" id="fb-b4-ptc2"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">p<sub>max</sub> (B=1.6m) =</span>
+        <input class="fi" id="f-b4-pmax2" type="number" step="0.01" placeholder="?">
+        <span class="fu">kPa</span>
+        <button class="fbt" onclick="cf('b4-pmax2',230.6,1.0)">✓</button>
+        <span class="ffb" id="fb-b4-pmax2"></span>
+      </div></div>
+    <table class="cmp-tbl">
+      <tr><th>Phương án</th><th>B (m)</th><th>p<sub>tc</sub></th>
+          <th>p<sub>max</sub></th><th>p<sub>min</sub></th>
+          <th>R<sub>n</sub></th><th>1.2·R<sub>n</sub></th>
+          <th>① p≤R<sub>n</sub></th><th>② p<sub>max</sub>≤1.2R<sub>n</sub></th>
+          <th>Kết luận</th></tr>
+      
+      <tr>
+        <td class="lbl">PA1 B=1.0m</td>
+        <td>1.0</td>
+        <td style="font-family:var(--mono)">235.2</td>
+        <td style="font-family:var(--mono);color:#2E7D32;font-weight:700">415.2</td>
+        <td style="font-family:var(--mono)">55.2</td>
+        <td style="font-family:var(--mono)">354.6</td>
+        <td style="font-family:var(--mono)">425.5</td>
+        <td><span style="color:#2E7D32;font-weight:700">✅ Đạt</span></td>
+        <td><span style="color:#2E7D32;font-weight:700">✅ Đạt</span></td>
+        <td><b style="color:#2E7D32">✅ Kỹ thuật OK</b></td>
+      </tr>
+      <tr>
+        <td class="lbl">PA2 B=1.6m</td>
+        <td>1.6</td>
+        <td style="font-family:var(--mono)">160.2</td>
+        <td style="font-family:var(--mono);color:#2E7D32;font-weight:700">230.6</td>
+        <td style="font-family:var(--mono)">89.9</td>
+        <td style="font-family:var(--mono)">387.8</td>
+        <td style="font-family:var(--mono)">465.4</td>
+        <td><span style="color:#2E7D32;font-weight:700">✅ Đạt</span></td>
+        <td><span style="color:#2E7D32;font-weight:700">✅ Đạt</span></td>
+        <td><b style="color:#2E7D32">✅ Kỹ thuật OK · ⚠ Lãng phí</b></td>
+      </tr>
+    </table>
+    <div class="mw">
+      <div class="mq"><span class="mn">QB4</span>Nhận xét kết quả và chọn kết luận đúng:</div>
+      <div class="mo-list"><div class="mo" id="mo-qb4-0" onclick="pm('qb4',0,1)"><span class="mk">A</span><span>PA1 đạt kỹ thuật nhưng B quá lớn — lãng phí</span></div><div class="mo" id="mo-qb4-1" onclick="pm('qb4',1,1)"><span class="mk">B</span><span>Cả hai đạt kỹ thuật · PA1 tối ưu hơn về kinh tế</span></div><div class="mo" id="mo-qb4-2" onclick="pm('qb4',2,1)"><span class="mk">C</span><span>PA2 tốt hơn PA1 về mọi mặt</span></div><div class="mo" id="mo-qb4-3" onclick="pm('qb4',3,1)"><span class="mk">D</span><span>PA1 không đạt kỹ thuật</span></div></div>
+      <div class="me" id="me-qb4">✓ γtb=(17×1.5+19.5×0.5)/2=17.6. Rn lớp 2 φ=22°. Móng băng α=1.0. PA1 B=1.0m: pmax rất lớn → vượt 1.2Rn. PA2 B=1.6m: pmax hợp lý → đạt KT, p/Rn≈0.75 tốt về kinh tế.</div>
+    </div>
+  </div>
+</div>
+<div class="gs"><i class="ti ti-pencil"></i>NHÓM C — Tự tính hoàn toàn · Chỉ có đề bài</div>
+
+<div class="ex">
+  <div class="exhd " onclick="tog('c1')">
+    <span class="ebg ebC">C1</span>
+    <span class="ebg ebe">Dễ</span>
+    <div><div class="etl">Móng đơn · 1 lớp đất · Tải đúng tâm · Cả 2 đều không đạt KT</div><div class="emt">Dạng 1 · Tình huống buộc phải tăng B thêm</div></div>
+    <i class="ti ti-chevron-right echv " id="cv-c1"></i>
+  </div>
+  <div class="exbd " id="bd-c1">
+
+    <div style="background:#F8FBFF;border:1px solid var(--brd);border-radius:8px;padding:12px;margin-bottom:10px">
+      <div style="font-size:11px;font-weight:700;color:var(--P);text-transform:uppercase;letter-spacing:.6px;margin-bottom:7px">
+        <i class="ti ti-file-description" style="margin-right:4px"></i>Đề bài</div>
+      <p style="font-size:13px;margin-bottom:7px">
+        Móng đơn (vuông), 
+        <b>N₀=600 kN</b>
+        , M₀=0.
+        h<sub>m</sub>=1.2m, F<sub>s</sub>=2.5, γ<sub>tb</sub> tính theo đất thực tế.
+      </p>
+      <table class="dt">
+        <tr><th>Lớp</th><th>Tên đất</th><th>h (m)</th><th>γ (kN/m³)</th><th>c (kPa)</th><th>φ (°)</th></tr>
+        <tr><td>1</td><td class="ln">Cát pha dẻo cứng</td><td>0</td><td>17.8</td><td>10</td><td>18</td></tr>
+      </table>
+      <p style="font-size:13px;margin-top:7px">Kiểm tra với: 
+        <b>PA1: B=1.2m</b> và <b>PA2: B=1.5m</b>
+        (chiều rộng; móng vuông B=L)
+      </p>
+      <div class="rqb">Điền kết quả vào ô · So sánh 2 phương án · Chọn kết luận đúng</div>
+    </div><div style="display:flex;flex-direction:column;gap:4px;margin:8px 0 8px 0">
+      <div class="fr">
+        <span class="fl">Tra bảng φ=18°: N<sub>c</sub> =</span>
+        <input class="fi" id="f-c1-Nc" type="number" step="0.01" placeholder="?">
+        
+        <button class="fbt" onclick="cf('c1-Nc',13.1,0.2)">✓</button>
+        <span class="ffb" id="fb-c1-Nc"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">N<sub>q</sub> =</span>
+        <input class="fi" id="f-c1-Nq" type="number" step="0.01" placeholder="?">
+        
+        <button class="fbt" onclick="cf('c1-Nq',5.3,0.2)">✓</button>
+        <span class="ffb" id="fb-c1-Nq"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">N<sub>γ</sub> =</span>
+        <input class="fi" id="f-c1-Ng" type="number" step="0.01" placeholder="?">
+        
+        <button class="fbt" onclick="cf('c1-Ng',4.1,0.2)">✓</button>
+        <span class="ffb" id="fb-c1-Ng"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">q = γ<sub>tb</sub>·h<sub>m</sub> = 17.8×1.2 =</span>
+        <input class="fi" id="f-c1-q" type="number" step="0.01" placeholder="?">
+        <span class="fu">kPa</span>
+        <button class="fbt" onclick="cf('c1-q',21.36,0.5)">✓</button>
+        <span class="ffb" id="fb-c1-q"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">R<sub>n</sub> (B=1.2m) =</span>
+        <input class="fi" id="f-c1-Rn1" type="number" step="0.01" placeholder="?">
+        <span class="fu">kPa</span>
+        <button class="fbt" onclick="cf('c1-Rn1',127.4,2.0)">✓</button>
+        <span class="ffb" id="fb-c1-Rn1"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">p<sub>tc</sub> (B=1.2m) =</span>
+        <input class="fi" id="f-c1-ptc1" type="number" step="0.01" placeholder="?">
+        <span class="fu">kPa</span>
+        <button class="fbt" onclick="cf('c1-ptc1',438.0,1.0)">✓</button>
+        <span class="ffb" id="fb-c1-ptc1"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">R<sub>n</sub> (B=1.5m) =</span>
+        <input class="fi" id="f-c1-Rn2" type="number" step="0.01" placeholder="?">
+        <span class="fu">kPa</span>
+        <button class="fbt" onclick="cf('c1-Rn2',130.9,2.0)">✓</button>
+        <span class="ffb" id="fb-c1-Rn2"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">p<sub>tc</sub> (B=1.5m) =</span>
+        <input class="fi" id="f-c1-ptc2" type="number" step="0.01" placeholder="?">
+        <span class="fu">kPa</span>
+        <button class="fbt" onclick="cf('c1-ptc2',288.0,1.0)">✓</button>
+        <span class="ffb" id="fb-c1-ptc2"></span>
+      </div></div>
+    <table class="cmp-tbl">
+      <tr><th>Phương án</th><th>B (m)</th><th>p<sub>tc</sub></th>
+          <th>p<sub>max</sub></th><th>p<sub>min</sub></th>
+          <th>R<sub>n</sub></th><th>1.2·R<sub>n</sub></th>
+          <th>① p≤R<sub>n</sub></th><th>② p<sub>max</sub>≤1.2R<sub>n</sub></th>
+          <th>Kết luận</th></tr>
+      
+      <tr>
+        <td class="lbl">PA1 B=1.2m</td>
+        <td>1.2</td>
+        <td style="font-family:var(--mono)">438.0</td>
+        <td style="font-family:var(--mono);color:#C62828;font-weight:700">438.0</td>
+        <td style="font-family:var(--mono)">438.0</td>
+        <td style="font-family:var(--mono)">127.4</td>
+        <td style="font-family:var(--mono)">152.9</td>
+        <td><span style="color:#C62828;font-weight:700">❌ Không đạt</span></td>
+        <td><span style="color:#C62828;font-weight:700">❌ Không đạt</span></td>
+        <td><b style="color:#C62828">❌ Không đạt KT</b></td>
+      </tr>
+      <tr>
+        <td class="lbl">PA2 B=1.5m</td>
+        <td>1.5</td>
+        <td style="font-family:var(--mono)">288.0</td>
+        <td style="font-family:var(--mono);color:#C62828;font-weight:700">288.0</td>
+        <td style="font-family:var(--mono)">288.0</td>
+        <td style="font-family:var(--mono)">130.9</td>
+        <td style="font-family:var(--mono)">157.1</td>
+        <td><span style="color:#C62828;font-weight:700">❌ Không đạt</span></td>
+        <td><span style="color:#C62828;font-weight:700">❌ Không đạt</span></td>
+        <td><b style="color:#C62828">❌ Không đạt KT</b></td>
+      </tr>
+    </table>
+    <div class="mw">
+      <div class="mq"><span class="mn">QC1</span>Nhận xét kết quả và chọn kết luận đúng:</div>
+      <div class="mo-list"><div class="mo" id="mo-qc1-0" onclick="pm('qc1',0,0)"><span class="mk">A</span><span>Cả hai không đạt kỹ thuật, phải tăng B</span></div><div class="mo" id="mo-qc1-1" onclick="pm('qc1',1,0)"><span class="mk">B</span><span>PA1 đạt, PA2 không đạt</span></div><div class="mo" id="mo-qc1-2" onclick="pm('qc1',2,0)"><span class="mk">C</span><span>PA2 đạt, PA1 không đạt</span></div><div class="mo" id="mo-qc1-3" onclick="pm('qc1',3,0)"><span class="mk">D</span><span>Cả hai đạt kỹ thuật</span></div></div>
+      <div class="me" id="me-qc1">✓ Cả PA1 B=1.2m và PA2 B=1.5m đều có p > Rn → không đạt KT. Phải tăng B đến ≈1.8–2.0m. Nhận xét: khi N0 lớn và h_m nhỏ, γtb·hm đóng góp ít → p chủ yếu do N0/B² → cần B đủ lớn.</div>
+    </div>
+  </div>
+</div>
+<div class="ex">
+  <div class="exhd " onclick="tog('c2')">
+    <span class="ebg ebC">C2</span>
+    <span class="ebg ebe">Dễ</span>
+    <div><div class="etl">Móng băng · 1 lớp đất · Cả 2 đều đạt · Chọn phương án kinh tế hơn</div><div class="emt">Dạng 2 · Tình huống so sánh kinh tế</div></div>
+    <i class="ti ti-chevron-right echv " id="cv-c2"></i>
+  </div>
+  <div class="exbd " id="bd-c2">
+
+    <div style="background:#F8FBFF;border:1px solid var(--brd);border-radius:8px;padding:12px;margin-bottom:10px">
+      <div style="font-size:11px;font-weight:700;color:var(--P);text-transform:uppercase;letter-spacing:.6px;margin-bottom:7px">
+        <i class="ti ti-file-description" style="margin-right:4px"></i>Đề bài</div>
+      <p style="font-size:13px;margin-bottom:7px">
+        Móng băng, 
+        <b>N₀=100 kN/m</b>
+        , M₀=0.
+        h<sub>m</sub>=1.5m, F<sub>s</sub>=2.5, γ<sub>tb</sub> tính theo đất thực tế.
+      </p>
+      <table class="dt">
+        <tr><th>Lớp</th><th>Tên đất</th><th>h (m)</th><th>γ (kN/m³)</th><th>c (kPa)</th><th>φ (°)</th></tr>
+        <tr><td>1</td><td class="ln">Sét nửa cứng nâu đỏ</td><td>0</td><td>19.0</td><td>25</td><td>22</td></tr>
+      </table>
+      <p style="font-size:13px;margin-top:7px">Kiểm tra với: 
+        <b>PA1: B=1.0m</b> và <b>PA2: B=1.6m</b>
+        (chiều rộng; tính trên 1m dài)
+      </p>
+      <div class="rqb">Điền kết quả vào ô · So sánh 2 phương án · Chọn kết luận đúng</div>
+    </div><div style="display:flex;flex-direction:column;gap:4px;margin:8px 0 8px 0">
+      <div class="fr">
+        <span class="fl">Tra bảng φ=22°: N<sub>c</sub> =</span>
+        <input class="fi" id="f-c2-Nc" type="number" step="0.01" placeholder="?">
+        
+        <button class="fbt" onclick="cf('c2-Nc',16.9,0.2)">✓</button>
+        <span class="ffb" id="fb-c2-Nc"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">N<sub>q</sub> =</span>
+        <input class="fi" id="f-c2-Nq" type="number" step="0.01" placeholder="?">
+        
+        <button class="fbt" onclick="cf('c2-Nq',7.8,0.2)">✓</button>
+        <span class="ffb" id="fb-c2-Nq"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">N<sub>γ</sub> =</span>
+        <input class="fi" id="f-c2-Ng" type="number" step="0.01" placeholder="?">
+        
+        <button class="fbt" onclick="cf('c2-Ng',7.1,0.2)">✓</button>
+        <span class="ffb" id="fb-c2-Ng"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">q = γ<sub>tb</sub>·h<sub>m</sub> = 19.0×1.5 =</span>
+        <input class="fi" id="f-c2-q" type="number" step="0.01" placeholder="?">
+        <span class="fu">kPa</span>
+        <button class="fbt" onclick="cf('c2-q',28.5,0.5)">✓</button>
+        <span class="ffb" id="fb-c2-q"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">R<sub>n</sub> (B=1.0m) =</span>
+        <input class="fi" id="f-c2-Rn1" type="number" step="0.01" placeholder="?">
+        <span class="fu">kPa</span>
+        <button class="fbt" onclick="cf('c2-Rn1',311.9,2.0)">✓</button>
+        <span class="ffb" id="fb-c2-Rn1"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">p<sub>tc</sub> (B=1.0m) =</span>
+        <input class="fi" id="f-c2-ptc1" type="number" step="0.01" placeholder="?">
+        <span class="fu">kPa</span>
+        <button class="fbt" onclick="cf('c2-ptc1',128.5,1.0)">✓</button>
+        <span class="ffb" id="fb-c2-ptc1"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">R<sub>n</sub> (B=1.6m) =</span>
+        <input class="fi" id="f-c2-Rn2" type="number" step="0.01" placeholder="?">
+        <span class="fu">kPa</span>
+        <button class="fbt" onclick="cf('c2-Rn2',344.3,2.0)">✓</button>
+        <span class="ffb" id="fb-c2-Rn2"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">p<sub>tc</sub> (B=1.6m) =</span>
+        <input class="fi" id="f-c2-ptc2" type="number" step="0.01" placeholder="?">
+        <span class="fu">kPa</span>
+        <button class="fbt" onclick="cf('c2-ptc2',91.0,1.0)">✓</button>
+        <span class="ffb" id="fb-c2-ptc2"></span>
+      </div></div>
+    <table class="cmp-tbl">
+      <tr><th>Phương án</th><th>B (m)</th><th>p<sub>tc</sub></th>
+          <th>p<sub>max</sub></th><th>p<sub>min</sub></th>
+          <th>R<sub>n</sub></th><th>1.2·R<sub>n</sub></th>
+          <th>① p≤R<sub>n</sub></th><th>② p<sub>max</sub>≤1.2R<sub>n</sub></th>
+          <th>Kết luận</th></tr>
+      
+      <tr>
+        <td class="lbl">PA1 B=1.0m</td>
+        <td>1.0</td>
+        <td style="font-family:var(--mono)">128.5</td>
+        <td style="font-family:var(--mono);color:#2E7D32;font-weight:700">128.5</td>
+        <td style="font-family:var(--mono)">128.5</td>
+        <td style="font-family:var(--mono)">311.9</td>
+        <td style="font-family:var(--mono)">374.3</td>
+        <td><span style="color:#2E7D32;font-weight:700">✅ Đạt</span></td>
+        <td><span style="color:#2E7D32;font-weight:700">✅ Đạt</span></td>
+        <td><b style="color:#2E7D32">✅ Kỹ thuật OK · ⚠ Lãng phí</b></td>
+      </tr>
+      <tr>
+        <td class="lbl">PA2 B=1.6m</td>
+        <td>1.6</td>
+        <td style="font-family:var(--mono)">91.0</td>
+        <td style="font-family:var(--mono);color:#2E7D32;font-weight:700">91.0</td>
+        <td style="font-family:var(--mono)">91.0</td>
+        <td style="font-family:var(--mono)">344.3</td>
+        <td style="font-family:var(--mono)">413.2</td>
+        <td><span style="color:#2E7D32;font-weight:700">✅ Đạt</span></td>
+        <td><span style="color:#2E7D32;font-weight:700">✅ Đạt</span></td>
+        <td><b style="color:#2E7D32">✅ Kỹ thuật OK · ⚠ Lãng phí</b></td>
+      </tr>
+    </table>
+    <div class="mw">
+      <div class="mq"><span class="mn">QC2</span>Nhận xét kết quả và chọn kết luận đúng:</div>
+      <div class="mo-list"><div class="mo" id="mo-qc2-0" onclick="pm('qc2',0,1)"><span class="mk">A</span><span>PA1 đạt kỹ thuật nhưng B quá lớn — lãng phí</span></div><div class="mo" id="mo-qc2-1" onclick="pm('qc2',1,1)"><span class="mk">B</span><span>Cả hai đạt kỹ thuật · PA1 tối ưu hơn về kinh tế</span></div><div class="mo" id="mo-qc2-2" onclick="pm('qc2',2,1)"><span class="mk">C</span><span>PA2 tốt hơn PA1 về mọi mặt</span></div><div class="mo" id="mo-qc2-3" onclick="pm('qc2',3,1)"><span class="mk">D</span><span>PA1 không đạt kỹ thuật</span></div></div>
+      <div class="me" id="me-qc2">✓ Cả hai đạt KT (R khá lớn vì φ=22°, c=25). PA1 B=1.0m: p/Rn gần 1 → tối ưu KT. PA2 B=1.6m: p/Rn nhỏ → lãng phí 40%. Chọn PA1. Khi tải nhỏ + nền tốt → B nhỏ hơn là tốt hơn.</div>
+    </div>
+  </div>
+</div>
+<div class="ex">
+  <div class="exhd " onclick="tog('c3')">
+    <span class="ebg ebC">C3</span>
+    <span class="ebg ebh">Khó</span>
+    <div><div class="etl">Móng đơn · 2 lớp đất · Tải lệch tâm · PA1 không KT, PA2 vừa</div><div class="emt">Dạng 3 · Kết hợp γtb + lệch tâm + 2 lớp</div></div>
+    <i class="ti ti-chevron-right echv " id="cv-c3"></i>
+  </div>
+  <div class="exbd " id="bd-c3">
+
+    <div style="background:#F8FBFF;border:1px solid var(--brd);border-radius:8px;padding:12px;margin-bottom:10px">
+      <div style="font-size:11px;font-weight:700;color:var(--P);text-transform:uppercase;letter-spacing:.6px;margin-bottom:7px">
+        <i class="ti ti-file-description" style="margin-right:4px"></i>Đề bài</div>
+      <p style="font-size:13px;margin-bottom:7px">
+        Móng đơn (vuông), 
+        <b>N₀=800 kN</b>
+        , <b>M₀=60 kN·m</b>.
+        h<sub>m</sub>=2.0m, F<sub>s</sub>=2.5, γ<sub>tb</sub> tính theo đất thực tế.
+      </p>
+      <table class="dt">
+        <tr><th>Lớp</th><th>Tên đất</th><th>h (m)</th><th>γ (kN/m³)</th><th>c (kPa)</th><th>φ (°)</th></tr>
+        <tr><td>1</td><td class="ln">Sét pha dẻo mềm</td><td>1.5</td><td>17.5</td><td>12</td><td>12</td></tr><tr><td>2</td><td class="ln">Sét pha dẻo cứng</td><td>0</td><td>19.0</td><td>20</td><td>20</td></tr>
+      </table>
+      <p style="font-size:13px;margin-top:7px">Kiểm tra với: 
+        <b>PA1: B=1.8m</b> và <b>PA2: B=2.4m</b>
+        (chiều rộng; móng vuông B=L)
+      </p>
+      <div class="rqb">Điền kết quả vào ô · So sánh 2 phương án · Chọn kết luận đúng</div>
+    </div><div style="display:flex;flex-direction:column;gap:4px;margin:8px 0 8px 0">
+      <div class="fr">
+        <span class="fl">γ<sub>tb</sub> = (17.5×1.5 + 19.0×0.5) / 2.0 =</span>
+        <input class="fi" id="f-c3-gtb" type="number" step="0.01" placeholder="?">
+        <span class="fu">kN/m³</span>
+        <button class="fbt" onclick="cf('c3-gtb',17.88,0.05)">✓</button>
+        <span class="ffb" id="fb-c3-gtb"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">Tra bảng φ=20°: N<sub>c</sub> =</span>
+        <input class="fi" id="f-c3-Nc" type="number" step="0.01" placeholder="?">
+        
+        <button class="fbt" onclick="cf('c3-Nc',14.8,0.2)">✓</button>
+        <span class="ffb" id="fb-c3-Nc"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">N<sub>q</sub> =</span>
+        <input class="fi" id="f-c3-Nq" type="number" step="0.01" placeholder="?">
+        
+        <button class="fbt" onclick="cf('c3-Nq',6.4,0.2)">✓</button>
+        <span class="ffb" id="fb-c3-Nq"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">N<sub>γ</sub> =</span>
+        <input class="fi" id="f-c3-Ng" type="number" step="0.01" placeholder="?">
+        
+        <button class="fbt" onclick="cf('c3-Ng',5.4,0.2)">✓</button>
+        <span class="ffb" id="fb-c3-Ng"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">q = γ<sub>tb</sub>·h<sub>m</sub> = 17.88×2.0 =</span>
+        <input class="fi" id="f-c3-q" type="number" step="0.01" placeholder="?">
+        <span class="fu">kPa</span>
+        <button class="fbt" onclick="cf('c3-q',35.76,0.5)">✓</button>
+        <span class="ffb" id="fb-c3-q"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">R<sub>n</sub> (B=1.8m) =</span>
+        <input class="fi" id="f-c3-Rn1" type="number" step="0.01" placeholder="?">
+        <span class="fu">kPa</span>
+        <button class="fbt" onclick="cf('c3-Rn1',275.0,2.0)">✓</button>
+        <span class="ffb" id="fb-c3-Rn1"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">p<sub>tc</sub> (B=1.8m) =</span>
+        <input class="fi" id="f-c3-ptc1" type="number" step="0.01" placeholder="?">
+        <span class="fu">kPa</span>
+        <button class="fbt" onclick="cf('c3-ptc1',282.7,1.0)">✓</button>
+        <span class="ffb" id="fb-c3-ptc1"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">p<sub>max</sub> (B=1.8m) =</span>
+        <input class="fi" id="f-c3-pmax1" type="number" step="0.01" placeholder="?">
+        <span class="fu">kPa</span>
+        <button class="fbt" onclick="cf('c3-pmax1',344.4,1.0)">✓</button>
+        <span class="ffb" id="fb-c3-pmax1"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">R<sub>n</sub> (B=2.4m) =</span>
+        <input class="fi" id="f-c3-Rn2" type="number" step="0.01" placeholder="?">
+        <span class="fu">kPa</span>
+        <button class="fbt" onclick="cf('c3-Rn2',284.9,2.0)">✓</button>
+        <span class="ffb" id="fb-c3-Rn2"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">p<sub>tc</sub> (B=2.4m) =</span>
+        <input class="fi" id="f-c3-ptc2" type="number" step="0.01" placeholder="?">
+        <span class="fu">kPa</span>
+        <button class="fbt" onclick="cf('c3-ptc2',174.6,1.0)">✓</button>
+        <span class="ffb" id="fb-c3-ptc2"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">p<sub>max</sub> (B=2.4m) =</span>
+        <input class="fi" id="f-c3-pmax2" type="number" step="0.01" placeholder="?">
+        <span class="fu">kPa</span>
+        <button class="fbt" onclick="cf('c3-pmax2',200.7,1.0)">✓</button>
+        <span class="ffb" id="fb-c3-pmax2"></span>
+      </div></div>
+    <table class="cmp-tbl">
+      <tr><th>Phương án</th><th>B (m)</th><th>p<sub>tc</sub></th>
+          <th>p<sub>max</sub></th><th>p<sub>min</sub></th>
+          <th>R<sub>n</sub></th><th>1.2·R<sub>n</sub></th>
+          <th>① p≤R<sub>n</sub></th><th>② p<sub>max</sub>≤1.2R<sub>n</sub></th>
+          <th>Kết luận</th></tr>
+      
+      <tr>
+        <td class="lbl">PA1 B=1.8m</td>
+        <td>1.8</td>
+        <td style="font-family:var(--mono)">282.7</td>
+        <td style="font-family:var(--mono);color:#C62828;font-weight:700">344.4</td>
+        <td style="font-family:var(--mono)">220.9</td>
+        <td style="font-family:var(--mono)">275.0</td>
+        <td style="font-family:var(--mono)">330.0</td>
+        <td><span style="color:#C62828;font-weight:700">❌ Không đạt</span></td>
+        <td><span style="color:#C62828;font-weight:700">❌ Không đạt</span></td>
+        <td><b style="color:#C62828">❌ Không đạt KT</b></td>
+      </tr>
+      <tr>
+        <td class="lbl">PA2 B=2.4m</td>
+        <td>2.4</td>
+        <td style="font-family:var(--mono)">174.6</td>
+        <td style="font-family:var(--mono);color:#2E7D32;font-weight:700">200.7</td>
+        <td style="font-family:var(--mono)">148.6</td>
+        <td style="font-family:var(--mono)">284.9</td>
+        <td style="font-family:var(--mono)">341.9</td>
+        <td><span style="color:#2E7D32;font-weight:700">✅ Đạt</span></td>
+        <td><span style="color:#2E7D32;font-weight:700">✅ Đạt</span></td>
+        <td><b style="color:#2E7D32">✅ Kỹ thuật OK</b></td>
+      </tr>
+    </table>
+    <div class="mw">
+      <div class="mq"><span class="mn">QC3</span>Nhận xét kết quả và chọn kết luận đúng:</div>
+      <div class="mo-list"><div class="mo" id="mo-qc3-0" onclick="pm('qc3',0,1)"><span class="mk">A</span><span>Cả PA1 và PA2 đều đảm bảo kỹ thuật</span></div><div class="mo" id="mo-qc3-1" onclick="pm('qc3',1,1)"><span class="mk">B</span><span>PA1 (B=1.8m) không đạt · PA2 (B=2.4m) đạt kỹ thuật</span></div><div class="mo" id="mo-qc3-2" onclick="pm('qc3',2,1)"><span class="mk">C</span><span>PA2 không đạt · PA1 đạt</span></div><div class="mo" id="mo-qc3-3" onclick="pm('qc3',3,1)"><span class="mk">D</span><span>Cả hai đều không đạt</span></div></div>
+      <div class="me" id="me-qc3">✓ γtb=(17.5×1.5+19×0.5)/2=18.1. Rn theo lớp 2 φ=20°. Lệch tâm → pmax=ptc+6M/B³. PA1 B=1.8m: pmax vượt 1.2Rn → không đạt. PA2 B=2.4m: pmax ≤ 1.2Rn, p/Rn≈0.7 → đạt cả KT & kinh tế.</div>
+    </div>
+  </div>
+</div>
+<div class="ex">
+  <div class="exhd " onclick="tog('c4')">
+    <span class="ebg ebC">C4</span>
+    <span class="ebg ebh">Khó</span>
+    <div><div class="etl">Móng băng · 2 lớp đất · Tải lệch tâm · Cả 2 PA đều đạt, so sánh</div><div class="emt">Dạng 4 · Phân tích tối ưu B cho lệch tâm 2 lớp</div></div>
+    <i class="ti ti-chevron-right echv " id="cv-c4"></i>
+  </div>
+  <div class="exbd " id="bd-c4">
+
+    <div style="background:#F8FBFF;border:1px solid var(--brd);border-radius:8px;padding:12px;margin-bottom:10px">
+      <div style="font-size:11px;font-weight:700;color:var(--P);text-transform:uppercase;letter-spacing:.6px;margin-bottom:7px">
+        <i class="ti ti-file-description" style="margin-right:4px"></i>Đề bài</div>
+      <p style="font-size:13px;margin-bottom:7px">
+        Móng băng, 
+        <b>N₀=160 kN/m</b>
+        , <b>M₀=20 kN·m/m</b>.
+        h<sub>m</sub>=2.0m, F<sub>s</sub>=2.5, γ<sub>tb</sub> tính theo đất thực tế.
+      </p>
+      <table class="dt">
+        <tr><th>Lớp</th><th>Tên đất</th><th>h (m)</th><th>γ (kN/m³)</th><th>c (kPa)</th><th>φ (°)</th></tr>
+        <tr><td>1</td><td class="ln">Cát pha yếu xám</td><td>1.5</td><td>17.0</td><td>8</td><td>12</td></tr><tr><td>2</td><td class="ln">Cát pha dẻo cứng</td><td>0</td><td>18.5</td><td>15</td><td>20</td></tr>
+      </table>
+      <p style="font-size:13px;margin-top:7px">Kiểm tra với: 
+        <b>PA1: B=1.2m</b> và <b>PA2: B=2.0m</b>
+        (chiều rộng; tính trên 1m dài)
+      </p>
+      <div class="rqb">Điền kết quả vào ô · So sánh 2 phương án · Chọn kết luận đúng</div>
+    </div><div style="display:flex;flex-direction:column;gap:4px;margin:8px 0 8px 0">
+      <div class="fr">
+        <span class="fl">γ<sub>tb</sub> = (17.0×1.5 + 18.5×0.5) / 2.0 =</span>
+        <input class="fi" id="f-c4-gtb" type="number" step="0.01" placeholder="?">
+        <span class="fu">kN/m³</span>
+        <button class="fbt" onclick="cf('c4-gtb',17.38,0.05)">✓</button>
+        <span class="ffb" id="fb-c4-gtb"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">Tra bảng φ=20°: N<sub>c</sub> =</span>
+        <input class="fi" id="f-c4-Nc" type="number" step="0.01" placeholder="?">
+        
+        <button class="fbt" onclick="cf('c4-Nc',14.8,0.2)">✓</button>
+        <span class="ffb" id="fb-c4-Nc"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">N<sub>q</sub> =</span>
+        <input class="fi" id="f-c4-Nq" type="number" step="0.01" placeholder="?">
+        
+        <button class="fbt" onclick="cf('c4-Nq',6.4,0.2)">✓</button>
+        <span class="ffb" id="fb-c4-Nq"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">N<sub>γ</sub> =</span>
+        <input class="fi" id="f-c4-Ng" type="number" step="0.01" placeholder="?">
+        
+        <button class="fbt" onclick="cf('c4-Ng',5.4,0.2)">✓</button>
+        <span class="ffb" id="fb-c4-Ng"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">q = γ<sub>tb</sub>·h<sub>m</sub> = 17.38×2.0 =</span>
+        <input class="fi" id="f-c4-q" type="number" step="0.01" placeholder="?">
+        <span class="fu">kPa</span>
+        <button class="fbt" onclick="cf('c4-q',34.76,0.5)">✓</button>
+        <span class="ffb" id="fb-c4-q"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">R<sub>n</sub> (B=1.2m) =</span>
+        <input class="fi" id="f-c4-Rn1" type="number" step="0.01" placeholder="?">
+        <span class="fu">kPa</span>
+        <button class="fbt" onclick="cf('c4-Rn1',225.7,2.0)">✓</button>
+        <span class="ffb" id="fb-c4-Rn1"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">p<sub>tc</sub> (B=1.2m) =</span>
+        <input class="fi" id="f-c4-ptc1" type="number" step="0.01" placeholder="?">
+        <span class="fu">kPa</span>
+        <button class="fbt" onclick="cf('c4-ptc1',168.1,1.0)">✓</button>
+        <span class="ffb" id="fb-c4-ptc1"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">p<sub>max</sub> (B=1.2m) =</span>
+        <input class="fi" id="f-c4-pmax1" type="number" step="0.01" placeholder="?">
+        <span class="fu">kPa</span>
+        <button class="fbt" onclick="cf('c4-pmax1',251.4,1.0)">✓</button>
+        <span class="ffb" id="fb-c4-pmax1"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">R<sub>n</sub> (B=2.0m) =</span>
+        <input class="fi" id="f-c4-Rn2" type="number" step="0.01" placeholder="?">
+        <span class="fu">kPa</span>
+        <button class="fbt" onclick="cf('c4-Rn2',257.7,2.0)">✓</button>
+        <span class="ffb" id="fb-c4-Rn2"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">p<sub>tc</sub> (B=2.0m) =</span>
+        <input class="fi" id="f-c4-ptc2" type="number" step="0.01" placeholder="?">
+        <span class="fu">kPa</span>
+        <button class="fbt" onclick="cf('c4-ptc2',114.8,1.0)">✓</button>
+        <span class="ffb" id="fb-c4-ptc2"></span>
+      </div>
+      <div class="fr">
+        <span class="fl">p<sub>max</sub> (B=2.0m) =</span>
+        <input class="fi" id="f-c4-pmax2" type="number" step="0.01" placeholder="?">
+        <span class="fu">kPa</span>
+        <button class="fbt" onclick="cf('c4-pmax2',144.8,1.0)">✓</button>
+        <span class="ffb" id="fb-c4-pmax2"></span>
+      </div></div>
+    <table class="cmp-tbl">
+      <tr><th>Phương án</th><th>B (m)</th><th>p<sub>tc</sub></th>
+          <th>p<sub>max</sub></th><th>p<sub>min</sub></th>
+          <th>R<sub>n</sub></th><th>1.2·R<sub>n</sub></th>
+          <th>① p≤R<sub>n</sub></th><th>② p<sub>max</sub>≤1.2R<sub>n</sub></th>
+          <th>Kết luận</th></tr>
+      
+      <tr>
+        <td class="lbl">PA1 B=1.2m</td>
+        <td>1.2</td>
+        <td style="font-family:var(--mono)">168.1</td>
+        <td style="font-family:var(--mono);color:#2E7D32;font-weight:700">251.4</td>
+        <td style="font-family:var(--mono)">84.8</td>
+        <td style="font-family:var(--mono)">225.7</td>
+        <td style="font-family:var(--mono)">270.8</td>
+        <td><span style="color:#2E7D32;font-weight:700">✅ Đạt</span></td>
+        <td><span style="color:#2E7D32;font-weight:700">✅ Đạt</span></td>
+        <td><b style="color:#2E7D32">✅ Kỹ thuật OK</b></td>
+      </tr>
+      <tr>
+        <td class="lbl">PA2 B=2.0m</td>
+        <td>2.0</td>
+        <td style="font-family:var(--mono)">114.8</td>
+        <td style="font-family:var(--mono);color:#2E7D32;font-weight:700">144.8</td>
+        <td style="font-family:var(--mono)">84.8</td>
+        <td style="font-family:var(--mono)">257.7</td>
+        <td style="font-family:var(--mono)">309.2</td>
+        <td><span style="color:#2E7D32;font-weight:700">✅ Đạt</span></td>
+        <td><span style="color:#2E7D32;font-weight:700">✅ Đạt</span></td>
+        <td><b style="color:#2E7D32">✅ Kỹ thuật OK · ⚠ Lãng phí</b></td>
+      </tr>
+    </table>
+    <div class="mw">
+      <div class="mq"><span class="mn">QC4</span>Nhận xét kết quả và chọn kết luận đúng:</div>
+      <div class="mo-list"><div class="mo" id="mo-qc4-0" onclick="pm('qc4',0,1)"><span class="mk">A</span><span>PA1 đạt kỹ thuật nhưng B quá lớn — lãng phí</span></div><div class="mo" id="mo-qc4-1" onclick="pm('qc4',1,1)"><span class="mk">B</span><span>Cả hai đạt kỹ thuật · PA1 tối ưu hơn về kinh tế</span></div><div class="mo" id="mo-qc4-2" onclick="pm('qc4',2,1)"><span class="mk">C</span><span>PA2 tốt hơn PA1 về mọi mặt</span></div><div class="mo" id="mo-qc4-3" onclick="pm('qc4',3,1)"><span class="mk">D</span><span>PA1 không đạt kỹ thuật</span></div></div>
+      <div class="me" id="me-qc4">✓ γtb=(17×1.5+18.5×0.5)/2=17.4. Rn lớp 2 φ=20°. PA1 B=1.2m: pmax khá lớn nhưng vẫn ≤1.2Rn, p/Rn≈0.85 tốt. PA2 B=2.0m: pmax nhỏ, p/Rn chỉ 0.5 → lãng phí. Chọn PA1 B=1.2m là tối ưu.</div>
+    </div>
+  </div>
+</div>
+
+</main>
+<div style="height:64px"></div>
+<div class="snav">
+  <span>8.4 · Kiểm tra SCT</span>
+  <div style="display:flex;align-items:center;gap:10px">
+    <span id="np">0/0</span>
+    <button class="btn bg" id="btn-nop" onclick="sub()" style="background:rgba(150,150,150,.35)">🔒 Nộp bài</button>
+    <a href="8.5_DANG_3.html" class="btn bg">Bài 8.5 ›</a>
+  </div>
+</div>
+<script>
+var ANS={},_sub=false,TQ=0;
+['b1-Nc','b1-Nq','b1-Ng','b1-q','b1-Rn1','b1-ptc1','b1-Rn2','b1-ptc2','b2-Nc','b2-Nq','b2-Ng','b2-q','b2-Rn1','b2-ptc1','b2-pmax1','b2-Rn2','b2-ptc2','b2-pmax2','b3-gtb','b3-Nc','b3-Nq','b3-Ng','b3-q','b3-Rn1','b3-ptc1','b3-Rn2','b3-ptc2','b4-gtb','b4-Nc','b4-Nq','b4-Ng','b4-q','b4-Rn1','b4-ptc1','b4-pmax1','b4-Rn2','b4-ptc2','b4-pmax2','c1-Nc','c1-Nq','c1-Ng','c1-q','c1-Rn1','c1-ptc1','c1-Rn2','c1-ptc2','c2-Nc','c2-Nq','c2-Ng','c2-q','c2-Rn1','c2-ptc1','c2-Rn2','c2-ptc2','c3-gtb','c3-Nc','c3-Nq','c3-Ng','c3-q','c3-Rn1','c3-ptc1','c3-pmax1','c3-Rn2','c3-ptc2','c3-pmax2','c4-gtb','c4-Nc','c4-Nq','c4-Ng','c4-q','c4-Rn1','c4-ptc1','c4-pmax1','c4-Rn2','c4-ptc2','c4-pmax2'].forEach(function(k){ANS['f-'+k]=null;});
+['qb1','qb2','qb3','qb4','qc1','qc2','qc3','qc4'].forEach(function(k){ANS['mcq-'+k]=null;});
+function gSV(){try{return JSON.parse(sessionStorage.getItem('ncm_sv'));}catch(e){return null;}}
+function tog(id){var b=document.getElementById('bd-'+id),h=b.previousElementSibling,c=document.getElementById('cv-'+id);var op=b.classList.contains('open');b.classList.toggle('open',!op);h.classList.toggle('open',!op);c.classList.toggle('open',!op);}
+function cf(key,correct,tol){if(_sub)return;var inp=document.getElementById('f-'+key),fb=document.getElementById('fb-'+key);if(!inp)return;var v=parseFloat(inp.value);if(isNaN(v)){fb.textContent='Nhập số!';fb.style.color='var(--R)';return;}var ok=Math.abs(v-correct)<=tol;inp.classList.toggle('ok',ok);inp.classList.toggle('no',!ok);fb.textContent=ok?'✓ Đúng!':'✗ Sai (≈'+correct+')';fb.style.color=ok?'var(--G)':'var(--R)';ANS['f-'+key]=ok;up();}
+function pm(id,picked,correct){if(ANS['mcq-'+id]!==null&&ANS['mcq-'+id]!==undefined)return;document.querySelectorAll('[id^="mo-'+id+'-"]').forEach(function(el,i){el.onclick=null;if(i===picked&&picked===correct)el.classList.add('ok');else if(i===picked)el.classList.add('no');else if(i===correct)el.classList.add('rok');});var e=document.getElementById('me-'+id);if(e){e.classList.add('show');e.classList.add(picked===correct?'ok-e':'no-e');}ANS['mcq-'+id]=(picked===correct);up();}
+function up(){var at=0,dn=0,tot=TQ||Object.keys(ANS).length;Object.keys(ANS).forEach(function(k){if(ANS[k]!==null&&ANS[k]!==undefined){at++;if(ANS[k]===true)dn++;}});var ap=tot?Math.round(at/tot*100):0;document.getElementById('pfill').style.width=ap+'%';document.getElementById('ptxt').textContent='Đã làm: '+at+'/'+tot+' ('+ap+'%) · Đúng: '+dn;document.getElementById('np').textContent=at+'/'+tot;document.getElementById('hprog').textContent=at+' / '+tot;try{localStorage.setItem('prog_c8_84',JSON.stringify({done:dn,total:tot,attempted:at}));}catch(e){}if(!_sub){var mp=(typeof window.MIN_ATTEMPT_PCT!=='undefined')?window.MIN_ATTEMPT_PCT:5;var btn=document.getElementById('btn-nop');if(btn){var rdy=(ap>=mp&&at>0);btn.style.background=rdy?'rgba(46,125,50,.7)':'rgba(150,150,150,.35)';btn.innerHTML=(rdy?'✅':'🔒')+' Nộp bài';}}}
+function sub(){var sv=gSV();if(!sv||!sv.name){alert('⚠️ Chưa đăng nhập!');return;}if(_sub)return;var tot=TQ||Object.keys(ANS).length,at=0,dn=0;Object.keys(ANS).forEach(function(k){if(ANS[k]!==null&&ANS[k]!==undefined){at++;if(ANS[k]===true)dn++;}});var ap=tot?Math.round(at/tot*100):0,sc=tot?Math.round(dn/tot*100):0;if(at===0){alert('⚠️ Chưa làm câu nào!');return;}var mp=(typeof window.MIN_ATTEMPT_PCT!=='undefined')?window.MIN_ATTEMPT_PCT:5;if(ap<mp){alert('⚠️ Cần làm tối thiểu '+mp+'%!');return;}var wu=(typeof window.WORKER_URL!=='undefined')?window.WORKER_URL:'https://dqt-chdnm.phamvietanh158.workers.dev';fetch(wu,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:sv.name,mssv:sv.mssv,stt:Number(sv.stt)||0,classId:sv.classId,chapterId:'C8-84-KiemTraSCT',score:sc,correct:dn,total:tot,duration:0})}).then(function(r){return r.json();}).then(function(d){if(d.ok){_sub=true;var btn=document.getElementById('btn-nop');if(btn){btn.innerHTML='✓ Đã nộp ('+sc+'%)';btn.disabled=true;btn.style.background='rgba(46,125,50,.5)';}alert('✅ Nộp thành công! '+dn+'/'+tot);}else alert('❌ '+(d.error||'Lỗi'));}).catch(function(err){alert('❌ '+err.message);});}
+window.onload=function(){var sv=gSV();if(sv&&sv.name){document.getElementById('svd').textContent=sv.name+' — STT: '+sv.stt;document.getElementById('svch').textContent='#'+sv.stt;document.getElementById('svbh').textContent='SV #'+sv.stt;}else{document.getElementById('svd').textContent='Chưa đăng nhập';}TQ=Object.keys(ANS).length;up();};
+</script>
+</body>
+</html>
