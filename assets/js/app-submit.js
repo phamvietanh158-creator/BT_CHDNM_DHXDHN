@@ -3,8 +3,27 @@
    Xử lý nộp bài: kiểm tra điều kiện → gửi lên Cloudflare Worker
    Yêu cầu: app-engine.js đã được tải trước (cần ANS, _submitted, TOTAL_QUESTIONS)
    Mỗi trang bài tập cần khai báo: window.CHAPTER_ID = 'CX-XX-TenBai'
-   v1.0 — 2026
+   v1.1 — 2026 (thêm localStorage chặn nộp lại sau reload)
    ═══════════════════════════════════════════════════════════════════ */
+
+/* Gọi sau khi trang load để disable nút nếu đã nộp rồi */
+function checkSubmittedOnLoad() {
+  try {
+    var sv = getSV();
+    if (!sv || !sv.mssv) return;
+    var chapId = window.CHAPTER_ID || 'UNKNOWN';
+    var lsKey = 'submitted_' + chapId + '_' + sv.mssv;
+    if (localStorage.getItem(lsKey)) {
+      _submitted = true;
+      var btn = document.getElementById('btn-nop');
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '✓ Đã nộp';
+        btn.style.background = 'rgba(46,125,50,.5)';
+      }
+    }
+  } catch(e) {}
+}
 
 function submitResult() {
   var sv = getSV();
@@ -13,6 +32,14 @@ function submitResult() {
     return;
   }
   if (_submitted) return;
+
+  /* Kiểm tra localStorage — chặn nộp lại sau khi reload trang */
+  var chapterIdEarly = window.CHAPTER_ID || 'UNKNOWN';
+  var lsKey = 'submitted_' + chapterIdEarly + '_' + (sv.mssv || '');
+  if (localStorage.getItem(lsKey)) {
+    alert('ℹ️ Bạn đã nộp bài "' + chapterIdEarly + '" rồi!\nKết quả đã được ghi nhận.');
+    return;
+  }
 
   /* Đếm số câu đã làm và số câu đúng */
   var total    = TOTAL_QUESTIONS || Object.keys(ANS).length;
@@ -65,6 +92,8 @@ function submitResult() {
   .then(function (d) {
     if (d.ok) {
       _submitted = true;
+      /* Ghi localStorage để chặn nộp lại sau reload */
+      try { localStorage.setItem(lsKey, Date.now()); } catch(e) {}
       if (btn) {
         btn.innerHTML = '✓ Đã nộp (' + scorePct + '%)';
         btn.disabled  = true;
