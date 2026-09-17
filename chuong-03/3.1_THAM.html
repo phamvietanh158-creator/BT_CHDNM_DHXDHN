@@ -612,7 +612,7 @@ function genA(stt){
 ================================================================ */
 function genBC(stt){
   var CFG=[
-    {id:'1',title:'TN cột nước không đổi — xác định k',fml:'k = q·L/(A·Δh) &nbsp;·&nbsp; A=πd²/4, q=V/t',type:'cnkd'},
+    {id:'1',title:'TN cột nước không đổi — xác định k',fml:'k = q·L/(A·Δh) &nbsp;·&nbsp; A=πd²/4 &nbsp;·&nbsp; q=V/t <small>(t: giây)</small>',type:'cnkd'},
     {id:'2',title:'TN cột nước thay đổi — xác định k',fml:'k = (a·L)/(A·t) × ln(h₁/h₂)',type:'cntd'},
     {id:'3',title:'Hệ số thấm đứng tương đương (nối tiếp)',fml:'k<sub>v</sub> = Σh<sub>i</sub> / Σ(h<sub>i</sub>/k<sub>i</sub>)',type:'kv'},
     {id:'4',title:'Hệ số thấm ngang tương đương (song song)',fml:'k<sub>h</sub> = Σ(k<sub>i</sub>h<sub>i</sub>) / Σh<sub>i</sub>',type:'kh'},
@@ -661,8 +661,9 @@ function genOne(id,type,stt,s1,s2){
     var V_cm3=Math.round(q_cms*t_min*60);
     var q_ans=r3(V_cm3/(t_min*60));
     var k_ans=r3(q_ans*(L_mm/10)/(A_cm2*(dh_mm/10)));
-    document.getElementById(id+'-prob').innerHTML='🏗️ <b>Đề bài</b>: TN cột nước không đổi, d='+d_mm+'mm, L='+L_mm+'mm, t='+t_min+' phút, V='+V_cm3+' cm³, Δh='+dh_mm+'mm. Tính k.';
-    document.getElementById(id+'-q').innerHTML=makeQ(id+'-A','A (cm²)',A_cm2,0.5,'cm²')+makeQ(id+'-q','q (cm³/s)',q_ans,r2(q_ans*0.05+0.005),'cm³/s')+makeQ(id+'-k','k (cm/s)',k_ans,r3(k_ans*0.07+0.0005),'cm/s');
+    document.getElementById(id+'-prob').innerHTML='🏗️ <b>Đề bài</b>: TN cột nước không đổi, d='+d_mm+'mm, L='+L_mm+'mm, t='+t_min+' phút, V='+V_cm3+' cm³, Δh='+dh_mm+'mm. Tính k.'
+      +'<div style="margin-top:6px;font-size:12px;color:#1565C0">Gợi ý: A=π×('+r2(d_mm/10)+'/2)² | q='+V_cm3+'/('+t_min+'×60) | i='+r2(dh_mm/10)+'/'+r2(L_mm/10)+' | k=q×L/(A×Δh)</div>';
+    document.getElementById(id+'-q').innerHTML=makeQ(id+'-A','A (cm²)',A_cm2,0.5,'cm²')+makeQ(id+'-q','q = V/(t×60) (cm³/s)',q_ans,r2(q_ans*0.05+0.005),'cm³/s')+makeQ(id+'-k','k (cm/s)',k_ans,r3(k_ans*0.07+0.0005),'cm/s');
   }
   else if(type==='cntd'){
     var a_cm2=r2(0.5+rng()*1);var A_cm2=r2(15+rng()*15);var L_cm=r2(8+rng()*6);
